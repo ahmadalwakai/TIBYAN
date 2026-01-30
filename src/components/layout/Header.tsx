@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Button, Container, Flex, Stack, Text, IconButton } from "@chakra-ui/react";
+import { Box, Button, Container, Flex, Stack, Text, IconButton, Drawer, Portal, CloseButton } from "@chakra-ui/react";
 import { useColorMode } from "@/components/ui/color-mode";
 import Logo from "@/components/ui/Logo";
 import Link from "next/link";
@@ -22,6 +22,7 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState("");
   const [langMenuOpen, setLangMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const langMenuRef = useRef<HTMLDivElement>(null);
   const handleLogout = useLogout();
@@ -161,13 +162,19 @@ export default function Header() {
               </Box>
             </Link>
 
-            {/* Mobile menu button placeholder */}
+            {/* Mobile menu button */}
             <IconButton
               display={{ base: "flex", md: "none" }}
-              aria-label="Menu"
+              aria-label="Open menu"
               variant="ghost"
               color="white"
               fontSize="xl"
+              onClick={() => {
+                console.log("Hamburger clicked");
+                setMobileMenuOpen(true);
+              }}
+              _hover={{ bg: "whiteAlpha.200" }}
+              _active={{ bg: "whiteAlpha.300" }}
             >
               <span>☰</span>
             </IconButton>
@@ -503,6 +510,185 @@ export default function Header() {
           </Stack>
         </Flex>
       </Container>
+
+      {/* Mobile Navigation Drawer */}
+      <Drawer.Root 
+        open={mobileMenuOpen} 
+        onOpenChange={(e) => setMobileMenuOpen(e.open)}
+        placement="end"
+      >
+        <Portal>
+          <Drawer.Backdrop 
+            bg="blackAlpha.700" 
+            backdropFilter="blur(4px)"
+          />
+          <Drawer.Positioner>
+            <Drawer.Content
+              bg="brand.900"
+              maxW="300px"
+              h="100vh"
+            >
+              <Drawer.Header 
+                borderBottomWidth="1px" 
+                borderColor="whiteAlpha.200"
+                p={4}
+              >
+                <Flex justify="space-between" align="center">
+                  <Logo size={40} showText={true} />
+                  <CloseButton 
+                    color="white" 
+                    onClick={() => {
+                      console.log("Close drawer clicked");
+                      setMobileMenuOpen(false);
+                    }}
+                    _hover={{ bg: "whiteAlpha.200" }}
+                  />
+                </Flex>
+              </Drawer.Header>
+
+              <Drawer.Body p={4}>
+                <Stack gap={2}>
+                  {navLinks.map((link) => {
+                    const isActive = activeLink === link.href;
+                    return (
+                      <Link 
+                        key={link.href} 
+                        href={link.href} 
+                        style={{ textDecoration: "none" }}
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <Box
+                          px={4}
+                          py={3}
+                          borderRadius="lg"
+                          fontWeight="600"
+                          fontSize="md"
+                          color={isActive ? "brand.900" : "white"}
+                          bg={isActive ? "white" : "transparent"}
+                          display="flex"
+                          alignItems="center"
+                          gap={3}
+                          transition="all 0.2s ease"
+                          _hover={{ 
+                            bg: isActive ? "white" : "whiteAlpha.200",
+                          }}
+                        >
+                          <Text as="span">{link.icon}</Text>
+                          {link.label}
+                        </Box>
+                      </Link>
+                    );
+                  })}
+                </Stack>
+
+                {/* Language selector in mobile */}
+                <Box mt={6} pt={4} borderTopWidth="1px" borderColor="whiteAlpha.200">
+                  <Text fontSize="sm" color="whiteAlpha.600" mb={3} fontWeight="600">
+                    🌐 {t("common.selectLanguage")}
+                  </Text>
+                  <Stack gap={1}>
+                    {languages.map((lang) => (
+                      <Box
+                        key={lang.code}
+                        as="button"
+                        onClick={() => {
+                          console.log("Language selected:", lang.code);
+                          handleLanguageChange(lang.code);
+                          setMobileMenuOpen(false);
+                        }}
+                        display="flex"
+                        alignItems="center"
+                        gap={3}
+                        w="full"
+                        px={3}
+                        py={2}
+                        borderRadius="md"
+                        bg={currentLocale === lang.code ? "whiteAlpha.200" : "transparent"}
+                        color="white"
+                        fontSize="sm"
+                        fontWeight={currentLocale === lang.code ? "700" : "500"}
+                        cursor="pointer"
+                        transition="all 0.2s ease"
+                        _hover={{ bg: "whiteAlpha.100" }}
+                        textAlign="start"
+                      >
+                        <Text fontSize="lg">{lang.flag}</Text>
+                        <Text flex={1}>{lang.label}</Text>
+                        {currentLocale === lang.code && (
+                          <Box w="6px" h="6px" borderRadius="full" bg="#c8a24a" />
+                        )}
+                      </Box>
+                    ))}
+                  </Stack>
+                </Box>
+              </Drawer.Body>
+
+              <Drawer.Footer 
+                borderTopWidth="1px" 
+                borderColor="whiteAlpha.200"
+                p={4}
+              >
+                <Stack w="full" gap={3}>
+                  {user ? (
+                    <>
+                      <Flex align="center" gap={3} p={3} bg="whiteAlpha.100" borderRadius="lg">
+                        <Box
+                          w="40px"
+                          h="40px"
+                          borderRadius="full"
+                          bg="linear-gradient(135deg, #c8a24a, #ffd700)"
+                          display="flex"
+                          alignItems="center"
+                          justifyContent="center"
+                          color="brand.900"
+                          fontWeight="800"
+                        >
+                          {user.name.charAt(0)}
+                        </Box>
+                        <Box>
+                          <Text fontSize="sm" fontWeight="700" color="white">
+                            {user.name}
+                          </Text>
+                          <Text fontSize="xs" color="whiteAlpha.700">
+                            {user.role === "admin" ? `🛡️ ${t("common.admin")}` : `👤 ${t("common.user")}`}
+                          </Text>
+                        </Box>
+                      </Flex>
+                      <Button
+                        onClick={() => {
+                          console.log("Logout clicked");
+                          handleLogout();
+                          setMobileMenuOpen(false);
+                        }}
+                        variant="outline"
+                        borderColor="red.400"
+                        color="red.300"
+                        w="full"
+                        _hover={{ bg: "red.500", borderColor: "red.500", color: "white" }}
+                      >
+                        🚪 {t("common.logout")}
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Link href="/auth/login" style={{ textDecoration: "none" }} onClick={() => setMobileMenuOpen(false)}>
+                        <Button variant="outline" borderColor="whiteAlpha.400" color="white" w="full" _hover={{ bg: "whiteAlpha.200" }}>
+                          {t("common.login")}
+                        </Button>
+                      </Link>
+                      <Link href="/auth/register" style={{ textDecoration: "none" }} onClick={() => setMobileMenuOpen(false)}>
+                        <Button bg="linear-gradient(135deg, #c8a24a, #ffd700)" color="brand.900" w="full" fontWeight="700">
+                          ✨ {t("common.register")}
+                        </Button>
+                      </Link>
+                    </>
+                  )}
+                </Stack>
+              </Drawer.Footer>
+            </Drawer.Content>
+          </Drawer.Positioner>
+        </Portal>
+      </Drawer.Root>
     </Box>
   );
 }
