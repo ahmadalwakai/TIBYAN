@@ -4,10 +4,15 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
-// Temporarily disabled - configure DATABASE_URL in .env to enable
-export const db = globalForPrisma.prisma ?? {} as PrismaClient;
+const createPrismaClient = () => {
+  return new PrismaClient({
+    log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
+  });
+};
 
-// When database is ready, use:
-// export const db = globalForPrisma.prisma ?? new PrismaClient();
+// Use global instance to prevent multiple connections in development
+export const db = globalForPrisma.prisma ?? createPrismaClient();
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = db;
+if (process.env.NODE_ENV !== 'production') {
+  globalForPrisma.prisma = db;
+}
