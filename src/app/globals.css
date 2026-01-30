@@ -17,3 +17,13 @@ body {
 	background: #f7f8fa;
 	color: #0f172a;
 }
+
+/* Wave animation for platform name */
+@keyframes waveMove {
+	0% {
+		transform: translateX(0%);
+	}
+	100% {
+		transform: translateX(50%);
+	}
+}

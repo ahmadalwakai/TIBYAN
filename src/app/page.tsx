@@ -275,22 +275,44 @@ export default function Home() {
                 {t("heroBadge")}
               </Badge>
 
-              {/* Platform Name */}
-              <Text
-                fontWeight="900"
-                fontSize={{ base: "xl", md: "2xl" }}
-                letterSpacing="tight"
-                css={{
-                  background: "linear-gradient(135deg, #0b1f3b 0%, #c8a24a 50%, #0b1f3b 100%)",
-                  backgroundSize: "200% auto",
-                  backgroundClip: "text",
-                  WebkitBackgroundClip: "text",
-                  color: "transparent",
-                  animation: "gradientShift 4s ease infinite",
-                }}
-              >
-                {t("platformName")}
-              </Text>
+              {/* Platform Name with Wave Effect */}
+              <Box position="relative" overflow="hidden">
+                <Text
+                  fontWeight="900"
+                  fontSize={{ base: "xl", md: "2xl" }}
+                  letterSpacing="tight"
+                  position="relative"
+                  css={{
+                    background: "linear-gradient(135deg, #ffffff 0%, #e8e8e8 50%, #ffffff 100%)",
+                    backgroundSize: "200% auto",
+                    backgroundClip: "text",
+                    WebkitBackgroundClip: "text",
+                    color: "transparent",
+                    textShadow: "0 0 30px rgba(255, 255, 255, 0.5)",
+                  }}
+                >
+                  {t("platformName")}
+                </Text>
+                {/* Animated wave overlay */}
+                <Box
+                  position="absolute"
+                  top="0"
+                  left="-100%"
+                  width="200%"
+                  height="100%"
+                  pointerEvents="none"
+                  css={{
+                    background: "linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.8) 25%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0.8) 75%, transparent 100%)",
+                    backgroundSize: "50% 100%",
+                    animation: "waveMove 3s ease-in-out infinite",
+                    mixBlendMode: "overlay",
+                    "@keyframes waveMove": {
+                      "0%": { transform: "translateX(0%)" },
+                      "100%": { transform: "translateX(50%)" },
+                    },
+                  }}
+                />
+              </Box>
             </Stack>
 
             {/* Main Heading with Glow Effect */}
