@@ -8,7 +8,7 @@ export async function GET() {
     timestamp: new Date().toISOString(),
     nodeEnv: process.env.NODE_ENV ?? "unknown",
     hasDbUrl: process.env.DATABASE_URL ? "yes" : "no",
-    hasDirectDbUrl: process.env.DIRECT_DATABASE_URL ? "yes" : "no",
+    hasDirectDbUrl: process.env.DATABASE_URL_NON_POOLING ? "yes" : "no",
     hasResendKey: process.env.RESEND_API_KEY ? "yes" : "no",
     hasAppUrl: process.env.NEXT_PUBLIC_APP_URL ?? "not set",
   };
