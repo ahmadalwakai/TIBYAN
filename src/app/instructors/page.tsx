@@ -246,7 +246,7 @@ export default function InstructorsPage() {
             <Flex align="center" justify="center" gap={3}>
               <Box h="2px" flex={1} maxW="100px" background="linear-gradient(90deg, transparent, #c8a24a)" />
               <Heading size="lg" color="white" textAlign="center">
-                المعلمون والمعلمات
+                المدرسين :
               </Heading>
               <Box h="2px" flex={1} maxW="100px" background="linear-gradient(90deg, #c8a24a, transparent)" />
             </Flex>
