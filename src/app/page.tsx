@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import PremiumCard from "@/components/ui/PremiumCard";
 import StatCard from "@/components/ui/StatCard";
 import FeatureCard from "@/components/ui/FeatureCard";
@@ -106,6 +107,8 @@ function AnimatedStatCard({
 }
 
 export default function Home() {
+  const t = useTranslations("home");
+  
   return (
     <Box 
       as="main" 
@@ -267,8 +270,7 @@ export default function Home() {
                   },
                 }}
               >
-                <Text as="span" css={{ animation: "sparkle 2s ease-in-out infinite" }}>✨</Text>
-                {" "}الجيل الجديد من منصات التعليم العربي
+                {t("heroBadge")}
               </Badge>
 
               {/* Platform Name */}
@@ -285,7 +287,7 @@ export default function Home() {
                   animation: "gradientShift 4s ease infinite",
                 }}
               >
-                منصة تبيان | Tibyan
+                {t("platformName")}
               </Text>
             </Stack>
 
@@ -313,17 +315,8 @@ export default function Home() {
                   animation: "gradientShift 6s ease infinite",
                 }}
               >
-                تعلّم بمعايير احترافية<br />
-                عبر مسارات معرفية موثوقة{" "}
-                <Text 
-                  as="span" 
-                  css={{ 
-                    animation: "heroFloat 3s ease-in-out infinite",
-                    display: "inline-block",
-                  }}
-                >
-                  📚
-                </Text>
+                {t("heroTitle")}<br />
+                {t("heroSubtitle")}
               </Heading>
             </Box>
 
@@ -333,16 +326,8 @@ export default function Home() {
               fontSize={{ base: "md", md: "xl" }} 
               lineHeight="1.9" 
               maxW="700px"
-              css={{
-                "& strong": {
-                  color: "#c8a24a",
-                  fontWeight: 700,
-                },
-              }}
-            >
-              تجربة تعلم متكاملة تجمع <strong>المحتوى المنهجي</strong>، <strong>الالتزام التعليمي</strong>،
-              <strong> التقييمات المتقدمة</strong>، والمجتمع التفاعلي ضمن واجهة عربية حديثة.
-            </Text>
+              dangerouslySetInnerHTML={{ __html: t.raw("heroDescription") }}
+            />
 
             {/* CTA Buttons */}
             <Stack
@@ -382,7 +367,7 @@ export default function Home() {
                     transition="all 0.3s ease"
                     w={{ base: "100%", sm: "auto" }}
                   >
-                    🚀 استكشف البرامج
+                    {t("explorePrograms")}
                   </Button>
                 </Link>
               </Box>
@@ -412,7 +397,7 @@ export default function Home() {
                   transition="all 0.3s ease"
                   w={{ base: "100%", sm: "auto" }}
                 >
-                  👨‍🏫 ابدأ كمدرّس
+                  {t("becomeInstructor")}
                 </Button>
               </Link>
             </Stack>
@@ -425,9 +410,9 @@ export default function Home() {
               w="100%"
               maxW="600px"
             >
-              <AnimatedStatCard value={5} label="برنامج" color="brand.500" icon="📖" />
-              <AnimatedStatCard value={18} suffix="k+" label="طالب نشط" color="success" icon="👥" />
-              <AnimatedStatCard value={4.9} suffix="★" label="تقييم" color="warning" icon="⭐" decimals={1} />
+              <AnimatedStatCard value={5} label={t("stats.programs")} color="brand.500" icon="📖" />
+              <AnimatedStatCard value={18} suffix="k+" label={t("stats.activeStudents")} color="success" icon="👥" />
+              <AnimatedStatCard value={4.9} suffix="★" label={t("stats.rating")} color="warning" icon="⭐" decimals={1} />
             </SimpleGrid>
           </Stack>
         </Container>
@@ -506,7 +491,7 @@ export default function Home() {
                 {/* Section Header */}
                 <Stack gap={3} textAlign="center">
                   <Text color="brand.500" fontWeight="700" fontSize="sm" letterSpacing="wider">
-                    ✨ لماذا تبيان؟
+                    {t("whyTibyan")}
                   </Text>
                   <Heading 
                     size={{ base: "lg", md: "xl" }} 
@@ -518,29 +503,29 @@ export default function Home() {
                       color: "transparent",
                     }}
                   >
-                    مميزات تجعلنا الخيار الأول
+                    {t("featuresTitle")}
                   </Heading>
                 </Stack>
 
                 <SimpleGrid columns={{ base: 1, md: 3 }} gap={8}>
                   {[
                     {
-                      title: "التزام أكاديمي",
-                      text: "قواعد إكمال الدروس تمنع التعلّم السطحي وتضمن فهمًا حقيقيًا ومتعمقًا للمحتوى.",
+                      title: t("features.academicCommitment.title"),
+                      text: t("features.academicCommitment.description"),
                       icon: "📚",
                       gradient: "linear-gradient(135deg, #c8a24a, #ffd700)",
                       delay: "0s",
                     },
                     {
-                      title: "بنك أسئلة متقدّم",
-                      text: "أنواع أسئلة متعددة، محاولات متكررة، وتقييمات آلية فورية مع تغذية راجعة مفصلة.",
+                      title: t("features.questionBank.title"),
+                      text: t("features.questionBank.description"),
                       icon: "🎯",
                       gradient: "linear-gradient(135deg, #00d4ff, #0099ff)",
                       delay: "0.2s",
                     },
                     {
-                      title: "مجتمع تفاعلي",
-                      text: "نقاشات حية داخل الدروس مع دعم فوري من المدرّسين والإجابات المعتمدة.",
+                      title: t("features.interactiveCommunity.title"),
+                      text: t("features.interactiveCommunity.description"),
                       icon: "💬",
                       gradient: "linear-gradient(135deg, #00ff88, #00cc6a)",
                       delay: "0.4s",
@@ -698,7 +683,7 @@ export default function Home() {
                     },
                   }}
                 >
-                  🎓 مسارات تعليمية متكاملة
+                  {t("programsBadge")}
                 </Badge>
                 <Heading 
                   size={{ base: "lg", md: "xl" }} 
@@ -712,41 +697,40 @@ export default function Home() {
                     animation: "shimmerText 6s linear infinite",
                   }}
                 >
-                  برامج مصممة بعناية للنمو المعرفي والمهني
+                  {t("programsTitle")}
                 </Heading>
                 <Text color="muted" fontSize={{ base: "md", md: "lg" }} lineHeight="1.9">
-                  من السنة التمهيدية إلى البرامج المتخصصة، نوفر مسارات تجمع بين المحتوى الأصيل،
-                  التطبيق العملي، والتقييم المتقدم لضمان أثر حقيقي ومستدام.
+                  {t("programsDescription")}
                 </Text>
               </Stack>
               
               <SimpleGrid columns={{ base: 1, md: 3 }} gap={8}>
                 {[
                   { 
-                    title: "السنة التمهيدية", 
-                    desc: "أساس متين في العلوم الشرعية",
+                    title: t("programsList.preparatory.title"), 
+                    desc: t("programsList.preparatory.description"),
                     icon: "🎓", 
                     gradient: "linear-gradient(135deg, #0b1f3b, #1a365d)",
                     accentGradient: "linear-gradient(135deg, #c8a24a, #ffd700)",
-                    sessions: "160 جلسة",
+                    sessions: t("programsList.preparatory.sessions"),
                     delay: "0s",
                   },
                   { 
-                    title: "المسار الشرعي", 
-                    desc: "تخصص عميق في الفقه والأصول",
+                    title: t("programsList.shariah.title"), 
+                    desc: t("programsList.shariah.description"),
                     icon: "📖", 
                     gradient: "linear-gradient(135deg, #065f46, #047857)",
                     accentGradient: "linear-gradient(135deg, #00ff88, #10b981)",
-                    sessions: "96-112 جلسة",
+                    sessions: t("programsList.shariah.sessions"),
                     delay: "0.15s",
                   },
                   { 
-                    title: "برنامج القراءة العربية", 
-                    desc: "من الحروف إلى الطلاقة",
+                    title: t("programsList.arabicReading.title"), 
+                    desc: t("programsList.arabicReading.description"),
                     icon: "✍️", 
                     gradient: "linear-gradient(135deg, #92400e, #b45309)",
                     accentGradient: "linear-gradient(135deg, #fbbf24, #f59e0b)",
-                    sessions: "112 جلسة",
+                    sessions: t("programsList.arabicReading.sessions"),
                     delay: "0.3s",
                   },
                 ].map((item) => (
@@ -873,7 +857,7 @@ export default function Home() {
                             gap: 3,
                           }}
                         >
-                          <Text>اكتشف المزيد</Text>
+                          <Text>{t("learnMore")}</Text>
                           <Text>←</Text>
                         </Flex>
                       </Stack>
@@ -944,7 +928,7 @@ export default function Home() {
                       },
                     }}
                   >
-                    👨‍🏫 للمدرّسين المحترفين
+                    {t("teachersBadge")}
                   </Badge>
                   <Heading 
                     size={{ base: "lg", md: "xl" }} 
@@ -958,12 +942,11 @@ export default function Home() {
                       animation: "gradientFlow 4s ease infinite",
                     }}
                   >
-                    أدوات قوية لتقديم<br />تجربة تعليمية استثنائية
+                    {t("teachersTitle")}<br />{t("teachersSubtitle")}
                   </Heading>
                 </Stack>
                 <Text color="muted" fontSize={{ base: "md", md: "lg" }} lineHeight="1.9" maxW="500px">
-                  منشئ مقررات بصري مرن، رفع محتوى متعدد الوسائط، إعداد اختبارات ذكية،
-                  وتحليلات أداء شاملة تساعدك في تحسين مستوى طلابك بشكل مستمر.
+                  {t("teachersDescription")}
                 </Text>
                 <Flex gap={4} pt={2}>
                   <Box position="relative">
@@ -990,7 +973,7 @@ export default function Home() {
                       }}
                       transition="all 0.3s ease"
                     >
-                      ✨ ابدأ التدريس الآن
+                      {t("startTeaching")}
                     </Button>
                   </Box>
                 </Flex>
@@ -1025,25 +1008,25 @@ export default function Home() {
                   <SimpleGrid columns={2} gap={4}>
                     {[
                       { 
-                        text: "بناء المنهج بالسحب والإفلات", 
+                        text: t("teacherFeatures.dragDrop"), 
                         icon: "🎨",
                         gradient: "linear-gradient(135deg, #c8a24a, #ffd700)",
                         delay: "0s",
                       },
                       { 
-                        text: "مراجعة جودة قبل النشر", 
+                        text: t("teacherFeatures.qualityReview"), 
                         icon: "✅",
                         gradient: "linear-gradient(135deg, #10b981, #34d399)",
                         delay: "0.1s",
                       },
                       { 
-                        text: "تحليلات تفاعل متقدمة", 
+                        text: t("teacherFeatures.analytics"), 
                         icon: "📊",
                         gradient: "linear-gradient(135deg, #f59e0b, #fbbf24)",
                         delay: "0.2s",
                       },
                       { 
-                        text: "نظام تقييم ذكي آلي", 
+                        text: t("teacherFeatures.smartAssessment"), 
                         icon: "🎯",
                         gradient: "linear-gradient(135deg, #00d4ff, #0099ff)",
                         delay: "0.3s",
@@ -1276,11 +1259,10 @@ export default function Home() {
                       animation: "shimmer 4s linear infinite",
                     }}
                   >
-                    ابدأ رحلتك التعليمية مع تبيان اليوم
+                    {t("ctaTitle")}
                   </Heading>
                   <Text color="whiteAlpha.900" fontSize={{ base: "md", md: "xl" }} lineHeight="1.8" maxW="600px">
-                    انضم إلى آلاف الطلاب والمعلمين في مجتمع المعرفة وابدأ ببناء مسارك 
-                    التعليمي بثقة ووضوح تام.
+                    {t("ctaDescription")}
                   </Text>
                 </Stack>
 
@@ -1316,7 +1298,7 @@ export default function Home() {
                       transition="all 0.3s ease"
                       w={{ base: "100%", sm: "auto" }}
                     >
-                      🎓 إنشاء حساب طالب
+                      {t("createStudentAccount")}
                     </Button>
                   </Box>
                   <Button
@@ -1340,7 +1322,7 @@ export default function Home() {
                     transition="all 0.3s ease"
                     w={{ base: "100%", sm: "auto" }}
                   >
-                    💬 تواصل معنا
+                    {t("contactUs")}
                   </Button>
                 </Stack>
                 
@@ -1353,9 +1335,9 @@ export default function Home() {
                   fontSize="sm"
                 >
                   {[
-                    { icon: "✓", text: "محتوى موثوق", color: "cyan.300" },
-                    { icon: "✓", text: "شهادات معتمدة", color: "yellow.300" },
-                    { icon: "✓", text: "دعم مستمر", color: "green.300" },
+                    { icon: "✓", text: t("trustIndicators.trustedContent"), color: "cyan.300" },
+                    { icon: "✓", text: t("trustIndicators.certifiedCertificates"), color: "yellow.300" },
+                    { icon: "✓", text: t("trustIndicators.continuousSupport"), color: "green.300" },
                   ].map((item, i) => (
                     <Flex 
                       key={i}

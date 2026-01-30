@@ -31,6 +31,77 @@
     "darkMode": "Switch to Dark Mode",
     "lightMode": "Switch to Light Mode"
   },
+  "home": {
+    "heroBadge": "✨ The New Generation of Arabic Education Platforms",
+    "platformName": "Tibyan Platform | تبيان",
+    "heroTitle": "Learn with Professional Standards",
+    "heroSubtitle": "Through Trusted Knowledge Paths 📚",
+    "heroDescription": "A complete learning experience combining <strong>structured content</strong>, <strong>educational commitment</strong>, <strong>advanced assessments</strong>, and interactive community in a modern Arabic interface.",
+    "explorePrograms": "🚀 Explore Programs",
+    "becomeInstructor": "👨‍🏫 Become an Instructor",
+    "stats": {
+      "programs": "Programs",
+      "activeStudents": "Active Students",
+      "rating": "Rating"
+    },
+    "whyTibyan": "✨ Why Tibyan?",
+    "featuresTitle": "Features That Make Us the First Choice",
+    "features": {
+      "academicCommitment": {
+        "title": "Academic Commitment",
+        "description": "Lesson completion rules prevent superficial learning and ensure genuine, deep understanding of the content."
+      },
+      "questionBank": {
+        "title": "Advanced Question Bank",
+        "description": "Multiple question types, repeated attempts, and instant automated assessments with detailed feedback."
+      },
+      "interactiveCommunity": {
+        "title": "Interactive Community",
+        "description": "Live discussions within lessons with instant support from instructors and approved answers."
+      }
+    },
+    "programsBadge": "🎓 Comprehensive Educational Paths",
+    "programsTitle": "Programs Carefully Designed for Knowledge and Professional Growth",
+    "programsDescription": "From the preparatory year to specialized programs, we provide paths that combine authentic content, practical application, and advanced assessment to ensure real and sustainable impact.",
+    "programsList": {
+      "preparatory": {
+        "title": "Preparatory Year",
+        "description": "Solid foundation in Islamic sciences",
+        "sessions": "160 sessions"
+      },
+      "shariah": {
+        "title": "Shariah Track",
+        "description": "Deep specialization in jurisprudence and principles",
+        "sessions": "96-112 sessions"
+      },
+      "arabicReading": {
+        "title": "Arabic Reading Program",
+        "description": "From letters to fluency",
+        "sessions": "112 sessions"
+      }
+    },
+    "learnMore": "Learn More",
+    "teachersBadge": "👨‍🏫 For Professional Instructors",
+    "teachersTitle": "Powerful Tools for Delivering",
+    "teachersSubtitle": "An Exceptional Educational Experience",
+    "teachersDescription": "Flexible visual course builder, multi-media content upload, smart quiz creation, and comprehensive performance analytics to help you continuously improve your students' levels.",
+    "startTeaching": "✨ Start Teaching Now",
+    "teacherFeatures": {
+      "dragDrop": "Build curriculum with drag & drop",
+      "qualityReview": "Quality review before publishing",
+      "analytics": "Advanced engagement analytics",
+      "smartAssessment": "Smart automated assessment system"
+    },
+    "ctaTitle": "Start Your Educational Journey with Tibyan Today",
+    "ctaDescription": "Join thousands of students and teachers in the knowledge community and start building your educational path with confidence and clarity.",
+    "createStudentAccount": "🎓 Create Student Account",
+    "contactUs": "💬 Contact Us",
+    "trustIndicators": {
+      "trustedContent": "Trusted Content",
+      "certifiedCertificates": "Certified Certificates",
+      "continuousSupport": "Continuous Support"
+    }
+  },
   "hero": {
     "badge": "Complete Learning Platform",
     "title": "Your Journey to Islamic Knowledge",
