@@ -268,6 +268,9 @@ export default function Header() {
               <Box
                 as="button"
                 onClick={() => setLangMenuOpen(!langMenuOpen)}
+                aria-label={`Select language. Current: ${currentLanguage.label}`}
+                aria-expanded={langMenuOpen}
+                aria-haspopup="listbox"
                 display="flex"
                 alignItems="center"
                 gap={2}
@@ -331,17 +334,19 @@ export default function Header() {
                     borderColor="whiteAlpha.100"
                     bg="whiteAlpha.50"
                   >
-                    <Text fontSize="xs" color="whiteAlpha.600" fontWeight="600">
+                    <Text fontSize="xs" color="whiteAlpha.800" fontWeight="600">
                       🌐 {t("common.selectLanguage")}
                     </Text>
                   </Box>
 
                   {/* Language Options */}
-                  <Stack gap={0} py={2}>
+                  <Stack gap={0} py={2} role="listbox" aria-label="Available languages">
                     {languages.map((lang) => (
                       <Box
                         key={lang.code}
                         as="button"
+                        role="option"
+                        aria-selected={currentLocale === lang.code}
                         onClick={() => handleLanguageChange(lang.code)}
                         aria-disabled={isPending}
                         display="flex"
@@ -438,7 +443,7 @@ export default function Header() {
                     <Text fontSize="sm" fontWeight="700" color="white" suppressHydrationWarning>
                       {user.name}
                     </Text>
-                    <Text fontSize="xs" color="whiteAlpha.700" suppressHydrationWarning>
+                    <Text fontSize="xs" color="whiteAlpha.800" suppressHydrationWarning>
                       {user.role === "admin" ? `🛡️ ${t("common.admin")}` : `👤 ${t("common.user")}`}
                     </Text>
                   </Flex>
@@ -546,7 +551,8 @@ export default function Header() {
                 <Flex justify="space-between" align="center">
                   <Logo size={40} showText={true} />
                   <CloseButton 
-                    color="white" 
+                    color="white"
+                    aria-label="Close navigation menu"
                     onClick={() => {
                       console.log("Close drawer clicked");
                       setMobileMenuOpen(false);
@@ -593,14 +599,17 @@ export default function Header() {
 
                 {/* Language selector in mobile */}
                 <Box mt={6} pt={4} borderTopWidth="1px" borderColor="whiteAlpha.200">
-                  <Text fontSize="sm" color="whiteAlpha.600" mb={3} fontWeight="600">
+                  <Text fontSize="sm" color="whiteAlpha.800" mb={3} fontWeight="600">
                     🌐 {t("common.selectLanguage")}
                   </Text>
-                  <Stack gap={1}>
+                  <Stack gap={1} role="listbox" aria-label="Available languages">
                     {languages.map((lang) => (
                       <Box
                         key={lang.code}
                         as="button"
+                        role="option"
+                        aria-selected={currentLocale === lang.code}
+                        aria-label={`Select ${lang.label}`}
                         onClick={() => {
                           console.log("Language selected:", lang.code);
                           handleLanguageChange(lang.code);
@@ -659,7 +668,7 @@ export default function Header() {
                           <Text fontSize="sm" fontWeight="700" color="white">
                             {user.name}
                           </Text>
-                          <Text fontSize="xs" color="whiteAlpha.700">
+                          <Text fontSize="xs" color="whiteAlpha.800">
                             {user.role === "admin" ? `🛡️ ${t("common.admin")}` : `👤 ${t("common.user")}`}
                           </Text>
                         </Box>

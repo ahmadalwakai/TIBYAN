@@ -167,13 +167,14 @@ export default function Home() {
         minH={{ base: "90vh", md: "85vh" }}
         overflow="hidden"
       >
-        {/* Video Background */}
+        {/* Video Background - decorative, no audio content */}
         <video
           autoPlay
           muted
           loop
           playsInline
           preload="metadata"
+          aria-hidden="true"
           onError={(e) => {
             // Fallback: hide video if it fails to load
             e.currentTarget.style.display = 'none';
@@ -190,6 +191,8 @@ export default function Home() {
           }}
         >
           <source src="/videos/hero.mp4" type="video/mp4" />
+          {/* Captions track for accessibility compliance - video is decorative/muted */}
+          <track kind="captions" src="/videos/hero-captions.vtt" srcLang="ar" label="Arabic" default />
         </video>
 
         {/* Fallback Background (shows if video fails) */}

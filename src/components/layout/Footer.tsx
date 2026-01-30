@@ -258,7 +258,7 @@ export default function Footer() {
                   {section.links.map((link) => (
                     <Link key={link.href} href={link.href} style={{ textDecoration: "none" }}>
                       <Box
-                        color="whiteAlpha.700"
+                        color="whiteAlpha.800"
                         fontSize="sm"
                         py={1}
                         transition="all 0.3s ease"
@@ -307,7 +307,7 @@ export default function Footer() {
               justify="space-between"
               align="center"
             >
-              <Text color="whiteAlpha.600" fontSize="sm">
+              <Text color="whiteAlpha.800" fontSize="sm">
                 {t("footer.rights")}
               </Text>
               

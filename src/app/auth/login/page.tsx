@@ -116,22 +116,6 @@ function LoginForm() {
               </Box>
             )}
 
-            <Box
-              bg="brand.50"
-              border="1px solid"
-              borderColor="brand.400"
-              borderRadius="button"
-              p={4}
-            >
-              <Text fontSize="sm" fontWeight="600" mb={2}>🔐 بيانات تسجيل الدخول التجريبية:</Text>
-              <Text fontSize="sm" color="muted">
-                <strong>مسؤول:</strong> admin@tibyan.academy / admin123
-              </Text>
-              <Text fontSize="sm" color="muted">
-                <strong>طالب:</strong> أي بريد إلكتروني / أي كلمة مرور
-              </Text>
-            </Box>
-
             <form onSubmit={handleSubmit}>
               <Stack gap={4}>
                 <Box as="label">

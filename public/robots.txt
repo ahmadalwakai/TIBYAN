@@ -1,0 +1,8 @@
+# Robots.txt for Tibyan Learning Platform
+# Allow all search engines to crawl all content
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://tibyan.com/sitemap.xml
