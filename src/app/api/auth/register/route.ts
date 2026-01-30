@@ -64,7 +64,7 @@ export async function POST(request: Request) {
     }
     
     // Try to create verification token (might fail if table doesn't exist)
-    let tokenResult = { ok: false, token: null as string | null };
+    let tokenResult: { ok: boolean; token?: string } = { ok: false };
     try {
       tokenResult = await createVerificationToken(user.id, "EMAIL_VERIFICATION");
     } catch (tokenError) {
