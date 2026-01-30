@@ -157,9 +157,82 @@ export default function Home() {
         css={{ animation: "heroFloat 10s ease-in-out infinite reverse" }}
       />
 
-      <Container maxW="7xl" py={{ base: 12, md: 24 }} px={{ base: 6, md: 8 }} position="relative">
-        <Stack gap={{ base: 16, md: 20 }}>
-          {/* Hero Section */}
+      {/* Hero Section with Video Background */}
+      <Box 
+        position="relative" 
+        minH={{ base: "90vh", md: "85vh" }}
+        overflow="hidden"
+      >
+        {/* Video Background */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster="/videos/hero-poster.jpg"
+          onError={(e) => {
+            // Fallback: hide video if it fails to load
+            e.currentTarget.style.display = 'none';
+          }}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            zIndex: 0,
+          }}
+        >
+          <source src="/videos/hero.mp4" type="video/mp4" />
+        </video>
+
+        {/* Fallback Background (shows if video fails) */}
+        <Box
+          position="absolute"
+          inset={0}
+          zIndex={-1}
+          bg="linear-gradient(135deg, #0b1f3b 0%, #1a365d 50%, #0b1f3b 100%)"
+          backgroundSize="400% 400%"
+          css={{
+            animation: "gradientShift 15s ease infinite",
+          }}
+        />
+
+        {/* Dark Overlay for Readability */}
+        <Box
+          position="absolute"
+          inset={0}
+          zIndex={1}
+          bg="rgba(11, 31, 59, 0.65)"
+          backdropFilter="blur(1px)"
+        />
+
+        {/* Gradient Overlay for Smooth Transition */}
+        <Box
+          position="absolute"
+          bottom={0}
+          left={0}
+          right={0}
+          h="30%"
+          zIndex={2}
+          bgGradient="to-t"
+          gradientFrom="background"
+          gradientTo="transparent"
+        />
+
+        {/* Hero Content */}
+        <Container 
+          maxW="7xl" 
+          py={{ base: 16, md: 28 }} 
+          px={{ base: 6, md: 8 }} 
+          position="relative"
+          zIndex={3}
+          h="100%"
+          display="flex"
+          alignItems="center"
+        >
           <Stack gap={8} textAlign={{ base: "center", md: "start" }} maxW="900px">
             <Stack gap={5} align={{ base: "center", md: "flex-start" }}>
               {/* Animated Badge */}
@@ -348,7 +421,12 @@ export default function Home() {
               <AnimatedStatCard value={4.9} suffix="★" label="تقييم" color="warning" icon="⭐" decimals={1} />
             </SimpleGrid>
           </Stack>
+        </Container>
+      </Box>
 
+      {/* Rest of Page Content */}
+      <Container maxW="7xl" py={{ base: 12, md: 20 }} px={{ base: 6, md: 8 }} position="relative">
+        <Stack gap={{ base: 16, md: 20 }}>
           {/* Features Highlight Section */}
           <Box
             position="relative"
