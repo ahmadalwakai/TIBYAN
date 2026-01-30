@@ -164,7 +164,7 @@ export default function Home() {
       {/* Hero Section with Video Background */}
       <Box 
         position="relative" 
-        minH={{ base: "90vh", md: "85vh" }}
+        minH={{ base: "100vh", md: "95vh" }}
         overflow="hidden"
       >
         {/* Video Background - decorative, no audio content */}
@@ -200,20 +200,64 @@ export default function Home() {
           position="absolute"
           inset={0}
           zIndex={-1}
-          bg="linear-gradient(135deg, #0b1f3b 0%, #1a365d 50%, #0b1f3b 100%)"
+          bg="linear-gradient(135deg, #0a1628 0%, #0b1f3b 25%, #1a365d 50%, #0b1f3b 75%, #0a1628 100%)"
           backgroundSize="400% 400%"
           css={{
-            animation: "gradientShift 15s ease infinite",
+            animation: "gradientShift 20s ease infinite",
           }}
         />
+
+        {/* Animated Particles/Stars Background */}
+        <Box
+          position="absolute"
+          inset={0}
+          zIndex={1}
+          overflow="hidden"
+          pointerEvents="none"
+        >
+          {/* Floating orbs */}
+          <Box
+            position="absolute"
+            top="10%"
+            right="15%"
+            w={{ base: "150px", md: "250px" }}
+            h={{ base: "150px", md: "250px" }}
+            borderRadius="full"
+            bg="radial-gradient(circle, rgba(200, 162, 74, 0.15) 0%, transparent 70%)"
+            filter="blur(40px)"
+            css={{ animation: "heroFloat 8s ease-in-out infinite" }}
+          />
+          <Box
+            position="absolute"
+            top="60%"
+            left="10%"
+            w={{ base: "100px", md: "200px" }}
+            h={{ base: "100px", md: "200px" }}
+            borderRadius="full"
+            bg="radial-gradient(circle, rgba(0, 212, 255, 0.12) 0%, transparent 70%)"
+            filter="blur(35px)"
+            css={{ animation: "heroFloat 12s ease-in-out infinite reverse" }}
+          />
+          <Box
+            position="absolute"
+            bottom="20%"
+            right="25%"
+            w={{ base: "80px", md: "150px" }}
+            h={{ base: "80px", md: "150px" }}
+            borderRadius="full"
+            bg="radial-gradient(circle, rgba(200, 162, 74, 0.1) 0%, transparent 70%)"
+            filter="blur(30px)"
+            css={{ animation: "heroFloat 10s ease-in-out infinite 2s" }}
+          />
+        </Box>
 
         {/* Dark Overlay for Readability */}
         <Box
           position="absolute"
           inset={0}
-          zIndex={1}
-          bg="rgba(11, 31, 59, 0.65)"
-          backdropFilter="blur(1px)"
+          zIndex={2}
+          bg="linear-gradient(180deg, rgba(10, 22, 40, 0.7) 0%, rgba(11, 31, 59, 0.8) 50%, rgba(10, 22, 40, 0.9) 100%)"
+          backdropFilter="blur(2px)"
           pointerEvents="none"
         />
 
@@ -223,10 +267,11 @@ export default function Home() {
           bottom={0}
           left={0}
           right={0}
-          h="30%"
-          zIndex={2}
+          h="40%"
+          zIndex={3}
           bgGradient="to-t"
           gradientFrom="background"
+          gradientVia="rgba(10, 22, 40, 0.8)"
           gradientTo="transparent"
           pointerEvents="none"
         />
@@ -234,161 +279,167 @@ export default function Home() {
         {/* Hero Content */}
         <Container 
           maxW="7xl" 
-          py={{ base: 16, md: 28 }} 
+          py={{ base: 20, md: 32 }} 
           px={{ base: 6, md: 8 }} 
           position="relative"
-          zIndex={3}
+          zIndex={4}
           h="100%"
           display="flex"
           alignItems="center"
         >
-          <Stack gap={8} textAlign={{ base: "center", md: "start" }} maxW="900px">
-            <Stack gap={5} align={{ base: "center", md: "flex-start" }}>
-              {/* Animated Badge */}
-              <Badge
-                position="relative"
-                overflow="hidden"
-                bg="transparent"
-                color="white"
-                px={6}
-                py={2.5}
-                borderRadius="full"
-                fontSize="sm"
-                fontWeight="700"
-                css={{
-                  background: "linear-gradient(135deg, #0b1f3b, #1a365d)",
-                  boxShadow: "0 4px 20px rgba(11, 31, 59, 0.4)",
-                  "&::before": {
-                    content: '""',
-                    position: "absolute",
-                    inset: 0,
-                    borderRadius: "full",
-                    padding: "2px",
-                    background: "linear-gradient(135deg, #c8a24a, #00d4ff, #c8a24a)",
-                    backgroundSize: "200% 200%",
-                    mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                    maskComposite: "exclude",
-                    animation: "gradientShift 4s ease infinite",
-                  },
-                }}
-              >
-                {t("heroBadge")}
-              </Badge>
+          <Stack gap={{ base: 8, md: 10 }} textAlign="center" w="100%" align="center">
+            {/* Animated Badge */}
+            <Badge
+              position="relative"
+              overflow="hidden"
+              bg="transparent"
+              color="white"
+              px={{ base: 5, md: 8 }}
+              py={{ base: 2, md: 3 }}
+              borderRadius="full"
+              fontSize={{ base: "xs", md: "sm" }}
+              fontWeight="700"
+              letterSpacing="wide"
+              css={{
+                background: "linear-gradient(135deg, rgba(11, 31, 59, 0.9), rgba(26, 54, 93, 0.9))",
+                backdropFilter: "blur(10px)",
+                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
+                "&::before": {
+                  content: '""',
+                  position: "absolute",
+                  inset: 0,
+                  borderRadius: "full",
+                  padding: "2px",
+                  background: "linear-gradient(135deg, #c8a24a, #ffd700, #c8a24a, #00d4ff, #c8a24a)",
+                  backgroundSize: "300% 300%",
+                  mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                  maskComposite: "exclude",
+                  animation: "gradientShift 4s ease infinite",
+                },
+              }}
+            >
+              {t("heroBadge")}
+            </Badge>
 
-              {/* Platform Name with Wave Effect */}
-              <Box position="relative" overflow="hidden">
+            {/* Main Title Block */}
+            <Stack gap={{ base: 4, md: 6 }} align="center">
+              {/* Platform Name - Calligraphic Style */}
+              <Box position="relative">
                 <Text
                   fontWeight="900"
-                  fontSize={{ base: "xl", md: "2xl" }}
-                  letterSpacing="tight"
-                  position="relative"
+                  fontSize={{ base: "5xl", md: "7xl", lg: "8xl" }}
+                  letterSpacing="-0.02em"
+                  lineHeight="1"
+                  fontFamily="var(--font-ibm-plex)"
                   css={{
-                    background: "linear-gradient(135deg, #ffffff 0%, #e8e8e8 50%, #ffffff 100%)",
-                    backgroundSize: "200% auto",
+                    background: "linear-gradient(180deg, #ffffff 0%, #f0f0f0 40%, #c8a24a 100%)",
                     backgroundClip: "text",
                     WebkitBackgroundClip: "text",
                     color: "transparent",
-                    textShadow: "0 0 30px rgba(255, 255, 255, 0.5)",
+                    textShadow: "0 0 80px rgba(200, 162, 74, 0.5)",
+                    filter: "drop-shadow(0 4px 20px rgba(0, 0, 0, 0.3))",
                   }}
                 >
                   {t("platformName")}
                 </Text>
-                {/* Animated wave overlay */}
+                {/* Decorative underline */}
                 <Box
                   position="absolute"
-                  top="0"
-                  left="-100%"
-                  width="200%"
-                  height="100%"
-                  pointerEvents="none"
+                  bottom={{ base: "-8px", md: "-12px" }}
+                  left="50%"
+                  transform="translateX(-50%)"
+                  w={{ base: "60%", md: "50%" }}
+                  h={{ base: "3px", md: "4px" }}
+                  borderRadius="full"
+                  background="linear-gradient(90deg, transparent, #c8a24a, #ffd700, #c8a24a, transparent)"
                   css={{
-                    background: "linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.8) 25%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0.8) 75%, transparent 100%)",
-                    backgroundSize: "50% 100%",
-                    animation: "waveMove 3s ease-in-out infinite",
-                    mixBlendMode: "overlay",
-                    "@keyframes waveMove": {
-                      "0%": { transform: "translateX(0%)" },
-                      "100%": { transform: "translateX(50%)" },
-                    },
+                    animation: "sparkle 3s ease-in-out infinite",
                   }}
                 />
               </Box>
-            </Stack>
 
-            {/* Main Heading with Glow Effect */}
-            <Box position="relative">
-              <Box
-                position="absolute"
-                inset="-20px"
-                bg="radial-gradient(ellipse at center, rgba(200, 162, 74, 0.1) 0%, transparent 70%)"
-                filter="blur(20px)"
-                pointerEvents="none"
-              />
-              <Heading 
-                position="relative"
-                size={{ base: "xl", md: "2xl" }}
-                lineHeight="1.15"
-                fontWeight="900"
-                letterSpacing="tight"
-                css={{
-                  background: "linear-gradient(135deg, #0b1f3b 0%, #1a365d 30%, #c8a24a 60%, #0b1f3b 100%)",
-                  backgroundSize: "300% auto",
-                  backgroundClip: "text",
-                  WebkitBackgroundClip: "text",
-                  color: "transparent",
-                  animation: "gradientShift 6s ease infinite",
-                }}
-              >
-                {t("heroTitle")}<br />
-                {t("heroSubtitle")}
-              </Heading>
-            </Box>
+              {/* Hero Title & Subtitle */}
+              <Stack gap={2} align="center" pt={{ base: 4, md: 6 }}>
+                <Heading 
+                  size={{ base: "2xl", md: "3xl", lg: "4xl" }}
+                  lineHeight="1.2"
+                  fontWeight="800"
+                  color="white"
+                  textShadow="0 2px 20px rgba(0, 0, 0, 0.5)"
+                >
+                  {t("heroTitle")}
+                </Heading>
+                <Text
+                  fontSize={{ base: "lg", md: "2xl", lg: "3xl" }}
+                  fontWeight="600"
+                  css={{
+                    background: "linear-gradient(135deg, #c8a24a 0%, #ffd700 50%, #c8a24a 100%)",
+                    backgroundClip: "text",
+                    WebkitBackgroundClip: "text",
+                    color: "transparent",
+                  }}
+                >
+                  {t("heroSubtitle")}
+                </Text>
+              </Stack>
+            </Stack>
 
             {/* Description */}
             <Text 
-              color="muted" 
-              fontSize={{ base: "md", md: "xl" }} 
+              color="gray.300" 
+              fontSize={{ base: "md", md: "lg", lg: "xl" }} 
               lineHeight="1.9" 
-              maxW="700px"
+              maxW="800px"
+              px={{ base: 2, md: 0 }}
               dangerouslySetInnerHTML={{ __html: t.raw("heroDescription") }}
+              css={{
+                "& strong": {
+                  color: "#c8a24a",
+                  fontWeight: 700,
+                },
+              }}
             />
 
             {/* CTA Buttons */}
             <Stack
               direction={{ base: "column", sm: "row" }}
-              gap={4}
-              justify={{ base: "center", md: "flex-start" }}
-              pt={2}
+              gap={{ base: 4, md: 5 }}
+              pt={{ base: 4, md: 6 }}
+              w={{ base: "100%", sm: "auto" }}
             >
               {/* Primary Button with Glow */}
               <Box position="relative">
                 <Box
                   position="absolute"
-                  inset="-4px"
-                  borderRadius="xl"
-                  background="linear-gradient(135deg, #c8a24a, #00d4ff)"
-                  filter="blur(12px)"
-                  opacity={0.4}
+                  inset="-6px"
+                  borderRadius="2xl"
+                  background="linear-gradient(135deg, #c8a24a, #ffd700, #c8a24a)"
+                  filter="blur(20px)"
+                  opacity={0.5}
                   pointerEvents="none"
                   css={{ animation: "sparkle 3s ease-in-out infinite" }}
                 />
                 <Link href="/programs" style={{ textDecoration: "none" }}>
                   <Button
                     position="relative"
-                    bg="brand.900"
-                    color="white"
+                    bg="linear-gradient(135deg, #c8a24a 0%, #b8943a 100%)"
+                    color="brand.900"
                     size="lg"
-                    px={10}
-                    h="56px"
-                    fontSize="lg"
-                    fontWeight="700"
-                    boxShadow="0 8px 30px rgba(11, 31, 59, 0.4)"
+                    px={{ base: 8, md: 12 }}
+                    h={{ base: "56px", md: "64px" }}
+                    fontSize={{ base: "md", md: "lg" }}
+                    fontWeight="800"
+                    borderRadius="xl"
+                    boxShadow="0 8px 30px rgba(200, 162, 74, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3)"
                     _hover={{ 
-                      bg: "brand.800",
+                      bg: "linear-gradient(135deg, #d4b05a 0%, #c8a24a 100%)",
                       transform: "translateY(-4px) scale(1.02)",
-                      boxShadow: "0 12px 40px rgba(11, 31, 59, 0.5)",
+                      boxShadow: "0 16px 50px rgba(200, 162, 74, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4)",
                     }}
-                    transition="all 0.3s ease"
+                    _active={{
+                      transform: "translateY(-2px) scale(1.01)",
+                    }}
+                    transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
                     w={{ base: "100%", sm: "auto" }}
                   >
                     {t("explorePrograms")}
@@ -397,28 +448,30 @@ export default function Home() {
               </Box>
 
               {/* Secondary Button */}
-              <Link href="/instructors/apply" style={{ textDecoration: "none", width: "100%" }}>
+              <Link href="/instructors/apply" style={{ textDecoration: "none" }}>
                 <Button
                   variant="outline"
                   borderWidth="2px"
-                  color="text"
+                  borderColor="rgba(200, 162, 74, 0.5)"
+                  color="white"
                   size="lg"
-                  px={10}
-                  h="56px"
-                  fontSize="lg"
+                  px={{ base: 8, md: 12 }}
+                  h={{ base: "56px", md: "64px" }}
+                  fontSize={{ base: "md", md: "lg" }}
                   fontWeight="700"
-                  bg="transparent"
-                  css={{
-                    borderImage: "linear-gradient(135deg, #c8a24a, #0b1f3b, #00d4ff) 1",
-                    borderImageSlice: 1,
-                    borderRadius: "12px",
-                  }}
+                  borderRadius="xl"
+                  bg="rgba(255, 255, 255, 0.05)"
+                  backdropFilter="blur(10px)"
                   _hover={{ 
-                    bg: "surfaceHover",
+                    bg: "rgba(200, 162, 74, 0.15)",
+                    borderColor: "#c8a24a",
                     transform: "translateY(-4px)",
-                    boxShadow: "0 8px 25px rgba(200, 162, 74, 0.2)",
+                    boxShadow: "0 8px 30px rgba(200, 162, 74, 0.2)",
                   }}
-                  transition="all 0.3s ease"
+                  _active={{
+                    transform: "translateY(-2px)",
+                  }}
+                  transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
                   w={{ base: "100%", sm: "auto" }}
                 >
                   {t("becomeInstructor")}
@@ -428,16 +481,109 @@ export default function Home() {
             
             {/* Stats Grid */}
             <SimpleGrid
-              columns={{ base: 3 }}
-              gap={4}
-              pt={{ base: 6, md: 8 }}
+              columns={3}
+              gap={{ base: 3, md: 6 }}
+              pt={{ base: 8, md: 12 }}
               w="100%"
-              maxW="600px"
+              maxW="700px"
             >
-              <AnimatedStatCard value={5} label={t("stats.programs")} color="brand.500" icon="📖" />
-              <AnimatedStatCard value={18} suffix="k+" label={t("stats.activeStudents")} color="success" icon="👥" />
-              <AnimatedStatCard value={4.9} suffix="★" label={t("stats.rating")} color="warning" icon="⭐" decimals={1} />
+              <Box
+                bg="rgba(255, 255, 255, 0.05)"
+                backdropFilter="blur(10px)"
+                borderRadius="2xl"
+                p={{ base: 4, md: 6 }}
+                border="1px solid"
+                borderColor="rgba(200, 162, 74, 0.2)"
+                transition="all 0.3s ease"
+                _hover={{
+                  bg: "rgba(255, 255, 255, 0.08)",
+                  borderColor: "rgba(200, 162, 74, 0.4)",
+                  transform: "translateY(-4px)",
+                }}
+              >
+                <Stack gap={1} align="center">
+                  <Text fontSize={{ base: "2xl", md: "4xl" }} fontWeight="900" color="white">+5</Text>
+                  <Text fontSize={{ base: "xs", md: "sm" }} color="gray.400" fontWeight="600">{t("stats.programs")}</Text>
+                </Stack>
+              </Box>
+              <Box
+                bg="rgba(255, 255, 255, 0.05)"
+                backdropFilter="blur(10px)"
+                borderRadius="2xl"
+                p={{ base: 4, md: 6 }}
+                border="1px solid"
+                borderColor="rgba(200, 162, 74, 0.2)"
+                transition="all 0.3s ease"
+                _hover={{
+                  bg: "rgba(255, 255, 255, 0.08)",
+                  borderColor: "rgba(200, 162, 74, 0.4)",
+                  transform: "translateY(-4px)",
+                }}
+              >
+                <Stack gap={1} align="center">
+                  <Text fontSize={{ base: "2xl", md: "4xl" }} fontWeight="900" color="white">18k+</Text>
+                  <Text fontSize={{ base: "xs", md: "sm" }} color="gray.400" fontWeight="600">{t("stats.activeStudents")}</Text>
+                </Stack>
+              </Box>
+              <Box
+                bg="rgba(255, 255, 255, 0.05)"
+                backdropFilter="blur(10px)"
+                borderRadius="2xl"
+                p={{ base: 4, md: 6 }}
+                border="1px solid"
+                borderColor="rgba(200, 162, 74, 0.2)"
+                transition="all 0.3s ease"
+                _hover={{
+                  bg: "rgba(255, 255, 255, 0.08)",
+                  borderColor: "rgba(200, 162, 74, 0.4)",
+                  transform: "translateY(-4px)",
+                }}
+              >
+                <Stack gap={1} align="center">
+                  <Text fontSize={{ base: "2xl", md: "4xl" }} fontWeight="900" color="#c8a24a">4.9★</Text>
+                  <Text fontSize={{ base: "xs", md: "sm" }} color="gray.400" fontWeight="600">{t("stats.rating")}</Text>
+                </Stack>
+              </Box>
             </SimpleGrid>
+
+            {/* Scroll indicator */}
+            <Box
+              pt={{ base: 6, md: 10 }}
+              css={{
+                animation: "heroFloat 2s ease-in-out infinite",
+              }}
+            >
+              <Stack gap={2} align="center" color="gray.500">
+                <Text fontSize="xs" fontWeight="500">استكشف المزيد</Text>
+                <Box
+                  w="24px"
+                  h="40px"
+                  borderRadius="full"
+                  border="2px solid"
+                  borderColor="gray.600"
+                  position="relative"
+                  overflow="hidden"
+                >
+                  <Box
+                    position="absolute"
+                    top="8px"
+                    left="50%"
+                    transform="translateX(-50%)"
+                    w="4px"
+                    h="8px"
+                    borderRadius="full"
+                    bg="gray.500"
+                    css={{
+                      animation: "scrollBounce 1.5s ease-in-out infinite",
+                      "@keyframes scrollBounce": {
+                        "0%, 100%": { transform: "translateX(-50%) translateY(0)", opacity: 1 },
+                        "50%": { transform: "translateX(-50%) translateY(12px)", opacity: 0.3 },
+                      },
+                    }}
+                  />
+                </Box>
+              </Stack>
+            </Box>
           </Stack>
         </Container>
       </Box>
