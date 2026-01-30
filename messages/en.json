@@ -32,13 +32,13 @@
     "lightMode": "Switch to Light Mode"
   },
   "home": {
-    "heroBadge": "✨ The New Generation of Arabic Education Platforms",
-    "platformName": "Tibyan Platform | تبيان",
-    "heroTitle": "Learn with Professional Standards",
-    "heroSubtitle": "Through Trusted Knowledge Paths 📚",
-    "heroDescription": "A complete learning experience combining <strong>structured content</strong>, <strong>educational commitment</strong>, <strong>advanced assessments</strong>, and interactive community in a modern Arabic interface.",
+    "heroBadge": "🎓 The Premier Arabic Platform for Advanced Islamic Education",
+    "platformName": "Tibyan",
+    "heroTitle": "Master Islamic Sciences",
+    "heroSubtitle": "With Academic Methodology & Expert Guidance",
+    "heroDescription": "A leading educational platform offering <strong>Quranic Sciences & Tajweed</strong>, <strong>Arabic Language</strong>, and <strong>Islamic Studies</strong> through structured curricula, interactive assessments, and an active scholarly community — supervised by elite specialists.",
     "explorePrograms": "🚀 Explore Programs",
-    "becomeInstructor": "👨‍🏫 Become an Instructor",
+    "becomeInstructor": "👨‍🏫 Join as Instructor",
     "stats": {
       "programs": "Programs",
       "activeStudents": "Active Students",
