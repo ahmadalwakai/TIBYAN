@@ -2,9 +2,6 @@ import { NextResponse } from "next/server";
 import { hash } from "bcryptjs";
 import { prisma } from "@/lib/db";
 import { RegisterSchema } from "@/lib/validations";
-import { createVerificationToken } from "@/lib/auth/tokens";
-import { sendEmail } from "@/lib/email/resend";
-import { getVerificationEmailTemplate } from "@/lib/email/templates";
 
 export async function POST(request: Request) {
   try {
@@ -36,75 +33,50 @@ export async function POST(request: Request) {
     // Hash password
     const hashedPassword = await hash(password, 12);
     
-    // Create user - try with emailVerified, fallback without it
-    let user;
-    try {
-      user = await prisma.user.create({
-        data: {
-          name,
-          email,
-          password: hashedPassword,
-          role: "STUDENT",
-          status: "PENDING",
-          emailVerified: false,
-        },
-      });
-    } catch (schemaError) {
-      // Fallback: emailVerified field might not exist in DB yet
-      console.warn("[Register] emailVerified field not available, creating without it");
-      user = await prisma.user.create({
-        data: {
-          name,
-          email,
-          password: hashedPassword,
-          role: "STUDENT",
-          status: "PENDING",
-        },
-      });
-    }
+    // Create user
+    const user = await prisma.user.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+        role: "STUDENT",
+        status: "ACTIVE", // Set to ACTIVE so user can login immediately
+        emailVerified: false,
+      },
+    });
     
-    // Try to create verification token (might fail if table doesn't exist)
-    let tokenResult: { ok: boolean; token?: string } = { ok: false };
+    // Try to send verification email (non-blocking)
     try {
-      tokenResult = await createVerificationToken(user.id, "EMAIL_VERIFICATION");
-    } catch (tokenError) {
-      console.warn("[Register] VerificationToken table not available:", tokenError);
-    }
-    
-    // If token created successfully, send verification email
-    if (tokenResult.ok && tokenResult.token) {
-      const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
-      const verificationUrl = `${baseUrl}/auth/verify?token=${tokenResult.token}`;
+      const { createVerificationToken } = await import("@/lib/auth/tokens");
+      const { sendEmail } = await import("@/lib/email/resend");
+      const { getVerificationEmailTemplate } = await import("@/lib/email/templates");
       
-      const emailHtml = getVerificationEmailTemplate({
-        name: user.name,
-        verificationUrl,
-      });
+      const tokenResult = await createVerificationToken(user.id, "EMAIL_VERIFICATION");
       
-      const emailResult = await sendEmail({
-        to: user.email,
-        subject: "تأكيد بريدك الإلكتروني - تبيان",
-        html: emailHtml,
-      });
-      
-      if (!emailResult.ok) {
-        console.error("[Register] Failed to send verification email:", emailResult.error);
+      if (tokenResult.ok && tokenResult.token) {
+        const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://www.ti-by-an.com";
+        const verificationUrl = `${baseUrl}/auth/verify?token=${tokenResult.token}`;
+        
+        const emailHtml = getVerificationEmailTemplate({
+          name: user.name,
+          verificationUrl,
+        });
+        
+        await sendEmail({
+          to: user.email,
+          subject: "تأكيد بريدك الإلكتروني - تبيان",
+          html: emailHtml,
+        });
       }
-      
-      return NextResponse.json({
-        ok: true,
-        data: {
-          message: "تم إنشاء الحساب بنجاح. يرجى تفقد بريدك الإلكتروني لتفعيل الحساب.",
-          userId: user.id,
-        },
-      });
+    } catch (emailError) {
+      // Log but don't fail registration if email fails
+      console.error("[Register] Email verification error (non-critical):", emailError);
     }
     
-    // If email verification not available, account is created but needs manual activation
     return NextResponse.json({
       ok: true,
       data: {
-        message: "تم إنشاء الحساب بنجاح.",
+        message: "تم إنشاء الحساب بنجاح! يمكنك تسجيل الدخول الآن.",
         userId: user.id,
       },
     });

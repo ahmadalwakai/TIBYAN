@@ -1,6 +1,8 @@
 import { randomBytes, createHash } from "crypto";
 import { prisma } from "@/lib/db";
-import type { TokenPurpose } from "@prisma/client";
+
+// Define token purpose types locally to avoid Prisma client import issues
+type TokenPurpose = "EMAIL_VERIFICATION" | "PASSWORD_RESET" | "TEACHER_CONFIRMATION";
 
 const TOKEN_EXPIRY_HOURS: Record<TokenPurpose, number> = {
   EMAIL_VERIFICATION: 24,
