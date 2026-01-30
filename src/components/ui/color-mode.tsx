@@ -3,6 +3,7 @@
 import { ClientOnly, IconButton, Skeleton } from "@chakra-ui/react";
 import { ThemeProvider, useTheme } from "next-themes";
 import type { ThemeProviderProps } from "next-themes";
+import { useEffect, useState } from "react";
 
 export function ColorModeProvider(props: ThemeProviderProps) {
   return (
@@ -18,11 +19,19 @@ export function ColorModeProvider(props: ThemeProviderProps) {
 
 export function useColorMode() {
   const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  
   const toggleColorMode = () => {
     setTheme(resolvedTheme === "light" ? "dark" : "light");
   };
+  
+  // Return default "light" on server/before mount to prevent hydration mismatch
   return {
-    colorMode: resolvedTheme,
+    colorMode: mounted ? resolvedTheme : "light",
     setColorMode: setTheme,
     toggleColorMode,
   };

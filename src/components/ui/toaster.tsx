@@ -101,7 +101,13 @@ export function ToasterProvider({ children }: { children: ReactNode }) {
                 display="flex"
                 alignItems="flex-start"
                 gap={3}
-                animation="slideIn 0.3s ease"
+                css={{
+                  animation: "toastSlideIn 0.3s ease",
+                  "@keyframes toastSlideIn": {
+                    from: { opacity: 0, transform: "translateY(-10px)" },
+                    to: { opacity: 1, transform: "translateY(0)" },
+                  },
+                }}
               >
                 <Text fontSize="lg">{getIcon(toast.type)}</Text>
                 <Box>
@@ -115,12 +121,6 @@ export function ToasterProvider({ children }: { children: ReactNode }) {
           })}
         </Flex>
       </Portal>
-      <style>{`
-        @keyframes slideIn {
-          from { opacity: 0; transform: translateY(-10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
     </ToasterContext.Provider>
   );
 }
