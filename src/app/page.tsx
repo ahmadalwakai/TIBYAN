@@ -1173,6 +1173,7 @@ export default function Home() {
                     accentGradient: "linear-gradient(135deg, #c8a24a, #ffd700)",
                     sessions: t("programsList.preparatory.sessions"),
                     delay: "0s",
+                    slug: "preparatory-year",
                   },
                   { 
                     title: t("programsList.shariah.title"), 
@@ -1182,6 +1183,7 @@ export default function Home() {
                     accentGradient: "linear-gradient(135deg, #00ff88, #10b981)",
                     sessions: t("programsList.shariah.sessions"),
                     delay: "0.15s",
+                    slug: "shariah-track",
                   },
                   { 
                     title: t("programsList.arabicReading.title"), 
@@ -1191,18 +1193,20 @@ export default function Home() {
                     accentGradient: "linear-gradient(135deg, #fbbf24, #f59e0b)",
                     sessions: t("programsList.arabicReading.sessions"),
                     delay: "0.3s",
+                    slug: "arabic-reading",
                   },
                 ].map((item) => (
-                  <Box
-                    key={item.title}
-                    position="relative"
-                    borderRadius="2xl"
-                    overflow="hidden"
-                    css={{
-                      animation: `cardFloat 5s ease-in-out infinite`,
-                      animationDelay: item.delay,
-                    }}
-                  >
+                  <Link key={item.title} href={`/programs#${item.slug}`} style={{ textDecoration: "none" }}>
+                    <Box
+                      position="relative"
+                      borderRadius="2xl"
+                      overflow="hidden"
+                      cursor="pointer"
+                      css={{
+                        animation: `cardFloat 5s ease-in-out infinite`,
+                        animationDelay: item.delay,
+                      }}
+                    >
                     {/* Animated border */}
                     <Box
                       position="absolute"
@@ -1322,6 +1326,7 @@ export default function Home() {
                       </Stack>
                     </Box>
                   </Box>
+                  </Link>
                 ))}
               </SimpleGrid>
             </Stack>
