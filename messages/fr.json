@@ -1,0 +1,146 @@
+{
+  "common": {
+    "home": "Accueil",
+    "courses": "Cours",
+    "programs": "Programmes",
+    "instructors": "Enseignants",
+    "pricing": "Tarifs",
+    "help": "Aide",
+    "login": "Connexion",
+    "register": "Créer un compte",
+    "logout": "Déconnexion",
+    "admin": "Admin",
+    "user": "Utilisateur",
+    "search": "Rechercher",
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "success": "Succès",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "view": "Voir",
+    "close": "Fermer",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "selectLanguage": "Choisir la langue"
+  },
+  "header": {
+    "facultyBadge": "Corps enseignant",
+    "darkMode": "Passer en mode sombre",
+    "lightMode": "Passer en mode clair"
+  },
+  "hero": {
+    "badge": "Plateforme d'apprentissage complète",
+    "title": "Votre voyage vers le savoir islamique",
+    "titleHighlight": "Commence ici",
+    "subtitle": "La plateforme éducative Tibyan vous offre des programmes islamiques complets enseignés par des enseignants spécialisés d'élite, avec un suivi continu et une méthodologie scientifique solide",
+    "ctaPrimary": "Commencer gratuitement",
+    "ctaSecondary": "Explorer les programmes",
+    "stats": {
+      "courses": "Cours éducatifs",
+      "students": "Étudiants inscrits",
+      "rating": "Évaluation des étudiants"
+    }
+  },
+  "features": {
+    "title": "Pourquoi Tibyan ?",
+    "subtitle": "Nous vous offrons une expérience éducative unique qui allie authenticité et modernité",
+    "academicCommitment": {
+      "title": "Engagement académique",
+      "description": "Méthodologie scientifique solide avec suivi continu des résultats académiques et évaluation périodique des performances"
+    },
+    "questionBank": {
+      "title": "Banque de questions avancée",
+      "description": "Des milliers de questions classées par niveau et sujet avec correction instantanée et analyse des performances"
+    },
+    "interactiveCommunity": {
+      "title": "Communauté interactive",
+      "description": "Communication directe avec les enseignants et les étudiants dans un environnement éducatif stimulant et fructueux"
+    }
+  },
+  "programs": {
+    "title": "Programmes éducatifs",
+    "subtitle": "Des programmes complets adaptés à tous les niveaux",
+    "preparatory": {
+      "title": "Année préparatoire",
+      "description": "Un programme préparatoire complet pour préparer l'étudiant psychologiquement, cognitivement et en compétences"
+    },
+    "shariah": {
+      "title": "Parcours Charia",
+      "description": "Trois années de spécialisation en sciences islamiques et jurisprudence"
+    },
+    "arabicReading": {
+      "title": "Programme de lecture arabe",
+      "description": "Apprenez à lire l'arabe classique de zéro à la maîtrise"
+    },
+    "learnMore": "En savoir plus"
+  },
+  "teachers": {
+    "title": "Apprenez avec des enseignants d'élite",
+    "subtitle": "Les cours sur la plateforme Tibyan sont dispensés par des enseignants spécialisés et des experts dans leurs domaines, dévoués à offrir une expérience éducative exceptionnelle et un suivi continu des résultats des étudiants.",
+    "stats": {
+      "teachers": "Enseignants spécialisés",
+      "programs": "Programmes éducatifs",
+      "students": "Étudiants bénéficiaires",
+      "rating": "Évaluation des enseignants"
+    },
+    "ctaTitle": "Êtes-vous un enseignant spécialisé ?",
+    "ctaDescription": "Rejoignez l'équipe Tibyan et partagez votre expertise avec des milliers d'étudiants désireux d'apprendre",
+    "ctaButton": "Rejoindre en tant qu'enseignant"
+  },
+  "cta": {
+    "title": "Commencez votre parcours d'apprentissage avec Tibyan aujourd'hui",
+    "subtitle": "Rejoignez des milliers d'étudiants qui apprennent avec nous",
+    "button": "Inscrivez-vous gratuitement maintenant"
+  },
+  "footer": {
+    "description": "Une plateforme éducative spécialisée dans les sciences islamiques et arabes, offrant des programmes éducatifs complets enseignés par des enseignants spécialisés d'élite.",
+    "platform": "Plateforme",
+    "resources": "Ressources",
+    "legal": "Mentions légales",
+    "helpCenter": "Centre d'aide",
+    "contentPolicy": "Politique de contenu",
+    "quickLinks": "Liens rapides",
+    "support": "Support et aide",
+    "contactUs": "Contactez-nous",
+    "faq": "FAQ",
+    "blog": "Blog",
+    "about": "À propos de Tibyan",
+    "terms": "Conditions d'utilisation",
+    "privacy": "Politique de confidentialité",
+    "rights": "© 2026 Tibyan. Tous droits réservés."
+  },
+  "pricing": {
+    "title": "Plans d'abonnement",
+    "subtitle": "Choisissez le programme éducatif adapté à votre niveau et à vos objectifs académiques",
+    "popular": "Le plus populaire",
+    "perMonth": "/ mois",
+    "total": "Total",
+    "duration": "Durée",
+    "sessions": "sessions",
+    "explore": "Explorer la plateforme",
+    "registerNow": "S'inscrire maintenant",
+    "helpTitle": "Besoin d'aide pour choisir le bon programme ?",
+    "helpDescription": "Contactez-nous et nous vous aiderons à choisir le meilleur parcours d'apprentissage pour vos objectifs",
+    "contactUs": "Contactez-nous",
+    "free": {
+      "title": "Plan gratuit",
+      "description": "Contenu d'introduction pour explorer la plateforme et commencer votre parcours d'apprentissage"
+    }
+  },
+  "auth": {
+    "loginTitle": "Connexion",
+    "registerTitle": "Créer un nouveau compte",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "name": "Nom complet",
+    "forgotPassword": "Mot de passe oublié ?",
+    "noAccount": "Pas de compte ?",
+    "hasAccount": "Déjà un compte ?",
+    "loginButton": "Se connecter",
+    "registerButton": "Créer un compte"
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "common": {
+    "home": "Hem",
+    "courses": "Kurser",
+    "programs": "Program",
+    "instructors": "Lärare",
+    "pricing": "Priser",
+    "help": "Hjälp",
+    "login": "Logga in",
+    "register": "Skapa konto",
+    "logout": "Logga ut",
+    "admin": "Admin",
+    "user": "Användare",
+    "search": "Sök",
+    "loading": "Laddar...",
+    "error": "Ett fel uppstod",
+    "success": "Lyckades",
+    "save": "Spara",
+    "cancel": "Avbryt",
+    "delete": "Radera",
+    "edit": "Redigera",
+    "view": "Visa",
+    "close": "Stäng",
+    "back": "Tillbaka",
+    "next": "Nästa",
+    "previous": "Föregående",
+    "selectLanguage": "Välj språk"
+  },
+  "header": {
+    "facultyBadge": "Lärarkår",
+    "darkMode": "Växla till mörkt läge",
+    "lightMode": "Växla till ljust läge"
+  },
+  "hero": {
+    "badge": "Komplett lärandeplattform",
+    "title": "Din resa mot islamisk kunskap",
+    "titleHighlight": "Börjar här",
+    "subtitle": "Tibyan utbildningsplattform erbjuder dig omfattande islamiska program undervisade av specialiserade elitlärare, med kontinuerlig uppföljning och solid vetenskaplig metodik",
+    "ctaPrimary": "Börja lära dig gratis",
+    "ctaSecondary": "Utforska program",
+    "stats": {
+      "courses": "Utbildningskurser",
+      "students": "Inskrivna studenter",
+      "rating": "Studentbetyg"
+    }
+  },
+  "features": {
+    "title": "Varför Tibyan?",
+    "subtitle": "Vi erbjuder dig en unik utbildningsupplevelse som kombinerar äkthet och modernitet",
+    "academicCommitment": {
+      "title": "Akademiskt engagemang",
+      "description": "Solid vetenskaplig metodik med kontinuerlig uppföljning av akademiska resultat och periodisk prestationsutvärdering"
+    },
+    "questionBank": {
+      "title": "Avancerad frågebank",
+      "description": "Tusentals frågor klassificerade efter nivå och ämne med omedelbar rättning och prestandaanalys"
+    },
+    "interactiveCommunity": {
+      "title": "Interaktivt community",
+      "description": "Direkt kommunikation med lärare och studenter i en stimulerande och givande utbildningsmiljö"
+    }
+  },
+  "programs": {
+    "title": "Utbildningsprogram",
+    "subtitle": "Omfattande program lämpliga för alla nivåer",
+    "preparatory": {
+      "title": "Förberedande år",
+      "description": "Ett omfattande förberedande program för att förbereda studenten psykologiskt, kognitivt och färdighetsmässigt"
+    },
+    "shariah": {
+      "title": "Shariaprogram",
+      "description": "Tre års specialisering inom islamiska vetenskaper och rättsvetenskap"
+    },
+    "arabicReading": {
+      "title": "Arabiskt läsprogram",
+      "description": "Lär dig läsa klassisk arabiska från grunden till behärskning"
+    },
+    "learnMore": "Läs mer"
+  },
+  "teachers": {
+    "title": "Lär av elitlärare",
+    "subtitle": "Lektionerna på Tibyan-plattformen ges av specialiserade lärare och experter inom sina områden, dedikerade till att ge en enastående utbildningsupplevelse och kontinuerlig uppföljning av studenternas resultat.",
+    "stats": {
+      "teachers": "Specialiserade lärare",
+      "programs": "Utbildningsprogram",
+      "students": "Gynnande studenter",
+      "rating": "Lärarens betyg"
+    },
+    "ctaTitle": "Är du en specialiserad lärare?",
+    "ctaDescription": "Gå med i Tibyan-teamet och dela din expertis med tusentals studenter som är ivriga att lära sig",
+    "ctaButton": "Gå med som lärare"
+  },
+  "cta": {
+    "title": "Börja din läranderesa med Tibyan idag",
+    "subtitle": "Gå med tusentals studenter som lär sig med oss",
+    "button": "Registrera dig gratis nu"
+  },
+  "footer": {
+    "description": "En utbildningsplattform specialiserad på islamiska och arabiska vetenskaper, som erbjuder omfattande utbildningsprogram undervisade av specialiserade elitlärare.",
+    "platform": "Plattform",
+    "resources": "Resurser",
+    "legal": "Juridiskt",
+    "helpCenter": "Hjälpcenter",
+    "contentPolicy": "Innehållspolicy",
+    "quickLinks": "Snabblänkar",
+    "support": "Support och hjälp",
+    "contactUs": "Kontakta oss",
+    "faq": "Vanliga frågor",
+    "blog": "Blogg",
+    "about": "Om Tibyan",
+    "terms": "Användarvillkor",
+    "privacy": "Integritetspolicy",
+    "rights": "© 2026 Tibyan. Alla rättigheter förbehållna."
+  },
+  "pricing": {
+    "title": "Prenumerationsplaner",
+    "subtitle": "Välj det utbildningsprogram som passar din nivå och dina akademiska mål",
+    "popular": "Mest populär",
+    "perMonth": "/ månad",
+    "total": "Totalt",
+    "duration": "Varaktighet",
+    "sessions": "sessioner",
+    "explore": "Utforska plattformen",
+    "registerNow": "Registrera dig nu",
+    "helpTitle": "Behöver du hjälp med att välja rätt program?",
+    "helpDescription": "Kontakta oss så hjälper vi dig att välja den bästa inlärningsvägen för dina mål",
+    "contactUs": "Kontakta oss",
+    "free": {
+      "title": "Gratis plan",
+      "description": "Introduktionsinnehåll för att utforska plattformen och börja din läranderesa"
+    }
+  },
+  "auth": {
+    "loginTitle": "Logga in",
+    "registerTitle": "Skapa nytt konto",
+    "email": "E-post",
+    "password": "Lösenord",
+    "confirmPassword": "Bekräfta lösenord",
+    "name": "Fullständigt namn",
+    "forgotPassword": "Glömt lösenordet?",
+    "noAccount": "Har du inget konto?",
+    "hasAccount": "Har du redan ett konto?",
+    "loginButton": "Logga in",
+    "registerButton": "Skapa konto"
+  }
+}

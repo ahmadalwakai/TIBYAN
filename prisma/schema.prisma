@@ -1,0 +1,235 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  name          String
+  password      String
+  role          Role     @default(STUDENT)
+  status        UserStatus @default(ACTIVE)
+  avatar        String?
+  bio           String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  lastActiveAt  DateTime @default(now())
+  
+  // Relations
+  coursesCreated Course[] @relation("CourseInstructor")
+  enrollments    Enrollment[]
+  reviews        Review[]
+  payments       Payment[]
+  
+  @@map("users")
+}
+
+model Course {
+  id            String   @id @default(cuid())
+  title         String
+  slug          String   @unique
+  description   String
+  thumbnail     String?
+  status        CourseStatus @default(DRAFT)
+  price         Float    @default(0)
+  duration      Int?     // in minutes
+  level         CourseLevel @default(BEGINNER)
+  instructorId  String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  publishedAt   DateTime?
+  
+  // Relations
+  instructor    User     @relation("CourseInstructor", fields: [instructorId], references: [id], onDelete: Cascade)
+  lessons       Lesson[]
+  enrollments   Enrollment[]
+  reviews       Review[]
+  payments      Payment[]
+  
+  @@map("courses")
+}
+
+model Lesson {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  content     String
+  videoUrl    String?
+  duration    Int?     // in minutes
+  order       Int
+  courseId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  
+  @@map("lessons")
+}
+
+model Enrollment {
+  id          String   @id @default(cuid())
+  userId      String
+  courseId    String
+  status      EnrollmentStatus @default(ACTIVE)
+  progress    Float    @default(0) // 0-100
+  enrolledAt  DateTime @default(now())
+  completedAt DateTime?
+  
+  // Relations
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, courseId])
+  @@map("enrollments")
+}
+
+model Review {
+  id          String   @id @default(cuid())
+  rating      Int      // 1-5
+  comment     String?
+  userId      String
+  courseId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, courseId])
+  @@map("reviews")
+}
+
+enum Role {
+  STUDENT
+  INSTRUCTOR
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+  PENDING
+}
+
+enum CourseStatus {
+  DRAFT
+  REVIEW
+  PUBLISHED
+  ARCHIVED
+}
+
+enum CourseLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+enum EnrollmentStatus {
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+model Payment {
+  id              String   @id @default(cuid())
+  userId          String
+  courseId        String
+  amount          Float
+  currency        String   @default("SAR")
+  status          PaymentStatus @default(PENDING)
+  paymentMethod   String?  // stripe, paypal, bank_transfer, etc.
+  transactionId   String?  // external payment provider ID
+  couponCode      String?
+  discountAmount  Float    @default(0)
+  
+  // Customer info (for guests or record keeping)
+  customerName    String?
+  customerEmail   String?
+  customerPhone   String?
+  
+  // Metadata
+  notes           String?
+  paidAt          DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  // Relations
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course          Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  
+  @@map("payments")
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  REFUNDED
+  CANCELLED
+}
+
+model TeacherApplication {
+  id                String   @id @default(cuid())
+  
+  // Personal Information
+  fullName          String
+  email             String
+  phone             String
+  dateOfBirth       String?
+  nationality       String?
+  gender            String?
+  
+  // Education
+  degree            String?
+  fieldOfStudy      String?
+  university        String?
+  graduationYear    String?
+  
+  // Teaching Experience
+  yearsExperience   String?
+  subjectsToTeach   String
+  quranMemorization String?
+  tajweedLevel      String?
+  onlineExperience  String?
+  
+  // Availability
+  availableDays     String?
+  hoursPerWeek      String?
+  startDate         String?
+  
+  // Other
+  motivation        String?
+  expectedSalary    String?
+  
+  // Application Status
+  status            ApplicationStatus @default(PENDING)
+  reviewedBy        String?
+  reviewedAt        DateTime?
+  reviewNotes       String?
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@map("teacher_applications")
+}
+
+enum ApplicationStatus {
+  PENDING
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+}

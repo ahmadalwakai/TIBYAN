@@ -1,0 +1,146 @@
+{
+  "common": {
+    "home": "Home",
+    "courses": "Courses",
+    "programs": "Programs",
+    "instructors": "Instructors",
+    "pricing": "Pricing",
+    "help": "Help",
+    "login": "Login",
+    "register": "Create Account",
+    "logout": "Logout",
+    "admin": "Admin",
+    "user": "User",
+    "search": "Search",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "selectLanguage": "Select Language"
+  },
+  "header": {
+    "facultyBadge": "Faculty",
+    "darkMode": "Switch to Dark Mode",
+    "lightMode": "Switch to Light Mode"
+  },
+  "hero": {
+    "badge": "Complete Learning Platform",
+    "title": "Your Journey to Islamic Knowledge",
+    "titleHighlight": "Starts Here",
+    "subtitle": "Tibyan educational platform offers you comprehensive Islamic programs taught by elite specialized teachers, with continuous follow-up and solid scientific methodology",
+    "ctaPrimary": "Start Learning Free",
+    "ctaSecondary": "Explore Programs",
+    "stats": {
+      "courses": "Educational Courses",
+      "students": "Enrolled Students",
+      "rating": "Student Rating"
+    }
+  },
+  "features": {
+    "title": "Why Tibyan?",
+    "subtitle": "We offer you a unique educational experience that combines authenticity and modernity",
+    "academicCommitment": {
+      "title": "Academic Commitment",
+      "description": "Solid scientific methodology with continuous follow-up of academic achievement and periodic performance evaluation"
+    },
+    "questionBank": {
+      "title": "Advanced Question Bank",
+      "description": "Thousands of questions classified by level and topic with instant correction and performance analysis"
+    },
+    "interactiveCommunity": {
+      "title": "Interactive Community",
+      "description": "Direct communication with teachers and students in a stimulating and fruitful educational environment"
+    }
+  },
+  "programs": {
+    "title": "Educational Programs",
+    "subtitle": "Comprehensive programs suitable for all levels",
+    "preparatory": {
+      "title": "Preparatory Year",
+      "description": "A comprehensive preparatory program to prepare the student psychologically, cognitively, and skillfully"
+    },
+    "shariah": {
+      "title": "Shariah Track",
+      "description": "Three years of specialization in Islamic sciences and jurisprudence"
+    },
+    "arabicReading": {
+      "title": "Arabic Reading Program",
+      "description": "Learn to read classical Arabic from scratch to mastery"
+    },
+    "learnMore": "Learn More"
+  },
+  "teachers": {
+    "title": "Learn from Elite Teachers",
+    "subtitle": "Lessons at Tibyan platform are delivered by specialized teachers and experts in their fields, dedicated to providing an outstanding educational experience and continuous follow-up of student achievement.",
+    "stats": {
+      "teachers": "Specialized Teachers",
+      "programs": "Educational Programs",
+      "students": "Benefiting Students",
+      "rating": "Teacher Rating"
+    },
+    "ctaTitle": "Are you a specialized teacher?",
+    "ctaDescription": "Join the Tibyan team and share your expertise with thousands of students eager to learn",
+    "ctaButton": "Join as Teacher"
+  },
+  "cta": {
+    "title": "Start Your Learning Journey with Tibyan Today",
+    "subtitle": "Join thousands of students learning with us",
+    "button": "Register Now for Free"
+  },
+  "footer": {
+    "description": "An educational platform specialized in Islamic and Arabic sciences, offering comprehensive educational programs taught by elite specialized teachers.",
+    "platform": "Platform",
+    "resources": "Resources",
+    "legal": "Legal",
+    "helpCenter": "Help Center",
+    "contentPolicy": "Content Policy",
+    "quickLinks": "Quick Links",
+    "support": "Support & Help",
+    "contactUs": "Contact Us",
+    "faq": "FAQ",
+    "blog": "Blog",
+    "about": "About Tibyan",
+    "terms": "Terms of Use",
+    "privacy": "Privacy Policy",
+    "rights": "© 2026 Tibyan. All Rights Reserved."
+  },
+  "pricing": {
+    "title": "Subscription Plans",
+    "subtitle": "Choose the educational program that suits your level and academic goals",
+    "popular": "Most Popular",
+    "perMonth": "/ month",
+    "total": "Total",
+    "duration": "Duration",
+    "sessions": "sessions",
+    "explore": "Explore Platform",
+    "registerNow": "Register Now",
+    "helpTitle": "Need help choosing the right program?",
+    "helpDescription": "Contact us and we'll help you choose the best learning path for your goals",
+    "contactUs": "Contact Us",
+    "free": {
+      "title": "Free Plan",
+      "description": "Introductory content to explore the platform and start your learning journey"
+    }
+  },
+  "auth": {
+    "loginTitle": "Login",
+    "registerTitle": "Create New Account",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "name": "Full Name",
+    "forgotPassword": "Forgot Password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "loginButton": "Login",
+    "registerButton": "Create Account"
+  }
+}

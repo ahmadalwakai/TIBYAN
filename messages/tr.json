@@ -1,0 +1,146 @@
+{
+  "common": {
+    "home": "Ana Sayfa",
+    "courses": "Kurslar",
+    "programs": "Programlar",
+    "instructors": "Eğitmenler",
+    "pricing": "Fiyatlandırma",
+    "help": "Yardım",
+    "login": "Giriş Yap",
+    "register": "Hesap Oluştur",
+    "logout": "Çıkış",
+    "admin": "Yönetici",
+    "user": "Kullanıcı",
+    "search": "Ara",
+    "loading": "Yükleniyor...",
+    "error": "Bir hata oluştu",
+    "success": "Başarılı",
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "delete": "Sil",
+    "edit": "Düzenle",
+    "view": "Görüntüle",
+    "close": "Kapat",
+    "back": "Geri",
+    "next": "İleri",
+    "previous": "Önceki",
+    "selectLanguage": "Dil Seçin"
+  },
+  "header": {
+    "facultyBadge": "Öğretim Kadrosu",
+    "darkMode": "Karanlık Moda Geç",
+    "lightMode": "Aydınlık Moda Geç"
+  },
+  "hero": {
+    "badge": "Kapsamlı Öğrenme Platformu",
+    "title": "İslami Bilgiye Yolculuğunuz",
+    "titleHighlight": "Burada Başlıyor",
+    "subtitle": "Tibyan eğitim platformu, sürekli takip ve sağlam bilimsel metodoloji ile uzman seçkin öğretmenler tarafından verilen kapsamlı İslami programlar sunar",
+    "ctaPrimary": "Ücretsiz Öğrenmeye Başla",
+    "ctaSecondary": "Programları Keşfet",
+    "stats": {
+      "courses": "Eğitim Kursları",
+      "students": "Kayıtlı Öğrenci",
+      "rating": "Öğrenci Değerlendirmesi"
+    }
+  },
+  "features": {
+    "title": "Neden Tibyan?",
+    "subtitle": "Size özgünlük ve modernliği birleştiren benzersiz bir eğitim deneyimi sunuyoruz",
+    "academicCommitment": {
+      "title": "Akademik Bağlılık",
+      "description": "Akademik başarının sürekli takibi ve periyodik performans değerlendirmesi ile sağlam bilimsel metodoloji"
+    },
+    "questionBank": {
+      "title": "Gelişmiş Soru Bankası",
+      "description": "Anında düzeltme ve performans analizi ile seviye ve konuya göre sınıflandırılmış binlerce soru"
+    },
+    "interactiveCommunity": {
+      "title": "Etkileşimli Topluluk",
+      "description": "Teşvik edici ve verimli bir eğitim ortamında öğretmenler ve öğrencilerle doğrudan iletişim"
+    }
+  },
+  "programs": {
+    "title": "Eğitim Programları",
+    "subtitle": "Tüm seviyelere uygun kapsamlı programlar",
+    "preparatory": {
+      "title": "Hazırlık Yılı",
+      "description": "Öğrenciyi psikolojik, bilişsel ve beceri açısından hazırlamak için kapsamlı bir hazırlık programı"
+    },
+    "shariah": {
+      "title": "Şeriat Programı",
+      "description": "İslami ilimler ve fıkıh alanında üç yıllık uzmanlık"
+    },
+    "arabicReading": {
+      "title": "Arapça Okuma Programı",
+      "description": "Klasik Arapçayı sıfırdan ustalığa kadar okumayı öğrenin"
+    },
+    "learnMore": "Daha Fazla Bilgi"
+  },
+  "teachers": {
+    "title": "Seçkin Öğretmenlerden Öğrenin",
+    "subtitle": "Tibyan platformundaki dersler, olağanüstü bir eğitim deneyimi ve öğrenci başarısının sürekli takibine adanmış, alanlarında uzman öğretmenler ve uzmanlar tarafından verilmektedir.",
+    "stats": {
+      "teachers": "Uzman Öğretmenler",
+      "programs": "Eğitim Programları",
+      "students": "Faydalanan Öğrenciler",
+      "rating": "Öğretmen Değerlendirmesi"
+    },
+    "ctaTitle": "Uzman bir öğretmen misiniz?",
+    "ctaDescription": "Tibyan ekibine katılın ve uzmanlığınızı öğrenmeye hevesli binlerce öğrenciyle paylaşın",
+    "ctaButton": "Öğretmen Olarak Katıl"
+  },
+  "cta": {
+    "title": "Bugün Tibyan ile Öğrenme Yolculuğunuza Başlayın",
+    "subtitle": "Bizimle öğrenen binlerce öğrenciye katılın",
+    "button": "Şimdi Ücretsiz Kaydol"
+  },
+  "footer": {
+    "description": "İslami ve Arap bilimleri konusunda uzmanlaşmış, seçkin uzman öğretmenler tarafından verilen kapsamlı eğitim programları sunan bir eğitim platformu.",
+    "platform": "Platform",
+    "resources": "Kaynaklar",
+    "legal": "Yasal",
+    "helpCenter": "Yardım Merkezi",
+    "contentPolicy": "İçerik Politikası",
+    "quickLinks": "Hızlı Bağlantılar",
+    "support": "Destek ve Yardım",
+    "contactUs": "Bize Ulaşın",
+    "faq": "SSS",
+    "blog": "Blog",
+    "about": "Tibyan Hakkında",
+    "terms": "Kullanım Şartları",
+    "privacy": "Gizlilik Politikası",
+    "rights": "© 2026 Tibyan. Tüm Hakları Saklıdır."
+  },
+  "pricing": {
+    "title": "Abonelik Planları",
+    "subtitle": "Seviyenize ve akademik hedeflerinize uygun eğitim programını seçin",
+    "popular": "En Popüler",
+    "perMonth": "/ ay",
+    "total": "Toplam",
+    "duration": "Süre",
+    "sessions": "oturum",
+    "explore": "Platformu Keşfet",
+    "registerNow": "Şimdi Kaydol",
+    "helpTitle": "Doğru programı seçmek için yardıma mı ihtiyacınız var?",
+    "helpDescription": "Bize ulaşın, hedefleriniz için en iyi öğrenme yolunu seçmenize yardımcı olalım",
+    "contactUs": "Bize Ulaşın",
+    "free": {
+      "title": "Ücretsiz Plan",
+      "description": "Platformu keşfetmek ve öğrenme yolculuğunuza başlamak için tanıtım içeriği"
+    }
+  },
+  "auth": {
+    "loginTitle": "Giriş Yap",
+    "registerTitle": "Yeni Hesap Oluştur",
+    "email": "E-posta",
+    "password": "Şifre",
+    "confirmPassword": "Şifreyi Onayla",
+    "name": "Tam Ad",
+    "forgotPassword": "Şifrenizi mi unuttunuz?",
+    "noAccount": "Hesabınız yok mu?",
+    "hasAccount": "Zaten hesabınız var mı?",
+    "loginButton": "Giriş Yap",
+    "registerButton": "Hesap Oluştur"
+  }
+}

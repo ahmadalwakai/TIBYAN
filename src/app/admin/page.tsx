@@ -1,0 +1,351 @@
+import { Badge, Box, Button, Flex, Heading, SimpleGrid, Stack, Text } from "@chakra-ui/react";
+import Link from "next/link";
+import PremiumCard from "@/components/ui/PremiumCard";
+import StatCard from "@/components/ui/StatCard";
+import { allCourses, teachers } from "@/content/courses.ar";
+
+const kpis = [
+  { label: "مستخدمون نشطون", value: "+18.2k", trend: "+6%", color: "brand.500" },
+  { label: "البرامج المنشورة", value: "5", trend: "+2", color: "success" },
+  { label: "الاشتراكات المدفوعة", value: "1,420", trend: "+4%", color: "warning" },
+  { label: "معدل الإكمال", value: "72%", trend: "+3%", color: "brand.600" },
+];
+
+const reviewQueue = [
+  { title: allCourses[4].name, instructor: teachers[4].name, status: "قيد المراجعة" },
+  { title: allCourses[2].name, instructor: teachers[6].name, status: "بانتظار الجودة" },
+  { title: allCourses[3].name, instructor: teachers[8].name, status: "قيد المراجعة" },
+];
+
+const reports = [
+  { title: "بلاغ محتوى", detail: "وحدة الدرس 4", severity: "متوسط" },
+  { title: "بلاغ مجتمع", detail: "مناقشة الدرس 2", severity: "مرتفع" },
+  { title: "بلاغ تقييم", detail: "سؤال اختبار", severity: "منخفض" },
+];
+
+export default function AdminDashboardPage() {
+  return (
+    <Stack gap={10}>
+      <Flex direction={{ base: "column", md: "row" }} gap={6} justify="space-between">
+        <Stack gap={3}>
+          <Badge
+            bg="brand.900"
+            color="white"
+            px={3}
+            py={1}
+            borderRadius="badge"
+            fontSize="xs"
+            fontWeight="600"
+            w="fit-content"
+          >
+            🏠 لوحة التحكم
+          </Badge>
+          <Heading size="2xl" color="text">
+            لوحة تحكم الإدارة
+          </Heading>
+          <Text color="muted" fontSize="lg" lineHeight="1.7">
+            تحكم شامل بالمنصة: المحتوى، المستخدمين، المدفوعات، الجودة، والمجتمع.
+          </Text>
+        </Stack>
+        <Stack direction={{ base: "column", sm: "row" }} gap={3} h="fit-content">
+          <Button 
+            variant="outline" 
+            borderColor="brand.500"
+            borderWidth="2px"
+            color="brand.900"
+            _hover={{ bg: "brand.50", borderColor: "brand.600" }}
+            transition="all 0.3s ease"
+          >
+            تصدير التقارير
+          </Button>
+          <Button 
+            bg="brand.900"
+            color="white"
+            _hover={{ bg: "brand.700", transform: "translateY(-2px)", boxShadow: "cardHover" }}
+            transition="all 0.3s ease"
+          >
+            إنشاء إعلان عام
+          </Button>
+        </Stack>
+      </Flex>
+
+      <SimpleGrid columns={{ base: 1, md: 4 }} gap={6}>
+        {kpis.map((item) => (
+          <StatCard key={item.label} accentColor={item.color} p={6}>
+            <Stack gap={3}>
+              <Text color="muted" fontSize="sm" fontWeight="600">
+                {item.label}
+              </Text>
+              <Flex align="baseline" gap={2}>
+                <Text 
+                  fontSize="3xl" 
+                  fontWeight="800"
+                  bgGradient={`linear(135deg, ${item.color} 0%, text 100%)`}
+                  bgClip="text"
+                >
+                  {item.value}
+                </Text>
+                <Badge 
+                  bgGradient="linear(135deg, success 0%, success 100%)"
+                  color="white"
+                  px={2}
+                  py={1}
+                  borderRadius="badge"
+                  fontSize="xs"
+                >
+                  {item.trend}
+                </Badge>
+              </Flex>
+            </Stack>
+          </StatCard>
+        ))}
+      </SimpleGrid>
+
+      <SimpleGrid columns={{ base: 1, md: 2 }} gap={6}>
+        <PremiumCard variant="bordered" p={6}>
+          <Stack gap={5}>
+            <Flex align="center" gap={3}>
+              <Text fontSize="2xl">📋</Text>
+              <Heading size="md">قائمة المهام الإدارية</Heading>
+            </Flex>
+            <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
+              {[
+                { text: "مراجعة الدورات الجديدة", icon: "📚" },
+                { text: "اعتماد المدرّسين", icon: "✅" },
+                { text: "تحديث سياسات المحتوى", icon: "📝" },
+                { text: "مراجعة بلاغات المجتمع", icon: "⚠️" },
+                { text: "تسوية المدفوعات", icon: "💰" },
+                { text: "مراقبة الأداء", icon: "📊" },
+              ].map((task) => (
+                <Flex
+                  key={task.text}
+                  align="center"
+                  gap={2}
+                  bg="backgroundAlt"
+                  borderRadius="button"
+                  border="1px solid"
+                  borderColor="border"
+                  p={3}
+                  transition="all 0.3s ease"
+                  _hover={{
+                    bg: "brand.50",
+                    borderColor: "brand.400",
+                    transform: "translateX(-4px)",
+                  }}
+                >
+                  <Text fontSize="lg">{task.icon}</Text>
+                  <Text fontWeight="600" fontSize="sm">{task.text}</Text>
+                </Flex>
+              ))}
+            </SimpleGrid>
+          </Stack>
+        </PremiumCard>
+
+        <PremiumCard variant="gradient" p={6}>
+          <Stack gap={4}>
+            <Flex align="center" gap={3}>
+              <Text fontSize="2xl">🚨</Text>
+              <Heading size="md">تنبيهات حرجة</Heading>
+            </Flex>
+            {reports.map((item) => (
+              <Flex 
+                key={item.title} 
+                justify="space-between" 
+                gap={4} 
+                flexWrap="wrap"
+                p={3}
+                bg="surface"
+                borderRadius="button"
+                transition="all 0.3s ease"
+                _hover={{ boxShadow: "subtle" }}
+              >
+                <Stack gap={1}>
+                  <Text fontWeight="700">{item.title}</Text>
+                  <Text color="muted" fontSize="sm">
+                    {item.detail}
+                  </Text>
+                </Stack>
+                <Badge
+                  bg={item.severity === "مرتفع" ? "error" : item.severity === "متوسط" ? "warning" : "success"}
+                  color="white"
+                  alignSelf="center"
+                  px={3}
+                  py={1}
+                  borderRadius="badge"
+                  fontWeight="600"
+                >
+                  {item.severity}
+                </Badge>
+              </Flex>
+            ))}
+            <Button 
+              variant="outline" 
+              borderColor="brand.500"
+              borderWidth="2px"
+              color="brand.900"
+              _hover={{ bg: "brand.50" }}
+              transition="all 0.3s ease"
+            >
+              فتح مركز البلاغات
+            </Button>
+          </Stack>
+        </PremiumCard>
+      </SimpleGrid>
+
+      <SimpleGrid columns={{ base: 1, md: 2 }} gap={6}>
+        <PremiumCard variant="default" p={6}>
+          <Stack gap={5}>
+            <Flex align="center" gap={3}>
+              <Text fontSize="2xl">🔍</Text>
+              <Heading size="md">مراجعات الدورات</Heading>
+            </Flex>
+            {reviewQueue.map((item) => (
+              <Flex 
+                key={item.title} 
+                justify="space-between" 
+                gap={4} 
+                flexWrap="wrap"
+                p={3}
+                bg="backgroundAlt"
+                borderRadius="button"
+                border="1px solid"
+                borderColor="border"
+                transition="all 0.3s ease"
+                _hover={{
+                  bg: "brand.50",
+                  borderColor: "brand.400",
+                }}
+              >
+                <Stack gap={1}>
+                  <Text fontWeight="700">{item.title}</Text>
+                  <Text color="muted" fontSize="sm">
+                    👤 {item.instructor}
+                  </Text>
+                </Stack>
+                <Badge 
+                  bgGradient="linear(135deg, brand.500 0%, brand.600 100%)"
+                  color="white"
+                  alignSelf="center"
+                  px={3}
+                  py={1}
+                  borderRadius="badge"
+                  fontWeight="600"
+                >
+                  {item.status}
+                </Badge>
+              </Flex>
+            ))}
+            <Button 
+              variant="outline" 
+              borderColor="brand.500"
+              borderWidth="2px"
+              color="brand.900"
+              _hover={{ bg: "brand.50" }}
+              transition="all 0.3s ease"
+            >
+              عرض جميع المراجعات
+            </Button>
+          </Stack>
+        </PremiumCard>
+
+        <PremiumCard variant="elevated" p={6}>
+          <Stack gap={5}>
+            <Flex align="center" gap={3}>
+              <Text fontSize="2xl">💳</Text>
+              <Heading size="md">ملخص المدفوعات</Heading>
+            </Flex>
+            <SimpleGrid columns={{ base: 1, md: 3 }} gap={4}>
+              {[
+                { label: "الإيراد الشهري", value: "€ 42,300", icon: "💰", color: "success" },
+                { label: "اشتراكات جديدة", value: "312", icon: "✨", color: "brand.500" },
+                { label: "نسبة التحويل", value: "3.8%", icon: "📈", color: "warning" },
+              ].map((item) => (
+                <Box
+                  key={item.label}
+                  bg="backgroundAlt"
+                  borderRadius="button"
+                  border="1px solid"
+                  borderColor="border"
+                  p={4}
+                  textAlign="center"
+                  transition="all 0.3s ease"
+                  _hover={{
+                    transform: "translateY(-4px)",
+                    boxShadow: "subtle",
+                    borderColor: item.color,
+                  }}
+                >
+                  <Text fontSize="2xl" mb={2}>{item.icon}</Text>
+                  <Text color="muted" fontSize="xs" fontWeight="600" mb={1}>
+                    {item.label}
+                  </Text>
+                  <Text 
+                    fontWeight="800"
+                    fontSize="lg"
+                    bgGradient={`linear(135deg, ${item.color} 0%, text 100%)`}
+                    bgClip="text"
+                  >
+                    {item.value}
+                  </Text>
+                </Box>
+              ))}
+            </SimpleGrid>
+            <Button 
+              variant="outline" 
+              borderColor="brand.500"
+              borderWidth="2px"
+              color="brand.900"
+              _hover={{ bg: "brand.50" }}
+              transition="all 0.3s ease"
+            >
+              إدارة المدفوعات
+            </Button>
+          </Stack>
+        </PremiumCard>
+      </SimpleGrid>
+
+      <PremiumCard variant="gradient" p={{ base: 6, md: 8 }}>
+        <Stack gap={5}>
+          <Flex align="center" gap={3}>
+            <Text fontSize="2xl">⚡</Text>
+            <Heading size="md">التحكم السريع</Heading>
+          </Flex>
+          <SimpleGrid columns={{ base: 1, md: 3 }} gap={4}>
+            {[
+              { label: "إدارة المستخدمين", href: "/admin/users", icon: "👥" },
+              { label: "إدارة الدورات", href: "/admin/courses", icon: "📚" },
+              { label: "مركز البلاغات", href: "/admin/reports", icon: "📊" },
+              { label: "إعدادات الدفع", href: "/admin/payments", icon: "💳" },
+              { label: "سياسات المحتوى", href: "/admin/settings", icon: "⚙️" },
+              { label: "إدارة الإعلانات", href: "/admin/reviews", icon: "📢" },
+            ].map((item) => (
+              <Link key={item.label} href={item.href} style={{ textDecoration: "none" }}>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  gap={3}
+                  bg="surface"
+                  borderRadius="button"
+                  border="1px solid"
+                  borderColor="border"
+                  p={4}
+                  fontWeight="700"
+                  transition="all 0.3s ease"
+                  _hover={{ 
+                    bg: "brand.50",
+                    borderColor: "brand.500",
+                    transform: "translateY(-2px)",
+                    boxShadow: "subtle",
+                  }}
+                >
+                  <Text fontSize="xl">{item.icon}</Text>
+                  <Text>{item.label}</Text>
+                </Box>
+              </Link>
+            ))}
+          </SimpleGrid>
+        </Stack>
+      </PremiumCard>
+    </Stack>
+  );
+}
