@@ -11,6 +11,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import PremiumCard from "@/components/ui/PremiumCard";
 import StatCard from "@/components/ui/StatCard";
@@ -183,6 +184,7 @@ export default function Home() {
             height: "100%",
             objectFit: "cover",
             zIndex: 0,
+            pointerEvents: "none",
           }}
         >
           <source src="/videos/hero.mp4" type="video/mp4" />
@@ -207,6 +209,7 @@ export default function Home() {
           zIndex={1}
           bg="rgba(11, 31, 59, 0.65)"
           backdropFilter="blur(1px)"
+          pointerEvents="none"
         />
 
         {/* Gradient Overlay for Smooth Transition */}
@@ -220,6 +223,7 @@ export default function Home() {
           bgGradient="to-t"
           gradientFrom="background"
           gradientTo="transparent"
+          pointerEvents="none"
         />
 
         {/* Hero Content */}
@@ -356,56 +360,61 @@ export default function Home() {
                   background="linear-gradient(135deg, #c8a24a, #00d4ff)"
                   filter="blur(12px)"
                   opacity={0.4}
+                  pointerEvents="none"
                   css={{ animation: "sparkle 3s ease-in-out infinite" }}
                 />
+                <Link href="/programs" style={{ textDecoration: "none" }}>
+                  <Button
+                    position="relative"
+                    bg="brand.900"
+                    color="white"
+                    size="lg"
+                    px={10}
+                    h="56px"
+                    fontSize="lg"
+                    fontWeight="700"
+                    boxShadow="0 8px 30px rgba(11, 31, 59, 0.4)"
+                    _hover={{ 
+                      bg: "brand.800",
+                      transform: "translateY(-4px) scale(1.02)",
+                      boxShadow: "0 12px 40px rgba(11, 31, 59, 0.5)",
+                    }}
+                    transition="all 0.3s ease"
+                    w={{ base: "100%", sm: "auto" }}
+                  >
+                    🚀 استكشف البرامج
+                  </Button>
+                </Link>
+              </Box>
+
+              {/* Secondary Button */}
+              <Link href="/instructors/apply" style={{ textDecoration: "none", width: "100%" }}>
                 <Button
-                  position="relative"
-                  bg="brand.900"
-                  color="white"
+                  variant="outline"
+                  borderWidth="2px"
+                  color="text"
                   size="lg"
                   px={10}
                   h="56px"
                   fontSize="lg"
                   fontWeight="700"
-                  boxShadow="0 8px 30px rgba(11, 31, 59, 0.4)"
+                  bg="transparent"
+                  css={{
+                    borderImage: "linear-gradient(135deg, #c8a24a, #0b1f3b, #00d4ff) 1",
+                    borderImageSlice: 1,
+                    borderRadius: "12px",
+                  }}
                   _hover={{ 
-                    bg: "brand.800",
-                    transform: "translateY(-4px) scale(1.02)",
-                    boxShadow: "0 12px 40px rgba(11, 31, 59, 0.5)"
+                    bg: "surfaceHover",
+                    transform: "translateY(-4px)",
+                    boxShadow: "0 8px 25px rgba(200, 162, 74, 0.2)",
                   }}
                   transition="all 0.3s ease"
                   w={{ base: "100%", sm: "auto" }}
                 >
-                  🚀 استكشف البرامج
+                  👨‍🏫 ابدأ كمدرّس
                 </Button>
-              </Box>
-
-              {/* Secondary Button */}
-              <Button
-                variant="outline"
-                borderWidth="2px"
-                color="text"
-                size="lg"
-                px={10}
-                h="56px"
-                fontSize="lg"
-                fontWeight="700"
-                bg="transparent"
-                css={{
-                  borderImage: "linear-gradient(135deg, #c8a24a, #0b1f3b, #00d4ff) 1",
-                  borderImageSlice: 1,
-                  borderRadius: "12px",
-                }}
-                _hover={{ 
-                  bg: "surfaceHover",
-                  transform: "translateY(-4px)",
-                  boxShadow: "0 8px 25px rgba(200, 162, 74, 0.2)"
-                }}
-                transition="all 0.3s ease"
-                w={{ base: "100%", sm: "auto" }}
-              >
-                👨‍🏫 ابدأ كمدرّس
-              </Button>
+              </Link>
             </Stack>
             
             {/* Stats Grid */}
