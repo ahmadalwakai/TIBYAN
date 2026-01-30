@@ -631,6 +631,295 @@ export default function Home() {
             </Box>
           </Box>
 
+          {/* Advisory Board Section - New Authority Section */}
+          <Box
+            position="relative"
+            py={8}
+            css={{
+              "@keyframes advisorFloat": {
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-8px)" },
+              },
+              "@keyframes goldGlow": {
+                "0%, 100%": { boxShadow: "0 0 20px rgba(212, 175, 55, 0.3)" },
+                "50%": { boxShadow: "0 0 40px rgba(212, 175, 55, 0.5)" },
+              },
+            }}
+          >
+            <Stack gap={10} textAlign="center">
+              <Stack gap={5} align="center" maxW="800px" mx="auto">
+                <Badge
+                  bg="linear-gradient(135deg, #D4AF37, #F7DC6F)"
+                  color="#0B1F3A"
+                  px={6}
+                  py={2.5}
+                  borderRadius="full"
+                  fontSize="sm"
+                  fontWeight="800"
+                  boxShadow="0 4px 15px rgba(212, 175, 55, 0.4)"
+                >
+                  {t("advisoryBadge")}
+                </Badge>
+                <Heading
+                  size={{ base: "lg", md: "xl" }}
+                  css={{
+                    background: "linear-gradient(135deg, #0b1f3b 0%, #D4AF37 50%, #0b1f3b 100%)",
+                    backgroundSize: "200% auto",
+                    backgroundClip: "text",
+                    WebkitBackgroundClip: "text",
+                    color: "transparent",
+                  }}
+                >
+                  {t("advisoryTitle")}
+                </Heading>
+                <Text color="muted" fontSize={{ base: "md", md: "lg" }} lineHeight="1.9">
+                  {t("advisorySubtitle")}
+                </Text>
+              </Stack>
+
+              <SimpleGrid columns={{ base: 1, md: 3 }} gap={8}>
+                {[
+                  { key: "scholar1", icon: "👨‍🎓", gradient: "linear-gradient(135deg, #D4AF37, #F7DC6F)" },
+                  { key: "scholar2", icon: "📖", gradient: "linear-gradient(135deg, #0b1f3b, #1a365d)" },
+                  { key: "scholar3", icon: "✨", gradient: "linear-gradient(135deg, #800020, #B85450)" },
+                ].map((advisor, index) => (
+                  <Box
+                    key={advisor.key}
+                    position="relative"
+                    bg="surface"
+                    borderRadius="2xl"
+                    overflow="hidden"
+                    transition="all 0.4s ease"
+                    css={{
+                      animation: `advisorFloat 5s ease-in-out infinite`,
+                      animationDelay: `${index * 0.2}s`,
+                    }}
+                    _hover={{
+                      transform: "translateY(-12px) scale(1.02)",
+                      boxShadow: "0 25px 50px -12px rgba(212, 175, 55, 0.25)",
+                    }}
+                  >
+                    {/* Gold border accent */}
+                    <Box
+                      position="absolute"
+                      top={0}
+                      left={0}
+                      right={0}
+                      h="4px"
+                      background={advisor.gradient}
+                    />
+                    <Stack p={8} gap={4} align="center">
+                      {/* Avatar placeholder with glow */}
+                      <Box position="relative">
+                        <Box
+                          position="absolute"
+                          inset="-8px"
+                          borderRadius="full"
+                          background={advisor.gradient}
+                          filter="blur(15px)"
+                          opacity={0.4}
+                          css={{ animation: "goldGlow 3s ease-in-out infinite" }}
+                        />
+                        <Box
+                          position="relative"
+                          w="100px"
+                          h="100px"
+                          borderRadius="full"
+                          background={advisor.gradient}
+                          display="flex"
+                          alignItems="center"
+                          justifyContent="center"
+                          fontSize="3xl"
+                          boxShadow="0 8px 24px rgba(0, 0, 0, 0.2)"
+                        >
+                          {advisor.icon}
+                        </Box>
+                      </Box>
+                      <Stack gap={1} align="center">
+                        <Heading size="md" color="text">
+                          {t(`advisors.${advisor.key}.name`)}
+                        </Heading>
+                        <Text fontSize="sm" fontWeight="700" color="brand.500">
+                          {t(`advisors.${advisor.key}.title`)}
+                        </Text>
+                        <Text fontSize="sm" color="muted" textAlign="center">
+                          {t(`advisors.${advisor.key}.bio`)}
+                        </Text>
+                      </Stack>
+                    </Stack>
+                  </Box>
+                ))}
+              </SimpleGrid>
+            </Stack>
+          </Box>
+
+          {/* Elegant Divider */}
+          <Box 
+            h="1px" 
+            bg="linear-gradient(90deg, transparent, #D4AF37, transparent)"
+            borderRadius="full"
+          />
+
+          {/* Tibyan 5-Step Mastery Method Section */}
+          <Box
+            position="relative"
+            py={8}
+            css={{
+              "@keyframes stepPulse": {
+                "0%, 100%": { transform: "scale(1)" },
+                "50%": { transform: "scale(1.05)" },
+              },
+              "@keyframes lineGrow": {
+                "0%": { width: "0%" },
+                "100%": { width: "100%" },
+              },
+            }}
+          >
+            <Stack gap={12} textAlign="center">
+              <Stack gap={5} align="center" maxW="800px" mx="auto">
+                <Badge
+                  bg="linear-gradient(135deg, #0b1f3b, #1a365d)"
+                  color="white"
+                  px={6}
+                  py={2.5}
+                  borderRadius="full"
+                  fontSize="sm"
+                  fontWeight="800"
+                  boxShadow="0 4px 15px rgba(11, 31, 59, 0.4)"
+                  css={{
+                    "&::before": {
+                      content: '""',
+                      position: "absolute",
+                      inset: 0,
+                      borderRadius: "full",
+                      padding: "2px",
+                      background: "linear-gradient(135deg, #D4AF37, #F7DC6F)",
+                      mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                      maskComposite: "exclude",
+                    },
+                  }}
+                  position="relative"
+                  overflow="hidden"
+                >
+                  {t("methodologyBadge")}
+                </Badge>
+                <Heading
+                  size={{ base: "lg", md: "xl" }}
+                  css={{
+                    background: "linear-gradient(135deg, #D4AF37 0%, #0b1f3b 50%, #D4AF37 100%)",
+                    backgroundSize: "200% auto",
+                    backgroundClip: "text",
+                    WebkitBackgroundClip: "text",
+                    color: "transparent",
+                  }}
+                >
+                  {t("methodologyTitle")}
+                </Heading>
+                <Text color="muted" fontSize={{ base: "md", md: "lg" }} lineHeight="1.9">
+                  {t("methodologySubtitle")}
+                </Text>
+              </Stack>
+
+              {/* 5-Step Timeline */}
+              <Box position="relative" px={{ base: 4, md: 8 }}>
+                {/* Connection line - hidden on mobile */}
+                <Box
+                  display={{ base: "none", md: "block" }}
+                  position="absolute"
+                  top="60px"
+                  left="10%"
+                  right="10%"
+                  h="4px"
+                  bg="linear-gradient(90deg, #D4AF37, #0b1f3b, #00d4ff, #0b1f3b, #D4AF37)"
+                  borderRadius="full"
+                  zIndex={0}
+                />
+
+                <SimpleGrid columns={{ base: 1, md: 5 }} gap={{ base: 6, md: 4 }}>
+                  {[
+                    { step: "step1", icon: "🏗️", color: "#D4AF37" },
+                    { step: "step2", icon: "💡", color: "#00d4ff" },
+                    { step: "step3", icon: "⚡", color: "#10b981" },
+                    { step: "step4", icon: "📊", color: "#f59e0b" },
+                    { step: "step5", icon: "🏆", color: "#D4AF37" },
+                  ].map((item, index) => (
+                    <Stack
+                      key={item.step}
+                      align="center"
+                      gap={4}
+                      position="relative"
+                      zIndex={1}
+                    >
+                      {/* Step number circle */}
+                      <Box position="relative">
+                        <Box
+                          position="absolute"
+                          inset="-6px"
+                          borderRadius="full"
+                          bg={item.color}
+                          filter="blur(12px)"
+                          opacity={0.4}
+                        />
+                        <Box
+                          position="relative"
+                          w="80px"
+                          h="80px"
+                          borderRadius="full"
+                          bg="surface"
+                          borderWidth="4px"
+                          borderColor={item.color}
+                          display="flex"
+                          alignItems="center"
+                          justifyContent="center"
+                          fontSize="2xl"
+                          boxShadow={`0 8px 24px ${item.color}40`}
+                          transition="all 0.3s ease"
+                          _hover={{ transform: "scale(1.1)" }}
+                        >
+                          {item.icon}
+                        </Box>
+                        {/* Step number badge */}
+                        <Box
+                          position="absolute"
+                          top="-4px"
+                          right="-4px"
+                          w="28px"
+                          h="28px"
+                          borderRadius="full"
+                          bg={item.color}
+                          color="white"
+                          fontSize="sm"
+                          fontWeight="900"
+                          display="flex"
+                          alignItems="center"
+                          justifyContent="center"
+                          boxShadow="0 4px 12px rgba(0,0,0,0.2)"
+                        >
+                          {index + 1}
+                        </Box>
+                      </Box>
+                      <Stack gap={1} align="center">
+                        <Text fontWeight="800" color="text" fontSize="md">
+                          {t(`methodologySteps.${item.step}.title`)}
+                        </Text>
+                        <Text fontSize="xs" color="muted" textAlign="center" maxW="160px">
+                          {t(`methodologySteps.${item.step}.description`)}
+                        </Text>
+                      </Stack>
+                    </Stack>
+                  ))}
+                </SimpleGrid>
+              </Box>
+            </Stack>
+          </Box>
+
+          {/* Elegant Divider */}
+          <Box 
+            h="1px" 
+            bg="linear-gradient(90deg, transparent, #D4AF37, transparent)"
+            borderRadius="full"
+          />
+
           {/* Educational Programs Section - Enhanced */}
           <Box
             position="relative"
@@ -1095,6 +1384,329 @@ export default function Home() {
                 </Box>
               </Box>
             </Flex>
+          </Box>
+
+          {/* Testimonials Section - Story-Driven Social Proof */}
+          <Box
+            position="relative"
+            py={8}
+            css={{
+              "@keyframes testimonialFloat": {
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-6px)" },
+              },
+              "@keyframes quoteGlow": {
+                "0%, 100%": { opacity: 0.6 },
+                "50%": { opacity: 1 },
+              },
+            }}
+          >
+            <Stack gap={10} textAlign="center">
+              <Stack gap={5} align="center" maxW="800px" mx="auto">
+                <Badge
+                  bg="linear-gradient(135deg, #10b981, #34d399)"
+                  color="white"
+                  px={6}
+                  py={2.5}
+                  borderRadius="full"
+                  fontSize="sm"
+                  fontWeight="800"
+                  boxShadow="0 4px 15px rgba(16, 185, 129, 0.4)"
+                >
+                  {t("testimonialsBadge")}
+                </Badge>
+                <Heading
+                  size={{ base: "lg", md: "xl" }}
+                  css={{
+                    background: "linear-gradient(135deg, #0b1f3b 0%, #10b981 50%, #0b1f3b 100%)",
+                    backgroundSize: "200% auto",
+                    backgroundClip: "text",
+                    WebkitBackgroundClip: "text",
+                    color: "transparent",
+                  }}
+                >
+                  {t("testimonialsTitle")}
+                </Heading>
+                <Text color="muted" fontSize={{ base: "md", md: "lg" }} lineHeight="1.9">
+                  {t("testimonialsSubtitle")}
+                </Text>
+              </Stack>
+
+              <SimpleGrid columns={{ base: 1, md: 3 }} gap={8}>
+                {[
+                  { key: "student1", gradient: "linear-gradient(135deg, #D4AF37, #F7DC6F)" },
+                  { key: "student2", gradient: "linear-gradient(135deg, #00d4ff, #0099ff)" },
+                  { key: "student3", gradient: "linear-gradient(135deg, #10b981, #34d399)" },
+                ].map((student, index) => (
+                  <Box
+                    key={student.key}
+                    position="relative"
+                    bg="surface"
+                    borderRadius="2xl"
+                    overflow="hidden"
+                    transition="all 0.4s ease"
+                    css={{
+                      animation: `testimonialFloat 5s ease-in-out infinite`,
+                      animationDelay: `${index * 0.2}s`,
+                    }}
+                    _hover={{
+                      transform: "translateY(-12px) scale(1.02)",
+                      boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)",
+                    }}
+                  >
+                    {/* Quote icon accent */}
+                    <Box
+                      position="absolute"
+                      top={4}
+                      right={4}
+                      fontSize="4xl"
+                      color="backgroundAlt"
+                      opacity={0.5}
+                      css={{ animation: "quoteGlow 3s ease-in-out infinite" }}
+                    >
+                      ❝
+                    </Box>
+                    
+                    <Stack p={8} gap={5}>
+                      {/* Quote */}
+                      <Text
+                        fontSize="sm"
+                        color="muted"
+                        lineHeight="1.9"
+                        fontStyle="italic"
+                        position="relative"
+                        zIndex={1}
+                      >
+                        &ldquo;{t(`testimonials.${student.key}.quote`)}&rdquo;
+                      </Text>
+
+                      {/* Divider */}
+                      <Box
+                        h="2px"
+                        w="60px"
+                        background={student.gradient}
+                        borderRadius="full"
+                      />
+
+                      {/* Author */}
+                      <Flex align="center" gap={4}>
+                        {/* Avatar */}
+                        <Box
+                          w="50px"
+                          h="50px"
+                          borderRadius="full"
+                          background={student.gradient}
+                          display="flex"
+                          alignItems="center"
+                          justifyContent="center"
+                          fontSize="xl"
+                          color="white"
+                          fontWeight="800"
+                          boxShadow="0 4px 12px rgba(0,0,0,0.15)"
+                        >
+                          {t(`testimonials.${student.key}.name`).charAt(0)}
+                        </Box>
+                        <Stack gap={0}>
+                          <Text fontWeight="800" fontSize="sm" color="text">
+                            {t(`testimonials.${student.key}.name`)}
+                          </Text>
+                          <Text fontSize="xs" color="muted">
+                            {t(`testimonials.${student.key}.location`)}
+                          </Text>
+                          <Badge
+                            bg="backgroundAlt"
+                            color="brand.500"
+                            fontSize="xs"
+                            px={2}
+                            py={0.5}
+                            borderRadius="md"
+                            mt={1}
+                          >
+                            {t(`testimonials.${student.key}.program`)}
+                          </Badge>
+                        </Stack>
+                      </Flex>
+                    </Stack>
+                  </Box>
+                ))}
+              </SimpleGrid>
+            </Stack>
+          </Box>
+
+          {/* Partners / As Seen In Section */}
+          <Box py={8}>
+            <Stack gap={8} align="center">
+              <Stack gap={2} align="center">
+                <Badge
+                  bg="backgroundAlt"
+                  color="muted"
+                  px={4}
+                  py={2}
+                  borderRadius="full"
+                  fontSize="sm"
+                  fontWeight="700"
+                >
+                  {t("partnersBadge")}
+                </Badge>
+                <Text fontSize="lg" fontWeight="700" color="text">
+                  {t("partnersTitle")}
+                </Text>
+              </Stack>
+              
+              {/* Partner logos placeholder - replace with actual logos */}
+              <Flex
+                gap={{ base: 8, md: 16 }}
+                wrap="wrap"
+                justify="center"
+                align="center"
+                opacity={0.6}
+                filter="grayscale(100%)"
+                transition="all 0.3s ease"
+                _hover={{ opacity: 1, filter: "grayscale(0%)" }}
+              >
+                {["🏛️ Al-Azhar", "📚 Islamic University", "🎓 Dar Al-Uloom", "🌍 ISNA", "📖 Quran Academy"].map((partner) => (
+                  <Box
+                    key={partner}
+                    bg="backgroundAlt"
+                    px={6}
+                    py={3}
+                    borderRadius="lg"
+                    fontSize="sm"
+                    fontWeight="600"
+                    color="muted"
+                    transition="all 0.3s ease"
+                    _hover={{
+                      bg: "surface",
+                      color: "text",
+                      transform: "scale(1.05)",
+                    }}
+                  >
+                    {partner}
+                  </Box>
+                ))}
+              </Flex>
+            </Stack>
+          </Box>
+
+          {/* Free Assessment Lead Magnet Section */}
+          <Box
+            position="relative"
+            borderRadius="2xl"
+            overflow="hidden"
+            css={{
+              "@keyframes assessmentPulse": {
+                "0%, 100%": { boxShadow: "0 0 30px rgba(212, 175, 55, 0.3)" },
+                "50%": { boxShadow: "0 0 60px rgba(212, 175, 55, 0.5)" },
+              },
+            }}
+          >
+            {/* Gold gradient border */}
+            <Box
+              position="absolute"
+              inset="-2px"
+              borderRadius="2xl"
+              background="linear-gradient(135deg, #D4AF37, #F7DC6F, #D4AF37)"
+              backgroundSize="200% 200%"
+              css={{
+                animation: "gradientShift 4s ease infinite",
+              }}
+            />
+            
+            <Box
+              position="relative"
+              bg="linear-gradient(135deg, #0b1f3b 0%, #1a365d 100%)"
+              borderRadius="xl"
+              m="2px"
+              p={{ base: 8, md: 12 }}
+              color="white"
+            >
+              <Flex
+                direction={{ base: "column", md: "row" }}
+                align="center"
+                justify="space-between"
+                gap={8}
+              >
+                {/* Content */}
+                <Stack gap={4} flex="1" textAlign={{ base: "center", md: "start" }}>
+                  <Badge
+                    bg="linear-gradient(135deg, #D4AF37, #F7DC6F)"
+                    color="#0b1f3b"
+                    px={4}
+                    py={2}
+                    borderRadius="full"
+                    fontSize="sm"
+                    fontWeight="800"
+                    w="fit-content"
+                    mx={{ base: "auto", md: 0 }}
+                  >
+                    {t("assessmentBadge")}
+                  </Badge>
+                  <Heading size={{ base: "md", md: "lg" }} color="white">
+                    {t("assessmentTitle")}
+                  </Heading>
+                  <Text color="whiteAlpha.800" fontSize={{ base: "sm", md: "md" }} lineHeight="1.8">
+                    {t("assessmentSubtitle")}
+                  </Text>
+                  
+                  {/* Features */}
+                  <Flex gap={4} wrap="wrap" justify={{ base: "center", md: "flex-start" }}>
+                    {[
+                      { key: "personalized", icon: "🎯" },
+                      { key: "freeMinutes", icon: "⏱️" },
+                      { key: "noCommitment", icon: "✓" },
+                    ].map((feature) => (
+                      <Flex
+                        key={feature.key}
+                        align="center"
+                        gap={2}
+                        bg="whiteAlpha.100"
+                        px={3}
+                        py={1.5}
+                        borderRadius="full"
+                        fontSize="xs"
+                        fontWeight="600"
+                      >
+                        <Text>{feature.icon}</Text>
+                        <Text>{t(`assessmentFeatures.${feature.key}`)}</Text>
+                      </Flex>
+                    ))}
+                  </Flex>
+                </Stack>
+
+                {/* CTA Button */}
+                <Box position="relative">
+                  <Box
+                    position="absolute"
+                    inset="-4px"
+                    borderRadius="xl"
+                    bg="linear-gradient(135deg, #D4AF37, #F7DC6F)"
+                    filter="blur(15px)"
+                    opacity={0.5}
+                    css={{ animation: "assessmentPulse 3s ease-in-out infinite" }}
+                  />
+                  <Link href="/assessment" style={{ textDecoration: "none" }}>
+                    <Button
+                      position="relative"
+                      bg="linear-gradient(135deg, #D4AF37, #F7DC6F)"
+                      color="#0b1f3b"
+                      size="lg"
+                      px={10}
+                      h="60px"
+                      fontSize="lg"
+                      fontWeight="800"
+                      boxShadow="0 8px 30px rgba(212, 175, 55, 0.4)"
+                      _hover={{
+                        transform: "translateY(-4px) scale(1.02)",
+                        boxShadow: "0 12px 40px rgba(212, 175, 55, 0.5)",
+                      }}
+                      transition="all 0.3s ease"
+                    >
+                      {t("assessmentCta")}
+                    </Button>
+                  </Link>
+                </Box>
+              </Flex>
+            </Box>
           </Box>
 
           {/* Enhanced CTA Section with Neon Effect */}

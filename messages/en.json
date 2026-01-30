@@ -100,6 +100,85 @@
       "trustedContent": "Trusted Content",
       "certifiedCertificates": "Certified Certificates",
       "continuousSupport": "Continuous Support"
+    },
+    "advisoryBadge": "🏛️ Advisory Board",
+    "advisoryTitle": "Learn from Renowned Scholars",
+    "advisorySubtitle": "Our programs are designed and supervised by leading experts in Islamic sciences",
+    "advisors": {
+      "scholar1": {
+        "name": "Dr. Ahmad Al-Khalidi",
+        "title": "Professor of Islamic Studies",
+        "bio": "30+ years in Islamic education, former Dean of Shariah Faculty"
+      },
+      "scholar2": {
+        "name": "Sheikh Mohammed Al-Rashid",
+        "title": "Expert in Quranic Sciences",
+        "bio": "Author of 15 books, taught over 10,000 students globally"
+      },
+      "scholar3": {
+        "name": "Dr. Fatima Al-Zahra",
+        "title": "Specialist in Arabic Language",
+        "bio": "PhD from Al-Azhar, pioneer in modern Arabic teaching methods"
+      }
+    },
+    "methodologyBadge": "⭐ The Tibyan Method",
+    "methodologyTitle": "The Tibyan 5-Step Mastery Method",
+    "methodologySubtitle": "Our proven methodology ensures deep understanding, not just surface-level learning",
+    "methodologySteps": {
+      "step1": {
+        "title": "Foundation",
+        "description": "Build strong conceptual foundations with structured prerequisites"
+      },
+      "step2": {
+        "title": "Engagement",
+        "description": "Interactive lessons with multimedia content and live discussions"
+      },
+      "step3": {
+        "title": "Practice",
+        "description": "Apply knowledge through exercises, quizzes, and real-world scenarios"
+      },
+      "step4": {
+        "title": "Assessment",
+        "description": "Rigorous testing with detailed feedback and personalized guidance"
+      },
+      "step5": {
+        "title": "Mastery",
+        "description": "Achieve certification with proven competency in the subject"
+      }
+    },
+    "testimonialsBadge": "💬 Student Stories",
+    "testimonialsTitle": "Transformative Learning Experiences",
+    "testimonialsSubtitle": "Hear from students whose lives have been changed through Tibyan",
+    "testimonials": {
+      "student1": {
+        "name": "Ahmed Hassan",
+        "location": "Egypt",
+        "quote": "Tibyan transformed my understanding of Islamic sciences. The structured approach and dedicated instructors helped me achieve what I thought was impossible.",
+        "program": "Shariah Track Graduate"
+      },
+      "student2": {
+        "name": "Sarah Johnson",
+        "location": "USA",
+        "quote": "As a convert, I was overwhelmed by where to start. Tibyan's preparatory year gave me the perfect foundation with patient, knowledgeable teachers.",
+        "program": "Preparatory Year"
+      },
+      "student3": {
+        "name": "Omar Al-Farsi",
+        "location": "UAE",
+        "quote": "The question bank and assessment system pushed me to truly master the material, not just memorize. I'm now teaching others what I learned.",
+        "program": "Arabic Reading Program"
+      }
+    },
+    "partnersBadge": "🤝 Trusted By",
+    "partnersTitle": "Partnered with Leading Institutions",
+    "assessmentBadge": "📋 Free Assessment",
+    "assessmentTitle": "Discover Your Learning Path",
+    "assessmentSubtitle": "Take our 5-minute assessment to find the perfect program for your level and goals",
+    "assessmentCta": "Start Free Assessment",
+    "assessmentFeatures": {
+      "personalized": "Personalized Recommendations",
+      "freeMinutes": "5 Minutes Free",
+      "noCommitment": "No Commitment Required"
     }
   },
   "hero": {
@@ -213,5 +292,74 @@
     "hasAccount": "Already have an account?",
     "loginButton": "Login",
     "registerButton": "Create Account"
+  },
+  "assessment": {
+    "badge": "📋 Free Assessment",
+    "title": "Discover Your Perfect Learning Path",
+    "subtitle": "Answer 5 quick questions to get personalized program recommendations",
+    "question": "Question",
+    "previous": "Previous",
+    "next": "Next",
+    "seeResults": "See Results",
+    "questions": {
+      "q1": {
+        "text": "What is your current level of Islamic knowledge?",
+        "q1_a": "Complete beginner - I'm just starting my journey",
+        "q1_b": "Basic - I know the fundamentals",
+        "q1_c": "Intermediate - I have studied some topics in depth",
+        "q1_d": "Advanced - I have formal Islamic education"
+      },
+      "q2": {
+        "text": "Can you read Arabic fluently?",
+        "q2_a": "No, I cannot read Arabic",
+        "q2_b": "I can read slowly with some difficulty",
+        "q2_c": "Yes, I can read Arabic fluently"
+      },
+      "q3": {
+        "text": "What is your primary learning goal?",
+        "q3_a": "Build a strong foundation in Islamic basics",
+        "q3_b": "Learn to read and understand Arabic texts",
+        "q3_c": "Deepen my knowledge in specific areas",
+        "q3_d": "Pursue advanced scholarly studies"
+      },
+      "q4": {
+        "text": "How much time can you dedicate to studying weekly?",
+        "q4_a": "1-3 hours per week",
+        "q4_b": "4-7 hours per week",
+        "q4_c": "8+ hours per week"
+      },
+      "q5": {
+        "text": "Have you completed any formal Islamic courses before?",
+        "q5_a": "No formal courses",
+        "q5_b": "A few short courses or workshops",
+        "q5_c": "Multiple courses or a structured program"
+      }
+    },
+    "programs": {
+      "preparatory": {
+        "title": "Preparatory Year"
+      },
+      "shariah": {
+        "title": "Shariah Track"
+      },
+      "arabicReading": {
+        "title": "Arabic Reading Program"
+      }
+    },
+    "results": {
+      "badge": "🎯 Your Personalized Results",
+      "title": "Here Are Your Recommended Programs",
+      "subtitle": "Based on your answers, we've identified the best learning paths for your journey",
+      "bestMatch": "Best Match",
+      "matchScore": "Match",
+      "learnMore": "Learn More",
+      "retake": "Retake Assessment",
+      "createAccount": "Create Free Account",
+      "reasons": {
+        "preparatory": "Perfect for building a solid foundation in Islamic sciences with a structured, comprehensive approach.",
+        "shariah": "Ideal for deepening your knowledge with advanced studies in jurisprudence and Islamic principles.",
+        "arabicReading": "Great for developing your Arabic reading skills from basics to fluency."
+      }
+    }
   }
 }
