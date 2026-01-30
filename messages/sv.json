@@ -31,6 +31,153 @@
     "darkMode": "Växla till mörkt läge",
     "lightMode": "Växla till ljust läge"
   },
+  "home": {
+    "heroBadge": "Komplett islamisk läroplattform",
+    "platformName": "Tibyan",
+    "heroTitle": "Din resa mot islamisk kunskap",
+    "heroSubtitle": "Börjar här",
+    "heroDescription": "Tibyan utbildningsplattform erbjuder dig omfattande islamiska program undervisade av specialiserade elitlärare, med kontinuerlig uppföljning och solid vetenskaplig metodik",
+    "explorePrograms": "Utforska program",
+    "becomeInstructor": "Bli instruktör",
+    "stats": {
+      "courses": "Kurser",
+      "students": "Studenter",
+      "rating": "Betyg"
+    },
+    "whyTibyan": "Varför Tibyan?",
+    "featuresTitle": "Unik utbildningsupplevelse som kombinerar autenticitet och modernitet",
+    "features": {
+      "academic": {
+        "title": "Akademiskt åtagande",
+        "description": "Solid vetenskaplig metodik med kontinuerlig uppföljning av akademiska resultat"
+      },
+      "questions": {
+        "title": "Frågebank",
+        "description": "Tusentals frågor med omedelbar korrigering och analys"
+      },
+      "community": {
+        "title": "Interaktiv gemenskap",
+        "description": "Direkt kommunikation med lärare och studenter"
+      }
+    },
+    "programsBadge": "Utbildningsprogram",
+    "programsTitle": "Kompletta program för alla nivåer",
+    "programsDescription": "Olika program från nybörjare till avancerad nivå, utformade av specialister på islamiska vetenskaper",
+    "programsList": {
+      "preparatory": {
+        "title": "Förberedande år",
+        "description": "Psykologisk, kognitiv och färdighetsmässig förberedelse"
+      },
+      "shariah": {
+        "title": "Sharia-spåret",
+        "description": "Tre års specialisering inom islamiska vetenskaper"
+      },
+      "arabic": {
+        "title": "Arabisk läsning",
+        "description": "Från noll till behärskning"
+      }
+    },
+    "learnMore": "Läs mer",
+    "teachersBadge": "Elitlärarkår",
+    "teachersTitle": "Lär dig med specialiserade lärare",
+    "teachersSubtitle": "Framstående lärare inom islamiska och arabiska vetenskaper",
+    "teachersDescription": "Kurserna ges av specialiserade lärare och experter inom sina områden",
+    "startTeaching": "Börja undervisa",
+    "teacherFeatures": {
+      "qualified": "Certifierade lärare",
+      "experience": "Års erfarenhet",
+      "support": "Kontinuerlig support",
+      "followUp": "Individuell uppföljning"
+    },
+    "ctaTitle": "Börja din läranderesa idag",
+    "ctaDescription": "Gå med tusentals studenter som lär sig med Tibyan",
+    "createStudentAccount": "Skapa studentkonto",
+    "contactUs": "Kontakta oss",
+    "trustIndicators": {
+      "students": "Över 10 000 studenter",
+      "rating": "Betyg 4.9/5",
+      "certificate": "Ackrediterade certifikat"
+    },
+    "advisoryBadge": "Rådgivande styrelse",
+    "advisoryTitle": "En kommitté av framstående lärda",
+    "advisorySubtitle": "Vetenskaplig övervakning av stora lärda inom islamiska vetenskaper",
+    "advisors": {
+      "scholar1": {
+        "name": "Dr. Ahmad Al-Qari",
+        "title": "Professor i islamisk fiqh",
+        "institution": "Umm Al-Qura-universitetet"
+      },
+      "scholar2": {
+        "name": "Dr. Fatima Al-Zahra",
+        "title": "Specialist på koranstudier",
+        "institution": "Al-Azhar-universitetet"
+      },
+      "scholar3": {
+        "name": "Sheikh Abdullah Hassan",
+        "title": "Domare vid shariadomstolen",
+        "institution": "Domstolsrådet"
+      }
+    },
+    "methodologyBadge": "Vår metodik",
+    "methodologyTitle": "Tibyan 5-stegs behärskningsmetod",
+    "methodologySubtitle": "En tydlig väg från nybörjare till mästare",
+    "methodologySteps": {
+      "step1": {
+        "title": "Grund",
+        "description": "Bygga en solid grund i arabiska språket och recitationsregler"
+      },
+      "step2": {
+        "title": "Förståelse",
+        "description": "Fördjupa förståelsen av heliga texter och deras betydelser"
+      },
+      "step3": {
+        "title": "Tillämpning",
+        "description": "Tillämpa förvärvad kunskap i dagligt liv"
+      },
+      "step4": {
+        "title": "Behärskning",
+        "description": "Uppnå excellens i specifika färdigheter"
+      },
+      "step5": {
+        "title": "Undervisning",
+        "description": "Dela kunskap med andra"
+      }
+    },
+    "testimonialsBadge": "Vittnesmål",
+    "testimonialsTitle": "Vad våra studenter säger",
+    "testimonialsSubtitle": "Framgångshistorier från vår lärandegemenskap",
+    "testimonials": {
+      "student1": {
+        "name": "Omar Ahmad",
+        "location": "Saudiarabien",
+        "quote": "Tibyan har transformerat min läranderesa. Undervisningskvaliteten är exceptionell.",
+        "program": "Sharia-spåret"
+      },
+      "student2": {
+        "name": "Aisha Mohammed",
+        "location": "Egypten",
+        "quote": "Lärarna har sällsynt kompetens och interaktionen med dem är utmärkt.",
+        "program": "Arabisk läsning"
+      },
+      "student3": {
+        "name": "Yusuf Ali",
+        "location": "Marocko",
+        "quote": "Jag har slutfört det förberedande året och är redo för Sharia-spåret. Underbar upplevelse.",
+        "program": "Förberedande år"
+      }
+    },
+    "partnersBadge": "Våra partners",
+    "partnersTitle": "Omnämnd av",
+    "assessmentBadge": "Gratis bedömning",
+    "assessmentTitle": "Upptäck din nivå",
+    "assessmentSubtitle": "Ta vårt gratis test för att fastställa din nivå och få personliga rekommendationer",
+    "assessmentCta": "Starta gratis bedömning",
+    "assessmentFeatures": {
+      "time": "5 minuter",
+      "questions": "10 frågor",
+      "result": "Omedelbart resultat"
+    }
+  },
   "hero": {
     "badge": "Komplett lärandeplattform",
     "title": "Din resa mot islamisk kunskap",

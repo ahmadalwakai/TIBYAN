@@ -31,6 +31,153 @@
     "darkMode": "Passer en mode sombre",
     "lightMode": "Passer en mode clair"
   },
+  "home": {
+    "heroBadge": "Plateforme d'apprentissage islamique complète",
+    "platformName": "Tibyan",
+    "heroTitle": "Votre voyage vers le savoir islamique",
+    "heroSubtitle": "Commence ici",
+    "heroDescription": "La plateforme éducative Tibyan vous offre des programmes islamiques complets enseignés par des enseignants spécialisés d'élite, avec un suivi continu et une méthodologie scientifique solide",
+    "explorePrograms": "Explorer les programmes",
+    "becomeInstructor": "Devenir enseignant",
+    "stats": {
+      "courses": "Cours",
+      "students": "Étudiants",
+      "rating": "Évaluation"
+    },
+    "whyTibyan": "Pourquoi Tibyan ?",
+    "featuresTitle": "Expérience éducative unique alliant authenticité et modernité",
+    "features": {
+      "academic": {
+        "title": "Engagement académique",
+        "description": "Méthodologie scientifique solide avec suivi continu des résultats académiques"
+      },
+      "questions": {
+        "title": "Banque de questions",
+        "description": "Des milliers de questions avec correction et analyse instantanées"
+      },
+      "community": {
+        "title": "Communauté interactive",
+        "description": "Communication directe avec les enseignants et étudiants"
+      }
+    },
+    "programsBadge": "Programmes éducatifs",
+    "programsTitle": "Programmes complets pour tous les niveaux",
+    "programsDescription": "Des programmes diversifiés du niveau débutant au niveau avancé, conçus par des spécialistes en sciences islamiques",
+    "programsList": {
+      "preparatory": {
+        "title": "Année préparatoire",
+        "description": "Préparation psychologique, cognitive et compétences"
+      },
+      "shariah": {
+        "title": "Parcours Charia",
+        "description": "Trois années de spécialisation en sciences islamiques"
+      },
+      "arabic": {
+        "title": "Lecture arabe",
+        "description": "De zéro à la maîtrise"
+      }
+    },
+    "learnMore": "En savoir plus",
+    "teachersBadge": "Corps enseignant d'élite",
+    "teachersTitle": "Apprenez avec des enseignants spécialisés",
+    "teachersSubtitle": "Des enseignants distingués dans les sciences islamiques et arabes",
+    "teachersDescription": "Les cours sont dispensés par des enseignants spécialisés et des experts dans leurs domaines",
+    "startTeaching": "Commencer l'enseignement",
+    "teacherFeatures": {
+      "qualified": "Enseignants certifiés",
+      "experience": "Des années d'expérience",
+      "support": "Support continu",
+      "followUp": "Suivi individuel"
+    },
+    "ctaTitle": "Commencez votre parcours d'apprentissage aujourd'hui",
+    "ctaDescription": "Rejoignez des milliers d'étudiants qui apprennent avec Tibyan",
+    "createStudentAccount": "Créer un compte étudiant",
+    "contactUs": "Contactez-nous",
+    "trustIndicators": {
+      "students": "+ de 10 000 étudiants",
+      "rating": "Évaluation 4.9/5",
+      "certificate": "Certificats accrédités"
+    },
+    "advisoryBadge": "Conseil consultatif",
+    "advisoryTitle": "Un comité de savants distingués",
+    "advisorySubtitle": "Supervision scientifique de grands savants dans les sciences islamiques",
+    "advisors": {
+      "scholar1": {
+        "name": "Dr. Ahmad Al-Qari",
+        "title": "Professeur de Fiqh Islamique",
+        "institution": "Université Umm Al-Qura"
+      },
+      "scholar2": {
+        "name": "Dr. Fatima Al-Zahra",
+        "title": "Spécialiste des études coraniques",
+        "institution": "Université Al-Azhar"
+      },
+      "scholar3": {
+        "name": "Sheikh Abdullah Hassan",
+        "title": "Juge au tribunal de la charia",
+        "institution": "Conseil de la magistrature"
+      }
+    },
+    "methodologyBadge": "Notre méthodologie",
+    "methodologyTitle": "La méthode de maîtrise Tibyan en 5 étapes",
+    "methodologySubtitle": "Un parcours clair de débutant à maître",
+    "methodologySteps": {
+      "step1": {
+        "title": "Fondation",
+        "description": "Construire une base solide en langue arabe et en règles de récitation"
+      },
+      "step2": {
+        "title": "Compréhension",
+        "description": "Approfondir la compréhension des textes sacrés et de leurs significations"
+      },
+      "step3": {
+        "title": "Application",
+        "description": "Appliquer les connaissances acquises dans la vie quotidienne"
+      },
+      "step4": {
+        "title": "Maîtrise",
+        "description": "Atteindre l'excellence dans les compétences ciblées"
+      },
+      "step5": {
+        "title": "Enseignement",
+        "description": "Partager les connaissances avec les autres"
+      }
+    },
+    "testimonialsBadge": "Témoignages",
+    "testimonialsTitle": "Ce que disent nos étudiants",
+    "testimonialsSubtitle": "Des histoires de réussite de notre communauté apprenante",
+    "testimonials": {
+      "student1": {
+        "name": "Omar Ahmad",
+        "location": "Arabie Saoudite",
+        "quote": "Tibyan a transformé mon parcours d'apprentissage. La qualité de l'enseignement est exceptionnelle.",
+        "program": "Parcours Charia"
+      },
+      "student2": {
+        "name": "Aisha Mohammed",
+        "location": "Égypte",
+        "quote": "Les enseignants sont d'une compétence rare et l'interaction avec eux est excellente.",
+        "program": "Lecture arabe"
+      },
+      "student3": {
+        "name": "Yusuf Ali",
+        "location": "Maroc",
+        "quote": "J'ai terminé l'année préparatoire et je suis prêt pour le parcours Charia. Expérience merveilleuse.",
+        "program": "Année préparatoire"
+      }
+    },
+    "partnersBadge": "Nos partenaires",
+    "partnersTitle": "Mentionné par",
+    "assessmentBadge": "Évaluation gratuite",
+    "assessmentTitle": "Découvrez votre niveau",
+    "assessmentSubtitle": "Passez notre test gratuit pour déterminer votre niveau et obtenir des recommandations personnalisées",
+    "assessmentCta": "Commencer l'évaluation gratuite",
+    "assessmentFeatures": {
+      "time": "5 minutes",
+      "questions": "10 questions",
+      "result": "Résultat immédiat"
+    }
+  },
   "hero": {
     "badge": "Plateforme d'apprentissage complète",
     "title": "Votre voyage vers le savoir islamique",

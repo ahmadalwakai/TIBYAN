@@ -31,6 +31,153 @@
     "darkMode": "Karanlık Moda Geç",
     "lightMode": "Aydınlık Moda Geç"
   },
+  "home": {
+    "heroBadge": "Kapsamlı İslami Öğrenme Platformu",
+    "platformName": "Tibyan",
+    "heroTitle": "İslami Bilgiye Yolculuğunuz",
+    "heroSubtitle": "Burada Başlıyor",
+    "heroDescription": "Tibyan eğitim platformu, sürekli takip ve sağlam bilimsel metodoloji ile uzman seçkin öğretmenler tarafından verilen kapsamlı İslami programlar sunar",
+    "explorePrograms": "Programları Keşfet",
+    "becomeInstructor": "Eğitmen Ol",
+    "stats": {
+      "courses": "Kurslar",
+      "students": "Öğrenciler",
+      "rating": "Değerlendirme"
+    },
+    "whyTibyan": "Neden Tibyan?",
+    "featuresTitle": "Özgünlük ve modernliği birleştiren benzersiz eğitim deneyimi",
+    "features": {
+      "academic": {
+        "title": "Akademik Bağlılık",
+        "description": "Akademik performansın sürekli takibi ile sağlam bilimsel metodoloji"
+      },
+      "questions": {
+        "title": "Soru Bankası",
+        "description": "Anında düzeltme ve analiz ile binlerce soru"
+      },
+      "community": {
+        "title": "Etkileşimli Topluluk",
+        "description": "Öğretmenler ve öğrencilerle doğrudan iletişim"
+      }
+    },
+    "programsBadge": "Eğitim Programları",
+    "programsTitle": "Tüm seviyeler için kapsamlı programlar",
+    "programsDescription": "İslami bilimler uzmanları tarafından tasarlanan, başlangıç seviyesinden ileri seviyeye kadar çeşitli programlar",
+    "programsList": {
+      "preparatory": {
+        "title": "Hazırlık Yılı",
+        "description": "Psikolojik, bilişsel ve beceri hazırlığı"
+      },
+      "shariah": {
+        "title": "Şeriat Yolu",
+        "description": "İslami bilimlerde üç yıllık uzmanlık"
+      },
+      "arabic": {
+        "title": "Arapça Okuma",
+        "description": "Sıfırdan ustalığa"
+      }
+    },
+    "learnMore": "Daha Fazla Bilgi",
+    "teachersBadge": "Seçkin Öğretim Kadrosu",
+    "teachersTitle": "Uzman öğretmenlerle öğrenin",
+    "teachersSubtitle": "İslami ve Arap bilimlerinde seçkin öğretmenler",
+    "teachersDescription": "Kurslar alanlarında uzman öğretmenler ve profesyoneller tarafından verilir",
+    "startTeaching": "Öğretmeye Başla",
+    "teacherFeatures": {
+      "qualified": "Sertifikalı öğretmenler",
+      "experience": "Yıllarca deneyim",
+      "support": "Sürekli destek",
+      "followUp": "Bireysel takip"
+    },
+    "ctaTitle": "Bugün öğrenme yolculuğunuza başlayın",
+    "ctaDescription": "Tibyan ile öğrenen binlerce öğrenciye katılın",
+    "createStudentAccount": "Öğrenci hesabı oluştur",
+    "contactUs": "Bize Ulaşın",
+    "trustIndicators": {
+      "students": "10.000'den fazla öğrenci",
+      "rating": "4.9/5 değerlendirme",
+      "certificate": "Akredite sertifikalar"
+    },
+    "advisoryBadge": "Danışma Kurulu",
+    "advisoryTitle": "Seçkin alimlerden oluşan bir komite",
+    "advisorySubtitle": "İslami bilimlerde büyük alimlerden bilimsel gözetim",
+    "advisors": {
+      "scholar1": {
+        "name": "Dr. Ahmad Al-Qari",
+        "title": "İslami Fıkıh Profesörü",
+        "institution": "Umm Al-Qura Üniversitesi"
+      },
+      "scholar2": {
+        "name": "Dr. Fatima Al-Zahra",
+        "title": "Kur'an çalışmaları uzmanı",
+        "institution": "Al-Azhar Üniversitesi"
+      },
+      "scholar3": {
+        "name": "Şeyh Abdullah Hassan",
+        "title": "Şeriat mahkemesi hakimi",
+        "institution": "Yargı Konseyi"
+      }
+    },
+    "methodologyBadge": "Metodolojimiz",
+    "methodologyTitle": "Tibyan 5 Adım Ustalık Metodu",
+    "methodologySubtitle": "Başlangıçtan ustalığa net bir yol",
+    "methodologySteps": {
+      "step1": {
+        "title": "Temel",
+        "description": "Arapça ve tilavet kurallarında sağlam bir temel oluşturma"
+      },
+      "step2": {
+        "title": "Anlayış",
+        "description": "Kutsal metinlerin ve anlamlarının derinlemesine anlaşılması"
+      },
+      "step3": {
+        "title": "Uygulama",
+        "description": "Edinilen bilginin günlük yaşamda uygulanması"
+      },
+      "step4": {
+        "title": "Ustalık",
+        "description": "Hedeflenen becerilerde mükemmelliğe ulaşma"
+      },
+      "step5": {
+        "title": "Öğretim",
+        "description": "Bilgiyi başkalarıyla paylaşma"
+      }
+    },
+    "testimonialsBadge": "Referanslar",
+    "testimonialsTitle": "Öğrencilerimiz ne diyor",
+    "testimonialsSubtitle": "Öğrenme topluluğumuzdan başarı hikayeleri",
+    "testimonials": {
+      "student1": {
+        "name": "Omar Ahmad",
+        "location": "Suudi Arabistan",
+        "quote": "Tibyan öğrenme yolculuğumu dönüştürdü. Eğitim kalitesi olağanüstü.",
+        "program": "Şeriat Yolu"
+      },
+      "student2": {
+        "name": "Aisha Mohammed",
+        "location": "Mısır",
+        "quote": "Öğretmenler nadir bir yetkinliğe sahip ve onlarla etkileşim mükemmel.",
+        "program": "Arapça Okuma"
+      },
+      "student3": {
+        "name": "Yusuf Ali",
+        "location": "Fas",
+        "quote": "Hazırlık yılını tamamladım ve Şeriat yoluna hazırım. Harika bir deneyim.",
+        "program": "Hazırlık Yılı"
+      }
+    },
+    "partnersBadge": "Ortaklarımız",
+    "partnersTitle": "Bahsedildi",
+    "assessmentBadge": "Ücretsiz Değerlendirme",
+    "assessmentTitle": "Seviyenizi keşfedin",
+    "assessmentSubtitle": "Seviyenizi belirlemek ve kişiselleştirilmiş öneriler almak için ücretsiz testimizi yapın",
+    "assessmentCta": "Ücretsiz değerlendirmeye başla",
+    "assessmentFeatures": {
+      "time": "5 dakika",
+      "questions": "10 soru",
+      "result": "Anında sonuç"
+    }
+  },
   "hero": {
     "badge": "Kapsamlı Öğrenme Platformu",
     "title": "İslami Bilgiye Yolculuğunuz",

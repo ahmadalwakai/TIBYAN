@@ -174,7 +174,6 @@ export default function Home() {
           loop
           playsInline
           preload="metadata"
-          poster="/videos/hero-poster.jpg"
           onError={(e) => {
             // Fallback: hide video if it fails to load
             e.currentTarget.style.display = 'none';

@@ -31,6 +31,153 @@
     "darkMode": "Cambiar a modo oscuro",
     "lightMode": "Cambiar a modo claro"
   },
+  "home": {
+    "heroBadge": "Plataforma integral de aprendizaje islámico",
+    "platformName": "Tibyan",
+    "heroTitle": "Tu viaje hacia el conocimiento islámico",
+    "heroSubtitle": "Comienza aquí",
+    "heroDescription": "La plataforma educativa Tibyan te ofrece programas islámicos completos impartidos por profesores especializados de élite, con seguimiento continuo y metodología científica sólida",
+    "explorePrograms": "Explorar programas",
+    "becomeInstructor": "Convertirse en instructor",
+    "stats": {
+      "courses": "Cursos",
+      "students": "Estudiantes",
+      "rating": "Calificación"
+    },
+    "whyTibyan": "¿Por qué Tibyan?",
+    "featuresTitle": "Experiencia educativa única que combina autenticidad y modernidad",
+    "features": {
+      "academic": {
+        "title": "Compromiso académico",
+        "description": "Metodología científica sólida con seguimiento continuo del rendimiento académico"
+      },
+      "questions": {
+        "title": "Banco de preguntas",
+        "description": "Miles de preguntas con corrección y análisis instantáneos"
+      },
+      "community": {
+        "title": "Comunidad interactiva",
+        "description": "Comunicación directa con profesores y estudiantes"
+      }
+    },
+    "programsBadge": "Programas educativos",
+    "programsTitle": "Programas completos para todos los niveles",
+    "programsDescription": "Programas diversos desde nivel principiante hasta avanzado, diseñados por especialistas en ciencias islámicas",
+    "programsList": {
+      "preparatory": {
+        "title": "Año preparatorio",
+        "description": "Preparación psicológica, cognitiva y de habilidades"
+      },
+      "shariah": {
+        "title": "Itinerario de Sharia",
+        "description": "Tres años de especialización en ciencias islámicas"
+      },
+      "arabic": {
+        "title": "Lectura árabe",
+        "description": "De cero a dominio"
+      }
+    },
+    "learnMore": "Saber más",
+    "teachersBadge": "Cuerpo docente de élite",
+    "teachersTitle": "Aprende con profesores especializados",
+    "teachersSubtitle": "Profesores distinguidos en ciencias islámicas y árabes",
+    "teachersDescription": "Los cursos son impartidos por profesores especializados y expertos en sus campos",
+    "startTeaching": "Comenzar a enseñar",
+    "teacherFeatures": {
+      "qualified": "Profesores certificados",
+      "experience": "Años de experiencia",
+      "support": "Soporte continuo",
+      "followUp": "Seguimiento individual"
+    },
+    "ctaTitle": "Comienza tu viaje de aprendizaje hoy",
+    "ctaDescription": "Únete a miles de estudiantes que aprenden con Tibyan",
+    "createStudentAccount": "Crear cuenta de estudiante",
+    "contactUs": "Contáctanos",
+    "trustIndicators": {
+      "students": "Más de 10,000 estudiantes",
+      "rating": "Calificación 4.9/5",
+      "certificate": "Certificados acreditados"
+    },
+    "advisoryBadge": "Consejo asesor",
+    "advisoryTitle": "Un comité de eruditos distinguidos",
+    "advisorySubtitle": "Supervisión científica de grandes eruditos en ciencias islámicas",
+    "advisors": {
+      "scholar1": {
+        "name": "Dr. Ahmad Al-Qari",
+        "title": "Profesor de Fiqh Islámico",
+        "institution": "Universidad Umm Al-Qura"
+      },
+      "scholar2": {
+        "name": "Dra. Fatima Al-Zahra",
+        "title": "Especialista en estudios coránicos",
+        "institution": "Universidad Al-Azhar"
+      },
+      "scholar3": {
+        "name": "Sheikh Abdullah Hassan",
+        "title": "Juez en el tribunal de la sharia",
+        "institution": "Consejo de la magistratura"
+      }
+    },
+    "methodologyBadge": "Nuestra metodología",
+    "methodologyTitle": "El método de dominio Tibyan en 5 pasos",
+    "methodologySubtitle": "Un camino claro de principiante a maestro",
+    "methodologySteps": {
+      "step1": {
+        "title": "Fundamento",
+        "description": "Construir una base sólida en lengua árabe y reglas de recitación"
+      },
+      "step2": {
+        "title": "Comprensión",
+        "description": "Profundizar la comprensión de los textos sagrados y sus significados"
+      },
+      "step3": {
+        "title": "Aplicación",
+        "description": "Aplicar el conocimiento adquirido en la vida diaria"
+      },
+      "step4": {
+        "title": "Dominio",
+        "description": "Alcanzar la excelencia en las habilidades específicas"
+      },
+      "step5": {
+        "title": "Enseñanza",
+        "description": "Compartir el conocimiento con otros"
+      }
+    },
+    "testimonialsBadge": "Testimonios",
+    "testimonialsTitle": "Lo que dicen nuestros estudiantes",
+    "testimonialsSubtitle": "Historias de éxito de nuestra comunidad de aprendizaje",
+    "testimonials": {
+      "student1": {
+        "name": "Omar Ahmad",
+        "location": "Arabia Saudita",
+        "quote": "Tibyan ha transformado mi viaje de aprendizaje. La calidad de la enseñanza es excepcional.",
+        "program": "Itinerario de Sharia"
+      },
+      "student2": {
+        "name": "Aisha Mohammed",
+        "location": "Egipto",
+        "quote": "Los profesores son de una competencia rara y la interacción con ellos es excelente.",
+        "program": "Lectura árabe"
+      },
+      "student3": {
+        "name": "Yusuf Ali",
+        "location": "Marruecos",
+        "quote": "Completé el año preparatorio y estoy listo para el itinerario de Sharia. Experiencia maravillosa.",
+        "program": "Año preparatorio"
+      }
+    },
+    "partnersBadge": "Nuestros socios",
+    "partnersTitle": "Mencionado en",
+    "assessmentBadge": "Evaluación gratuita",
+    "assessmentTitle": "Descubre tu nivel",
+    "assessmentSubtitle": "Realiza nuestra prueba gratuita para determinar tu nivel y obtener recomendaciones personalizadas",
+    "assessmentCta": "Comenzar evaluación gratuita",
+    "assessmentFeatures": {
+      "time": "5 minutos",
+      "questions": "10 preguntas",
+      "result": "Resultado inmediato"
+    }
+  },
   "hero": {
     "badge": "Plataforma de aprendizaje completa",
     "title": "Tu viaje hacia el conocimiento islámico",

@@ -31,6 +31,156 @@
     "darkMode": "Zum Dunkelmodus wechseln",
     "lightMode": "Zum Hellmodus wechseln"
   },
+  "home": {
+    "heroBadge": "✨ Die neue Generation arabischer Bildungsplattformen",
+    "platformName": "Tibyan Plattform | تبيان",
+    "heroTitle": "Lernen mit professionellen Standards",
+    "heroSubtitle": "Durch vertrauenswürdige Wissenspfade 📚",
+    "heroDescription": "Ein vollständiges Lernerlebnis, das <strong>strukturierte Inhalte</strong>, <strong>Bildungsengagement</strong>, <strong>fortgeschrittene Bewertungen</strong> und interaktive Gemeinschaft in einer modernen arabischen Benutzeroberfläche vereint.",
+    "explorePrograms": "🚀 Programme erkunden",
+    "becomeInstructor": "👨‍🏫 Dozent werden",
+    "stats": {
+      "programs": "Programme",
+      "activeStudents": "Aktive Studenten",
+      "rating": "Bewertung"
+    },
+    "whyTibyan": "✨ Warum Tibyan?",
+    "featuresTitle": "Funktionen, die uns zur ersten Wahl machen",
+    "features": {
+      "academicCommitment": {
+        "title": "Akademisches Engagement",
+        "description": "Lektionsabschlussregeln verhindern oberflächliches Lernen und gewährleisten echtes, tiefes Verständnis des Inhalts."
+      },
+      "questionBank": {
+        "title": "Fortgeschrittene Fragenbank",
+        "description": "Mehrere Fragetypen, wiederholte Versuche und sofortige automatisierte Bewertungen mit detailliertem Feedback."
+      },
+      "interactiveCommunity": {
+        "title": "Interaktive Gemeinschaft",
+        "description": "Live-Diskussionen innerhalb der Lektionen mit sofortiger Unterstützung von Dozenten und genehmigten Antworten."
+      }
+    },
+    "programsBadge": "🎓 Umfassende Bildungswege",
+    "programsTitle": "Programme, die sorgfältig für Wissens- und berufliches Wachstum konzipiert wurden",
+    "programsDescription": "Vom Vorbereitungsjahr bis zu spezialisierten Programmen bieten wir Wege, die authentische Inhalte, praktische Anwendung und fortgeschrittene Bewertung kombinieren, um echte und nachhaltige Wirkung zu gewährleisten.",
+    "programsList": {
+      "preparatory": {
+        "title": "Vorbereitungsjahr",
+        "description": "Solide Grundlage in islamischen Wissenschaften",
+        "sessions": "160 Sitzungen"
+      },
+      "shariah": {
+        "title": "Scharia-Studiengang",
+        "description": "Tiefe Spezialisierung in Rechtswissenschaft und Prinzipien",
+        "sessions": "96-112 Sitzungen"
+      },
+      "arabicReading": {
+        "title": "Arabisch-Leseprogramm",
+        "description": "Von Buchstaben zur Sprachgewandtheit",
+        "sessions": "112 Sitzungen"
+      }
+    },
+    "learnMore": "Mehr erfahren",
+    "teachersBadge": "👨‍🏫 Für professionelle Dozenten",
+    "teachersTitle": "Leistungsstarke Werkzeuge für",
+    "teachersSubtitle": "Ein außergewöhnliches Bildungserlebnis",
+    "teachersDescription": "Flexibler visueller Kursersteller, Multimedia-Inhalts-Upload, intelligente Quiz-Erstellung und umfassende Leistungsanalysen, um das Niveau Ihrer Studenten kontinuierlich zu verbessern.",
+    "startTeaching": "✨ Jetzt mit Unterrichten beginnen",
+    "teacherFeatures": {
+      "dragDrop": "Lehrplan per Drag & Drop erstellen",
+      "qualityReview": "Qualitätsprüfung vor Veröffentlichung",
+      "analytics": "Fortgeschrittene Engagement-Analysen",
+      "smartAssessment": "Intelligentes automatisiertes Bewertungssystem"
+    },
+    "ctaTitle": "Starten Sie heute Ihre Bildungsreise mit Tibyan",
+    "ctaDescription": "Treten Sie Tausenden von Studenten und Lehrern in der Wissensgemeinschaft bei und beginnen Sie, Ihren Bildungsweg mit Vertrauen und Klarheit aufzubauen.",
+    "createStudentAccount": "🎓 Studentenkonto erstellen",
+    "contactUs": "💬 Kontaktieren Sie uns",
+    "trustIndicators": {
+      "trustedContent": "Vertrauenswürdige Inhalte",
+      "certifiedCertificates": "Zertifizierte Zertifikate",
+      "continuousSupport": "Kontinuierliche Unterstützung"
+    },
+    "advisoryBadge": "🏛️ Beirat",
+    "advisoryTitle": "Lernen von renommierten Gelehrten",
+    "advisorySubtitle": "Unsere Programme werden von führenden Experten in islamischen Wissenschaften entworfen und betreut",
+    "advisors": {
+      "scholar1": {
+        "name": "Dr. Ahmad Al-Khalidi",
+        "title": "Professor für Islamische Studien",
+        "bio": "30+ Jahre in islamischer Bildung, ehemaliger Dekan der Scharia-Fakultät"
+      },
+      "scholar2": {
+        "name": "Sheikh Mohammed Al-Rashid",
+        "title": "Experte für Koranwissenschaften",
+        "bio": "Autor von 15 Büchern, hat über 10.000 Studenten weltweit unterrichtet"
+      },
+      "scholar3": {
+        "name": "Dr. Fatima Al-Zahra",
+        "title": "Spezialistin für Arabische Sprache",
+        "bio": "PhD von Al-Azhar, Pionierin moderner Arabisch-Lehrmethoden"
+      }
+    },
+    "methodologyBadge": "⭐ Die Tibyan-Methode",
+    "methodologyTitle": "Die Tibyan 5-Stufen-Meisterschaftsmethode",
+    "methodologySubtitle": "Unsere bewährte Methodik gewährleistet tiefes Verständnis, nicht nur oberflächliches Lernen",
+    "methodologySteps": {
+      "step1": {
+        "title": "Grundlage",
+        "description": "Starke konzeptuelle Grundlagen mit strukturierten Voraussetzungen aufbauen"
+      },
+      "step2": {
+        "title": "Engagement",
+        "description": "Interaktive Lektionen mit Multimedia-Inhalten und Live-Diskussionen"
+      },
+      "step3": {
+        "title": "Übung",
+        "description": "Wissen durch Übungen, Quizze und reale Szenarien anwenden"
+      },
+      "step4": {
+        "title": "Bewertung",
+        "description": "Rigorose Prüfungen mit detailliertem Feedback und persönlicher Anleitung"
+      },
+      "step5": {
+        "title": "Meisterschaft",
+        "description": "Zertifizierung mit nachgewiesener Kompetenz im Fach erreichen"
+      }
+    },
+    "testimonialsBadge": "💬 Studentengeschichten",
+    "testimonialsTitle": "Transformative Lernerfahrungen",
+    "testimonialsSubtitle": "Hören Sie von Studenten, deren Leben sich durch Tibyan verändert hat",
+    "testimonials": {
+      "student1": {
+        "name": "Ahmed Hassan",
+        "location": "Ägypten",
+        "quote": "Tibyan hat mein Verständnis der islamischen Wissenschaften transformiert. Der strukturierte Ansatz und die engagierten Dozenten halfen mir, das zu erreichen, was ich für unmöglich hielt.",
+        "program": "Scharia-Studiengang Absolvent"
+      },
+      "student2": {
+        "name": "Sarah Johnson",
+        "location": "USA",
+        "quote": "Als Konvertitin war ich überwältigt, wo ich anfangen sollte. Tibyans Vorbereitungsjahr gab mir die perfekte Grundlage mit geduldigen, sachkundigen Lehrern.",
+        "program": "Vorbereitungsjahr"
+      },
+      "student3": {
+        "name": "Omar Al-Farsi",
+        "location": "VAE",
+        "quote": "Die Fragenbank und das Bewertungssystem haben mich dazu gebracht, das Material wirklich zu beherrschen, nicht nur auswendig zu lernen. Ich unterrichte jetzt andere, was ich gelernt habe.",
+        "program": "Arabisch-Leseprogramm"
+      }
+    },
+    "partnersBadge": "🤝 Vertraut von",
+    "partnersTitle": "Partnerschaften mit führenden Institutionen",
+    "assessmentBadge": "📋 Kostenlose Bewertung",
+    "assessmentTitle": "Entdecken Sie Ihren Lernpfad",
+    "assessmentSubtitle": "Machen Sie unsere 5-minütige Bewertung, um das perfekte Programm für Ihr Niveau und Ihre Ziele zu finden",
+    "assessmentCta": "Kostenlose Bewertung starten",
+    "assessmentFeatures": {
+      "personalized": "Personalisierte Empfehlungen",
+      "freeMinutes": "5 Minuten kostenlos",
+      "noCommitment": "Keine Verpflichtung erforderlich"
+    }
+  },
   "hero": {
     "badge": "Vollständige Lernplattform",
     "title": "Ihre Reise zum islamischen Wissen",
