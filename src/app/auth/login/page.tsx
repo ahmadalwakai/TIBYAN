@@ -1,11 +1,10 @@
 "use client";
 
-import { Box, Button, Container, Heading, Input, Stack, Text } from "@chakra-ui/react";
+import { Box, Button, Container, Heading, Input, Stack, Text, Spinner } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, FormEvent, Suspense } from "react";
 import PremiumCard from "@/components/ui/PremiumCard";
-import { login } from "@/lib/auth-client";
 
 function LoginForm() {
   const router = useRouter();
@@ -24,22 +23,25 @@ function LoginForm() {
     setLoading(true);
 
     try {
-      const result = await login({ email, password });
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
       
-      if (result.ok) {
-        // Get user role from cookie to determine redirect
-        const userRole = document.cookie
-          .split('; ')
-          .find(row => row.startsWith('user-role='))
-          ?.split('=')[1];
+      if (data.ok) {
+        // Get user role from response to determine redirect
+        const userRole = data.data?.user?.role;
         
         // If there's a redirect param, use it, otherwise redirect based on role
-        const destination = redirect || (userRole === 'admin' ? '/admin' : '/courses');
+        const destination = redirect || (userRole === 'ADMIN' ? '/admin' : '/courses');
         
         router.push(destination);
         router.refresh();
       } else {
-        setError(result.error || "فشل تسجيل الدخول");
+        setError(data.error || "فشل تسجيل الدخول");
       }
     } catch {
       setError("حدث خطأ أثناء تسجيل الدخول");
@@ -182,8 +184,18 @@ function LoginForm() {
                   }}
                   transition="all 0.2s"
                 >
-                  {loading ? "جارٍ تسجيل الدخول..." : "دخول"}
+                  {loading ? <Spinner size="sm" /> : "دخول"}
                 </Button>
+                <Link href="/auth/forgot-password" style={{ textDecoration: "none" }}>
+                  <Text
+                    color="brand.700"
+                    fontSize="sm"
+                    textAlign="center"
+                    _hover={{ textDecoration: "underline" }}
+                  >
+                    نسيت كلمة المرور؟
+                  </Text>
+                </Link>
               </Stack>
             </form>
 

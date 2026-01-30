@@ -13,6 +13,9 @@ const createPrismaClient = () => {
 // Use global instance to prevent multiple connections in development
 export const db = globalForPrisma.prisma ?? createPrismaClient();
 
+// Alias for convenience
+export const prisma = db;
+
 if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = db;
 }

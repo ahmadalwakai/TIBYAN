@@ -98,3 +98,34 @@ export const UpdatePaymentStatusSchema = z.object({
 
 export type CreatePaymentInput = z.infer<typeof CreatePaymentSchema>;
 export type UpdatePaymentStatusInput = z.infer<typeof UpdatePaymentStatusSchema>;
+
+// Auth Schemas
+export const RegisterSchema = z.object({
+  name: z.string().min(2, "الاسم يجب أن يكون حرفين على الأقل"),
+  email: z.string().email("البريد الإلكتروني غير صحيح"),
+  password: z.string().min(8, "كلمة المرور يجب أن تكون 8 أحرف على الأقل"),
+});
+
+export const LoginSchema = z.object({
+  email: z.string().email("البريد الإلكتروني غير صحيح"),
+  password: z.string().min(1, "كلمة المرور مطلوبة"),
+});
+
+export const ForgotPasswordSchema = z.object({
+  email: z.string().email("البريد الإلكتروني غير صحيح"),
+});
+
+export const ResetPasswordSchema = z.object({
+  token: z.string().min(1, "الرمز مطلوب"),
+  password: z.string().min(8, "كلمة المرور يجب أن تكون 8 أحرف على الأقل"),
+});
+
+export const VerifyEmailSchema = z.object({
+  token: z.string().min(1, "الرمز مطلوب"),
+});
+
+export type RegisterInput = z.infer<typeof RegisterSchema>;
+export type LoginInput = z.infer<typeof LoginSchema>;
+export type ForgotPasswordInput = z.infer<typeof ForgotPasswordSchema>;
+export type ResetPasswordInput = z.infer<typeof ResetPasswordSchema>;
+export type VerifyEmailInput = z.infer<typeof VerifyEmailSchema>;
