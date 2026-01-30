@@ -77,25 +77,23 @@ export default function CheckoutConfirmationPage() {
             </Stack>
 
             <Stack gap={3} direction={{ base: "column", sm: "row" }} w="100%" pt={4}>
-              <Link href="/" style={{ flex: 1 }}>
-                <Button
-                  variant="outline"
-                  colorPalette="brand"
-                  w="100%"
-                >
-                  العودة للرئيسية
-                </Button>
-              </Link>
-              <Link href="/courses" style={{ flex: 1 }}>
-                <Button
-                  bg="brand.900"
-                  color="white"
-                  w="100%"
-                  _hover={{ bg: "brand.700" }}
-                >
-                  تصفح الدورات
-                </Button>
-              </Link>
+              <Button
+                asChild
+                variant="outline"
+                colorPalette="brand"
+                w="100%"
+              >
+                <Link href="/">العودة للرئيسية</Link>
+              </Button>
+              <Button
+                asChild
+                bg="brand.900"
+                color="white"
+                w="100%"
+                _hover={{ bg: "brand.700" }}
+              >
+                <Link href="/courses">تصفح الدورات</Link>
+              </Button>
             </Stack>
 
             <Text fontSize="sm" color="muted" pt={4}>

@@ -106,21 +106,20 @@ function VerifyEmailContent() {
                   تم التحقق بنجاح!
                 </Heading>
                 <Text color="muted">{message}</Text>
-                <Link href="/auth/login" style={{ width: "100%" }}>
-                  <Button
-                    w="100%"
-                    bgGradient="linear(to-r, brand.900, brand.700)"
-                    color="white"
-                    _hover={{
-                      bgGradient: "linear(to-r, brand.800, brand.600)",
-                      transform: "translateY(-1px)",
-                      boxShadow: "lg"
-                    }}
-                    transition="all 0.2s"
-                  >
-                    تسجيل الدخول
-                  </Button>
-                </Link>
+                <Button
+                  asChild
+                  w="100%"
+                  bgGradient="linear(to-r, brand.900, brand.700)"
+                  color="white"
+                  _hover={{
+                    bgGradient: "linear(to-r, brand.800, brand.600)",
+                    transform: "translateY(-1px)",
+                    boxShadow: "lg"
+                  }}
+                  transition="all 0.2s"
+                >
+                  <Link href="/auth/login">تسجيل الدخول</Link>
+                </Button>
               </>
             )}
             
@@ -147,29 +146,27 @@ function VerifyEmailContent() {
                 </Heading>
                 <Text color="muted">{message}</Text>
                 <Stack direction="row" gap={4} w="100%">
-                  <Link href="/auth/register" style={{ flex: 1 }}>
-                    <Button
-                      w="100%"
-                      variant="outline"
-                      borderColor="brand.500"
-                      color="brand.500"
-                      _hover={{ bg: "brand.50" }}
-                    >
-                      تسجيل جديد
-                    </Button>
-                  </Link>
-                  <Link href="/auth/login" style={{ flex: 1 }}>
-                    <Button
-                      w="100%"
-                      bgGradient="linear(to-r, brand.900, brand.700)"
-                      color="white"
-                      _hover={{
-                        bgGradient: "linear(to-r, brand.800, brand.600)",
-                      }}
-                    >
-                      تسجيل الدخول
-                    </Button>
-                  </Link>
+                  <Button
+                    asChild
+                    w="100%"
+                    variant="outline"
+                    borderColor="brand.500"
+                    color="brand.500"
+                    _hover={{ bg: "brand.50" }}
+                  >
+                    <Link href="/auth/register">تسجيل جديد</Link>
+                  </Button>
+                  <Button
+                    asChild
+                    w="100%"
+                    bgGradient="linear(to-r, brand.900, brand.700)"
+                    color="white"
+                    _hover={{
+                      bgGradient: "linear(to-r, brand.800, brand.600)",
+                    }}
+                  >
+                    <Link href="/auth/login">تسجيل الدخول</Link>
+                  </Button>
                 </Stack>
               </>
             )}

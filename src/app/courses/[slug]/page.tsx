@@ -62,11 +62,9 @@ export default function CourseDetailPage() {
       <Container maxW="6xl" py={{ base: 12, md: 20 }} px={{ base: 6, md: 8 }}>
         <Stack gap={8}>
           {/* Back Button */}
-          <Link href="/courses">
-            <Button variant="ghost" size="sm">
-              → العودة للدورات
-            </Button>
-          </Link>
+          <Button asChild variant="ghost" size="sm">
+            <Link href="/courses">→ العودة للدورات</Link>
+          </Button>
 
           {/* Header */}
           <SimpleGrid columns={{ base: 1, lg: 2 }} gap={8}>
@@ -124,20 +122,19 @@ export default function CourseDetailPage() {
                 </Stack>
 
                 <Stack gap={3}>
-                  <Link href={`/checkout/${course.slug}`}>
-                    <Button
-                      bg="brand.900"
-                      color="white"
-                      size="lg"
-                      fontSize="md"
-                      fontWeight="700"
-                      w="100%"
-                      py={6}
-                      _hover={{ bg: "brand.700" }}
-                    >
-                      سجّل الآن 🚀
-                    </Button>
-                  </Link>
+                  <Button
+                    asChild
+                    bg="brand.900"
+                    color="white"
+                    size="lg"
+                    fontSize="md"
+                    fontWeight="700"
+                    w="100%"
+                    py={6}
+                    _hover={{ bg: "brand.700" }}
+                  >
+                    <Link href={`/checkout/${course.slug}`}>سجّل الآن 🚀</Link>
+                  </Button>
                   <Text fontSize="xs" color="muted" textAlign="center">
                     ضمان استرداد الأموال خلال 14 يوم
                   </Text>
@@ -245,18 +242,17 @@ export default function CourseDetailPage() {
                   انضم إلى آلاف الطلاب واستثمر في نفسك
                 </Text>
               </Stack>
-              <Link href={`/checkout/${course.slug}`}>
-                <Button
-                  bg="white"
-                  color="brand.900"
-                  size="lg"
-                  px={8}
-                  fontWeight="700"
-                  _hover={{ bg: "gray.100" }}
-                >
-                  سجّل الآن
-                </Button>
-              </Link>
+              <Button
+                asChild
+                bg="white"
+                color="brand.900"
+                size="lg"
+                px={8}
+                fontWeight="700"
+                _hover={{ bg: "gray.100" }}
+              >
+                <Link href={`/checkout/${course.slug}`}>سجّل الآن</Link>
+              </Button>
             </Flex>
           </PremiumCard>
         </Stack>

@@ -136,9 +136,9 @@ export default function StudentCoursesPage() {
                 : "ابدأ رحلتك التعليمية الآن"}
             </Text>
             {!searchTerm && (
-              <Link href="/courses">
-                <Button colorPalette="blue">تصفح الدورات</Button>
-              </Link>
+              <Button asChild colorPalette="blue">
+                <Link href="/courses">تصفح الدورات</Link>
+              </Button>
             )}
           </Box>
         </PremiumCard>

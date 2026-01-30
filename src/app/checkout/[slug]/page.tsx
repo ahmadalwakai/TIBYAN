@@ -128,11 +128,9 @@ export default function CheckoutPage() {
         <form onSubmit={handleSubmit}>
           <Stack gap={8}>
             {/* Back Button */}
-            <Link href={`/courses/${course.slug}`}>
-              <Button variant="ghost" size="sm">
-                → العودة للدورة
-              </Button>
-            </Link>
+            <Button asChild variant="ghost" size="sm">
+              <Link href={`/courses/${course.slug}`}>→ العودة للدورة</Link>
+            </Button>
 
             {/* Header */}
             <Stack gap={2} textAlign="center">

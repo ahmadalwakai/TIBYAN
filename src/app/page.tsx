@@ -419,64 +419,62 @@ export default function Home() {
                   pointerEvents="none"
                   css={{ animation: "sparkle 3s ease-in-out infinite" }}
                 />
-                <Link href="/programs" style={{ textDecoration: "none" }}>
-                  <Button
-                    position="relative"
-                    bg="linear-gradient(135deg, #c8a24a 0%, #b8943a 100%)"
-                    color="brand.900"
-                    size="lg"
-                    px={{ base: 8, md: 12 }}
-                    h={{ base: "56px", md: "64px" }}
-                    fontSize={{ base: "md", md: "lg" }}
-                    fontWeight="800"
-                    borderRadius="xl"
-                    boxShadow="0 8px 30px rgba(200, 162, 74, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3)"
-                    _hover={{ 
-                      bg: "linear-gradient(135deg, #d4b05a 0%, #c8a24a 100%)",
-                      transform: "translateY(-4px) scale(1.02)",
-                      boxShadow: "0 16px 50px rgba(200, 162, 74, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4)",
-                    }}
-                    _active={{
-                      transform: "translateY(-2px) scale(1.01)",
-                    }}
-                    transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
-                    w={{ base: "100%", sm: "auto" }}
-                  >
-                    {t("explorePrograms")}
-                  </Button>
-                </Link>
-              </Box>
-
-              {/* Secondary Button */}
-              <Link href="/instructors/apply" style={{ textDecoration: "none" }}>
                 <Button
-                  variant="outline"
-                  borderWidth="2px"
-                  borderColor="rgba(200, 162, 74, 0.5)"
-                  color="white"
+                  asChild
+                  position="relative"
+                  bg="linear-gradient(135deg, #c8a24a 0%, #b8943a 100%)"
+                  color="brand.900"
                   size="lg"
                   px={{ base: 8, md: 12 }}
                   h={{ base: "56px", md: "64px" }}
                   fontSize={{ base: "md", md: "lg" }}
-                  fontWeight="700"
+                  fontWeight="800"
                   borderRadius="xl"
-                  bg="rgba(255, 255, 255, 0.05)"
-                  backdropFilter="blur(10px)"
+                  boxShadow="0 8px 30px rgba(200, 162, 74, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3)"
                   _hover={{ 
-                    bg: "rgba(200, 162, 74, 0.15)",
-                    borderColor: "#c8a24a",
-                    transform: "translateY(-4px)",
-                    boxShadow: "0 8px 30px rgba(200, 162, 74, 0.2)",
+                    bg: "linear-gradient(135deg, #d4b05a 0%, #c8a24a 100%)",
+                    transform: "translateY(-4px) scale(1.02)",
+                    boxShadow: "0 16px 50px rgba(200, 162, 74, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4)",
                   }}
                   _active={{
-                    transform: "translateY(-2px)",
+                    transform: "translateY(-2px) scale(1.01)",
                   }}
                   transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
                   w={{ base: "100%", sm: "auto" }}
                 >
-                  {t("becomeInstructor")}
+                  <Link href="/programs">{t("explorePrograms")}</Link>
                 </Button>
-              </Link>
+              </Box>
+
+              {/* Secondary Button */}
+              <Button
+                asChild
+                variant="outline"
+                borderWidth="2px"
+                borderColor="rgba(200, 162, 74, 0.5)"
+                color="white"
+                size="lg"
+                px={{ base: 8, md: 12 }}
+                h={{ base: "56px", md: "64px" }}
+                fontSize={{ base: "md", md: "lg" }}
+                fontWeight="700"
+                borderRadius="xl"
+                bg="rgba(255, 255, 255, 0.05)"
+                backdropFilter="blur(10px)"
+                _hover={{ 
+                  bg: "rgba(200, 162, 74, 0.15)",
+                  borderColor: "#c8a24a",
+                  transform: "translateY(-4px)",
+                  boxShadow: "0 8px 30px rgba(200, 162, 74, 0.2)",
+                }}
+                _active={{
+                  transform: "translateY(-2px)",
+                }}
+                transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+                w={{ base: "100%", sm: "auto" }}
+              >
+                <Link href="/instructors/apply">{t("becomeInstructor")}</Link>
+              </Button>
             </Stack>
             
             {/* Stats Grid */}
@@ -1859,26 +1857,25 @@ export default function Home() {
                     opacity={0.5}
                     css={{ animation: "assessmentPulse 3s ease-in-out infinite" }}
                   />
-                  <Link href="/assessment" style={{ textDecoration: "none" }}>
-                    <Button
-                      position="relative"
-                      bg="linear-gradient(135deg, #D4AF37, #F7DC6F)"
-                      color="#0b1f3b"
-                      size="lg"
-                      px={10}
-                      h="60px"
-                      fontSize="lg"
-                      fontWeight="800"
-                      boxShadow="0 8px 30px rgba(212, 175, 55, 0.4)"
-                      _hover={{
-                        transform: "translateY(-4px) scale(1.02)",
-                        boxShadow: "0 12px 40px rgba(212, 175, 55, 0.5)",
-                      }}
-                      transition="all 0.3s ease"
-                    >
-                      {t("assessmentCta")}
-                    </Button>
-                  </Link>
+                  <Button
+                    asChild
+                    position="relative"
+                    bg="linear-gradient(135deg, #D4AF37, #F7DC6F)"
+                    color="#0b1f3b"
+                    size="lg"
+                    px={10}
+                    h="60px"
+                    fontSize="lg"
+                    fontWeight="800"
+                    boxShadow="0 8px 30px rgba(212, 175, 55, 0.4)"
+                    _hover={{
+                      transform: "translateY(-4px) scale(1.02)",
+                      boxShadow: "0 12px 40px rgba(212, 175, 55, 0.5)",
+                    }}
+                    transition="all 0.3s ease"
+                  >
+                    <Link href="/assessment">{t("assessmentCta")}</Link>
+                  </Button>
                 </Box>
               </Flex>
             </Box>

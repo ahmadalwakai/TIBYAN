@@ -471,55 +471,53 @@ export default function Header() {
               </>
             ) : (
               <>
-                <Link href="/auth/login" style={{ textDecoration: "none" }}>
-                  <Button
-                    variant="ghost"
-                    color="whiteAlpha.900"
+                <Button
+                  asChild
+                  variant="ghost"
+                  color="whiteAlpha.900"
+                  borderRadius="full"
+                  px={6}
+                  fontWeight="600"
+                  transition="all 0.3s ease"
+                  _hover={{
+                    bg: "whiteAlpha.200",
+                    color: "white",
+                    transform: "translateY(-2px)",
+                  }}
+                  suppressHydrationWarning
+                >
+                  <Link href="/auth/login">{t("common.login")}</Link>
+                </Button>
+                <Box position="relative">
+                  <Box
+                    position="absolute"
+                    inset="-3px"
                     borderRadius="full"
-                    px={6}
-                    fontWeight="600"
+                    background="linear-gradient(135deg, #c8a24a, #00d4ff, #c8a24a)"
+                    backgroundSize="200% 200%"
+                    filter="blur(8px)"
+                    opacity={0.5}
+                    css={{ animation: "pulseGlow 2s ease-in-out infinite" }}
+                  />
+                  <Button
+                    asChild
+                    position="relative"
+                    bg="linear-gradient(135deg, #c8a24a, #ffd700)"
+                    color="brand.900"
+                    borderRadius="full"
+                    px={7}
+                    fontWeight="800"
                     transition="all 0.3s ease"
+                    boxShadow="0 4px 20px rgba(200, 162, 74, 0.4)"
                     _hover={{
-                      bg: "whiteAlpha.200",
-                      color: "white",
-                      transform: "translateY(-2px)",
+                      transform: "translateY(-3px) scale(1.02)",
+                      boxShadow: "0 8px 30px rgba(200, 162, 74, 0.5)",
                     }}
                     suppressHydrationWarning
                   >
-                    {t("common.login")}
+                    <Link href="/auth/register">✨ {t("common.register")}</Link>
                   </Button>
-                </Link>
-                <Link href="/auth/register" style={{ textDecoration: "none" }}>
-                  <Box position="relative">
-                    <Box
-                      position="absolute"
-                      inset="-3px"
-                      borderRadius="full"
-                      background="linear-gradient(135deg, #c8a24a, #00d4ff, #c8a24a)"
-                      backgroundSize="200% 200%"
-                      filter="blur(8px)"
-                      opacity={0.5}
-                      css={{ animation: "pulseGlow 2s ease-in-out infinite" }}
-                    />
-                    <Button
-                      position="relative"
-                      bg="linear-gradient(135deg, #c8a24a, #ffd700)"
-                      color="brand.900"
-                      borderRadius="full"
-                      px={7}
-                      fontWeight="800"
-                      transition="all 0.3s ease"
-                      boxShadow="0 4px 20px rgba(200, 162, 74, 0.4)"
-                      _hover={{
-                        transform: "translateY(-3px) scale(1.02)",
-                        boxShadow: "0 8px 30px rgba(200, 162, 74, 0.5)",
-                      }}
-                      suppressHydrationWarning
-                    >
-                      ✨ {t("common.register")}
-                    </Button>
-                  </Box>
-                </Link>
+                </Box>
               </>
             )}
           </Stack>
@@ -690,16 +688,12 @@ export default function Header() {
                     </>
                   ) : (
                     <>
-                      <Link href="/auth/login" style={{ textDecoration: "none" }} onClick={() => setMobileMenuOpen(false)}>
-                        <Button variant="outline" borderColor="whiteAlpha.400" color="white" w="full" _hover={{ bg: "whiteAlpha.200" }}>
-                          {t("common.login")}
-                        </Button>
-                      </Link>
-                      <Link href="/auth/register" style={{ textDecoration: "none" }} onClick={() => setMobileMenuOpen(false)}>
-                        <Button bg="linear-gradient(135deg, #c8a24a, #ffd700)" color="brand.900" w="full" fontWeight="700">
-                          ✨ {t("common.register")}
-                        </Button>
-                      </Link>
+                      <Button asChild variant="outline" borderColor="whiteAlpha.400" color="white" w="full" _hover={{ bg: "whiteAlpha.200" }}>
+                        <Link href="/auth/login" onClick={() => setMobileMenuOpen(false)}>{t("common.login")}</Link>
+                      </Button>
+                      <Button asChild bg="linear-gradient(135deg, #c8a24a, #ffd700)" color="brand.900" w="full" fontWeight="700">
+                        <Link href="/auth/register" onClick={() => setMobileMenuOpen(false)}>✨ {t("common.register")}</Link>
+                      </Button>
                     </>
                   )}
                 </Stack>

@@ -322,22 +322,21 @@ export default function AssessmentPage() {
                     </Stack>
 
                     {/* CTA */}
-                    <Link href="/programs" style={{ textDecoration: "none" }}>
-                      <Button
-                        bg="brand.900"
-                        color="white"
-                        size="lg"
-                        px={8}
-                        fontWeight="700"
-                        _hover={{
-                          bg: "brand.700",
-                          transform: "scale(1.05)",
-                        }}
-                        transition="all 0.3s ease"
-                      >
-                        {t("results.learnMore")}
-                      </Button>
-                    </Link>
+                    <Button
+                      asChild
+                      bg="brand.900"
+                      color="white"
+                      size="lg"
+                      px={8}
+                      fontWeight="700"
+                      _hover={{
+                        bg: "brand.700",
+                        transform: "scale(1.05)",
+                      }}
+                      transition="all 0.3s ease"
+                    >
+                      <Link href="/programs">{t("results.learnMore")}</Link>
+                    </Button>
                   </Flex>
                 </Box>
               ))}
@@ -357,19 +356,18 @@ export default function AssessmentPage() {
               >
                 {t("results.retake")}
               </Button>
-              <Link href="/auth/register" style={{ textDecoration: "none" }}>
-                <Button
-                  bg="linear-gradient(135deg, #D4AF37, #F7DC6F)"
-                  color="#0b1f3b"
-                  size="lg"
-                  fontWeight="800"
-                  _hover={{
-                    transform: "scale(1.05)",
-                  }}
-                >
-                  {t("results.createAccount")}
-                </Button>
-              </Link>
+              <Button
+                asChild
+                bg="linear-gradient(135deg, #D4AF37, #F7DC6F)"
+                color="#0b1f3b"
+                size="lg"
+                fontWeight="800"
+                _hover={{
+                  transform: "scale(1.05)",
+                }}
+              >
+                <Link href="/auth/register">{t("results.createAccount")}</Link>
+              </Button>
             </Flex>
           </Stack>
         </Container>

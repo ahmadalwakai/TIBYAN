@@ -95,11 +95,9 @@ export default function TeacherCoursesPage() {
             إدارة جميع دوراتك ومحتواها
           </Text>
         </Box>
-        <Link href="/teacher/courses/new">
-          <Button colorPalette="blue" size="lg">
-            ➕ إنشاء دورة جديدة
-          </Button>
-        </Link>
+        <Button asChild colorPalette="blue" size="lg">
+          <Link href="/teacher/courses/new">➕ إنشاء دورة جديدة</Link>
+        </Button>
       </HStack>
 
       {/* Filters */}
@@ -161,9 +159,9 @@ export default function TeacherCoursesPage() {
                 : "ابدأ بإنشاء دورتك الأولى الآن"}
             </Text>
             {!searchTerm && (
-              <Link href="/teacher/courses/new">
-                <Button colorPalette="blue">إنشاء دورة</Button>
-              </Link>
+              <Button asChild colorPalette="blue">
+                <Link href="/teacher/courses/new">إنشاء دورة</Link>
+              </Button>
             )}
           </Box>
         </PremiumCard>
@@ -222,21 +220,15 @@ export default function TeacherCoursesPage() {
 
                 {/* Actions */}
                 <HStack gap={2}>
-                  <Link href={`/teacher/courses/${course.id}`} style={{ flex: 1 }}>
-                    <Button w="100%" variant="outline" size="sm">
-                      تعديل
-                    </Button>
-                  </Link>
-                  <Link href={`/teacher/courses/${course.id}/students`} style={{ flex: 1 }}>
-                    <Button w="100%" variant="outline" size="sm">
-                      الطلاب
-                    </Button>
-                  </Link>
-                  <Link href={`/teacher/courses/${course.id}/analytics`} style={{ flex: 1 }}>
-                    <Button w="100%" colorPalette="blue" size="sm">
-                      التحليلات
-                    </Button>
-                  </Link>
+                  <Button asChild w="100%" variant="outline" size="sm">
+                    <Link href={`/teacher/courses/${course.id}`}>تعديل</Link>
+                  </Button>
+                  <Button asChild w="100%" variant="outline" size="sm">
+                    <Link href={`/teacher/courses/${course.id}/students`}>الطلاب</Link>
+                  </Button>
+                  <Button asChild w="100%" colorPalette="blue" size="sm">
+                    <Link href={`/teacher/courses/${course.id}/analytics`}>التحليلات</Link>
+                  </Button>
                 </HStack>
               </Box>
             </PremiumCard>

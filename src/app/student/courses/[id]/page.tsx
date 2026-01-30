@@ -87,9 +87,9 @@ export default function StudentCourseDetailPage({ params }: PageProps) {
       <Box textAlign="center" py={20}>
         <Text fontSize="5xl" mb={4}>❌</Text>
         <Heading size="md" mb={2}>الدورة غير موجودة</Heading>
-        <Link href="/student/courses">
-          <Button colorPalette="blue">العودة للدورات</Button>
-        </Link>
+        <Button asChild colorPalette="blue">
+          <Link href="/student/courses">العودة للدورات</Link>
+        </Button>
       </Box>
     );
   }

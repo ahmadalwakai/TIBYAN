@@ -78,18 +78,17 @@ function ResetPasswordContent() {
               <Text color="muted">
                 الرابط غير صالح أو منتهي الصلاحية. يرجى طلب رابط جديد.
               </Text>
-              <Link href="/auth/forgot-password" style={{ width: "100%" }}>
-                <Button
-                  w="100%"
-                  bgGradient="linear(to-r, brand.900, brand.700)"
-                  color="white"
-                  _hover={{
-                    bgGradient: "linear(to-r, brand.800, brand.600)",
-                  }}
-                >
-                  طلب رابط جديد
-                </Button>
-              </Link>
+              <Button
+                asChild
+                w="100%"
+                bgGradient="linear(to-r, brand.900, brand.700)"
+                color="white"
+                _hover={{
+                  bgGradient: "linear(to-r, brand.800, brand.600)",
+                }}
+              >
+                <Link href="/auth/forgot-password">طلب رابط جديد</Link>
+              </Button>
             </Stack>
           </PremiumCard>
         </Container>
@@ -125,21 +124,20 @@ function ResetPasswordContent() {
               <Text color="muted">
                 تم تغيير كلمة المرور بنجاح. يمكنك الآن تسجيل الدخول.
               </Text>
-              <Link href="/auth/login" style={{ width: "100%" }}>
-                <Button
-                  w="100%"
-                  bgGradient="linear(to-r, brand.900, brand.700)"
-                  color="white"
-                  _hover={{
-                    bgGradient: "linear(to-r, brand.800, brand.600)",
-                    transform: "translateY(-1px)",
-                    boxShadow: "lg"
-                  }}
-                  transition="all 0.2s"
-                >
-                  تسجيل الدخول
-                </Button>
-              </Link>
+              <Button
+                asChild
+                w="100%"
+                bgGradient="linear(to-r, brand.900, brand.700)"
+                color="white"
+                _hover={{
+                  bgGradient: "linear(to-r, brand.800, brand.600)",
+                  transform: "translateY(-1px)",
+                  boxShadow: "lg"
+                }}
+                transition="all 0.2s"
+              >
+                <Link href="/auth/login">تسجيل الدخول</Link>
+              </Button>
             </Stack>
           </PremiumCard>
         </Container>
