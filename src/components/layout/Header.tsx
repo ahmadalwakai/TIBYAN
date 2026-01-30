@@ -4,6 +4,7 @@ import { Box, Button, Container, Flex, Stack, Text, IconButton, Drawer, Portal, 
 import { useColorMode } from "@/components/ui/color-mode";
 import Logo from "@/components/ui/Logo";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { getCurrentUserClient, useLogout } from "@/lib/auth-client";
 import { useEffect, useState, useRef, useTransition } from "react";
 import { useTranslations, useLocale } from "next-intl";
@@ -25,6 +26,7 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const langMenuRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
   const handleLogout = useLogout();
   const { colorMode, toggleColorMode } = useColorMode();
   
@@ -67,10 +69,18 @@ export default function Header() {
 
   const handleLanguageChange = (langCode: Locale) => {
     startTransition(async () => {
+      // Set the cookie via server action
       await setLocale(langCode);
       setLangMenuOpen(false);
-      // Refresh the page to apply the new locale
-      window.location.reload();
+      
+      // Update HTML lang and dir attributes immediately for visual feedback
+      const isRtl = isRtlLocale(langCode);
+      document.documentElement.lang = langCode;
+      document.documentElement.dir = isRtl ? "rtl" : "ltr";
+      
+      // Use router.refresh() to re-fetch server components with new locale
+      // This triggers a soft refresh that reads the updated cookie
+      router.refresh();
     });
   };
 
