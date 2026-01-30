@@ -9,6 +9,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { getLocale } from "@/i18n/actions";
 import { isRtlLocale } from "@/i18n/config";
+import { organizationJsonLd, websiteJsonLd } from "@/lib/seo/jsonld";
 import "./globals.css";
 
 const ibmPlexArabic = IBM_Plex_Sans_Arabic({
@@ -26,56 +27,42 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.ti-by-an.com"),
   title: {
-    default: "Tibyan | تبيان - Islamic Learning Platform",
-    template: "%s | Tibyan",
+    default: "Tibyan Academy | معهد تبيان - Islamic Learning for Arab Children in Germany",
+    template: "%s | Tibyan Academy",
   },
   description:
-    "Tibyan (تبيان) is a comprehensive Islamic learning platform offering courses in Quran, Arabic, and Islamic sciences taught by elite specialized instructors.",
+    "Online Islamic and Arabic educational platform for Syrian and Arab children in Germany. Comprehensive courses in Quran, Arabic language, and Islamic sciences taught by specialized instructors.",
   keywords: [
-    "Islamic education",
-    "Quran learning",
-    "Arabic courses",
-    "Islamic sciences",
-    "تبيان",
-    "تعليم إسلامي",
-    "تعلم القرآن",
-    "دورات عربية",
+    "Islamic education Germany",
+    "Arabic courses for children",
+    "Quran learning online",
+    "Syrian teachers Germany",
+    "Arab children education",
+    "تعليم إسلامي ألمانيا",
+    "معهد تبيان",
+    "Islamische Bildung Deutschland",
+    "Arabisch Kinder",
   ],
-  authors: [{ name: "Tibyan" }],
-  creator: "Tibyan",
-  publisher: "Tibyan",
   robots: {
     index: true,
     follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
   },
   openGraph: {
     type: "website",
-    locale: "ar_SA",
-    alternateLocale: ["en_US", "de_DE", "fr_FR", "es_ES", "sv_SE", "tr_TR"],
-    url: "https://tibyan.com",
-    siteName: "Tibyan",
-    title: "Tibyan | تبيان - Islamic Learning Platform",
+    url: "https://www.ti-by-an.com",
+    siteName: "Tibyan Academy",
+    title: "Tibyan Academy | معهد تبيان - Islamic Learning for Arab Children",
     description:
-      "Comprehensive Islamic learning platform with elite instructors",
+      "Online Islamic and Arabic education platform for Syrian and Arab children in Germany with professional specialized instructors.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tibyan | تبيان",
+    title: "Tibyan Academy | معهد تبيان",
     description:
-      "Comprehensive Islamic learning platform with elite instructors",
+      "Islamic and Arabic education for Arab children in Germany",
   },
-  alternates: {
-    canonical: "https://tibyan.com",
-  },
-  metadataBase: new URL("https://tibyan.com"),
 };
 
 export default async function RootLayout({
@@ -94,7 +81,18 @@ export default async function RootLayout({
       className={`${ibmPlexArabic.variable} ${inter.variable}`}
       suppressHydrationWarning
     >
-      <body suppressHydrationWarning>
+      <head>
+        {/* Organization & Website Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd()) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd()) }}
+        />
+      </head>
+      <body>
         <NextIntlClientProvider messages={messages} locale={locale}>
           <Providers>
             <Header />
