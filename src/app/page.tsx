@@ -1134,16 +1134,16 @@ export default function Home() {
                           _groupHover={{ w: "80px" }}
                         />
 
-                        {/* Learn more link */}
+                        {/* Learn more indicator */}
                         <Flex 
                           align="center" 
                           gap={2}
                           color="muted"
                           fontSize="sm"
                           fontWeight="600"
-                          cursor="pointer"
+                          aria-hidden="true"
                           transition="all 0.3s ease"
-                          _hover={{ 
+                          _groupHover={{ 
                             color: "brand.500",
                             gap: 3,
                           }}

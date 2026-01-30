@@ -121,10 +121,18 @@ export default function Footer() {
               </Text>
               
               {/* Social Links Placeholder */}
-              <Flex gap={3} pt={2}>
-                {["📧", "📱", "🐦", "📸"].map((icon, i) => (
+              <Flex gap={3} pt={2} role="list" aria-label="Social media links">
+                {[
+                  { icon: "📧", label: "Email" },
+                  { icon: "📱", label: "Phone" },
+                  { icon: "🐦", label: "Twitter" },
+                  { icon: "📸", label: "Instagram" }
+                ].map((social, i) => (
                   <Box
                     key={i}
+                    as="span"
+                    role="listitem"
+                    aria-label={social.label}
                     w="44px"
                     h="44px"
                     borderRadius="xl"
@@ -133,7 +141,6 @@ export default function Footer() {
                     alignItems="center"
                     justifyContent="center"
                     fontSize="lg"
-                    cursor="pointer"
                     transition="all 0.3s ease"
                     _hover={{
                       bg: "whiteAlpha.200",
@@ -141,7 +148,7 @@ export default function Footer() {
                       boxShadow: "0 8px 20px rgba(0, 0, 0, 0.3)",
                     }}
                   >
-                    {icon}
+                    {social.icon}
                   </Box>
                 ))}
               </Flex>

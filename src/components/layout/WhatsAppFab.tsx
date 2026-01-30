@@ -9,10 +9,10 @@ export default function WhatsAppFab() {
         href={WHATSAPP_URL}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="التواصل عبر واتساب"
         style={{ textDecoration: "none" }}
       >
         <Button
+          aria-label="التواصل عبر واتساب"
           w={{ base: "56px", md: "52px" }}
           h={{ base: "56px", md: "52px" }}
           p={0}

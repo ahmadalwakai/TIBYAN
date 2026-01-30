@@ -171,11 +171,17 @@ export default function AdminLiveChatPage() {
                 return (
                   <Box
                     key={session.id}
+                    as="button"
+                    role="option"
+                    aria-selected={activeSession?.id === session.id}
+                    aria-label={`Chat session with ${session.userName}`}
                     bg={activeSession?.id === session.id ? "brand.50" : "backgroundAlt"}
                     border="2px solid"
                     borderColor={activeSession?.id === session.id ? "brand.400" : "border"}
                     borderRadius="button"
                     p={3}
+                    w="100%"
+                    textAlign="start"
                     transition="all 0.3s ease"
                     _hover={{
                       bg: "brand.50",
