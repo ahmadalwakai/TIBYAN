@@ -1,8 +1,10 @@
 import { Badge, Box, Button, Container, Flex, Heading, SimpleGrid, Stack, Text } from "@chakra-ui/react";
+import Link from "next/link";
 
 const programs = [
   {
     title: "شهادة التحليل الاستراتيجي",
+    slug: "strategic-analysis",
     description: "برنامج مكثف لتطوير مهارات التحليل وصناعة القرار.",
     duration: "12 أسبوعًا",
     level: "متقدم",
@@ -13,6 +15,7 @@ const programs = [
   },
   {
     title: "برنامج إعداد الباحث الشرعي",
+    slug: "islamic-researcher",
     description: "منهج متكامل لبناء المهارات البحثية والتأصيل.",
     duration: "10 أسابيع",
     level: "متوسط",
@@ -23,6 +26,7 @@ const programs = [
   },
   {
     title: "دبلوم قيادة الفرق التعليمية",
+    slug: "educational-leadership",
     description: "قيادة تعليمية عملية مع أدوات قياس الأثر.",
     duration: "14 أسبوعًا",
     level: "متقدم",
@@ -228,6 +232,7 @@ export default function ProgramsPage() {
                         </Flex>
                       </Box>
                       <Button 
+                        asChild
                         size="md"
                         background={program.color}
                         color="white" 
@@ -240,7 +245,7 @@ export default function ProgramsPage() {
                         }}
                         transition="all 0.3s ease"
                       >
-                        سجّل الآن ←
+                        <Link href={`/checkout/${program.slug}`}>سجّل الآن ←</Link>
                       </Button>
                     </Flex>
                   </Stack>

@@ -1,11 +1,13 @@
 "use client";
 
 import { Box, Button, Container, Flex, Heading, SimpleGrid, Stack, Text } from "@chakra-ui/react";
+import Link from "next/link";
 import { pricingPlans } from "@/content/courses.ar";
 
 const plans = [
   {
     name: pricingPlans.free.name,
+    slug: "free",
     price: "0",
     description: "محتوى تعريفي لاستكشاف المنصة والبدء في رحلة التعلم.",
     features: pricingPlans.free.features,
@@ -15,6 +17,7 @@ const plans = [
   },
   {
     name: pricingPlans.preparatory.name,
+    slug: "preparatory-year",
     price: `${pricingPlans.preparatory.price}`,
     priceUnit: "/ شهر",
     totalPrice: `المجموع: €${pricingPlans.preparatory.totalPrice}`,
@@ -34,6 +37,7 @@ const plans = [
   },
   {
     name: pricingPlans.arabicReading.name,
+    slug: "arabic-reading",
     price: `${pricingPlans.arabicReading.price}`,
     priceUnit: "/ شهر",
     totalPrice: `المجموع: €${pricingPlans.arabicReading.totalPrice}`,
@@ -52,6 +56,7 @@ const plans = [
   },
   {
     name: pricingPlans.shariah1.name,
+    slug: "shariah-year-1",
     price: `${pricingPlans.shariah1.price}`,
     priceUnit: "/ شهر",
     totalPrice: `المجموع: €${pricingPlans.shariah1.totalPrice}`,
@@ -70,6 +75,7 @@ const plans = [
   },
   {
     name: pricingPlans.shariah2.name,
+    slug: "shariah-year-2",
     price: `${pricingPlans.shariah2.price}`,
     priceUnit: "/ شهر",
     totalPrice: `المجموع: €${pricingPlans.shariah2.totalPrice}`,
@@ -88,6 +94,7 @@ const plans = [
   },
   {
     name: pricingPlans.shariah3.name,
+    slug: "shariah-year-3",
     price: `${pricingPlans.shariah3.price}`,
     priceUnit: "/ شهر",
     totalPrice: `المجموع: €${pricingPlans.shariah3.totalPrice}`,
@@ -425,6 +432,7 @@ export default function PricingPage() {
                         />
                       )}
                       <Button
+                        asChild
                         position="relative"
                         w="full"
                         size="lg"
@@ -444,7 +452,9 @@ export default function PricingPage() {
                         }}
                         transition="all 0.3s ease"
                       >
-                        {plan.price === "0" ? "🚀 استكشف المنصة" : "✨ سجل الآن"}
+                        <Link href={plan.price === "0" ? "/courses" : `/checkout/${plan.slug}`}>
+                          {plan.price === "0" ? "🚀 استكشف المنصة" : "✨ سجل الآن"}
+                        </Link>
                       </Button>
                     </Box>
                   </Stack>

@@ -271,37 +271,35 @@ export default function CoursesPage() {
                       </Flex>
                       
                       <Stack gap={2}>
-                        <Link href={`/courses/${course.slug}`}>
-                          <Button 
-                            size="sm" 
-                            w="full"
-                            bg="brand.900"
-                            color="white" 
-                            _hover={{ 
-                              bg: "brand.700",
-                              transform: "translateY(-2px)",
-                            }}
-                            transition="all 0.3s ease"
-                          >
-                            عرض التفاصيل
-                          </Button>
-                        </Link>
-                        <Link href={`/checkout/${course.slug}`}>
-                          <Button 
-                            size="sm" 
-                            w="full"
-                            variant="outline"
-                            borderColor="brand.500"
-                            color="brand.900"
-                            _hover={{ 
-                              bg: "brand.50",
-                              transform: "translateY(-2px)",
-                            }}
-                            transition="all 0.3s ease"
-                          >
-                            سجّل الآن 🚀
-                          </Button>
-                        </Link>
+                        <Button 
+                          asChild
+                          size="sm" 
+                          w="full"
+                          bg="brand.900"
+                          color="white" 
+                          _hover={{ 
+                            bg: "brand.700",
+                            transform: "translateY(-2px)",
+                          }}
+                          transition="all 0.3s ease"
+                        >
+                          <Link href={`/courses/${course.slug}`}>عرض التفاصيل</Link>
+                        </Button>
+                        <Button 
+                          asChild
+                          size="sm" 
+                          w="full"
+                          variant="outline"
+                          borderColor="brand.500"
+                          color="brand.900"
+                          _hover={{ 
+                            bg: "brand.50",
+                            transform: "translateY(-2px)",
+                          }}
+                          transition="all 0.3s ease"
+                        >
+                          <Link href={`/checkout/${course.slug}`}>سجّل الآن 🚀</Link>
+                        </Button>
                       </Stack>
                     </Box>
                   </Stack>
