@@ -129,6 +129,7 @@ function LoginForm() {
                     placeholder="name@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    autoComplete="email"
                     required
                     bg="background"
                     border="2px solid"
@@ -155,6 +156,7 @@ function LoginForm() {
                     placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    autoComplete="current-password"
                     required
                     bg="background"
                     border="2px solid"

@@ -130,6 +130,7 @@ export default function RegisterPage() {
                   <Input
                     type="text"
                     name="name"
+                    autoComplete="name"
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="اسمك الكامل"
@@ -158,6 +159,7 @@ export default function RegisterPage() {
                   <Input
                     type="email"
                     name="email"
+                    autoComplete="email"
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="name@example.com"
@@ -186,6 +188,7 @@ export default function RegisterPage() {
                   <Input
                     type="password"
                     name="password"
+                    autoComplete="new-password"
                     value={formData.password}
                     onChange={handleChange}
                     placeholder="••••••••"

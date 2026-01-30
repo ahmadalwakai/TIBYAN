@@ -31,8 +31,9 @@ export async function POST(request: Request) {
       );
     }
     
-    // Check if email is verified
-    if (!user.emailVerified) {
+    // Check if email is verified (only if field exists)
+    const emailVerified = (user as { emailVerified?: boolean }).emailVerified;
+    if (emailVerified === false) {
       return NextResponse.json(
         { ok: false, error: "يرجى تأكيد بريدك الإلكتروني أولاً" },
         { status: 403 }
