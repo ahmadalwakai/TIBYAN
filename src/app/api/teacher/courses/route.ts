@@ -1,26 +1,14 @@
-import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { z } from "zod";
+import { requireRole } from "@/lib/api-auth";
 
-async function getCurrentUserId(): Promise<string | null> {
-  const cookieStore = await cookies();
-  const userDataStr = cookieStore.get("user-data")?.value;
-  if (!userDataStr) return null;
-  try {
-    const userData = JSON.parse(userDataStr);
-    return userData.id;
-  } catch {
-    return null;
-  }
-}
+export async function GET(request: NextRequest) {
+  const authResult = await requireRole(request, "INSTRUCTOR");
+  if (authResult instanceof NextResponse) return authResult;
 
-export async function GET() {
   try {
-    const userId = await getCurrentUserId();
-    if (!userId) {
-      return NextResponse.json({ ok: false, error: "غير مصرح" }, { status: 401 });
-    }
+    const userId = authResult.id;
 
     const courses = await prisma.course.findMany({
       where: { instructorId: userId },
@@ -77,12 +65,12 @@ function generateSlug(title: string): string {
     .slice(0, 100) + "-" + Date.now().toString(36);
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
+  const authResult = await requireRole(request, "INSTRUCTOR");
+  if (authResult instanceof NextResponse) return authResult;
+
   try {
-    const userId = await getCurrentUserId();
-    if (!userId) {
-      return NextResponse.json({ ok: false, error: "غير مصرح" }, { status: 401 });
-    }
+    const userId = authResult.id;
 
     const body = await request.json();
     const result = CreateCourseSchema.safeParse(body);

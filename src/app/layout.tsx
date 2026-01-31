@@ -8,6 +8,7 @@ import Providers from "./providers";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { getLocale } from "@/i18n/actions";
+import { SITE_CONFIG } from "@/config/site";
 import { isRtlLocale } from "@/i18n/config";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo/jsonld";
 import "./globals.css";
@@ -49,13 +50,28 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  alternates: {
+    canonical: SITE_CONFIG.baseUrl,
+    languages: {
+      'ar': `${SITE_CONFIG.baseUrl}/ar`,
+      'en': `${SITE_CONFIG.baseUrl}/en`,
+      'de': `${SITE_CONFIG.baseUrl}/de`,
+      'fr': `${SITE_CONFIG.baseUrl}/fr`,
+      'es': `${SITE_CONFIG.baseUrl}/es`,
+      'sv': `${SITE_CONFIG.baseUrl}/sv`,
+      'tr': `${SITE_CONFIG.baseUrl}/tr`,
+      'x-default': SITE_CONFIG.baseUrl,
+    },
+  },
   openGraph: {
     type: "website",
-    url: "https://www.ti-by-an.com",
+    url: SITE_CONFIG.baseUrl,
     siteName: "Tibyan Academy",
     title: "Tibyan Academy | معهد تبيان - Islamic Learning for Arab Children",
     description:
       "Online Islamic and Arabic education platform for Syrian and Arab children in Germany with professional specialized instructors.",
+    locale: "ar_SA",
+    alternateLocale: ["en_US", "de_DE", "fr_FR", "es_ES", "sv_SE", "tr_TR"],
   },
   twitter: {
     card: "summary_large_image",

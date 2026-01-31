@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { UpdatePaymentStatusSchema } from "@/lib/validations";
+import { requireAdmin, requireUser } from "@/lib/api-auth";
 
 const DB_UNAVAILABLE = NextResponse.json(
   { ok: false, error: "قاعدة البيانات غير متوفرة" },
@@ -12,6 +13,9 @@ export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const authResult = await requireUser(request);
+  if (authResult instanceof NextResponse) return authResult;
+
   try {
     if (!db.payment) return DB_UNAVAILABLE;
 
@@ -48,6 +52,14 @@ export async function GET(
       );
     }
 
+    // Check ownership: user can only view their own payments, unless admin
+    if (payment.userId !== authResult.id && authResult.role !== "ADMIN") {
+      return NextResponse.json(
+        { ok: false, error: "غير مصرح" },
+        { status: 403 }
+      );
+    }
+
     return NextResponse.json({ ok: true, data: payment });
   } catch (error) {
     console.error("Get payment error:", error);
@@ -58,11 +70,14 @@ export async function GET(
   }
 }
 
-// Update payment status (admin or webhook)
+// Update payment status (admin only)
 export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const authResult = await requireAdmin(request);
+  if (authResult instanceof NextResponse) return authResult;
+
   try {
     if (!db.payment) return DB_UNAVAILABLE;
 

@@ -1,19 +1,7 @@
-import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { z } from "zod";
-
-async function getCurrentUserId(): Promise<string | null> {
-  const cookieStore = await cookies();
-  const userDataStr = cookieStore.get("user-data")?.value;
-  if (!userDataStr) return null;
-  try {
-    const userData = JSON.parse(userDataStr);
-    return userData.id;
-  } catch {
-    return null;
-  }
-}
+import { requireRole } from "@/lib/api-auth";
 
 interface RouteParams {
   params: Promise<{ id: string }>;
@@ -27,13 +15,13 @@ const CreateLessonSchema = z.object({
   order: z.number().min(1),
 });
 
-export async function POST(request: Request, { params }: RouteParams) {
+export async function POST(request: NextRequest, { params }: RouteParams) {
+  const authResult = await requireRole(request, "INSTRUCTOR");
+  if (authResult instanceof NextResponse) return authResult;
+
   try {
     const { id: courseId } = await params;
-    const userId = await getCurrentUserId();
-    if (!userId) {
-      return NextResponse.json({ ok: false, error: "غير مصرح" }, { status: 401 });
-    }
+    const userId = authResult.id;
 
     // Verify ownership
     const course = await prisma.course.findUnique({

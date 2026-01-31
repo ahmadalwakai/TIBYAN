@@ -1,16 +1,42 @@
 import { Box, Container, Flex } from "@chakra-ui/react";
 import type { ReactNode } from "react";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import AdminSidebar from "@/components/layout/AdminSidebar";
-import { getCurrentUser } from "@/lib/auth";
+import { verifyToken } from "@/lib/jwt";
+import { prisma } from "@/lib/db";
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {
-  // Server-side authentication check
-  const user = await getCurrentUser();
-  
-  // If not authenticated or not an admin, redirect to login
-  if (!user || user.role !== "admin") {
-    redirect("/auth/login?error=unauthorized&redirect=/admin");
+  // Check for auth token
+  const cookieStore = await cookies();
+  const token = cookieStore.get("auth-token")?.value;
+
+  // If no token, redirect to login
+  if (!token) {
+    redirect("/auth/admin-login");
+  }
+
+  // Verify JWT token signature and expiration
+  const payload = await verifyToken(token);
+  if (!payload) {
+    // Invalid or expired token - redirect to login
+    redirect("/auth/admin-login");
+  }
+
+  // Verify user exists, is active, and is an ADMIN
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: payload.userId },
+      select: { id: true, role: true, status: true },
+    });
+
+    if (!user || user.status !== "ACTIVE" || user.role !== "ADMIN") {
+      // User not found, inactive, or not admin - redirect to login
+      redirect("/auth/admin-login");
+    }
+  } catch {
+    // Database error - fail secure by redirecting to login
+    redirect("/auth/admin-login");
   }
 
   return (

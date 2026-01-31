@@ -12,7 +12,7 @@ export default async function TeacherLayout({ children }: { children: ReactNode 
     redirect("/auth/login?redirect=/teacher");
   }
 
-  if (user.role !== "instructor" && user.role !== "admin") {
+  if (user.role !== "INSTRUCTOR" && user.role !== "ADMIN") {
     redirect("/?error=unauthorized");
   }
 

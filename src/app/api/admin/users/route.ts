@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { CreateUserSchema, UpdateUserSchema } from "@/lib/validations";
 import bcrypt from "bcryptjs";
+import { requireAdmin, getAdminFromRequest } from "@/lib/api-auth";
+import { logAudit } from "@/lib/audit";
 
 // Mock data for when database is not connected
 const mockUsers = [
@@ -69,6 +71,9 @@ const mockUsers = [
 
 // GET /api/admin/users - List all users
 export async function GET(request: NextRequest) {
+  const authResult = await requireAdmin(request);
+  if (authResult instanceof NextResponse) return authResult;
+
   try {
     const { searchParams } = new URL(request.url);
     const role = searchParams.get("role");
@@ -141,6 +146,9 @@ export async function GET(request: NextRequest) {
 
 // POST /api/admin/users - Create new user
 export async function POST(request: NextRequest) {
+  const authResult = await requireAdmin(request);
+  if (authResult instanceof NextResponse) return authResult;
+
   try {
     const body = await request.json();
     const validation = CreateUserSchema.safeParse(body);
@@ -185,6 +193,16 @@ export async function POST(request: NextRequest) {
         bio: true,
         createdAt: true,
       },
+    });
+
+    // Log audit
+    const admin = await getAdminFromRequest(request);
+    await logAudit({
+      actorUserId: admin?.id,
+      action: "USER_CREATE",
+      entityType: "USER",
+      entityId: user.id,
+      metadata: { email: user.email, role: user.role },
     });
 
     return NextResponse.json({ ok: true, data: user }, { status: 201 });

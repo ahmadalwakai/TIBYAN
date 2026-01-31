@@ -3,10 +3,12 @@ import { hash } from "bcryptjs";
 import { prisma } from "@/lib/db";
 import { ResetPasswordSchema } from "@/lib/validations";
 import { verifyToken, markTokenUsed } from "@/lib/auth/tokens";
+import { withRateLimit, RATE_LIMITS } from "@/lib/rate-limit";
 
 export async function POST(request: Request) {
-  try {
-    const body = await request.json();
+  return withRateLimit(request, RATE_LIMITS.auth, async () => {
+    try {
+      const body = await request.json();
     
     // Validate input
     const result = ResetPasswordSchema.safeParse(body);
@@ -53,4 +55,5 @@ export async function POST(request: Request) {
       { status: 500 }
     );
   }
+  });
 }

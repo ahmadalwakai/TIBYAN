@@ -10,6 +10,8 @@ const teacherLinks = [
   { label: "نظرة عامة", href: "/teacher", icon: "📊" },
   { label: "دوراتي", href: "/teacher/courses", icon: "📚" },
   { label: "إنشاء دورة", href: "/teacher/courses/new", icon: "➕" },
+  { label: "حصصي التعليمية", href: "/teacher/lessons", icon: "🎥" },
+  { label: "منشوراتي", href: "/teacher/posts", icon: "✍️" },
   { label: "طلابي", href: "/teacher/students", icon: "👥" },
   { label: "الأرباح", href: "/teacher/earnings", icon: "💰" },
   { label: "المراجعات", href: "/teacher/reviews", icon: "⭐" },

@@ -6,12 +6,13 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DATABASE_URL_NON_POOLING")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["public", "students", "teachers", "admins"]
 }
 
 model User {
@@ -34,8 +35,11 @@ model User {
   reviews        Review[]
   payments       Payment[]
   verificationTokens VerificationToken[]
+  auditLogs      AuditLog[] @relation("AuditLogActor")
+  certificates   Certificate[]
   
   @@map("users")
+  @@schema("students")
 }
 
 model VerificationToken {
@@ -53,12 +57,38 @@ model VerificationToken {
   @@index([token])
   @@index([userId])
   @@map("verification_tokens")
+  @@schema("public")
 }
 
 enum TokenPurpose {
   EMAIL_VERIFICATION
   PASSWORD_RESET
   TEACHER_CONFIRMATION
+  
+  @@schema("public")
+}
+
+model EmailVerificationCode {
+  id        String   @id @default(cuid())
+  email     String
+  code      String   @unique
+  purpose   VerificationCodePurpose @default(ADMIN_LOGIN)
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime @default(now())
+  
+  @@index([email])
+  @@index([code])
+  @@map("email_verification_codes")
+  @@schema("public")
+}
+
+enum VerificationCodePurpose {
+  ADMIN_LOGIN
+  EMAIL_VERIFICATION
+  PASSWORD_RESET
+  
+  @@schema("public")
 }
 
 model Course {
@@ -82,8 +112,10 @@ model Course {
   enrollments   Enrollment[]
   reviews       Review[]
   payments      Payment[]
+  certificates  Certificate[]
   
   @@map("courses")
+  @@schema("teachers")
 }
 
 model Lesson {
@@ -102,6 +134,7 @@ model Lesson {
   course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
   
   @@map("lessons")
+  @@schema("teachers")
 }
 
 model Enrollment {
@@ -119,6 +152,7 @@ model Enrollment {
   
   @@unique([userId, courseId])
   @@map("enrollments")
+  @@schema("students")
 }
 
 model Review {
@@ -136,12 +170,15 @@ model Review {
   
   @@unique([userId, courseId])
   @@map("reviews")
+  @@schema("students")
 }
 
 enum Role {
   STUDENT
   INSTRUCTOR
   ADMIN
+  
+  @@schema("public")
 }
 
 enum UserStatus {
@@ -149,6 +186,8 @@ enum UserStatus {
   INACTIVE
   SUSPENDED
   PENDING
+  
+  @@schema("public")
 }
 
 enum CourseStatus {
@@ -156,18 +195,24 @@ enum CourseStatus {
   REVIEW
   PUBLISHED
   ARCHIVED
+  
+  @@schema("public")
 }
 
 enum CourseLevel {
   BEGINNER
   INTERMEDIATE
   ADVANCED
+  
+  @@schema("public")
 }
 
 enum EnrollmentStatus {
   ACTIVE
   COMPLETED
   CANCELLED
+  
+  @@schema("public")
 }
 
 model Payment {
@@ -198,6 +243,7 @@ model Payment {
   course          Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
   
   @@map("payments")
+  @@schema("students")
 }
 
 enum PaymentStatus {
@@ -207,6 +253,8 @@ enum PaymentStatus {
   FAILED
   REFUNDED
   CANCELLED
+  
+  @@schema("public")
 }
 
 model TeacherApplication {
@@ -252,6 +300,7 @@ model TeacherApplication {
   updatedAt         DateTime @updatedAt
   
   @@map("teacher_applications")
+  @@schema("teachers")
 }
 
 enum ApplicationStatus {
@@ -259,4 +308,721 @@ enum ApplicationStatus {
   UNDER_REVIEW
   APPROVED
   REJECTED
+  
+  @@schema("public")
+}
+
+model AuditLog {
+  id            String   @id @default(cuid())
+  actorUserId   String?
+  action        String
+  entityType    String?
+  entityId      String?
+  metadata      Json?
+  createdAt     DateTime @default(now())
+  
+  // Relations
+  actor         User?    @relation("AuditLogActor", fields: [actorUserId], references: [id], onDelete: SetNull)
+  
+  @@index([actorUserId])
+  @@index([action])
+  @@index([createdAt])
+  @@map("audit_logs")
+  @@schema("admins")
+}
+
+model SystemSetting {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       Json
+  category    String   @default("general")
+  description String?
+  updatedAt   DateTime @updatedAt
+  updatedBy   String?
+  
+  @@index([category])
+  @@map("system_settings")
+  @@schema("admins")
+}
+
+model Notification {
+  id          String   @id @default(cuid())
+  title       String
+  content     String
+  channel     NotificationChannel @default(EMAIL)
+  status      NotificationStatus @default(DRAFT)
+  targetType  NotificationTarget @default(ALL_USERS)
+  scheduledAt DateTime?
+  sentAt      DateTime?
+  createdBy   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([status])
+  @@index([channel])
+  @@map("notifications")
+  @@schema("admins")
+}
+
+enum NotificationChannel {
+  EMAIL
+  IN_APP
+  SMS
+  PUSH
+  
+  @@schema("public")
+}
+
+enum NotificationStatus {
+  DRAFT
+  SCHEDULED
+  SENDING
+  SENT
+  FAILED
+  
+  @@schema("public")
+}
+
+enum NotificationTarget {
+  ALL_USERS
+  STUDENTS
+  TEACHERS
+  SPECIFIC_USERS
+  
+  @@schema("public")
+}
+
+// ==================== SOCIAL/POSTS SYSTEM ====================
+
+model Post {
+  id              String   @id @default(cuid())
+  title           String?
+  content         String   @db.Text // Rich text HTML content
+  excerpt         String?  // Short preview text
+  
+  // Styling options (stored as JSON)
+  styling         Json?    // { fontFamily, fontSize, fontColor, backgroundColor, textAlign, etc. }
+  
+  // Author info
+  authorId        String
+  authorType      AuthorType @default(ADMIN)
+  
+  // Status and visibility
+  status          PostStatus @default(DRAFT)
+  visibility      PostVisibility @default(PUBLIC)
+  isPinned        Boolean  @default(false)
+  allowComments   Boolean  @default(true)
+  allowLikes      Boolean  @default(true)
+  
+  // Engagement counts (denormalized for performance)
+  likesCount      Int      @default(0)
+  commentsCount   Int      @default(0)
+  viewsCount      Int      @default(0)
+  
+  // Timestamps
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  publishedAt     DateTime?
+  
+  // Relations
+  media           PostMedia[]
+  comments        PostComment[]
+  likes           PostLike[]
+  
+  @@index([authorId])
+  @@index([status])
+  @@index([createdAt])
+  @@index([isPinned, publishedAt])
+  @@map("posts")
+  @@schema("public")
+}
+
+model PostMedia {
+  id          String   @id @default(cuid())
+  postId      String
+  
+  // Media details
+  type        MediaType
+  url         String
+  filename    String?
+  mimeType    String?
+  fileSize    Int?     // in bytes
+  
+  // Media dimensions/duration
+  width       Int?
+  height      Int?
+  duration    Int?     // for audio/video in seconds
+  
+  // Display options
+  caption     String?
+  altText     String?
+  order       Int      @default(0)
+  styling     Json?    // { borderRadius, objectFit, aspectRatio, etc. }
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  
+  // Relations
+  post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  
+  @@index([postId])
+  @@map("post_media")
+  @@schema("public")
+}
+
+model PostComment {
+  id          String   @id @default(cuid())
+  postId      String
+  authorId    String
+  authorName  String   // Denormalized for display
+  authorAvatar String?
+  
+  content     String   @db.Text
+  
+  // Nested comments support
+  parentId    String?
+  
+  // Moderation
+  status      CommentStatus @default(APPROVED)
+  
+  // Engagement
+  likesCount  Int      @default(0)
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  parent      PostComment? @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies     PostComment[] @relation("CommentReplies")
+  likes       CommentLike[]
+  
+  @@index([postId])
+  @@index([authorId])
+  @@index([parentId])
+  @@map("post_comments")
+  @@schema("public")
+}
+
+model PostLike {
+  id        String   @id @default(cuid())
+  postId    String
+  userId    String
+  createdAt DateTime @default(now())
+  
+  // Relations
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  
+  @@unique([postId, userId])
+  @@index([postId])
+  @@index([userId])
+  @@map("post_likes")
+  @@schema("public")
+}
+
+model CommentLike {
+  id        String   @id @default(cuid())
+  commentId String
+  userId    String
+  createdAt DateTime @default(now())
+  
+  // Relations
+  comment   PostComment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  
+  @@unique([commentId, userId])
+  @@index([commentId])
+  @@index([userId])
+  @@map("comment_likes")
+  @@schema("public")
+}
+
+enum AuthorType {
+  ADMIN
+  INSTRUCTOR
+  
+  @@schema("public")
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+  
+  @@schema("public")
+}
+
+enum PostVisibility {
+  PUBLIC
+  TEACHERS_ONLY
+  PRIVATE
+  
+  @@schema("public")
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+  AUDIO
+  DOCUMENT
+  PDF
+  
+  @@schema("public")
+}
+
+enum CommentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SPAM
+  
+  @@schema("public")
+}
+
+model AdminRole {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  nameAr      String
+  description String?
+  permissions Json     // Array of permission strings
+  isSystem    Boolean  @default(false) // System roles cannot be deleted
+  status      String   @default("active") // active, inactive
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("admin_roles")
+  @@schema("admins")
+}
+
+model Certificate {
+  id                String   @id @default(cuid())
+  certificateNumber String   @unique
+  studentName       String
+  studentNameEn     String?
+  courseName        String
+  courseNameEn      String?
+  completionDate    DateTime
+  grade             String?
+  score             Float?
+  instructorName    String?
+  courseDuration    String?
+  templateType      String   @default("classic")
+  
+  // Optional relations to actual user/course
+  userId            String?
+  courseId          String?
+  
+  // Metadata
+  issuedBy          String?  // Admin who issued
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  // Relations (optional - certificates can exist without user/course records)
+  user              User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  course            Course?  @relation(fields: [courseId], references: [id], onDelete: SetNull)
+  
+  @@index([studentName])
+  @@index([courseName])
+  @@index([certificateNumber])
+  @@map("certificates")
+  @@schema("students")
+}
+
+// ==========================================
+// Teacher Room - Communication System
+// ==========================================
+
+model TeacherRoomMessage {
+  id          String      @id @default(cuid())
+  content     String?     // Text content (null for voice-only messages)
+  type        MessageType @default(TEXT)
+  voiceUrl    String?     // URL to voice message file
+  voiceDuration Int?      // Duration in seconds
+  attachmentUrl String?   // Optional file attachment
+  attachmentName String?
+  attachmentType String?
+  
+  // Author info
+  authorId    String
+  authorName  String
+  authorAvatar String?
+  authorRole  Role
+  
+  // Reply to another message
+  replyToId   String?
+  replyTo     TeacherRoomMessage? @relation("MessageReplies", fields: [replyToId], references: [id], onDelete: SetNull)
+  replies     TeacherRoomMessage[] @relation("MessageReplies")
+  
+  // Reactions
+  reactions   MessageReaction[]
+  
+  // Status
+  isEdited    Boolean  @default(false)
+  isDeleted   Boolean  @default(false)
+  isPinned    Boolean  @default(false)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([authorId])
+  @@index([createdAt])
+  @@map("teacher_room_messages")
+  @@schema("teachers")
+}
+
+model MessageReaction {
+  id        String   @id @default(cuid())
+  emoji     String   // The emoji reaction
+  userId    String
+  userName  String
+  messageId String
+  message   TeacherRoomMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  
+  @@unique([messageId, userId, emoji])
+  @@map("message_reactions")
+  @@schema("teachers")
+}
+
+model TeacherMeeting {
+  id          String        @id @default(cuid())
+  title       String
+  description String?
+  type        MeetingType   @default(VIDEO)
+  status      MeetingStatus @default(SCHEDULED)
+  
+  // Scheduling
+  scheduledAt DateTime?
+  startedAt   DateTime?
+  endedAt     DateTime?
+  duration    Int?          // Duration in minutes
+  
+  // Host info
+  hostId      String
+  hostName    String
+  hostAvatar  String?
+  
+  // Meeting settings
+  isRecorded  Boolean @default(false)
+  recordingUrl String?
+  maxParticipants Int @default(50)
+  
+  // Privacy & Access Control
+  privacy     MeetingPrivacy @default(PUBLIC)
+  requireApproval Boolean @default(false) // Host must approve join requests
+  allowChat   Boolean @default(true)
+  allowScreenShare Boolean @default(true)
+  allowHandRaise Boolean @default(true)
+  
+  // Notification settings
+  notifyOnCreate Boolean @default(true)  // Send notifications when created
+  notifyBeforeStart Int? // Minutes before start to send reminder
+  
+  // Participants
+  participants MeetingParticipant[]
+  
+  // Invitations (for private meetings)
+  invitations MeetingInvitation[]
+  
+  // Chat during meeting
+  chatMessages MeetingChatMessage[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([hostId])
+  @@index([status])
+  @@index([scheduledAt])
+  @@index([privacy])
+  @@map("teacher_meetings")
+  @@schema("teachers")
+}
+
+model MeetingInvitation {
+  id          String   @id @default(cuid())
+  meetingId   String
+  meeting     TeacherMeeting @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+  
+  userId      String
+  userName    String
+  userEmail   String
+  userRole    Role
+  
+  // Invitation status
+  status      InvitationStatus @default(PENDING)
+  respondedAt DateTime?
+  
+  // Notification tracking
+  emailSent   Boolean @default(false)
+  emailSentAt DateTime?
+  notificationSent Boolean @default(false)
+  
+  createdAt   DateTime @default(now())
+  
+  @@unique([meetingId, userId])
+  @@index([userId])
+  @@index([status])
+  @@map("meeting_invitations")
+  @@schema("teachers")
+}
+
+// User notifications (in-app)
+model UserNotification {
+  id          String   @id @default(cuid())
+  userId      String
+  
+  type        UserNotificationType
+  title       String
+  message     String
+  link        String?  // URL to navigate to
+  
+  // Reference to related entity
+  referenceType String? // "meeting", "post", etc.
+  referenceId   String?
+  
+  isRead      Boolean @default(false)
+  readAt      DateTime?
+  
+  createdAt   DateTime @default(now())
+  
+  @@index([userId])
+  @@index([isRead])
+  @@index([createdAt])
+  @@map("user_notifications")
+  @@schema("public")
+}
+
+enum MeetingPrivacy {
+  PUBLIC      // All teachers/admins can join
+  PRIVATE     // Only invited users can join
+  
+  @@schema("public")
+}
+
+enum InvitationStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+  
+  @@schema("public")
+}
+
+enum UserNotificationType {
+  MEETING_INVITATION
+  MEETING_STARTING
+  MEETING_CANCELLED
+  NEW_MESSAGE
+  SYSTEM
+  
+  @@schema("public")
+}
+
+model MeetingParticipant {
+  id          String   @id @default(cuid())
+  meetingId   String
+  meeting     TeacherMeeting @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+  
+  userId      String
+  userName    String
+  userAvatar  String?
+  userRole    Role
+  
+  // Participant status
+  joinedAt    DateTime?
+  leftAt      DateTime?
+  isActive    Boolean  @default(false)
+  isMuted     Boolean  @default(false)
+  isCameraOff Boolean  @default(false)
+  isHandRaised Boolean @default(false)
+  
+  // Permissions
+  canSpeak    Boolean  @default(true)
+  canShare    Boolean  @default(false)
+  isCoHost    Boolean  @default(false)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@unique([meetingId, userId])
+  @@map("meeting_participants")
+  @@schema("teachers")
+}
+
+model MeetingChatMessage {
+  id          String   @id @default(cuid())
+  meetingId   String
+  meeting     TeacherMeeting @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+  
+  content     String
+  authorId    String
+  authorName  String
+  authorAvatar String?
+  
+  createdAt   DateTime @default(now())
+  
+  @@index([meetingId])
+  @@map("meeting_chat_messages")
+  @@schema("teachers")
+}
+
+// ==========================================
+// TEACHING SESSIONS (Teacher-to-Student Lessons)
+// ==========================================
+
+model TeachingSession {
+  id          String   @id @default(cuid())
+  
+  title       String
+  description String?
+  type        MeetingType @default(VIDEO) // VIDEO or VOICE
+  
+  // Session timing
+  status      MeetingStatus @default(SCHEDULED)
+  scheduledAt DateTime?
+  startedAt   DateTime?
+  endedAt     DateTime?
+  duration    Int?     // Duration in minutes
+  
+  // Teacher (host) info
+  teacherId   String
+  teacherName String
+  teacherAvatar String?
+  
+  // Course/Subject association (optional)
+  courseId    String?
+  courseName  String?
+  
+  // Session settings
+  isRecorded  Boolean @default(false)
+  recordingUrl String?
+  maxStudents Int @default(30)
+  
+  // Privacy & Access Control
+  privacy     MeetingPrivacy @default(PRIVATE) // Default PRIVATE for lessons
+  requireApproval Boolean @default(false)
+  allowChat   Boolean @default(true)
+  allowScreenShare Boolean @default(true)
+  allowHandRaise Boolean @default(true)
+  allowStudentMic Boolean @default(false) // Can students unmute?
+  allowStudentCamera Boolean @default(false) // Can students turn on camera?
+  
+  // Notification settings
+  notifyOnCreate Boolean @default(true)
+  notifyBeforeStart Int? // Minutes before start
+  
+  // Relations
+  participants SessionParticipant[]
+  invitations  SessionInvitation[]
+  chatMessages SessionChatMessage[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([teacherId])
+  @@index([status])
+  @@index([scheduledAt])
+  @@index([courseId])
+  @@map("teaching_sessions")
+  @@schema("teachers")
+}
+
+model SessionParticipant {
+  id          String   @id @default(cuid())
+  sessionId   String
+  session     TeachingSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  
+  userId      String
+  userName    String
+  userAvatar  String?
+  userRole    Role     // STUDENT, INSTRUCTOR, ADMIN
+  
+  // Status
+  isActive    Boolean @default(false)
+  joinedAt    DateTime?
+  leftAt      DateTime?
+  
+  // Permissions (can be overridden by teacher)
+  isMuted     Boolean @default(true)
+  isCameraOff Boolean @default(true)
+  isHandRaised Boolean @default(false)
+  canSpeak    Boolean @default(false)
+  canShare    Boolean @default(false)
+  
+  createdAt   DateTime @default(now())
+  
+  @@unique([sessionId, userId])
+  @@index([userId])
+  @@map("session_participants")
+  @@schema("teachers")
+}
+
+model SessionInvitation {
+  id          String   @id @default(cuid())
+  sessionId   String
+  session     TeachingSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  
+  userId      String
+  userName    String
+  userEmail   String
+  userRole    Role
+  
+  // Invitation status
+  status      InvitationStatus @default(PENDING)
+  respondedAt DateTime?
+  
+  // Notification tracking
+  emailSent   Boolean @default(false)
+  emailSentAt DateTime?
+  notificationSent Boolean @default(false)
+  
+  createdAt   DateTime @default(now())
+  
+  @@unique([sessionId, userId])
+  @@index([userId])
+  @@index([status])
+  @@map("session_invitations")
+  @@schema("teachers")
+}
+
+model SessionChatMessage {
+  id          String   @id @default(cuid())
+  sessionId   String
+  session     TeachingSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  
+  content     String
+  authorId    String
+  authorName  String
+  authorAvatar String?
+  authorRole  Role
+  
+  createdAt   DateTime @default(now())
+  
+  @@index([sessionId])
+  @@map("session_chat_messages")
+  @@schema("teachers")
+}
+
+enum MessageType {
+  TEXT
+  VOICE
+  FILE
+  SYSTEM
+  
+  @@schema("public")
+}
+
+enum MeetingType {
+  VIDEO
+  VOICE
+  
+  @@schema("public")
+}
+
+enum MeetingStatus {
+  SCHEDULED
+  LIVE
+  ENDED
+  CANCELLED
+  
+  @@schema("public")
 }

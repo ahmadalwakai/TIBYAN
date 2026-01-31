@@ -61,6 +61,7 @@ const statusIcons: Record<string, string> = {
 };
 
 const methodLabels: Record<string, string> = {
+  cash: "نقدًا",
   bank_transfer: "تحويل بنكي",
   stripe: "بطاقة ائتمان",
   paypal: "PayPal",

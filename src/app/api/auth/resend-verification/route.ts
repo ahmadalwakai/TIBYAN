@@ -4,14 +4,16 @@ import { createVerificationToken } from "@/lib/auth/tokens";
 import { sendEmail } from "@/lib/email/resend";
 import { getVerificationEmailTemplate } from "@/lib/email/templates";
 import { z } from "zod";
+import { withRateLimit, RATE_LIMITS } from "@/lib/rate-limit";
 
 const ResendVerificationSchema = z.object({
   email: z.string().email("البريد الإلكتروني غير صحيح"),
 });
 
 export async function POST(request: Request) {
-  try {
-    const body = await request.json();
+  return withRateLimit(request, RATE_LIMITS.auth, async () => {
+    try {
+      const body = await request.json();
     
     // Validate input
     const result = ResendVerificationSchema.safeParse(body);
@@ -94,4 +96,5 @@ export async function POST(request: Request) {
       { status: 500 }
     );
   }
+  });
 }

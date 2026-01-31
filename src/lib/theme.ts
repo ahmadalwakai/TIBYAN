@@ -38,6 +38,35 @@ const customConfig = defineConfig({
             "var(--font-ibm-plex), var(--font-inter), system-ui, -apple-system, sans-serif",
         },
       },
+      fontSizes: {
+        // Arabic-optimized typography scale
+        xs: { value: "0.75rem" },    // 12px - captions, metadata
+        sm: { value: "0.875rem" },   // 14px - secondary text
+        md: { value: "1rem" },       // 16px - body text (baseline)
+        lg: { value: "1.125rem" },   // 18px - emphasized body
+        xl: { value: "1.25rem" },    // 20px - small headings
+        "2xl": { value: "1.5rem" },  // 24px - h3
+        "3xl": { value: "1.875rem" }, // 30px - h2
+        "4xl": { value: "2.25rem" }, // 36px - h1
+        "5xl": { value: "3rem" },    // 48px - display headings
+        "6xl": { value: "3.75rem" }, // 60px - hero headings
+        "7xl": { value: "4.5rem" },  // 72px - large hero
+        "8xl": { value: "6rem" },    // 96px - extra large hero
+      },
+      lineHeights: {
+        // Optimized for Arabic script with diacritics
+        tight: { value: "1.25" },    // For headings
+        snug: { value: "1.375" },    // For sub-headings
+        normal: { value: "1.6" },    // For body text
+        relaxed: { value: "1.75" },  // For long-form content
+        loose: { value: "2" },       // For captions/metadata
+      },
+      spacing: {
+        // RTL-aware spacing scale
+        textGap: { value: "0.5rem" }, // Gap between text elements
+        cardGap: { value: "1.5rem" }, // Gap between cards
+        sectionGap: { value: "4rem" }, // Gap between sections
+      },
       gradients: {
         brand: { value: `linear-gradient(135deg, ${BRAND.navy[900]} 0%, ${BRAND.navy[700]} 100%)` },
         brandSubtle: { value: `linear-gradient(135deg, ${BRAND.background.subtle} 0%, ${BRAND.background.surface} 100%)` },
@@ -69,12 +98,30 @@ const customConfig = defineConfig({
     body: {
       bg: "background",
       color: "textBody",
-      lineHeight: "1.6",
+      lineHeight: "normal",
+      fontSize: "md",
     },
     "h1, h2, h3, h4, h5, h6": {
       color: "text",
       fontWeight: "700",
-      lineHeight: "1.3",
+      lineHeight: "tight",
+      letterSpacing: "-0.01em",
+    },
+    h1: {
+      fontSize: { base: "4xl", md: "5xl", lg: "6xl" },
+      lineHeight: "tight",
+    },
+    h2: {
+      fontSize: { base: "3xl", md: "4xl" },
+      lineHeight: "tight",
+    },
+    h3: {
+      fontSize: { base: "2xl", md: "3xl" },
+      lineHeight: "snug",
+    },
+    p: {
+      lineHeight: "normal",
+      marginBottom: "textGap",
     },
     a: {
       color: "link",

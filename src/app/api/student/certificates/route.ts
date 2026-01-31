@@ -1,25 +1,13 @@
-import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { requireRole } from "@/lib/api-auth";
 
-async function getCurrentUserId(): Promise<string | null> {
-  const cookieStore = await cookies();
-  const userDataStr = cookieStore.get("user-data")?.value;
-  if (!userDataStr) return null;
-  try {
-    const userData = JSON.parse(userDataStr);
-    return userData.id;
-  } catch {
-    return null;
-  }
-}
+export async function GET(request: NextRequest) {
+  const authResult = await requireRole(request, "STUDENT");
+  if (authResult instanceof NextResponse) return authResult;
 
-export async function GET() {
   try {
-    const userId = await getCurrentUserId();
-    if (!userId) {
-      return NextResponse.json({ ok: false, error: "غير مصرح" }, { status: 401 });
-    }
+    const userId = authResult.id;
 
     // Get completed enrollments
     const completedEnrollments = await prisma.enrollment.findMany({

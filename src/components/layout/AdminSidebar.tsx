@@ -11,6 +11,8 @@ const adminLinks = [
   { label: "طلبات المدرسين", href: "/admin/applications" },
   { label: "الدورات", href: "/admin/courses" },
   { label: "المدفوعات", href: "/admin/payments" },
+  { label: "الشهادات", href: "/admin/certificates" },
+  { label: "المنشورات الاجتماعية", href: "/admin/social" },
   { label: "المراجعات", href: "/admin/reviews" },
   { label: "التقارير", href: "/admin/reports" },
   { label: "سجلات التدقيق", href: "/admin/audit-logs" },

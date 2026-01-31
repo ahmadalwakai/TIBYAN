@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { UpdateApplicationStatusSchema } from "@/lib/validations";
+import { requireAdmin } from "@/lib/api-auth";
 
 const DB_UNAVAILABLE_RESPONSE = NextResponse.json(
   { ok: false, error: "قاعدة البيانات غير متوفرة" },
@@ -11,6 +12,9 @@ export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const authResult = await requireAdmin(request);
+  if (authResult instanceof NextResponse) return authResult;
+
   try {
     if (!db.teacherApplication) return DB_UNAVAILABLE_RESPONSE;
     
@@ -41,6 +45,9 @@ export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const authResult = await requireAdmin(request);
+  if (authResult instanceof NextResponse) return authResult;
+
   try {
     if (!db.teacherApplication) return DB_UNAVAILABLE_RESPONSE;
     

@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import { requireAdmin, requireUser } from "@/lib/api-auth";
 
 // In-memory storage (in production, use a database)
-let chatSessions: {
+const chatSessions: {
   [sessionId: string]: {
     id: string;
+    userId?: string; // Owner of the session
     userName: string;
     userEmail?: string;
     status: "active" | "waiting" | "resolved";
@@ -19,6 +21,10 @@ export async function GET(request: NextRequest) {
     const sessionId = searchParams.get("sessionId");
 
     if (sessionId) {
+      // User accessing their own session
+      const authResult = await requireUser(request);
+      if (authResult instanceof NextResponse) return authResult;
+      
       // Get specific session
       const session = chatSessions[sessionId];
       if (!session) {
@@ -27,9 +33,21 @@ export async function GET(request: NextRequest) {
           { status: 404 }
         );
       }
+
+      // Enforce ownership: user can only access own session, admin can access all
+      if (authResult.role !== "ADMIN" && session.userId && session.userId !== authResult.id) {
+        return NextResponse.json(
+          { ok: false, error: "غير مصرح" },
+          { status: 403 }
+        );
+      }
+
       return NextResponse.json({ ok: true, data: session });
     } else {
-      // Get all sessions (for admin)
+      // Admin-only: Get all sessions
+      const authResult = await requireAdmin(request);
+      if (authResult instanceof NextResponse) return authResult;
+      
       const sessions = Object.values(chatSessions);
       return NextResponse.json({ ok: true, data: sessions });
     }
@@ -49,11 +67,19 @@ export async function POST(request: NextRequest) {
 
     if (action === "create") {
       // Create new chat session
+      // Get userId from auth if available (guest sessions allowed)
+      let userId: string | undefined;
+      const authResult = await requireUser(request);
+      if (!(authResult instanceof NextResponse)) {
+        userId = authResult.id;
+      }
+
       const newSessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       const now = new Date().toISOString();
       
       chatSessions[newSessionId] = {
         id: newSessionId,
+        userId, // Store owner userId
         userName: userName || "زائر",
         userEmail: userEmail || undefined,
         status: "active",

@@ -17,6 +17,8 @@ import { useTranslations } from "next-intl";
 import PremiumCard from "@/components/ui/PremiumCard";
 import StatCard from "@/components/ui/StatCard";
 import FeatureCard from "@/components/ui/FeatureCard";
+import InstructorVerification from "@/components/ui/InstructorVerification";
+import SocialFeed from "@/components/ui/SocialFeed";
 
 // Animated counter hook
 function useCountUp(end: number, duration: number = 3000) {
@@ -325,7 +327,8 @@ export default function Home() {
             <Stack gap={{ base: 4, md: 6 }} align="center">
               {/* Platform Name - Calligraphic Style */}
               <Box position="relative">
-                <Text
+                <Heading
+                  as="h1"
                   fontWeight="900"
                   fontSize={{ base: "5xl", md: "7xl", lg: "8xl" }}
                   letterSpacing="-0.02em"
@@ -341,7 +344,7 @@ export default function Home() {
                   }}
                 >
                   {t("platformName")}
-                </Text>
+                </Heading>
                 {/* Decorative underline */}
                 <Box
                   position="absolute"
@@ -361,6 +364,7 @@ export default function Home() {
               {/* Hero Title & Subtitle */}
               <Stack gap={2} align="center" pt={{ base: 4, md: 6 }}>
                 <Heading 
+                  as="h2"
                   size={{ base: "2xl", md: "3xl", lg: "4xl" }}
                   lineHeight="1.2"
                   fontWeight="800"
@@ -407,7 +411,7 @@ export default function Home() {
               pt={{ base: 4, md: 6 }}
               w={{ base: "100%", sm: "auto" }}
             >
-              {/* Primary Button with Glow */}
+              {/* Primary Button with Glow - High Intent CTA */}
               <Box position="relative">
                 <Box
                   position="absolute"
@@ -442,7 +446,7 @@ export default function Home() {
                   transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
                   w={{ base: "100%", sm: "auto" }}
                 >
-                  <Link href="/programs">{t("explorePrograms")}</Link>
+                  <Link href="/assessment">{t("startAssessment")}</Link>
                 </Button>
               </Box>
 
@@ -473,7 +477,7 @@ export default function Home() {
                 transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
                 w={{ base: "100%", sm: "auto" }}
               >
-                <Link href="/instructors/apply">{t("becomeInstructor")}</Link>
+                <Link href="/programs">{t("explorePrograms")}</Link>
               </Button>
             </Stack>
             
@@ -519,8 +523,8 @@ export default function Home() {
                 }}
               >
                 <Stack gap={1} align="center">
-                  <Text fontSize={{ base: "2xl", md: "4xl" }} fontWeight="900" color="white">18k+</Text>
-                  <Text fontSize={{ base: "xs", md: "sm" }} color="gray.400" fontWeight="600">{t("stats.activeStudents")}</Text>
+                  <Text fontSize={{ base: "2xl", md: "4xl" }} fontWeight="900" color="white">معتمد</Text>
+                  <Text fontSize={{ base: "xs", md: "sm" }} color="gray.400" fontWeight="600">{t("stats.certified")}</Text>
                 </Stack>
               </Box>
               <Box
@@ -538,8 +542,8 @@ export default function Home() {
                 }}
               >
                 <Stack gap={1} align="center">
-                  <Text fontSize={{ base: "2xl", md: "4xl" }} fontWeight="900" color="#c8a24a">4.9★</Text>
-                  <Text fontSize={{ base: "xs", md: "sm" }} color="gray.400" fontWeight="600">{t("stats.rating")}</Text>
+                  <Text fontSize={{ base: "2xl", md: "4xl" }} fontWeight="900" color="#c8a24a">مختصون</Text>
+                  <Text fontSize={{ base: "xs", md: "sm" }} color="gray.400" fontWeight="600">{t("stats.expertInstructors")}</Text>
                 </Stack>
               </Box>
             </SimpleGrid>
@@ -589,6 +593,73 @@ export default function Home() {
       {/* Rest of Page Content */}
       <Container maxW="7xl" py={{ base: 12, md: 20 }} px={{ base: 6, md: 8 }} position="relative">
         <Stack gap={{ base: 16, md: 20 }}>
+          
+          {/* Community Posts Section - First thing after hero */}
+          <Box
+            position="relative"
+            py={{ base: 8, md: 12 }}
+          >
+            <Stack gap={8}>
+              {/* Section Header */}
+              <Stack gap={4} textAlign="center" align="center">
+                <Badge
+                  bg="linear-gradient(135deg, rgba(200, 162, 74, 0.2), rgba(0, 212, 255, 0.2))"
+                  color="brand.500"
+                  px={6}
+                  py={2}
+                  borderRadius="full"
+                  fontSize="sm"
+                  fontWeight="700"
+                  border="1px solid"
+                  borderColor="rgba(200, 162, 74, 0.3)"
+                >
+                  {t("socialBadge")}
+                </Badge>
+                <Heading
+                  size={{ base: "lg", md: "xl" }}
+                  css={{
+                    background: "linear-gradient(135deg, #0b1f3b 0%, #c8a24a 100%)",
+                    backgroundClip: "text",
+                    WebkitBackgroundClip: "text",
+                    color: "transparent",
+                  }}
+                >
+                  {t("socialTitle")}
+                </Heading>
+                <Text color="muted" fontSize={{ base: "md", md: "lg" }} maxW="600px">
+                  {t("socialDescription")}
+                </Text>
+              </Stack>
+
+              {/* Social Feed Component */}
+              <Box maxW="4xl" mx="auto" w="100%">
+                <SocialFeed showTitle={false} maxPosts={3} />
+              </Box>
+
+              {/* View All Button */}
+              <Flex justify="center" pt={4}>
+                <Button
+                  asChild
+                  size="lg"
+                  bg="linear-gradient(135deg, #c8a24a 0%, #b8943a 100%)"
+                  color="brand.900"
+                  px={8}
+                  fontWeight="700"
+                  borderRadius="xl"
+                  boxShadow="0 4px 20px rgba(200, 162, 74, 0.3)"
+                  _hover={{
+                    bg: "linear-gradient(135deg, #d4b05a 0%, #c8a24a 100%)",
+                    transform: "translateY(-2px)",
+                    boxShadow: "0 8px 30px rgba(200, 162, 74, 0.4)",
+                  }}
+                  transition="all 0.3s ease"
+                >
+                  <Link href="/social">{t("viewAllPosts")} →</Link>
+                </Button>
+              </Flex>
+            </Stack>
+          </Box>
+
           {/* Features Highlight Section */}
           <Box
             position="relative"
@@ -1558,6 +1629,11 @@ export default function Home() {
               </Box>
             </Flex>
           </Box>
+
+          {/* Instructor Verification Section */}
+          <Container maxW="6xl" py={{ base: 8, md: 12 }}>
+            <InstructorVerification />
+          </Container>
 
           {/* Testimonials Section - Story-Driven Social Proof */}
           <Box

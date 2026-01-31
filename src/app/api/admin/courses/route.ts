@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { CreateCourseSchema, UpdateCourseSchema } from "@/lib/validations";
 import { allCourses, teachers } from "@/content/courses.ar";
+import { requireAdmin } from "@/lib/api-auth";
 
 // Mock data for when database is not connected - using real educational content
 const mockCourses = [
@@ -139,6 +140,9 @@ const mockCourses = [
 
 // GET /api/admin/courses - List all courses
 export async function GET(request: NextRequest) {
+  const authResult = await requireAdmin(request);
+  if (authResult instanceof NextResponse) return authResult;
+
   try {
     const { searchParams } = new URL(request.url);
     const status = searchParams.get("status");
@@ -211,6 +215,9 @@ export async function GET(request: NextRequest) {
 
 // POST /api/admin/courses - Create new course
 export async function POST(request: NextRequest) {
+  const authResult = await requireAdmin(request);
+  if (authResult instanceof NextResponse) return authResult;
+
   try {
     const body = await request.json();
     const validation = CreateCourseSchema.safeParse(body);

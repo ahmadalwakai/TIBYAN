@@ -234,11 +234,10 @@ export default function InstructorsPage() {
           </Stack>
 
           {/* Stats Section */}
-          <SimpleGrid columns={{ base: 2, md: 4 }} gap={5}>
+          <SimpleGrid columns={{ base: 2, md: 3 }} gap={5}>
             <AnimatedStat icon="👥" value={12} suffix="+" label="معلم متخصص" color="#c8a24a" />
             <AnimatedStat icon="📚" value={5} suffix="" label="برنامج تعليمي" color="#3b82f6" />
-            <AnimatedStat icon="🎓" value={18} suffix="k+" label="طالب مستفيد" color="#10b981" />
-            <AnimatedStat icon="⭐" value={4.9} suffix="" label="تقييم المعلمين" color="#f59e0b" />
+            <AnimatedStat icon="🎓" value={0} suffix="" label="طلاب مسجلون" color="#10b981" />
           </SimpleGrid>
 
           {/* Teachers Grid */}
@@ -376,10 +375,10 @@ export default function InstructorsPage() {
                               backgroundClip="text"
                               css={{ WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
                             >
-                              ⭐ 4.9
+                              ✓ معتمد
                             </Text>
                             <Text fontSize="xs" color="whiteAlpha.600">
-                              التقييم
+                              مدرس مؤهل
                             </Text>
                           </Box>
                           <Box

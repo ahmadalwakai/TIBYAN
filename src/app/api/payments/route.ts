@@ -1,11 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { CreatePaymentSchema } from "@/lib/validations";
+import { withRateLimit, RATE_LIMITS } from "@/lib/rate-limit";
+import { allCourses } from "@/content/courses.ar";
+import { sendEmail } from "@/lib/email/resend";
+import { getPaymentConfirmationTemplate } from "@/lib/email/templates";
 
 // Create a new payment (checkout)
 export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json();
+  return withRateLimit(request, RATE_LIMITS.payment, async () => {
+    try {
+      const body = await request.json();
     
     // Validate input
     const result = CreatePaymentSchema.safeParse(body);
@@ -17,7 +22,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if database is available
-    if (!db.payment || !db.course) {
+    if (!db.payment) {
       return NextResponse.json(
         { ok: false, error: "قاعدة البيانات غير متوفرة حالياً" },
         { status: 503 }
@@ -26,24 +31,64 @@ export async function POST(request: NextRequest) {
 
     const { courseId, paymentMethod, couponCode, customerName, customerEmail, customerPhone } = result.data;
 
-    // Get the course
-    const course = await db.course.findUnique({
-      where: { id: courseId },
-    });
+    // First try to find course in database by ID or slug
+    let dbCourse = await db.course.findFirst({
+      where: {
+        OR: [
+          { id: courseId },
+          { slug: courseId },
+        ],
+      },
+    }).catch(() => null);
 
-    if (!course) {
+    // If not in database, check static course data and create it
+    const staticCourse = allCourses.find(c => c.id === courseId || c.slug === courseId);
+    
+    if (!dbCourse && !staticCourse) {
       return NextResponse.json(
         { ok: false, error: "الدورة غير موجودة" },
         { status: 404 }
       );
     }
 
-    if (course.status !== "PUBLISHED") {
-      return NextResponse.json(
-        { ok: false, error: "هذه الدورة غير متاحة للتسجيل حالياً" },
-        { status: 400 }
-      );
+    // If course exists only in static data, create it in database
+    if (!dbCourse && staticCourse) {
+      // First, ensure we have a system instructor for auto-created courses
+      let systemInstructor = await db.user.findFirst({
+        where: { role: "INSTRUCTOR" },
+      });
+      
+      if (!systemInstructor) {
+        // Create a system instructor if none exists
+        systemInstructor = await db.user.create({
+          data: {
+            email: "instructor@tibyan.com",
+            name: "معهد تبيان",
+            password: "",
+            role: "INSTRUCTOR",
+            status: "ACTIVE",
+          },
+        });
+      }
+
+      dbCourse = await db.course.create({
+        data: {
+          title: staticCourse.name,
+          slug: staticCourse.slug,
+          description: staticCourse.description,
+          price: staticCourse.price,
+          duration: staticCourse.totalSessions * 60, // Convert sessions to minutes
+          level: "BEGINNER",
+          status: "PUBLISHED",
+          instructorId: systemInstructor.id,
+        },
+      });
     }
+
+    // Use database course info
+    const courseTitle = dbCourse!.title;
+    const coursePrice = dbCourse!.price;
+    const courseCurrency = "EUR"; // Default currency
 
     // Check if user exists by email, or create a guest user
     let user = await db.user.findUnique({
@@ -68,7 +113,7 @@ export async function POST(request: NextRequest) {
       where: {
         userId_courseId: {
           userId: user.id,
-          courseId: course.id,
+          courseId: dbCourse!.id,
         },
       },
     });
@@ -80,11 +125,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check for existing pending payment
+    // Check for existing pending payment for this course
     const existingPayment = await db.payment.findFirst({
       where: {
         userId: user.id,
-        courseId: course.id,
+        courseId: dbCourse!.id,
         status: "PENDING",
       },
     });
@@ -101,7 +146,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Calculate amount (apply coupon if provided)
-    let amount = course.price;
+    let amount = coursePrice;
     let discountAmount = 0;
 
     // TODO: Implement coupon validation
@@ -111,11 +156,11 @@ export async function POST(request: NextRequest) {
     const payment = await db.payment.create({
       data: {
         userId: user.id,
-        courseId: course.id,
+        courseId: dbCourse!.id,
         amount,
         discountAmount,
         couponCode,
-        paymentMethod: paymentMethod || "bank_transfer",
+        paymentMethod: paymentMethod || "cash",
         customerName,
         customerEmail,
         customerPhone,
@@ -123,14 +168,34 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    // Send confirmation email
+    try {
+      const emailHtml = getPaymentConfirmationTemplate({
+        name: customerName,
+        courseTitle: courseTitle,
+        amount: amount,
+        currency: courseCurrency,
+        paymentId: payment.id,
+      });
+
+      await sendEmail({
+        to: customerEmail,
+        subject: `تأكيد التسجيل - ${courseTitle}`,
+        html: emailHtml,
+      });
+    } catch (emailError) {
+      // Log but don't fail the request if email fails
+      console.error("Failed to send confirmation email:", emailError);
+    }
+
     return NextResponse.json(
       {
         ok: true,
         data: {
           paymentId: payment.id,
           amount: payment.amount,
-          currency: payment.currency,
-          courseTitle: course.title,
+          currency: courseCurrency,
+          courseTitle: courseTitle,
           message: "تم إنشاء طلب الدفع. يرجى إتمام عملية الدفع.",
         },
       },
@@ -143,6 +208,7 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
+  });
 }
 
 // Get all payments (for authenticated user)

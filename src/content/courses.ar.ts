@@ -22,6 +22,8 @@ export interface Teacher {
   id: string;
   name: string;
   specialization?: string;
+  credentials?: string;
+  experience?: string;
 }
 
 // ===============================
@@ -173,6 +175,91 @@ export const arabicReadingProgram: CourseLevel = {
 };
 
 // ===============================
+// SPECIALIZED PROGRAMS & CERTIFICATES
+// ===============================
+
+export const strategicAnalysisCertificate: CourseLevel = {
+  id: 'strategic-analysis',
+  name: 'شهادة التحليل الاستراتيجي',
+  slug: 'strategic-analysis',
+  description: 'برنامج مكثف لتطوير مهارات التحليل وصناعة القرار، مصمم لتأهيل القادة والمتخصصين في مجالات التخطيط والإدارة الاستراتيجية.',
+  price: 290,
+  currency: 'EUR',
+  duration: '12 أسبوعًا',
+  totalSessions: 48,
+  monthlyPayment: 97,
+  level: 'تمهيدي',
+  subjects: [
+    'أسس التحليل الاستراتيجي',
+    'منهجيات صناعة القرار',
+    'التخطيط الاستراتيجي',
+    'تحليل البيئة الداخلية والخارجية',
+    'أدوات التحليل الحديثة',
+    'دراسات حالة تطبيقية'
+  ],
+  objectives: [
+    'إتقان مهارات التحليل الاستراتيجي',
+    'تطوير القدرة على صناعة القرار الرشيد',
+    'فهم منهجيات التخطيط المتقدمة',
+    'القدرة على تحليل المشكلات المعقدة'
+  ]
+};
+
+export const islamicResearcherProgram: CourseLevel = {
+  id: 'islamic-researcher',
+  name: 'برنامج إعداد الباحث الشرعي',
+  slug: 'islamic-researcher',
+  description: 'منهج متكامل لبناء المهارات البحثية والتأصيل الشرعي، يؤهل المتخرج للبحث العلمي في المجالات الشرعية.',
+  price: 210,
+  currency: 'EUR',
+  duration: '10 أسابيع',
+  totalSessions: 40,
+  monthlyPayment: 84,
+  level: 'تمهيدي',
+  subjects: [
+    'منهجية البحث الشرعي',
+    'أصول التأصيل العلمي',
+    'التوثيق والمراجع',
+    'كتابة البحث الأكاديمي',
+    'تحقيق المخطوطات',
+    'النقد العلمي والتحليل'
+  ],
+  objectives: [
+    'إتقان منهجية البحث الشرعي',
+    'القدرة على التأصيل العلمي',
+    'مهارات الكتابة الأكاديمية',
+    'التعامل مع المصادر والمراجع'
+  ]
+};
+
+export const educationalLeadershipDiploma: CourseLevel = {
+  id: 'educational-leadership',
+  name: 'دبلوم قيادة الفرق التعليمية',
+  slug: 'educational-leadership',
+  description: 'قيادة تعليمية عملية مع أدوات قياس الأثر، يؤهل المتخرج لقيادة الفرق التعليمية وإدارة المؤسسات التربوية.',
+  price: 320,
+  currency: 'EUR',
+  duration: '14 أسبوعًا',
+  totalSessions: 56,
+  monthlyPayment: 91,
+  level: 'تمهيدي',
+  subjects: [
+    'أسس القيادة التعليمية',
+    'إدارة الفرق التعليمية',
+    'قياس الأثر التعليمي',
+    'تطوير المناهج والبرامج',
+    'التقييم والمتابعة',
+    'مهارات التواصل القيادي'
+  ],
+  objectives: [
+    'إتقان مهارات القيادة التعليمية',
+    'القدرة على إدارة الفرق بفعالية',
+    'استخدام أدوات قياس الأثر',
+    'تطوير البرامج التعليمية'
+  ]
+};
+
+// ===============================
 // ALL COURSES ARRAY
 // ===============================
 
@@ -181,7 +268,10 @@ export const allCourses: CourseLevel[] = [
   shariahFirstYear,
   shariahSecondYear,
   shariahThirdYear,
-  arabicReadingProgram
+  arabicReadingProgram,
+  strategicAnalysisCertificate,
+  islamicResearcherProgram,
+  educationalLeadershipDiploma
 ];
 
 // ===============================
@@ -189,18 +279,90 @@ export const allCourses: CourseLevel[] = [
 // ===============================
 
 export const teachers: Teacher[] = [
-  { id: 't1', name: 'محمد أيوب يحيى العلي.' },
-  { id: 't2', name: 'نسرين صالح الموسى.' },
-  { id: 't3', name: 'جهادية الخليف' },
-  { id: 't4', name: 'هناء فوزي النوري' },
-  { id: 't5', name: 'نور عطا لله جريص' },
-  { id: 't6', name: 'بندر الناصر' },
-  { id: 't7', name: 'احمد سلوم العمر' },
-  { id: 't8', name: 'خالد جاسم المحمد' },
-  { id: 't9', name: 'خريف محمد اليونس' },
-  { id: 't10', name: 'زينب ضياء الدين عايد' },
-  { id: 't11', name: 'فاطمة هارون' },
-  { id: 't12', name: 'ثراء هارون .' }
+  { 
+    id: 't1', 
+    name: 'د. محمد أيوب يحيى العلي', 
+    specialization: 'التفسير وعلوم القرآن',
+    credentials: 'دكتوراه في التفسير - جامعة الأزهر',
+    experience: '+15 سنة خبرة في التدريس'
+  },
+  { 
+    id: 't2', 
+    name: 'أ. نسرين صالح الموسى', 
+    specialization: 'اللغة العربية والنحو',
+    credentials: 'ماجستير في اللغة العربية - جامعة دمشق',
+    experience: '+10 سنوات خبرة'
+  },
+  { 
+    id: 't3', 
+    name: 'د. جهادية الخليف', 
+    specialization: 'الفقه وأصوله',
+    credentials: 'دكتوراه في الفقه - جامعة الإمام محمد بن سعود',
+    experience: '+12 سنة خبرة'
+  },
+  { 
+    id: 't4', 
+    name: 'أ. هناء فوزي النوري', 
+    specialization: 'العقيدة والسيرة النبوية',
+    credentials: 'ماجستير في العقيدة - جامعة الشام',
+    experience: '+8 سنوات خبرة'
+  },
+  { 
+    id: 't5', 
+    name: 'د. نور عطا الله جريص', 
+    specialization: 'الحديث ومصطلحه',
+    credentials: 'دكتوراه في علوم الحديث',
+    experience: '+11 سنة خبرة'
+  },
+  { 
+    id: 't6', 
+    name: 'أ. بندر الناصر', 
+    specialization: 'أصول الفقه',
+    credentials: 'ماجستير في أصول الفقه',
+    experience: '+7 سنوات خبرة'
+  },
+  { 
+    id: 't7', 
+    name: 'د. أحمد سلوم العمر', 
+    specialization: 'البلاغة والأدب',
+    credentials: 'دكتوراه في البلاغة العربية',
+    experience: '+14 سنة خبرة'
+  },
+  { 
+    id: 't8', 
+    name: 'أ. خالد جاسم المحمد', 
+    specialization: 'النحو والصرف',
+    credentials: 'ماجستير في النحو والصرف',
+    experience: '+9 سنوات خبرة'
+  },
+  { 
+    id: 't9', 
+    name: 'أ. خريف محمد اليونس', 
+    specialization: 'التجويد والقراءات',
+    credentials: 'إجازة في القراءات العشر',
+    experience: '+13 سنة خبرة'
+  },
+  { 
+    id: 't10', 
+    name: 'أ. زينب ضياء الدين عايد', 
+    specialization: 'التربية الإسلامية',
+    credentials: 'ماجستير في التربية الإسلامية',
+    experience: '+6 سنوات خبرة'
+  },
+  { 
+    id: 't11', 
+    name: 'أ. فاطمة هارون', 
+    specialization: 'القرآن الكريم وتحفيظه',
+    credentials: 'إجازة في حفظ القرآن الكريم',
+    experience: '+10 سنوات خبرة'
+  },
+  { 
+    id: 't12', 
+    name: 'أ. ثراء هارون', 
+    specialization: 'التفسير التربوي',
+    credentials: 'بكالوريوس في الدراسات الإسلامية',
+    experience: '+5 سنوات خبرة'
+  }
 ];
 
 // ===============================

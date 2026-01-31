@@ -1,119 +1,244 @@
 import { NextResponse } from "next/server";
 import { compare } from "bcryptjs";
-import { cookies } from "next/headers";
 import { prisma } from "@/lib/db";
 import { LoginSchema } from "@/lib/validations";
+import { RATE_LIMITS, checkRateLimit, getClientIp } from "@/lib/rate-limit";
+import { encodeUserData, type CookieUserData } from "@/lib/auth/cookie-encoding";
 
 export async function POST(request: Request) {
+  const contentType = request.headers.get("content-type") || "";
+  const isJson = contentType.includes("application/json");
+
   try {
-    const body = await request.json();
-    
+
+    let body: { email?: string; password?: string } = {};
+    let redirectParam: string | null = null;
+
+    if (isJson) {
+      const jsonBody = (await request.json()) as { email?: string; password?: string; redirect?: string };
+      body = { email: jsonBody.email, password: jsonBody.password };
+      redirectParam = jsonBody.redirect ?? null;
+    } else {
+      const form = await request.formData();
+      body = {
+        email: String(form.get("email") ?? ""),
+        password: String(form.get("password") ?? ""),
+      };
+      const rawRedirect = form.get("redirect");
+      redirectParam = rawRedirect ? String(rawRedirect) : null;
+    }
+
+    const safeRedirect = redirectParam && redirectParam.startsWith("/") ? redirectParam : "/admin";
+
+    const { limited, remaining, resetTime } = checkRateLimit(
+      getClientIp(request),
+      RATE_LIMITS.auth
+    );
+
+    if (limited) {
+      const retryAfter = Math.ceil((resetTime - Date.now()) / 1000);
+      if (isJson) {
+        return NextResponse.json(
+          { ok: false, error: "عدد المحاولات كثير جداً. يرجى المحاولة لاحقاً." },
+          {
+            status: 429,
+            headers: {
+              "Retry-After": retryAfter.toString(),
+              "X-RateLimit-Limit": RATE_LIMITS.auth.maxRequests.toString(),
+              "X-RateLimit-Remaining": "0",
+              "X-RateLimit-Reset": resetTime.toString(),
+            },
+          }
+        );
+      }
+
+      const loginUrl = new URL("/auth/login", request.url);
+      loginUrl.searchParams.set("error", "rate-limited");
+      loginUrl.searchParams.set("redirect", safeRedirect);
+      return NextResponse.redirect(loginUrl, 303);
+    }
+
     // Validate input
     const result = LoginSchema.safeParse(body);
     if (!result.success) {
-      return NextResponse.json(
-        { ok: false, error: result.error.issues[0].message },
-        { status: 400 }
-      );
+      if (isJson) {
+        return NextResponse.json(
+          { ok: false, error: result.error.issues[0].message },
+          { status: 400 }
+        );
+      }
+
+      const loginUrl = new URL("/auth/login", request.url);
+      loginUrl.searchParams.set("error", "validation");
+      loginUrl.searchParams.set("redirect", safeRedirect);
+      return NextResponse.redirect(loginUrl, 303);
     }
-    
+
     const { email, password } = result.data;
-    
+
     // Find user
     const user = await prisma.user.findUnique({
       where: { email },
     });
-    
+
     if (!user) {
-      return NextResponse.json(
-        { ok: false, error: "البريد الإلكتروني أو كلمة المرور غير صحيحة" },
-        { status: 401 }
-      );
+      if (isJson) {
+        return NextResponse.json(
+          { ok: false, error: "البريد الإلكتروني أو كلمة المرور غير صحيحة" },
+          { status: 401 }
+        );
+      }
+
+      const loginUrl = new URL("/auth/login", request.url);
+      loginUrl.searchParams.set("error", "invalid-credentials");
+      loginUrl.searchParams.set("redirect", safeRedirect);
+      return NextResponse.redirect(loginUrl, 303);
     }
-    
+
     // Check if email is verified (only if field exists)
     const emailVerified = (user as { emailVerified?: boolean }).emailVerified;
     if (emailVerified === false) {
-      return NextResponse.json(
-        { ok: false, error: "يرجى تأكيد بريدك الإلكتروني أولاً" },
-        { status: 403 }
-      );
+      if (isJson) {
+        return NextResponse.json(
+          { ok: false, error: "يرجى تأكيد بريدك الإلكتروني أولاً" },
+          { status: 403 }
+        );
+      }
+
+      const loginUrl = new URL("/auth/login", request.url);
+      loginUrl.searchParams.set("error", "unverified");
+      loginUrl.searchParams.set("redirect", safeRedirect);
+      return NextResponse.redirect(loginUrl, 303);
     }
-    
+
     // Check if user is suspended
     if (user.status === "SUSPENDED") {
-      return NextResponse.json(
-        { ok: false, error: "تم تعليق حسابك. يرجى التواصل مع الدعم." },
-        { status: 403 }
-      );
+      if (isJson) {
+        return NextResponse.json(
+          { ok: false, error: "تم تعليق حسابك. يرجى التواصل مع الدعم." },
+          { status: 403 }
+        );
+      }
+
+      const loginUrl = new URL("/auth/login", request.url);
+      loginUrl.searchParams.set("error", "suspended");
+      loginUrl.searchParams.set("redirect", safeRedirect);
+      return NextResponse.redirect(loginUrl, 303);
     }
-    
-    // Check if user is pending (shouldn't reach here if emailVerified is checked)
+
+    // Check if user is pending
     if (user.status === "PENDING") {
-      return NextResponse.json(
-        { ok: false, error: "حسابك قيد المراجعة" },
-        { status: 403 }
-      );
+      if (isJson) {
+        return NextResponse.json(
+          { ok: false, error: "حسابك قيد المراجعة" },
+          { status: 403 }
+        );
+      }
+
+      const loginUrl = new URL("/auth/login", request.url);
+      loginUrl.searchParams.set("error", "pending");
+      loginUrl.searchParams.set("redirect", safeRedirect);
+      return NextResponse.redirect(loginUrl, 303);
     }
-    
+
     // Verify password
     const isPasswordValid = await compare(password, user.password);
     if (!isPasswordValid) {
-      return NextResponse.json(
-        { ok: false, error: "البريد الإلكتروني أو كلمة المرور غير صحيحة" },
-        { status: 401 }
-      );
+      if (isJson) {
+        return NextResponse.json(
+          { ok: false, error: "البريد الإلكتروني أو كلمة المرور غير صحيحة" },
+          { status: 401 }
+        );
+      }
+
+      const loginUrl = new URL("/auth/login", request.url);
+      loginUrl.searchParams.set("error", "invalid-credentials");
+      loginUrl.searchParams.set("redirect", safeRedirect);
+      return NextResponse.redirect(loginUrl, 303);
     }
-    
+
     // Update last active
     await prisma.user.update({
       where: { id: user.id },
       data: { lastActiveAt: new Date() },
     });
-    
-    // Create session data
-    const userData = {
+
+    // Sign JWT token
+    const { signToken } = await import("@/lib/jwt");
+    const authToken = await signToken({
+      userId: user.id,
+      role: user.role,
+    });
+
+    // Minimal user data for cookie
+    const cookieUserData: CookieUserData = {
       id: user.id,
       email: user.email,
       name: user.name,
       role: user.role,
-      avatar: user.avatar,
     };
-    
-    // Set cookies
-    const cookieStore = await cookies();
-    
-    // Simple token (in production, use JWT or session management)
-    const authToken = Buffer.from(JSON.stringify({ userId: user.id, timestamp: Date.now() })).toString("base64");
-    
-    cookieStore.set("auth-token", authToken, {
+
+    const isProduction = process.env.NODE_ENV === "production";
+    const cookieMaxAge = 60 * 60 * 24 * 7; // 7 days
+
+    const defaultRedirect =
+      user.role === "ADMIN" ? "/admin" : user.role === "INSTRUCTOR" ? "/teacher" : "/courses";
+    const requestedRedirect = redirectParam && redirectParam.startsWith("/") ? redirectParam : defaultRedirect;
+    const successRedirect =
+      requestedRedirect.startsWith("/admin") && user.role !== "ADMIN"
+        ? "/courses"
+        : requestedRedirect;
+
+    const response = isJson
+      ? NextResponse.json({
+          ok: true,
+          data: {
+            user: cookieUserData,
+            token: authToken,
+            message: "تم تسجيل الدخول بنجاح",
+          },
+        })
+      : NextResponse.redirect(new URL(successRedirect, request.url), 303);
+
+    response.cookies.set("auth-token", authToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: isProduction,
       sameSite: "lax",
-      maxAge: 60 * 60 * 24 * 7, // 7 days
+      maxAge: cookieMaxAge,
       path: "/",
     });
-    
-    cookieStore.set("user-data", JSON.stringify(userData), {
-      httpOnly: false, // Allow client-side access
-      secure: process.env.NODE_ENV === "production",
+    response.cookies.set("user-data", encodeUserData(cookieUserData), {
+      httpOnly: false,
+      secure: isProduction,
       sameSite: "lax",
-      maxAge: 60 * 60 * 24 * 7, // 7 days
+      maxAge: cookieMaxAge,
       path: "/",
     });
-    
-    return NextResponse.json({
-      ok: true,
-      data: {
-        user: userData,
-        message: "تم تسجيل الدخول بنجاح",
-      },
-    });
+
+    response.headers.set("X-RateLimit-Limit", RATE_LIMITS.auth.maxRequests.toString());
+    response.headers.set("X-RateLimit-Remaining", remaining.toString());
+    response.headers.set("X-RateLimit-Reset", resetTime.toString());
+
+    if (process.env.NODE_ENV === "development") {
+      console.log("[Login] Success:", {
+        email: cookieUserData.email,
+        role: cookieUserData.role,
+      });
+    }
+
+    return response;
   } catch (error) {
     console.error("[Login] Error:", error);
-    return NextResponse.json(
-      { ok: false, error: "حدث خطأ في تسجيل الدخول" },
-      { status: 500 }
-    );
+    if (isJson) {
+      return NextResponse.json(
+        { ok: false, error: "حدث خطأ في تسجيل الدخول" },
+        { status: 500 }
+      );
+    }
+
+    const loginUrl = new URL("/auth/login", request.url);
+    loginUrl.searchParams.set("error", "server");
+    loginUrl.searchParams.set("redirect", "/admin");
+    return NextResponse.redirect(loginUrl, 303);
   }
 }

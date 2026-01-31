@@ -3,10 +3,12 @@ import { prisma } from "@/lib/db";
 import { TeacherApplicationSchema } from "@/lib/validations";
 import { sendEmail } from "@/lib/email/resend";
 import { getTeacherConfirmationEmailTemplate } from "@/lib/email/templates";
+import { withRateLimit, RATE_LIMITS } from "@/lib/rate-limit";
 
 export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json();
+  return withRateLimit(request, RATE_LIMITS.application, async () => {
+    try {
+      const body = await request.json();
     
     // Validate input
     const result = TeacherApplicationSchema.safeParse(body);
@@ -77,4 +79,5 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
+  });
 }

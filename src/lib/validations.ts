@@ -83,7 +83,7 @@ export type UpdateApplicationStatusInput = z.infer<typeof UpdateApplicationStatu
 // Payment Schemas
 export const CreatePaymentSchema = z.object({
   courseId: z.string().min(1, "معرف الدورة مطلوب"),
-  paymentMethod: z.enum(["stripe", "paypal", "bank_transfer", "tap"]).optional(),
+  paymentMethod: z.enum(["cash"]).optional(),
   couponCode: z.string().optional(),
   customerName: z.string().min(2, "الاسم مطلوب"),
   customerEmail: z.string().email("البريد الإلكتروني غير صحيح"),
@@ -124,8 +124,19 @@ export const VerifyEmailSchema = z.object({
   token: z.string().min(1, "الرمز مطلوب"),
 });
 
+export const AdminLoginRequestSchema = z.object({
+  email: z.string().email("البريد الإلكتروني غير صحيح"),
+});
+
+export const AdminVerifyCodeSchema = z.object({
+  email: z.string().email("البريد الإلكتروني غير صحيح"),
+  code: z.string().length(6, "الرمز يجب أن يكون 6 أرقام"),
+});
+
 export type RegisterInput = z.infer<typeof RegisterSchema>;
 export type LoginInput = z.infer<typeof LoginSchema>;
 export type ForgotPasswordInput = z.infer<typeof ForgotPasswordSchema>;
 export type ResetPasswordInput = z.infer<typeof ResetPasswordSchema>;
 export type VerifyEmailInput = z.infer<typeof VerifyEmailSchema>;
+export type AdminLoginRequestInput = z.infer<typeof AdminLoginRequestSchema>;
+export type AdminVerifyCodeInput = z.infer<typeof AdminVerifyCodeSchema>;

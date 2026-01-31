@@ -3,6 +3,7 @@
 import { Box, Button, Container, Flex, Stack, Text, IconButton, Drawer, Portal, CloseButton } from "@chakra-ui/react";
 import { useColorMode } from "@/components/ui/color-mode";
 import Logo from "@/components/ui/Logo";
+import NotificationBell from "@/components/ui/NotificationBell";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getCurrentUserClient, useLogout } from "@/lib/auth-client";
@@ -37,13 +38,41 @@ export default function Header() {
     { label: t("common.courses"), href: "/courses", icon: "📚" },
     { label: t("common.programs"), href: "/programs", icon: "🎓" },
     { label: t("common.instructors"), href: "/instructors", icon: "👨‍🏫" },
+    { label: t("common.community"), href: "/social", icon: "💬" },
     { label: t("common.pricing"), href: "/pricing", icon: "💎" },
     { label: t("common.help"), href: "/help", icon: "❓" },
   ];
 
   useEffect(() => {
-    const currentUser = getCurrentUserClient();
-    setUser(currentUser);
+    const initUser = async () => {
+      // First try getting user from cookie
+      let currentUser = getCurrentUserClient();
+      
+      // If no user data in cookie, try fetching from API
+      if (!currentUser) {
+        try {
+          const res = await fetch("/api/auth/me");
+          const json = await res.json();
+          if (json.ok && json.data) {
+            currentUser = {
+              id: json.data.id,
+              email: json.data.email,
+              name: json.data.name,
+              role: json.data.role,
+            };
+          }
+        } catch {
+          // Ignore fetch errors
+        }
+      }
+      
+      if (currentUser) {
+        console.log("[Header] User detected:", currentUser.role);
+      }
+      setUser(currentUser);
+    };
+    
+    initUser();
 
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -411,6 +440,79 @@ export default function Header() {
 
             {user ? (
               <>
+                {/* Notification Bell */}
+                <NotificationBell />
+
+                {/* My Lessons Button - For Students */}
+                {user.role === "STUDENT" && (
+                  <Button
+                    asChild
+                    bg="linear-gradient(135deg, #2d8a4e, #48bb78)"
+                    color="white"
+                    size="sm"
+                    borderRadius="full"
+                    px={4}
+                    fontWeight="700"
+                    border="1px solid"
+                    borderColor="green.400/50"
+                    _hover={{
+                      bg: "linear-gradient(135deg, #38a169, #68d391)",
+                      transform: "translateY(-2px)",
+                      boxShadow: "0 4px 15px rgba(72, 187, 120, 0.3)",
+                    }}
+                    transition="all 0.3s ease"
+                  >
+                    <Link href="/student/lessons">🎥 {t("common.myLessons") || "حصصي"}</Link>
+                  </Button>
+                )}
+
+                {/* Teacher Room Button - Only for Instructors and Admins */}
+                {(user.role === "INSTRUCTOR" || user.role === "ADMIN") && (
+                  <>
+                    {/* Teaching Lessons Button */}
+                    <Button
+                      asChild
+                      bg="linear-gradient(135deg, #2d8a4e, #48bb78)"
+                      color="white"
+                      size="sm"
+                      borderRadius="full"
+                      px={4}
+                      fontWeight="700"
+                      border="1px solid"
+                      borderColor="green.400/50"
+                      _hover={{
+                        bg: "linear-gradient(135deg, #38a169, #68d391)",
+                        transform: "translateY(-2px)",
+                        boxShadow: "0 4px 15px rgba(72, 187, 120, 0.3)",
+                      }}
+                      transition="all 0.3s ease"
+                    >
+                      <Link href="/teacher/lessons">🎥 {t("common.teachingLessons") || "حصصي التعليمية"}</Link>
+                    </Button>
+
+                    {/* Teacher Room Button */}
+                    <Button
+                      asChild
+                      bg="linear-gradient(135deg, #1a365d, #2d4a7c)"
+                      color="white"
+                      size="sm"
+                      borderRadius="full"
+                      px={4}
+                      fontWeight="700"
+                      border="1px solid"
+                      borderColor="brand.500/50"
+                      _hover={{
+                        bg: "linear-gradient(135deg, #2d4a7c, #3d5a8c)",
+                        transform: "translateY(-2px)",
+                        boxShadow: "0 4px 15px rgba(200, 162, 74, 0.3)",
+                      }}
+                      transition="all 0.3s ease"
+                    >
+                      <Link href="/teacher-room">🏫 {t("common.teacherRoom")}</Link>
+                    </Button>
+                  </>
+                )}
+
                 {/* User Info with Avatar */}
                 <Flex
                   align="center"
@@ -444,7 +546,7 @@ export default function Header() {
                       {user.name}
                     </Text>
                     <Text fontSize="xs" color="whiteAlpha.800" suppressHydrationWarning>
-                      {user.role === "admin" ? `🛡️ ${t("common.admin")}` : `👤 ${t("common.user")}`}
+                      {user.role === "ADMIN" ? `🛡️ ${t("common.admin")}` : `👤 ${t("common.user")}`}
                     </Text>
                   </Flex>
                 </Flex>
@@ -667,7 +769,7 @@ export default function Header() {
                             {user.name}
                           </Text>
                           <Text fontSize="xs" color="whiteAlpha.800">
-                            {user.role === "admin" ? `🛡️ ${t("common.admin")}` : `👤 ${t("common.user")}`}
+                            {user.role === "ADMIN" ? `🛡️ ${t("common.admin")}` : `👤 ${t("common.user")}`}
                           </Text>
                         </Box>
                       </Flex>

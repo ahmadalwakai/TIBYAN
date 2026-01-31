@@ -109,8 +109,6 @@ const coursesDisplay = allCourses.map((course) => ({
   duration: course.duration,
   price: `€ ${course.monthlyPayment}`,
   totalPrice: `€ ${course.price}`,
-  rating: "4.9",
-  students: "+950",
   category: "علوم شرعية",
   description: course.description,
   sessions: course.totalSessions,
@@ -212,10 +210,6 @@ export default function CoursesPage() {
                       >
                         {course.level}
                       </Badge>
-                      <Flex align="center" gap={1}>
-                        <Text fontSize="sm" color="yellow.500">⭐</Text>
-                        <Text fontSize="sm" fontWeight="600" color="text">{course.rating}</Text>
-                      </Flex>
                     </Flex>
                     
                     <Heading size="md" color="text" lineHeight="1.4">
@@ -244,10 +238,6 @@ export default function CoursesPage() {
                       <Flex align="center" gap={2}>
                         <Text>📚</Text>
                         <Text>{course.sessions} حصة</Text>
-                      </Flex>
-                      <Flex align="center" gap={2}>
-                        <Text>👥</Text>
-                        <Text>{course.students} طالب</Text>
                       </Flex>
                       <Flex align="center" gap={2}>
                         <Text>🎓</Text>

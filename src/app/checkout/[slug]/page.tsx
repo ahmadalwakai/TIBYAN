@@ -42,7 +42,7 @@ export default function CheckoutPage() {
     customerName: "",
     customerEmail: "",
     customerPhone: "",
-    paymentMethod: "bank_transfer",
+    paymentMethod: "cash",
     couponCode: "",
   });
 
@@ -220,44 +220,23 @@ export default function CheckoutPage() {
 
                 <PremiumCard p={{ base: 6, md: 8 }}>
                   <Stack gap={5}>
-                    <Heading size="md" color="text">طريقة الدفع 💳</Heading>
+                    <Heading size="md" color="text">طريقة الدفع �</Heading>
                     
-                    <Stack gap={3}>
-                      {[
-                        { id: "bank_transfer", label: "تحويل بنكي", icon: "🏦", desc: "تحويل مباشر للحساب البنكي" },
-                        { id: "stripe", label: "بطاقة ائتمان", icon: "💳", desc: "Visa, Mastercard" },
-                        { id: "paypal", label: "PayPal", icon: "🅿️", desc: "الدفع عبر PayPal" },
-                      ].map((method) => (
-                        <Box
-                          key={method.id}
-                          as="label"
-                          cursor="pointer"
-                          p={4}
-                          borderRadius="lg"
-                          borderWidth="2px"
-                          borderColor={formData.paymentMethod === method.id ? "brand.500" : "gray.200"}
-                          bg={formData.paymentMethod === method.id ? "brand.50" : "white"}
-                          transition="all 0.2s"
-                          _hover={{ borderColor: "brand.300" }}
-                        >
-                          <Flex align="center" gap={3}>
-                            <input
-                              type="radio"
-                              name="paymentMethod"
-                              value={method.id}
-                              checked={formData.paymentMethod === method.id}
-                              onChange={(e) => setFormData({ ...formData, paymentMethod: e.target.value })}
-                              style={{ display: "none" }}
-                            />
-                            <Text fontSize="2xl">{method.icon}</Text>
-                            <Stack gap={0}>
-                              <Text fontWeight="600" color="text">{method.label}</Text>
-                              <Text fontSize="sm" color="muted">{method.desc}</Text>
-                            </Stack>
-                          </Flex>
-                        </Box>
-                      ))}
-                    </Stack>
+                    <Box
+                      p={4}
+                      borderRadius="lg"
+                      borderWidth="2px"
+                      borderColor="brand.500"
+                      bg="brand.50"
+                    >
+                      <Flex align="center" gap={3}>
+                        <Text fontSize="2xl">💵</Text>
+                        <Stack gap={0}>
+                          <Text fontWeight="600" color="text">الدفع نقدًا</Text>
+                          <Text fontSize="sm" color="muted">الدفع نقدًا عند التسجيل أو عبر مندوبنا</Text>
+                        </Stack>
+                      </Flex>
+                    </Box>
                   </Stack>
                 </PremiumCard>
 
@@ -324,15 +303,15 @@ export default function CheckoutPage() {
                       loadingText="جاري المعالجة..."
                       _hover={{ bg: "brand.700" }}
                     >
-                      إتمام الدفع 🚀
+                      إتمام التسجيل والدفع نقدًا 💵
                     </Button>
 
                     <Stack gap={2} pt={3}>
                       <Flex gap={2} align="center" justify="center">
-                        <Text fontSize="sm" color="muted">🔒 دفع آمن ومشفر</Text>
+                        <Text fontSize="sm" color="muted">💵 الدفع نقدًا عند التسجيل</Text>
                       </Flex>
                       <Text fontSize="xs" color="muted" textAlign="center">
-                        بالضغط على "إتمام الدفع" أنت توافق على شروط الاستخدام وسياسة الخصوصية
+                        بالضغط على "إتمام التسجيل" أنت توافق على شروط الاستخدام وسياسة الخصوصية
                       </Text>
                     </Stack>
                   </Stack>

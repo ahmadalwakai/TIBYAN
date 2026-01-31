@@ -4,10 +4,12 @@ import { ForgotPasswordSchema } from "@/lib/validations";
 import { createVerificationToken } from "@/lib/auth/tokens";
 import { sendEmail } from "@/lib/email/resend";
 import { getPasswordResetEmailTemplate } from "@/lib/email/templates";
+import { withRateLimit, RATE_LIMITS } from "@/lib/rate-limit";
 
 export async function POST(request: Request) {
-  try {
-    const body = await request.json();
+  return withRateLimit(request, RATE_LIMITS.passwordReset, async () => {
+    try {
+      const body = await request.json();
     
     // Validate input
     const result = ForgotPasswordSchema.safeParse(body);
@@ -90,4 +92,5 @@ export async function POST(request: Request) {
       { status: 500 }
     );
   }
+  });
 }

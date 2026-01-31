@@ -9,6 +9,7 @@ import PremiumCard from "@/components/ui/PremiumCard";
 const studentLinks = [
   { label: "نظرة عامة", href: "/student", icon: "📊" },
   { label: "دوراتي", href: "/student/courses", icon: "📚" },
+  { label: "حصصي المباشرة", href: "/student/lessons", icon: "🎥" },
   { label: "جدول الدراسة", href: "/student/schedule", icon: "📅" },
   { label: "الشهادات", href: "/student/certificates", icon: "🏆" },
   { label: "المدفوعات", href: "/student/payments", icon: "💳" },

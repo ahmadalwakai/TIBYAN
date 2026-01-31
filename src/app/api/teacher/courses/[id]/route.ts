@@ -1,31 +1,19 @@
-import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { z } from "zod";
-
-async function getCurrentUserId(): Promise<string | null> {
-  const cookieStore = await cookies();
-  const userDataStr = cookieStore.get("user-data")?.value;
-  if (!userDataStr) return null;
-  try {
-    const userData = JSON.parse(userDataStr);
-    return userData.id;
-  } catch {
-    return null;
-  }
-}
+import { requireRole } from "@/lib/api-auth";
 
 interface RouteParams {
   params: Promise<{ id: string }>;
 }
 
-export async function GET(_request: Request, { params }: RouteParams) {
+export async function GET(request: NextRequest, { params }: RouteParams) {
+  const authResult = await requireRole(request, "INSTRUCTOR");
+  if (authResult instanceof NextResponse) return authResult;
+
   try {
     const { id } = await params;
-    const userId = await getCurrentUserId();
-    if (!userId) {
-      return NextResponse.json({ ok: false, error: "غير مصرح" }, { status: 401 });
-    }
+    const userId = authResult.id;
 
     const course = await prisma.course.findUnique({
       where: { id, instructorId: userId },
@@ -79,13 +67,13 @@ const UpdateCourseSchema = z.object({
   duration: z.number().nullable().optional(),
 });
 
-export async function PUT(request: Request, { params }: RouteParams) {
+export async function PUT(request: NextRequest, { params }: RouteParams) {
+  const authResult = await requireRole(request, "INSTRUCTOR");
+  if (authResult instanceof NextResponse) return authResult;
+
   try {
     const { id } = await params;
-    const userId = await getCurrentUserId();
-    if (!userId) {
-      return NextResponse.json({ ok: false, error: "غير مصرح" }, { status: 401 });
-    }
+    const userId = authResult.id;
 
     // Verify ownership
     const existing = await prisma.course.findUnique({
@@ -113,13 +101,13 @@ export async function PUT(request: Request, { params }: RouteParams) {
   }
 }
 
-export async function DELETE(_request: Request, { params }: RouteParams) {
+export async function DELETE(request: NextRequest, { params }: RouteParams) {
+  const authResult = await requireRole(request, "INSTRUCTOR");
+  if (authResult instanceof NextResponse) return authResult;
+
   try {
     const { id } = await params;
-    const userId = await getCurrentUserId();
-    if (!userId) {
-      return NextResponse.json({ ok: false, error: "غير مصرح" }, { status: 401 });
-    }
+    const userId = authResult.id;
 
     const course = await prisma.course.findUnique({
       where: { id, instructorId: userId },

@@ -2,10 +2,12 @@ import { NextResponse } from "next/server";
 import { hash } from "bcryptjs";
 import { prisma } from "@/lib/db";
 import { RegisterSchema } from "@/lib/validations";
+import { withRateLimit, RATE_LIMITS } from "@/lib/rate-limit";
 
 export async function POST(request: Request) {
-  try {
-    const body = await request.json();
+  return withRateLimit(request, RATE_LIMITS.auth, async () => {
+    try {
+      const body = await request.json();
     
     // Validate input
     const result = RegisterSchema.safeParse(body);
@@ -88,4 +90,5 @@ export async function POST(request: Request) {
       { status: 500 }
     );
   }
+  });
 }

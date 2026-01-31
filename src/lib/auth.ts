@@ -1,6 +1,8 @@
 import { cookies } from "next/headers";
+import { verifyToken } from "@/lib/jwt";
+import { prisma } from "@/lib/db";
 
-export type UserRole = "admin" | "instructor" | "student" | "guest";
+export type UserRole = "ADMIN" | "INSTRUCTOR" | "STUDENT" | "GUEST";
 
 export interface User {
   id: string;
@@ -11,21 +13,48 @@ export interface User {
 
 /**
  * Get the current authenticated user from cookies (server-side)
+ * Verifies JWT token and fetches fresh user data from DB
  * Returns null if not authenticated
  */
 export async function getCurrentUser(): Promise<User | null> {
   const cookieStore = await cookies();
   const token = cookieStore.get("auth-token")?.value;
-  const userDataStr = cookieStore.get("user-data")?.value;
 
-  if (!token || !userDataStr) {
+  if (!token) {
     return null;
   }
 
+  // Verify JWT
+  const payload = await verifyToken(token);
+  if (!payload) {
+    return null;
+  }
+
+  // Fetch fresh user data from database
   try {
-    const userData = JSON.parse(userDataStr);
-    return userData as User;
-  } catch {
+    const user = await prisma.user.findUnique({
+      where: { id: payload.userId },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        role: true,
+        status: true,
+      },
+    });
+
+    if (!user || user.status !== "ACTIVE") {
+      return null;
+    }
+
+    return {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      role: user.role as UserRole,
+    };
+  } catch (error) {
+    console.error("[Auth] Failed to fetch user:", error);
     return null;
   }
 }
@@ -35,7 +64,7 @@ export async function getCurrentUser(): Promise<User | null> {
  */
 export async function isAdmin(): Promise<boolean> {
   const user = await getCurrentUser();
-  return user?.role === "admin";
+  return user?.role === "ADMIN";
 }
 
 /**
@@ -57,7 +86,7 @@ export async function requireAdmin(): Promise<User> {
     throw new Error("Authentication required");
   }
   
-  if (user.role !== "admin") {
+  if (user.role !== "ADMIN") {
     throw new Error("Admin access required");
   }
   
