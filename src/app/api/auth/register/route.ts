@@ -4,6 +4,10 @@ import { prisma } from "@/lib/db";
 import { RegisterSchema } from "@/lib/validations";
 import { withRateLimit, RATE_LIMITS } from "@/lib/rate-limit";
 
+// Force Node.js runtime for Prisma
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: Request) {
   return withRateLimit(request, RATE_LIMITS.auth, async () => {
     try {

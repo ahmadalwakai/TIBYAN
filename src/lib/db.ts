@@ -1,5 +1,9 @@
 import { PrismaClient } from '@prisma/client';
 
+// Force Node.js runtime for Prisma (not Edge)
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };

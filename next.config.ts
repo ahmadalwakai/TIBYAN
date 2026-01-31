@@ -45,6 +45,9 @@ const nextConfig: NextConfig = {
   // Enable source maps in production for error tracking
   productionBrowserSourceMaps: true,
 
+  // Force Node.js runtime for API routes (Prisma doesn't work in Edge)
+  serverExternalPackages: ['@prisma/client', 'bcryptjs'],
+
   // Security headers
   async headers() {
     return [

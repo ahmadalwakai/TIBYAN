@@ -5,6 +5,10 @@ import { LoginSchema } from "@/lib/validations";
 import { RATE_LIMITS, checkRateLimit, getClientIp } from "@/lib/rate-limit";
 import { encodeUserData, type CookieUserData } from "@/lib/auth/cookie-encoding";
 
+// Force Node.js runtime for Prisma
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: Request) {
   const contentType = request.headers.get("content-type") || "";
   const isJson = contentType.includes("application/json");

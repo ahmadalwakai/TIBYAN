@@ -4,6 +4,10 @@ import { verifyToken } from "@/lib/jwt";
 import { type CookieUserData, encodeUserData } from "@/lib/auth/cookie-encoding";
 import { prisma } from "@/lib/db";
 
+// Force Node.js runtime for Prisma
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 /**
  * Parse user-data cookie - handles both raw JSON and URL-encoded JSON
  */
