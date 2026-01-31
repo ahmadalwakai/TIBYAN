@@ -46,7 +46,8 @@ export async function sendEmail(params: SendEmailParams): Promise<EmailResult> {
     };
   }
   
-  const fromEmail = from ?? process.env.FROM_EMAIL ?? "noreply@tibyan.com";
+  // Use FROM_EMAIL from env, fallback to Resend's onboarding email for testing
+  const fromEmail = from ?? process.env.FROM_EMAIL ?? "onboarding@resend.dev";
   
   try {
     const result = await resend.emails.send({
