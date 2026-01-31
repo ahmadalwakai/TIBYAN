@@ -138,10 +138,13 @@ export async function POST(request: Request) {
     );
   } catch (error) {
     console.error("[Admin Auth] Request code error:", error);
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    const errorCode = (error as { code?: string })?.code || "UNKNOWN";
     return NextResponse.json(
       {
         ok: false,
         error: "حدث خطأ في الخادم",
+        debug: process.env.NODE_ENV !== "production" ? { message: errorMessage, code: errorCode } : undefined,
       },
       { status: 500 }
     );
