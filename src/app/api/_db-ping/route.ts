@@ -34,7 +34,9 @@ export async function GET() {
           nodeEnv: process.env.NODE_ENV,
           hasDbUrl: !!process.env.DATABASE_URL,
           hasDirectUrl: !!process.env.DIRECT_DATABASE_URL,
-          dbUrlPrefix: process.env.DATABASE_URL?.substring(0, 30) + "...",
+          dbUrlPrefix: process.env.DATABASE_URL?.substring(0, 50) + "...",
+          directUrlPrefix: process.env.DIRECT_DATABASE_URL?.substring(0, 50) + "...",
+          usingUrl: (process.env.DIRECT_DATABASE_URL || process.env.DATABASE_URL)?.substring(0, 50) + "...",
         },
       },
     });
@@ -61,7 +63,9 @@ export async function GET() {
           nodeEnv: process.env.NODE_ENV,
           hasDbUrl: !!process.env.DATABASE_URL,
           hasDirectUrl: !!process.env.DIRECT_DATABASE_URL,
-          dbUrlPrefix: process.env.DATABASE_URL?.substring(0, 30) + "...",
+          dbUrlPrefix: process.env.DATABASE_URL?.substring(0, 50) + "...",
+          directUrlPrefix: process.env.DIRECT_DATABASE_URL?.substring(0, 50) + "...",
+          usingUrl: (process.env.DIRECT_DATABASE_URL || process.env.DATABASE_URL)?.substring(0, 50) + "...",
         },
       },
     }, { status: 500 });

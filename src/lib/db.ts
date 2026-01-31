@@ -9,8 +9,16 @@ const globalForPrisma = globalThis as unknown as {
 };
 
 const createPrismaClient = () => {
+  // Use DIRECT_DATABASE_URL if available (bypasses Vercel's proxy), otherwise DATABASE_URL
+  const databaseUrl = process.env.DIRECT_DATABASE_URL || process.env.DATABASE_URL;
+  
   return new PrismaClient({
     log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
+    datasources: {
+      db: {
+        url: databaseUrl,
+      },
+    },
   });
 };
 
