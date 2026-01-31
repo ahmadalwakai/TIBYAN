@@ -5,6 +5,10 @@ import bcrypt from "bcryptjs";
 import { requireAdmin, getAdminFromRequest } from "@/lib/api-auth";
 import { logAudit } from "@/lib/audit";
 
+// Force Node.js runtime - Prisma doesn't work in Edge
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 // GET /api/admin/users/[id] - Get single user
 export async function GET(
   request: NextRequest,

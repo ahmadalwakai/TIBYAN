@@ -4,6 +4,10 @@ import { db } from "@/lib/db";
 import { getAdminFromRequest } from "@/lib/api-auth";
 import { logAudit } from "@/lib/audit";
 
+// Force Node.js runtime - Prisma doesn't work in Edge
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 // Schema for creating a certificate
 const createCertificateSchema = z.object({
   studentName: z.string().min(2, "اسم الطالب مطلوب"),

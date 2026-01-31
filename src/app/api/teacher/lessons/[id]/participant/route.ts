@@ -3,6 +3,10 @@ import { db } from "@/lib/db";
 import { getUserFromRequest } from "@/lib/api-auth";
 import { z } from "zod";
 
+// Force Node.js runtime - Prisma doesn't work in Edge
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 const updateParticipantSchema = z.object({
   participantId: z.string(),
   action: z.enum(["mute", "unmute", "camera-off", "camera-on", "allow-speak", "revoke-speak", "kick", "lower-hand"]),

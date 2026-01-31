@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { requireAdmin } from "@/lib/api-auth";
 
+// Force Node.js runtime - Prisma doesn't work in Edge
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 // GET /api/admin/activity - Get recent platform activity
 export async function GET(request: NextRequest) {
   const authResult = await requireAdmin(request);

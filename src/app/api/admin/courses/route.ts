@@ -4,6 +4,10 @@ import { CreateCourseSchema, UpdateCourseSchema } from "@/lib/validations";
 import { allCourses, teachers } from "@/content/courses.ar";
 import { requireAdmin } from "@/lib/api-auth";
 
+// Force Node.js runtime - Prisma doesn't work in Edge
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 // Mock data for when database is not connected - using real educational content
 const mockCourses = [
   {

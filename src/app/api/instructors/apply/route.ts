@@ -5,6 +5,10 @@ import { sendEmail } from "@/lib/email/resend";
 import { getTeacherConfirmationEmailTemplate } from "@/lib/email/templates";
 import { withRateLimit, RATE_LIMITS } from "@/lib/rate-limit";
 
+// Force Node.js runtime - Prisma doesn't work in Edge
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: NextRequest) {
   return withRateLimit(request, RATE_LIMITS.application, async () => {
     try {

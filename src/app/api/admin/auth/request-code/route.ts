@@ -5,6 +5,10 @@ import { getAdminLoginCodeTemplate } from "@/lib/email/templates";
 import { AdminLoginRequestSchema } from "@/lib/validations";
 import { isAuthorizedAdmin, VERIFICATION_CODE_CONFIG } from "@/config/admin";
 
+// Force Node.js runtime - Prisma doesn't work in Edge
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 /**
  * Generate a random 6-digit code
  */

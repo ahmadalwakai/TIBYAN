@@ -5,6 +5,10 @@ import bcrypt from "bcryptjs";
 import { requireAdmin, getAdminFromRequest } from "@/lib/api-auth";
 import { logAudit } from "@/lib/audit";
 
+// Force Node.js runtime - Prisma doesn't work in Edge
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 // Mock data for when database is not connected
 const mockUsers = [
   {

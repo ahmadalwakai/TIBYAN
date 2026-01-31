@@ -4,6 +4,10 @@ import { getAdminFromRequest } from "@/lib/api-auth";
 import fs from "fs/promises";
 import path from "path";
 
+// Force Node.js runtime - Prisma doesn't work in Edge
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 // GET - Get storage statistics and file list
 export async function GET(request: NextRequest) {
   try {

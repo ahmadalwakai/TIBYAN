@@ -3,6 +3,10 @@ import { db } from "@/lib/db";
 import { UpdateApplicationStatusSchema } from "@/lib/validations";
 import { requireAdmin } from "@/lib/api-auth";
 
+// Force Node.js runtime - Prisma doesn't work in Edge
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 const DB_UNAVAILABLE_RESPONSE = NextResponse.json(
   { ok: false, error: "قاعدة البيانات غير متوفرة" },
   { status: 503 }

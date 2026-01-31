@@ -4,6 +4,10 @@ import { signToken } from "@/lib/jwt";
 import { AdminVerifyCodeSchema } from "@/lib/validations";
 import { isAuthorizedAdmin } from "@/config/admin";
 
+// Force Node.js runtime - Prisma doesn't work in Edge
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 /**
  * POST /api/admin/auth/verify-code
  * Verify the code and create auth session for admin

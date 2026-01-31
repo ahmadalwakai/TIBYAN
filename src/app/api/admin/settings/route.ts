@@ -3,6 +3,10 @@ import { db } from "@/lib/db";
 import { requireAdmin, getAdminFromRequest } from "@/lib/api-auth";
 import { logAudit } from "@/lib/audit";
 
+// Force Node.js runtime - Prisma doesn't work in Edge
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 // Default settings structure
 const defaultSettings: Record<string, Record<string, unknown>> = {
   platform: {

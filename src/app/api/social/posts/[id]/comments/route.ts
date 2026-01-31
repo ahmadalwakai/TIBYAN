@@ -3,6 +3,10 @@ import { db } from "@/lib/db";
 import { getUserFromRequest, requireRole } from "@/lib/api-auth";
 import { z } from "zod";
 
+// Force Node.js runtime - Prisma doesn't work in Edge
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 interface RouteParams {
   params: Promise<{ id: string }>;
 }

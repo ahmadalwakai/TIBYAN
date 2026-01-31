@@ -4,6 +4,10 @@ import { getUserFromRequest } from "@/lib/api-auth";
 import { z } from "zod";
 import { MeetingPrivacy, InvitationStatus } from "@prisma/client";
 
+// Force Node.js runtime - Prisma doesn't work in Edge
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 const createSessionSchema = z.object({
   title: z.string().min(1).max(200),
   description: z.string().optional(),

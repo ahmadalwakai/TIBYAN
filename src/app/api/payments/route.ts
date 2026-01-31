@@ -6,6 +6,10 @@ import { allCourses } from "@/content/courses.ar";
 import { sendEmail } from "@/lib/email/resend";
 import { getPaymentConfirmationTemplate } from "@/lib/email/templates";
 
+// Force Node.js runtime - Prisma doesn't work in Edge
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 // Create a new payment (checkout)
 export async function POST(request: NextRequest) {
   return withRateLimit(request, RATE_LIMITS.payment, async () => {

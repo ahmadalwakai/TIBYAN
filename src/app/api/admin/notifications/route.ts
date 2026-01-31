@@ -4,6 +4,10 @@ import { logAudit } from "@/lib/audit";
 import { getAdminFromRequest } from "@/lib/api-auth";
 import { z } from "zod";
 
+// Force Node.js runtime - Prisma doesn't work in Edge
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 const createNotificationSchema = z.object({
   title: z.string().min(1, "العنوان مطلوب"),
   content: z.string().min(1, "المحتوى مطلوب"),

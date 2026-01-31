@@ -4,6 +4,10 @@ import { getUserFromRequest } from "@/lib/api-auth";
 import { z } from "zod";
 import { InvitationStatus } from "@prisma/client";
 
+// Force Node.js runtime - Prisma doesn't work in Edge
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 const inviteSchema = z.object({
   studentIds: z.array(z.string()).min(1),
   sendNotification: z.boolean().default(true),

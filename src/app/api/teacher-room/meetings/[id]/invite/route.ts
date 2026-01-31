@@ -8,6 +8,10 @@ import {
   createMeetingInvitationNotifications,
 } from "@/lib/email/meeting-notifications";
 
+// Force Node.js runtime - Prisma doesn't work in Edge
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 const inviteUsersSchema = z.object({
   userIds: z.array(z.string()).min(1),
   sendEmail: z.boolean().default(true),

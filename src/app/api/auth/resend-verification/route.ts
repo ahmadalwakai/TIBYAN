@@ -6,6 +6,10 @@ import { getVerificationEmailTemplate } from "@/lib/email/templates";
 import { z } from "zod";
 import { withRateLimit, RATE_LIMITS } from "@/lib/rate-limit";
 
+// Force Node.js runtime - Prisma doesn't work in Edge
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 const ResendVerificationSchema = z.object({
   email: z.string().email("البريد الإلكتروني غير صحيح"),
 });

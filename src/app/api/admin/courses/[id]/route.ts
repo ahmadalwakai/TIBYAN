@@ -3,6 +3,10 @@ import { db } from "@/lib/db";
 import { UpdateCourseSchema } from "@/lib/validations";
 import { requireAdmin } from "@/lib/api-auth";
 
+// Force Node.js runtime - Prisma doesn't work in Edge
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 // GET /api/admin/courses/[id] - Get single course
 export async function GET(
   request: NextRequest,

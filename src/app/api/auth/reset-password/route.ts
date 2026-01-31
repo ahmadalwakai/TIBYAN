@@ -5,6 +5,10 @@ import { ResetPasswordSchema } from "@/lib/validations";
 import { verifyToken, markTokenUsed } from "@/lib/auth/tokens";
 import { withRateLimit, RATE_LIMITS } from "@/lib/rate-limit";
 
+// Force Node.js runtime - Prisma doesn't work in Edge
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: Request) {
   return withRateLimit(request, RATE_LIMITS.auth, async () => {
     try {

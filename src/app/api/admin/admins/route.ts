@@ -5,6 +5,10 @@ import { logAudit } from "@/lib/audit";
 import { ADMIN_EMAILS, setDynamicAdminEmails } from "@/config/admin";
 import { z } from "zod";
 
+// Force Node.js runtime - Prisma doesn't work in Edge
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 // Schema for admin data
 interface DynamicAdmin {
   email: string;
