@@ -47,7 +47,8 @@ export async function sendEmail(params: SendEmailParams): Promise<EmailResult> {
   }
   
   // Use FROM_EMAIL from env - must be from a verified domain in Resend
-  const fromEmail = from ?? process.env.FROM_EMAIL;
+  // Trim to remove any accidental whitespace/newlines
+  const fromEmail = (from ?? process.env.FROM_EMAIL)?.trim();
   
   if (!fromEmail) {
     console.error("[Email] FROM_EMAIL environment variable is not set");
