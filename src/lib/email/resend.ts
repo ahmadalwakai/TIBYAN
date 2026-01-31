@@ -46,8 +46,18 @@ export async function sendEmail(params: SendEmailParams): Promise<EmailResult> {
     };
   }
   
-  // Use FROM_EMAIL from env, fallback to Resend's onboarding email for testing
-  const fromEmail = from ?? process.env.FROM_EMAIL ?? "onboarding@resend.dev";
+  // Use FROM_EMAIL from env - must be from a verified domain in Resend
+  const fromEmail = from ?? process.env.FROM_EMAIL;
+  
+  if (!fromEmail) {
+    console.error("[Email] FROM_EMAIL environment variable is not set");
+    return {
+      ok: false,
+      error: "Email sender not configured",
+    };
+  }
+  
+  console.log("[Email] Sending from:", fromEmail);
   
   try {
     const result = await resend.emails.send({
