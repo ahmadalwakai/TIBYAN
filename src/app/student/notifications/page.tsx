@@ -79,7 +79,7 @@ export default function StudentNotificationsPage() {
   if (loading) {
     return (
       <Box textAlign="center" py={20}>
-        <Spinner size="xl" color="brand.500" />
+        <Spinner size="xl" color="spinner" />
         <Text mt={4} color="muted">جاري تحميل الإشعارات...</Text>
       </Box>
     );
@@ -134,9 +134,9 @@ export default function StudentNotificationsPage() {
                     p={4}
                     borderRadius="card"
                     border="1px solid"
-                    borderColor={notification.read ? "border" : "brand.200"}
-                    bg={notification.read ? "transparent" : "brand.50"}
-                    _hover={{ borderColor: "brand.500" }}
+                    borderColor={notification.read ? "border" : "borderAccent"}
+                    bg={notification.read ? "transparent" : "accentSubtle"}
+                    _hover={{ borderColor: "borderAccent" }}
                     transition="all 0.2s"
                     cursor="pointer"
                     onClick={() => !notification.read && markAsRead(notification.id)}
@@ -150,7 +150,7 @@ export default function StudentNotificationsPage() {
                               {notification.title}
                             </Text>
                             {!notification.read && (
-                              <Badge bg="brand.500" color="white" fontSize="xs">
+                              <Badge bg="primary" color="primaryText" fontSize="xs">
                                 جديد
                               </Badge>
                             )}

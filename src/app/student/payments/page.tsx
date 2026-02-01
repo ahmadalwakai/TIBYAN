@@ -76,7 +76,7 @@ export default function StudentPaymentsPage() {
   if (loading) {
     return (
       <Box textAlign="center" py={20}>
-        <Spinner size="xl" color="brand.500" />
+        <Spinner size="xl" color="spinner" />
         <Text mt={4} color="muted">جاري تحميل المدفوعات...</Text>
       </Box>
     );
@@ -155,7 +155,7 @@ export default function StudentPaymentsPage() {
                         </Text>
                       </Table.Cell>
                       <Table.Cell>
-                        <Text fontWeight="700" color="brand.700">
+                        <Text fontWeight="700" color="accent">
                           {payment.amount} {payment.currency}
                         </Text>
                       </Table.Cell>

@@ -73,12 +73,12 @@ function MemberSignupForm() {
     <Box
       as="form"
       onSubmit={handleSubmit}
-      bg="white"
+      bg="surface"
       p={{ base: 6, md: 10 }}
       borderRadius="2xl"
       boxShadow="0 8px 40px rgba(0, 0, 0, 0.1)"
       border="1px solid"
-      borderColor="gray.100"
+      borderColor="border"
     >
       <Stack gap={5}>
         <Field label="الاسم الكامل" required>
@@ -155,7 +155,7 @@ function MemberSignupForm() {
         <Text textAlign="center" color="gray.600" fontSize="sm">
           لديك حساب بالفعل؟{" "}
           <Link href={`/auth/login?redirect=${encodeURIComponent(redirectTo)}`}>
-            <Text as="span" color="brand.500" fontWeight="600" _hover={{ textDecoration: "underline" }}>
+            <Text as="span" color="link" fontWeight="600" _hover={{ textDecoration: "underline" }}>
               تسجيل الدخول
             </Text>
           </Link>
@@ -164,7 +164,7 @@ function MemberSignupForm() {
         <Text textAlign="center" color="gray.500" fontSize="xs">
           تريد التسجيل كطالب؟{" "}
           <Link href="/auth/register">
-            <Text as="span" color="brand.500" _hover={{ textDecoration: "underline" }}>
+            <Text as="span" color="link" _hover={{ textDecoration: "underline" }}>
               التسجيل كطالب
             </Text>
           </Link>

@@ -112,7 +112,7 @@ export default function PricingComparisonTable({
                   top="-12px"
                   right="20px"
                   bg="linear-gradient(135deg, #c8a24a, #ffd700)"
-                  color="brand.900"
+                  color="primary"
                   px={4}
                   py={1}
                   borderRadius="full"

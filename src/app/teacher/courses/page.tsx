@@ -77,7 +77,7 @@ export default function TeacherCoursesPage() {
   if (loading) {
     return (
       <Box textAlign="center" py={20}>
-        <Spinner size="xl" color="brand.500" />
+        <Spinner size="xl" color="spinner" />
         <Text mt={4} color="muted">جاري تحميل الدورات...</Text>
       </Box>
     );
@@ -199,7 +199,7 @@ export default function TeacherCoursesPage() {
                 {/* Stats */}
                 <Grid templateColumns="repeat(3, 1fr)" gap={3} mb={4}>
                   <Box textAlign="center" p={2} bg="backgroundAlt" borderRadius="md">
-                    <Text fontWeight="700" color="brand.700">{course.students}</Text>
+                    <Text fontWeight="700" color="accent">{course.students}</Text>
                     <Text fontSize="xs" color="muted">طالب</Text>
                   </Box>
                   <Box textAlign="center" p={2} bg="backgroundAlt" borderRadius="md">

@@ -95,12 +95,12 @@ function LoginForm() {
     <Box
       as="form"
       onSubmit={handleSubmit}
-      bg="white"
+      bg="surface"
       p={{ base: 6, md: 10 }}
       borderRadius="2xl"
       boxShadow="0 8px 40px rgba(0, 0, 0, 0.1)"
       border="1px solid"
-      borderColor="gray.100"
+      borderColor="border"
     >
       <Stack gap={5}>
         <Field label="البريد الإلكتروني" required>
@@ -127,7 +127,7 @@ function LoginForm() {
 
         <Box textAlign="left">
           <Link href="/auth/forgot-password">
-            <Text as="span" color="brand.500" fontSize="sm" _hover={{ textDecoration: "underline" }}>
+            <Text as="span" color="link" fontSize="sm" _hover={{ textDecoration: "underline" }}>
               نسيت كلمة المرور؟
             </Text>
           </Link>
@@ -153,7 +153,7 @@ function LoginForm() {
         <Text textAlign="center" color="gray.600" fontSize="sm">
           ليس لديك حساب؟{" "}
           <Link href={`/auth/member-signup?redirect=${encodeURIComponent(redirectTo)}`}>
-            <Text as="span" color="brand.500" fontWeight="600" _hover={{ textDecoration: "underline" }}>
+            <Text as="span" color="link" fontWeight="600" _hover={{ textDecoration: "underline" }}>
               إنشاء حساب جديد
             </Text>
           </Link>
@@ -162,7 +162,7 @@ function LoginForm() {
         <Text textAlign="center" color="gray.500" fontSize="xs">
           هل أنت مسؤول؟{" "}
           <Link href="/auth/admin-login">
-            <Text as="span" color="brand.500" _hover={{ textDecoration: "underline" }}>
+            <Text as="span" color="link" _hover={{ textDecoration: "underline" }}>
               دخول المسؤول
             </Text>
           </Link>

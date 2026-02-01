@@ -29,8 +29,8 @@ export default function AdminDashboardPage() {
       <Flex direction={{ base: "column", md: "row" }} gap={6} justify="space-between">
         <Stack gap={3}>
           <Badge
-            bg="brand.900"
-            color="white"
+            bg="primary"
+            color="primaryText"
             px={3}
             py={1}
             borderRadius="badge"
@@ -50,18 +50,18 @@ export default function AdminDashboardPage() {
         <Stack direction={{ base: "column", sm: "row" }} gap={3} h="fit-content">
           <Button 
             variant="outline" 
-            borderColor="brand.500"
+            borderColor="outlineBorder"
             borderWidth="2px"
-            color="brand.900"
-            _hover={{ bg: "brand.50", borderColor: "brand.600" }}
+            color="outlineText"
+            _hover={{ bg: "surfaceHover", borderColor: "borderAccent" }}
             transition="all 0.3s ease"
           >
             تصدير التقارير
           </Button>
           <Button 
-            bg="brand.900"
-            color="white"
-            _hover={{ bg: "brand.700", transform: "translateY(-2px)", boxShadow: "cardHover" }}
+            bg="primary"
+            color="primaryText"
+            _hover={{ bg: "primaryHover", transform: "translateY(-2px)", boxShadow: "cardHover" }}
             transition="all 0.3s ease"
           >
             إنشاء إعلان عام
@@ -128,8 +128,8 @@ export default function AdminDashboardPage() {
                   p={3}
                   transition="all 0.3s ease"
                   _hover={{
-                    bg: "brand.50",
-                    borderColor: "brand.400",
+                    bg: "surfaceHover",
+                    borderColor: "borderAccent",
                     transform: "translateX(-4px)",
                   }}
                 >
@@ -180,10 +180,10 @@ export default function AdminDashboardPage() {
             ))}
             <Button 
               variant="outline" 
-              borderColor="brand.500"
+              borderColor="outlineBorder"
               borderWidth="2px"
-              color="brand.900"
-              _hover={{ bg: "brand.50" }}
+              color="outlineText"
+              _hover={{ bg: "surfaceHover" }}
               transition="all 0.3s ease"
             >
               فتح مركز البلاغات
@@ -212,8 +212,8 @@ export default function AdminDashboardPage() {
                 borderColor="border"
                 transition="all 0.3s ease"
                 _hover={{
-                  bg: "brand.50",
-                  borderColor: "brand.400",
+                  bg: "surfaceHover",
+                  borderColor: "borderAccent",
                 }}
               >
                 <Stack gap={1}>
@@ -223,8 +223,8 @@ export default function AdminDashboardPage() {
                   </Text>
                 </Stack>
                 <Badge 
-                  bgGradient="linear(135deg, brand.500 0%, brand.600 100%)"
-                  color="white"
+                  bg="primary"
+                  color="primaryText"
                   alignSelf="center"
                   px={3}
                   py={1}
@@ -237,10 +237,10 @@ export default function AdminDashboardPage() {
             ))}
             <Button 
               variant="outline" 
-              borderColor="brand.500"
+              borderColor="outlineBorder"
               borderWidth="2px"
-              color="brand.900"
-              _hover={{ bg: "brand.50" }}
+              color="outlineText"
+              _hover={{ bg: "surfaceHover" }}
               transition="all 0.3s ease"
             >
               عرض جميع المراجعات
@@ -292,10 +292,10 @@ export default function AdminDashboardPage() {
             </SimpleGrid>
             <Button 
               variant="outline" 
-              borderColor="brand.500"
+              borderColor="outlineBorder"
               borderWidth="2px"
-              color="brand.900"
-              _hover={{ bg: "brand.50" }}
+              color="outlineText"
+              _hover={{ bg: "surfaceHover" }}
               transition="all 0.3s ease"
             >
               إدارة المدفوعات
@@ -332,8 +332,8 @@ export default function AdminDashboardPage() {
                   fontWeight="700"
                   transition="all 0.3s ease"
                   _hover={{ 
-                    bg: "brand.50",
-                    borderColor: "brand.500",
+                    bg: "surfaceHover",
+                    borderColor: "borderAccent",
                     transform: "translateY(-2px)",
                     boxShadow: "subtle",
                   }}

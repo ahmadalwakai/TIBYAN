@@ -166,7 +166,7 @@ export default function AdminApplicationsPage() {
         {/* Loading */}
         {loading ? (
           <Flex justify="center" py={10}>
-            <Spinner size="xl" color="brand.500" />
+            <Spinner size="xl" color="spinner" />
           </Flex>
         ) : filteredApplications.length === 0 ? (
           <PremiumCard p={8}>

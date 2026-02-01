@@ -69,7 +69,7 @@ export default function ProgramsPage() {
           {/* Header Section */}
           <Stack gap={4} textAlign="center" maxW="2xl" mx="auto">
             <Badge
-              bg="brand.900"
+              bg="primary"
               color="white"
               px={4}
               py={2}
@@ -268,13 +268,13 @@ export default function ProgramsPage() {
             </Text>
             <Button
               size="lg"
-              bg="brand.900"
+              bg="primary"
               color="white"
               px={8}
               borderRadius="full"
               fontWeight="700"
               _hover={{
-                bg: "brand.700",
+                bg: "primaryHover",
                 transform: "translateY(-2px)",
                 boxShadow: "0 8px 25px rgba(11, 31, 58, 0.3)",
               }}

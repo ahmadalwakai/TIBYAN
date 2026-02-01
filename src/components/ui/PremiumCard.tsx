@@ -17,9 +17,9 @@ export default function PremiumCard({
 }: PremiumCardProps) {
   const variantStyles = {
     default: {
-      bg: "surface",
+      bg: "cardBg",
       border: "1px solid",
-      borderColor: "border",
+      borderColor: "cardBorder",
       borderRadius: "card",
       boxShadow: "card",
       transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
@@ -27,12 +27,12 @@ export default function PremiumCard({
         ? {
             boxShadow: "cardHover",
             transform: "translateY(-4px)",
-            borderColor: "borderAccent",
+            borderColor: "cardHoverBorder",
           }
         : {},
     },
     elevated: {
-      bg: "surface",
+      bg: "cardBg",
       borderRadius: "card",
       boxShadow: "cardLarge",
       transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
@@ -44,9 +44,9 @@ export default function PremiumCard({
         : {},
     },
     gradient: {
-      bg: "surface",
+      bg: "cardBg",
       border: "2px solid",
-      borderColor: "brand.900",
+      borderColor: "primary",
       borderRadius: "card",
       boxShadow: "card",
       position: "relative",
@@ -59,7 +59,7 @@ export default function PremiumCard({
         left: 0,
         right: 0,
         height: "4px",
-        bg: "brand.900",
+        bg: "primary",
       },
       _hover: hoverEffect
         ? {
@@ -69,32 +69,33 @@ export default function PremiumCard({
         : {},
     },
     bordered: {
-      bg: "surface",
+      bg: "cardBg",
       border: "2px solid",
-      borderColor: "border",
+      borderColor: "cardBorder",
       borderRadius: "card",
       boxShadow: "subtle",
       transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
       _hover: hoverEffect
         ? {
-            borderColor: "brand.500",
+            borderColor: "cardHoverBorder",
             boxShadow: "cardHover",
             bg: "surfaceHover",
           }
         : {},
     },
     glass: {
-      bg: "rgba(255, 255, 255, 0.7)",
+      bg: "surface",
       backdropFilter: "blur(12px)",
       border: "1px solid",
-      borderColor: "rgba(255, 255, 255, 0.3)",
+      borderColor: "border",
       borderRadius: "card",
-      boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.1)",
+      boxShadow: "card",
       transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+      opacity: 0.95,
       _hover: hoverEffect
         ? {
-            bg: "rgba(255, 255, 255, 0.85)",
-            boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.15)",
+            opacity: 1,
+            boxShadow: "cardHover",
           }
         : {},
     },

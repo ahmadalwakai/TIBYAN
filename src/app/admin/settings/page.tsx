@@ -500,7 +500,7 @@ export default function AdminSettingsPage() {
                     />
                   </HStack>
                   <Button
-                    bg="brand.900"
+                    bg="primary"
                     color="white"
                     onClick={handleAddAdmin}
                     disabled={adminLoading}
@@ -595,7 +595,7 @@ export default function AdminSettingsPage() {
                           <HStack gap={2}>
                             <Button
                               size="sm"
-                              bg="brand.900"
+                              bg="primary"
                               color="white"
                               onClick={handleEditAdmin}
                               disabled={adminLoading}
@@ -820,7 +820,7 @@ export default function AdminSettingsPage() {
             <Text color="muted">{category.description}</Text>
           </Stack>
           <Button
-            bg="brand.900"
+            bg="primary"
             color="white"
             onClick={handleSave}
             loading={saving}
@@ -884,9 +884,9 @@ export default function AdminSettingsPage() {
               <Text color="muted" lineHeight="1.7">{category.description}</Text>
               <Button 
                 variant="outline" 
-                borderColor="brand.500"
+                borderColor="outlineBorder"
                 borderWidth="2px"
-                color="brand.900" 
+                color="outlineText" 
                 alignSelf="start"
                 _hover={{ bg: "brand.50", borderColor: "brand.600" }}
                 transition="all 0.3s ease"

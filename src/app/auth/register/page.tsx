@@ -85,8 +85,7 @@ export default function RegisterPage() {
             <Stack gap={6}>
               <Heading
                 size="lg"
-                bgGradient="linear(to-r, brand.900, brand.600)"
-                bgClip="text"
+                color="text"
               >
                 إنشاء حساب
               </Heading>
@@ -142,11 +141,11 @@ export default function RegisterPage() {
                     py={3}
                     w="100%"
                     transition="all 0.2s"
-                    _hover={{ borderColor: "brand.200" }}
+                    _hover={{ borderColor: "borderAccent" }}
                     _focus={{
                       outline: "none",
-                      borderColor: "brand.500",
-                      boxShadow: "0 0 0 1px var(--chakra-colors-brand-500)"
+                      borderColor: "accent",
+                      boxShadow: "0 0 0 1px var(--color-accent)"
                     }}
                     required
                     disabled={isLoading}
@@ -171,11 +170,11 @@ export default function RegisterPage() {
                     py={3}
                     w="100%"
                     transition="all 0.2s"
-                    _hover={{ borderColor: "brand.200" }}
+                    _hover={{ borderColor: "borderAccent" }}
                     _focus={{
                       outline: "none",
-                      borderColor: "brand.500",
-                      boxShadow: "0 0 0 1px var(--chakra-colors-brand-500)"
+                      borderColor: "accent",
+                      boxShadow: "0 0 0 1px var(--color-accent)"
                     }}
                     required
                     disabled={isLoading}
@@ -200,11 +199,11 @@ export default function RegisterPage() {
                     py={3}
                     w="100%"
                     transition="all 0.2s"
-                    _hover={{ borderColor: "brand.200" }}
+                    _hover={{ borderColor: "borderAccent" }}
                     _focus={{
                       outline: "none",
-                      borderColor: "brand.500",
-                      boxShadow: "0 0 0 1px var(--chakra-colors-brand-500)"
+                      borderColor: "accent",
+                      boxShadow: "0 0 0 1px var(--color-accent)"
                     }}
                     minLength={8}
                     required
@@ -217,24 +216,24 @@ export default function RegisterPage() {
               </Stack>
               <Button
                 type="submit"
-                bgGradient="linear(to-r, brand.900, brand.700)"
-                color="white"
+                bg="primary"
+                color="primaryText"
                 _hover={{
-                  bgGradient: "linear(to-r, brand.800, brand.600)",
+                  bg: "primaryHover",
                   transform: "translateY(-1px)",
                   boxShadow: "lg"
                 }}
                 transition="all 0.2s"
                 disabled={isLoading}
               >
-                {isLoading ? <Spinner size="sm" /> : "إنشاء الحساب"}
+                {isLoading ? <Spinner size="sm" color="spinner" /> : "إنشاء الحساب"}
               </Button>
               <Text color="muted" fontSize="sm">
                 لديك حساب بالفعل؟{" "}
                 <Link href="/auth/login" style={{ textDecoration: "none" }}>
                   <Text
                     as="span"
-                    color="brand.900"
+                    color="link"
                     fontWeight="600"
                     _hover={{ textDecoration: "underline" }}
                   >

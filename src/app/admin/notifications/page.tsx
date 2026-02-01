@@ -282,7 +282,7 @@ export default function AdminNotificationsPage() {
             <Flex gap={4} justify="flex-end">
               <Button variant="ghost" onClick={resetForm}>إلغاء</Button>
               <Button 
-                bg="brand.900" 
+                bg="primary" 
                 color="white" 
                 onClick={handleSubmit}
                 _hover={{ bg: "brand.700" }}

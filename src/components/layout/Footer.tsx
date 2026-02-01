@@ -46,8 +46,8 @@ export default function Footer() {
       as="footer"
       position="relative"
       overflow="hidden"
-      bg="brand.900"
-      color="white"
+      bg="primary"
+      color="primaryText"
       suppressHydrationWarning
       css={{
         "@keyframes footerGlow": {

@@ -150,12 +150,12 @@ export default function AdminAuditLogsPage() {
       {/* Stats Cards */}
       <SimpleGrid columns={{ base: 2, md: 4 }} gap={6}>
         <PremiumCard p={6} textAlign="center">
-          <Text fontSize="3xl" fontWeight="800" color="brand.900">{stats.total}</Text>
+          <Text fontSize="3xl" fontWeight="800" color="primary">{stats.total}</Text>
           <Text color="muted" fontSize="sm">إجمالي السجلات</Text>
         </PremiumCard>
         {stats.actionBreakdown.slice(0, 3).map((stat) => (
           <PremiumCard key={stat.action} p={6} textAlign="center">
-            <Text fontSize="3xl" fontWeight="800" color="brand.900">{stat.count}</Text>
+            <Text fontSize="3xl" fontWeight="800" color="primary">{stat.count}</Text>
             <Text color="muted" fontSize="sm">{getActionLabel(stat.action)}</Text>
           </PremiumCard>
         ))}
@@ -195,10 +195,10 @@ export default function AdminAuditLogsPage() {
             <option value="ADMIN_LOGIN">تسجيل دخول</option>
           </select>
           <Button
-            bg="brand.900"
+            bg="primary"
             color="white"
             onClick={handleSearch}
-            _hover={{ bg: "brand.700" }}
+            _hover={{ bg: "primaryHover" }}
           >
             بحث
           </Button>

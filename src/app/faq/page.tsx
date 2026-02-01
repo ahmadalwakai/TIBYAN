@@ -38,18 +38,18 @@ export default function FaqPage() {
         right="10%"
         width="400px"
         height="400px"
-        bgGradient="radial(circle, brand.50 0%, transparent 70%)"
+        bg="accentSubtle"
         opacity={0.3}
         pointerEvents="none"
         zIndex={0}
+        borderRadius="full"
       />
       <Container maxW="5xl" py={{ base: 12, md: 20 }} px={{ base: 6, md: 8 }} position="relative" zIndex={1}>
         <Stack gap={10}>
           <Stack gap={3} textAlign={{ base: "center", md: "start" }}>
             <Heading 
               size="2xl"
-              bgGradient="linear(135deg, text 0%, brand.900 100%)"
-              bgClip="text"
+              color="text"
             >
               ❓ الأسئلة الشائعة
             </Heading>
@@ -68,26 +68,11 @@ export default function FaqPage() {
                 <Stack gap={3}>
                   <Heading 
                     size="md"
-                    bgGradient="linear(135deg, text 0%, brand.900 100%)"
-                    bgClip="text"
+                    color="text"
                   >
-                    {["\ud83d\udd11", "\ud83d\udcf1", "\ud83c\udf93", "\ud83d\udcac", "\ud83d\udcb3", "\ud83d\udd10"][index]} {item.question}
+                    {["🔑", "📱", "🎓", "💬", "💳", "🔐"][index]} {item.question}
                   </Heading>
                   <Text color="muted" lineHeight="1.7">{item.answer}</Text>
-                  <Button 
-                    variant="outline" 
-                    borderColor="brand.500"
-                    borderWidth="2px"
-                    color="brand.900" 
-                    alignSelf="start"
-                    _hover={{
-                      bg: "brand.50",
-                      transform: "translateY(-2px)"
-                    }}
-                    transition="all 0.3s ease"
-                  >
-                    اقرأ المزيد
-                  </Button>
                 </Stack>
               </PremiumCard>
             ))}

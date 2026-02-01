@@ -417,7 +417,7 @@ export default function TeacherRoomPage() {
   if (loading) {
     return (
       <Flex minH="100vh" align="center" justify="center" bg="background">
-        <Spinner size="xl" color="brand.500" />
+        <Spinner size="xl" color="spinner" />
       </Flex>
     );
   }
@@ -431,7 +431,7 @@ export default function TeacherRoomPage() {
           {/* Header */}
           <Flex justify="space-between" align="center" wrap="wrap" gap={4}>
             <Stack gap={1}>
-              <Heading size="xl" color="brand.500">
+              <Heading size="xl" color="accent">
                 🏫 غرفة المعلمين
               </Heading>
               <Text color="muted">تواصل مع زملائك المعلمين والإداريين</Text>
@@ -563,7 +563,7 @@ export default function TeacherRoomPage() {
                                   py={1}
                                   mb={2}
                                   borderRight="3px solid"
-                                  borderColor="brand.500"
+                                  borderColor="borderAccent"
                                 >
                                   <Text fontSize="xs" color="muted">
                                     رداً على {message.replyTo.authorName}
@@ -723,14 +723,14 @@ export default function TeacherRoomPage() {
                 <Flex
                   px={4}
                   py={2}
-                  bg="brand.500/10"
+                  bg="accentSubtle"
                   align="center"
                   justify="space-between"
                   borderTop="1px solid"
                   borderColor="border"
                 >
                   <Box>
-                    <Text fontSize="xs" color="brand.500" fontWeight="600">
+                    <Text fontSize="xs" color="accent" fontWeight="600">
                       رداً على {replyingTo.authorName}
                     </Text>
                     <Text fontSize="sm" lineClamp={1}>

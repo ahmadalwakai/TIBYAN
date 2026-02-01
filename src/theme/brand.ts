@@ -19,6 +19,11 @@ export const BRAND = {
     900: "#0B1F3A",
     700: "#12335A",
     500: "#1F4B7A",
+    400: "#2A5C8F",
+    300: "#4A7DB5",
+    200: "#7BA3D0",
+    100: "#B8D0EA",
+    50: "#E8F0F8",
   },
   // Premium accent colors for authority and prestige
   gold: {
@@ -78,13 +83,25 @@ export const BRAND_DARK = {
     surface: "#0F1D32",
     subtle: "#1A2B45",
   },
+  navy: {
+    // Inverted scale for dark mode - lighter values for visibility
+    900: "#E8F0F8",
+    700: "#B8D0EA",
+    500: "#7BA3D0",
+    400: "#4A7DB5",
+    300: "#2A5C8F",
+    200: "#1F4B7A",
+    100: "#12335A",
+    50: "#0F1D32",
+  },
   text: {
-    title: "#F8F9FA",      // Increased from #F8F8F6 for better contrast (19.77:1)
-    body: "#E2E8F0",       // Increased from #D0D5DD for better contrast (14.57:1)
-    muted: "#A0AEC0",      // Increased from #98A2B3 for better contrast (7.54:1)
+    title: "#F8F9FA",      // High contrast white
+    body: "#E2E8F0",       // Readable light gray
+    muted: "#A0AEC0",      // Visible muted
     onNavy: "#FFFFFF",
   },
   border: {
-    base: "#2D3748",       // Increased from #2E3D54 for better visibility
+    base: "#2D3748",       // Visible border in dark mode
+    accent: "#4A7DB5",     // Accent border for dark mode
   },
 } as const;

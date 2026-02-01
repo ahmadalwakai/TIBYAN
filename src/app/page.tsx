@@ -424,7 +424,7 @@ export default function Home() {
                   asChild
                   position="relative"
                   bg="linear-gradient(135deg, #c8a24a 0%, #b8943a 100%)"
-                  color="brand.900"
+                  color="primary"
                   size="lg"
                   px={{ base: 8, md: 12 }}
                   h={{ base: "56px", md: "64px" }}
@@ -718,7 +718,7 @@ export default function Home() {
               <Stack gap={4} textAlign="center" align="center">
                 <Badge
                   bg="linear-gradient(135deg, rgba(200, 162, 74, 0.2), rgba(0, 212, 255, 0.2))"
-                  color="brand.500"
+                  color="accent"
                   px={6}
                   py={2}
                   borderRadius="full"
@@ -756,7 +756,7 @@ export default function Home() {
                   asChild
                   size="lg"
                   bg="linear-gradient(135deg, #c8a24a 0%, #b8943a 100%)"
-                  color="brand.900"
+                  color="primary"
                   px={8}
                   fontWeight="700"
                   borderRadius="xl"
@@ -843,7 +843,7 @@ export default function Home() {
               <Stack gap={10} position="relative" zIndex={1}>
                 {/* Section Header */}
                 <Stack gap={3} textAlign="center">
-                  <Text color="brand.500" fontWeight="700" fontSize="sm" letterSpacing="wider">
+                  <Text color="accent" fontWeight="700" fontSize="sm" letterSpacing="wider">
                     {t("whyTibyan")}
                   </Text>
                   <Heading 
@@ -1092,7 +1092,7 @@ export default function Home() {
                         <Heading size="md" color="text">
                           {t(`advisors.${advisor.key}.name`)}
                         </Heading>
-                        <Text fontSize="sm" fontWeight="700" color="brand.500">
+                        <Text fontSize="sm" fontWeight="700" color="accent">
                           {t(`advisors.${advisor.key}.title`)}
                         </Text>
                         <Text fontSize="sm" color="muted" textAlign="center">
@@ -1607,14 +1607,14 @@ export default function Home() {
                     />
                     <Button
                       position="relative"
-                      bg="brand.900"
-                      color="white"
+                      bg="primary"
+                      color="primaryText"
                       size="lg"
                       px={10}
                       fontWeight="700"
                       boxShadow="0 8px 25px rgba(11, 31, 59, 0.3)"
                       _hover={{ 
-                        bg: "brand.700",
+                        bg: "primaryHover",
                         transform: "translateY(-4px) scale(1.02)",
                         boxShadow: "0 12px 35px rgba(11, 31, 59, 0.4)"
                       }}
@@ -1878,7 +1878,7 @@ export default function Home() {
                           </Text>
                           <Badge
                             bg="backgroundAlt"
-                            color="brand.500"
+                            color="accent"
                             fontSize="xs"
                             px={2}
                             py={0.5}
@@ -2124,8 +2124,8 @@ export default function Home() {
             <Box
               position="relative"
               zIndex={1}
-              bg="brand.900"
-              color="white"
+              bg="primary"
+              color="primaryText"
               borderRadius="xl"
               m="3px"
               p={{ base: 10, md: 16 }}
@@ -2258,7 +2258,7 @@ export default function Home() {
                     <Button 
                       position="relative"
                       bg="white" 
-                      color="brand.900"
+                      color="primary"
                       size="lg"
                       px={10}
                       h="56px"

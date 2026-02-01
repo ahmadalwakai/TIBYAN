@@ -118,8 +118,8 @@ export default function LiveChatFab() {
         >
           {/* Header */}
           <Box
-            bg="brand.900"
-            color="white"
+            bg="primary"
+            color="primaryText"
             p={4}
             display="flex"
             alignItems="center"
@@ -151,8 +151,8 @@ export default function LiveChatFab() {
                   maxW="80%"
                 >
                   <Box
-                    bg={msg.sender === "user" ? "brand.500" : "surface"}
-                    color={msg.sender === "user" ? "white" : "text"}
+                    bg={msg.sender === "user" ? "primary" : "surface"}
+                    color={msg.sender === "user" ? "primaryText" : "text"}
                     p={3}
                     borderRadius="12px"
                     boxShadow="sm"
@@ -178,9 +178,9 @@ export default function LiveChatFab() {
               <IconButton
                 aria-label="إرسال"
                 onClick={handleSend}
-                bg="brand.900"
-                color="white"
-                _hover={{ bg: "brand.800" }}
+                bg="primary"
+                color="primaryText"
+                _hover={{ bg: "primaryHover" }}
                 size="md"
               >
                 <FaPaperPlane />
@@ -198,9 +198,9 @@ export default function LiveChatFab() {
           w={{ base: "56px", md: "52px" }}
           h={{ base: "56px", md: "52px" }}
           p={0}
-          bg="brand.900"
-          color="white"
-          _hover={{ bg: "brand.800" }}
+          bg="primary"
+          color="primaryText"
+          _hover={{ bg: "primaryHover" }}
           borderRadius="full"
           boxShadow="lg"
         >

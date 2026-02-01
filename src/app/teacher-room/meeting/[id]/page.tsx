@@ -380,7 +380,7 @@ export default function MeetingRoomPage() {
   if (loading) {
     return (
       <Flex minH="100vh" align="center" justify="center" bg="gray.900">
-        <Spinner size="xl" color="brand.500" />
+        <Spinner size="xl" color="spinner" />
       </Flex>
     );
   }
@@ -394,7 +394,7 @@ export default function MeetingRoomPage() {
         <PremiumCard maxW="500px" w="100%" p={8}>
           <Stack gap={6} align="center" textAlign="center">
             <Box
-              bg="brand.500/20"
+              bg="accentSubtle"
               w="80px"
               h="80px"
               borderRadius="full"
@@ -505,7 +505,7 @@ export default function MeetingRoomPage() {
               overflow="hidden"
               aspectRatio="16/9"
               border="3px solid"
-              borderColor="brand.500"
+              borderColor="borderAccent"
             >
               {meeting.type === "VIDEO" && !isCameraOff ? (
                 <video
@@ -529,7 +529,7 @@ export default function MeetingRoomPage() {
                   bg="gray.800"
                 >
                   <Avatar.Root size="2xl">
-                    <Avatar.Fallback bg="brand.600">{user.name.charAt(0)}</Avatar.Fallback>
+                    <Avatar.Fallback bg="avatarBg" color="avatarText">{user.name.charAt(0)}</Avatar.Fallback>
                   </Avatar.Root>
                 </Flex>
               )}
@@ -686,12 +686,12 @@ export default function MeetingRoomPage() {
                   {chatMessages.map((msg) => (
                     <Box
                       key={msg.id}
-                      bg={msg.authorId === user.id ? "brand.500/20" : "gray.700"}
+                      bg={msg.authorId === user.id ? "accentSubtle" : "gray.700"}
                       borderRadius="lg"
                       px={3}
                       py={2}
                     >
-                      <Text fontSize="xs" color="brand.400" fontWeight="600">
+                      <Text fontSize="xs" color="accent" fontWeight="600">
                         {msg.authorName}
                       </Text>
                       <Text fontSize="sm" color="white">

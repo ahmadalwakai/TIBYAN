@@ -176,7 +176,7 @@ export default function AdminPaymentsPage() {
         <StatCard>
           <Stack gap={1}>
             <Text fontSize="sm" color="muted">إجمالي الإيرادات</Text>
-            <Text fontSize="2xl" fontWeight="700" color="brand.500">
+            <Text fontSize="2xl" fontWeight="700" color="accent">
               {formatCurrency(stats.totalRevenue, "SAR")}
             </Text>
           </Stack>
@@ -227,7 +227,7 @@ export default function AdminPaymentsPage() {
       {/* Payments List */}
       {loading ? (
         <Flex justify="center" py={10}>
-          <Spinner size="xl" color="brand.500" />
+          <Spinner size="xl" color="spinner" />
         </Flex>
       ) : filteredPayments.length === 0 ? (
         <PremiumCard p={8}>
@@ -268,7 +268,7 @@ export default function AdminPaymentsPage() {
                 {/* Amount & Actions */}
                 <Flex align="center" gap={4}>
                   <Stack gap={0} align="end">
-                    <Text fontSize="xl" fontWeight="700" color="brand.900">
+                    <Text fontSize="xl" fontWeight="700" color="accent">
                       {formatCurrency(payment.amount, payment.currency)}
                     </Text>
                     {payment.paidAt && (

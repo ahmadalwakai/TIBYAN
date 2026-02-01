@@ -41,7 +41,7 @@ export default function TeacherSidebar({ userName }: TeacherSidebarProps) {
         {/* User Info */}
         <VStack gap={3} pb={4} borderBottom="1px solid" borderColor="border">
           <Avatar.Root size="lg">
-            <Avatar.Fallback bg="brand.700" color="white">
+            <Avatar.Fallback bg="avatarBg" color="avatarText">
               {userName.charAt(0)}
             </Avatar.Fallback>
           </Avatar.Root>
@@ -50,8 +50,8 @@ export default function TeacherSidebar({ userName }: TeacherSidebarProps) {
               {userName}
             </Text>
             <Badge
-              bg="brand.900"
-              color="white"
+              bg="primary"
+              color="primaryText"
               px={2}
               py={1}
               borderRadius="full"
@@ -73,16 +73,16 @@ export default function TeacherSidebar({ userName }: TeacherSidebarProps) {
                   px={3}
                   py={2}
                   borderRadius="button"
-                  color={isActive ? "brand.900" : "muted"}
-                  bg={isActive ? "brand.50" : "transparent"}
+                  color={isActive ? "accent" : "muted"}
+                  bg={isActive ? "accentSubtle" : "transparent"}
                   fontWeight="600"
                   transition="all 0.2s"
                   display="flex"
                   alignItems="center"
                   gap={2}
                   _hover={{
-                    bg: "brand.50",
-                    color: "brand.900",
+                    bg: "surfaceHover",
+                    color: "accent",
                     transform: "translateX(-2px)"
                   }}
                 >

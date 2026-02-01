@@ -63,7 +63,7 @@ export default function TeacherReviewsPage() {
   if (loading) {
     return (
       <Box textAlign="center" py={20}>
-        <Spinner size="xl" color="brand.500" />
+        <Spinner size="xl" color="spinner" />
         <Text mt={4} color="muted">جاري تحميل المراجعات...</Text>
       </Box>
     );
@@ -93,7 +93,7 @@ export default function TeacherReviewsPage() {
         {/* Rating Summary */}
         <PremiumCard variant="elevated">
           <Box p={6} textAlign="center">
-            <Text fontSize="5xl" fontWeight="700" color="brand.700">
+            <Text fontSize="5xl" fontWeight="700" color="accent">
               {stats?.averageRating?.toFixed(1) ?? "0.0"}
             </Text>
             <HStack justify="center" gap={1} mb={2}>
@@ -175,7 +175,7 @@ export default function TeacherReviewsPage() {
                   <HStack justify="space-between" mb={3}>
                     <HStack gap={3}>
                       <Avatar.Root size="sm">
-                        <Avatar.Fallback bg="brand.100" color="brand.700">
+                        <Avatar.Fallback bg="avatarBg" color="avatarText">
                           {review.studentName.charAt(0)}
                         </Avatar.Fallback>
                       </Avatar.Root>

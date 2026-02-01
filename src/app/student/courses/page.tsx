@@ -67,7 +67,7 @@ export default function StudentCoursesPage() {
   if (loading) {
     return (
       <Box textAlign="center" py={20}>
-        <Spinner size="xl" color="brand.500" />
+        <Spinner size="xl" color="spinner" />
         <Text mt={4} color="muted">جاري تحميل الدورات...</Text>
       </Box>
     );
@@ -179,7 +179,7 @@ export default function StudentCoursesPage() {
                   </Text>
 
                   {/* Instructor */}
-                  <Text fontSize="sm" color="brand.700" mb={3}>
+                  <Text fontSize="sm" color="accent" mb={3}>
                     👨‍🏫 {course.instructor}
                   </Text>
 

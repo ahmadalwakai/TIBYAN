@@ -262,7 +262,7 @@ export default function StudentLessonRoomPage() {
   if (loading) {
     return (
       <Flex minH="100vh" align="center" justify="center" bg="gray.900">
-        <Spinner size="xl" color="brand.500" />
+        <Spinner size="xl" color="spinner" />
       </Flex>
     );
   }
@@ -285,7 +285,7 @@ export default function StudentLessonRoomPage() {
             w="80px"
             h="80px"
             borderRadius="full"
-            bg="brand.500"
+            bg="accent"
             mx="auto"
             mb={4}
             display="flex"
@@ -421,7 +421,7 @@ export default function StudentLessonRoomPage() {
                   w="120px"
                   h="120px"
                   borderRadius="full"
-                  bg="brand.500"
+                  bg="accent"
                   display="flex"
                   alignItems="center"
                   justifyContent="center"
@@ -503,7 +503,7 @@ export default function StudentLessonRoomPage() {
               <Stack gap={2}>
                 {chatMessages.map((msg) => (
                   <Box key={msg.id} bg="gray.700" p={2} borderRadius="lg">
-                    <Text fontSize="xs" fontWeight="600" color="brand.400" mb={1}>
+                    <Text fontSize="xs" fontWeight="600" color="accent" mb={1}>
                       {msg.authorName}
                     </Text>
                     <Text fontSize="sm">{msg.content}</Text>

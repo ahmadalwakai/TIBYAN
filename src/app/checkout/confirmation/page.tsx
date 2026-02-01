@@ -61,9 +61,9 @@ export default function CheckoutConfirmationPage() {
                 </Stack>
               </PremiumCard>
 
-              <PremiumCard p={4} bg="brand.50" borderColor="brand.200" borderWidth="1px">
+              <PremiumCard p={4} bg="accentSubtle" borderColor="borderAccent" borderWidth="1px">
                 <Stack gap={2}>
-                  <Text fontWeight="700" color="brand.900">بيانات التحويل البنكي:</Text>
+                  <Text fontWeight="700" color="primary">بيانات التحويل البنكي:</Text>
                   <Stack gap={1} fontSize="sm" color="text">
                     <Text>البنك: مصرف الراجحي</Text>
                     <Text>اسم الحساب: معهد تبيان للعلوم الشرعية</Text>
@@ -87,10 +87,10 @@ export default function CheckoutConfirmationPage() {
               </Button>
               <Button
                 asChild
-                bg="brand.900"
+                bg="primary"
                 color="white"
                 w="100%"
-                _hover={{ bg: "brand.700" }}
+                _hover={{ bg: "primaryHover" }}
               >
                 <Link href="/courses">تصفح الدورات</Link>
               </Button>

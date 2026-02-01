@@ -71,7 +71,7 @@ export default function TeacherDashboard() {
   if (loading) {
     return (
       <Box textAlign="center" py={20}>
-        <Spinner size="xl" color="brand.500" />
+        <Spinner size="xl" color="spinner" />
         <Text mt={4} color="muted">جاري التحميل...</Text>
       </Box>
     );
@@ -95,7 +95,7 @@ export default function TeacherDashboard() {
           title="إجمالي الدورات"
           value={stats?.totalCourses ?? 0}
           icon="📚"
-          color="brand.500"
+          color="accent"
         />
         <StatCard
           title="إجمالي الطلاب"
@@ -154,7 +154,7 @@ export default function TeacherDashboard() {
                 أفضل الدورات
               </Heading>
               <Link href="/teacher/courses">
-                <Text color="brand.500" fontWeight="600" _hover={{ textDecoration: "underline" }}>
+                <Text color="link" fontWeight="600" _hover={{ textDecoration: "underline", color: "linkHover" }}>
                   عرض الكل
                 </Text>
               </Link>
@@ -165,7 +165,7 @@ export default function TeacherDashboard() {
                 <Text fontSize="4xl" mb={2}>📚</Text>
                 <Text color="muted">لم تنشئ أي دورات بعد</Text>
                 <Link href="/teacher/courses/new">
-                  <Text color="brand.500" fontWeight="600" mt={2}>
+                  <Text color="link" fontWeight="600" mt={2}>
                     أنشئ دورتك الأولى
                   </Text>
                 </Link>
@@ -179,8 +179,8 @@ export default function TeacherDashboard() {
                       p={3}
                       borderRadius="card"
                       border="1px solid"
-                      borderColor="border"
-                      _hover={{ borderColor: "brand.500", bg: "brand.50" }}
+                      borderColor="cardBorder"
+                      _hover={{ borderColor: "cardHoverBorder", bg: "surfaceHover" }}
                       transition="all 0.2s"
                     >
                       <HStack gap={3}>
@@ -226,7 +226,7 @@ export default function TeacherDashboard() {
                 التسجيلات الأخيرة
               </Heading>
               <Link href="/teacher/students">
-                <Text color="brand.500" fontWeight="600" _hover={{ textDecoration: "underline" }}>
+                <Text color="link" fontWeight="600" _hover={{ textDecoration: "underline", color: "linkHover" }}>
                   عرض الكل
                 </Text>
               </Link>

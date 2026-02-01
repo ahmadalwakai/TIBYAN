@@ -315,7 +315,7 @@ export default function AssessmentPage() {
                             </Progress.Track>
                           </Progress.Root>
                         </Box>
-                        <Text fontSize="sm" fontWeight="800" color="brand.500">
+                        <Text fontSize="sm" fontWeight="800" color="accent">
                           {rec.match}%
                         </Text>
                       </Flex>
@@ -324,7 +324,7 @@ export default function AssessmentPage() {
                     {/* CTA */}
                     <Button
                       asChild
-                      bg="brand.900"
+                      bg="primary"
                       color="white"
                       size="lg"
                       px={8}
@@ -346,8 +346,8 @@ export default function AssessmentPage() {
             <Flex gap={4} wrap="wrap" justify="center">
               <Button
                 variant="outline"
-                borderColor="brand.500"
-                color="brand.500"
+                borderColor="outlineBorder"
+                color="outlineText"
                 size="lg"
                 onClick={handleRestart}
                 _hover={{
@@ -428,7 +428,7 @@ export default function AssessmentPage() {
               <Text fontSize="sm" fontWeight="600" color="muted">
                 {t("question")} {currentQuestion + 1} / {questions.length}
               </Text>
-              <Text fontSize="sm" fontWeight="600" color="brand.500">
+              <Text fontSize="sm" fontWeight="600" color="accent">
                 {Math.round(progress)}%
               </Text>
             </Flex>

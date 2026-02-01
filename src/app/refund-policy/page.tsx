@@ -90,7 +90,7 @@ export default function RefundPolicyPage() {
                   >
                     <Flex gap={3} align="start">
                       <Box
-                        bg="brand.900"
+                        bg="primary"
                         color="white"
                         borderRadius="full"
                         w={8}
@@ -123,7 +123,7 @@ export default function RefundPolicyPage() {
                   >
                     <Flex gap={3} align="start">
                       <Box
-                        bg="brand.900"
+                        bg="primary"
                         color="white"
                         borderRadius="full"
                         w={8}
@@ -156,7 +156,7 @@ export default function RefundPolicyPage() {
                   >
                     <Flex gap={3} align="start">
                       <Box
-                        bg="brand.900"
+                        bg="primary"
                         color="white"
                         borderRadius="full"
                         w={8}
@@ -266,7 +266,7 @@ export default function RefundPolicyPage() {
 
           {/* CTA back to pricing */}
           <Box textAlign="center">
-            <Button asChild bg="brand.900" color="white" size="lg" _hover={{ bg: "brand.700" }}>
+            <Button asChild bg="primary" color="white" size="lg" _hover={{ bg: "primaryHover" }}>
               <Link href="/pricing">عرض الباقات والأسعار</Link>
             </Button>
           </Box>

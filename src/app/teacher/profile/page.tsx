@@ -111,7 +111,7 @@ export default function TeacherProfilePage() {
   if (loading) {
     return (
       <Box textAlign="center" py={20}>
-        <Spinner size="xl" color="brand.500" />
+        <Spinner size="xl" color="spinner" />
         <Text mt={4} color="muted">جاري تحميل الملف الشخصي...</Text>
       </Box>
     );
@@ -143,7 +143,7 @@ export default function TeacherProfilePage() {
           <PremiumCard variant="elevated">
             <VStack gap={4} p={6} textAlign="center">
               <Avatar.Root size="2xl">
-                <Avatar.Fallback bg="brand.700" color="white" fontSize="3xl">
+                <Avatar.Fallback bg="avatarBg" color="avatarText" fontSize="3xl">
                   {profile.name.charAt(0)}
                 </Avatar.Fallback>
               </Avatar.Root>
@@ -170,7 +170,7 @@ export default function TeacherProfilePage() {
               <Heading size="sm" mb={4}>إحصائياتك</Heading>
               <Grid templateColumns="repeat(2, 1fr)" gap={4}>
                 <Box textAlign="center" p={3} bg="backgroundAlt" borderRadius="md">
-                  <Text fontSize="2xl" fontWeight="700" color="brand.700">
+                  <Text fontSize="2xl" fontWeight="700" color="accent">
                     {profile.stats.totalCourses}
                   </Text>
                   <Text fontSize="xs" color="muted">دورة</Text>

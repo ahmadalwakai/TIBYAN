@@ -144,7 +144,7 @@ export default function TeacherApplicationPage() {
             {/* Header */}
             <Stack gap={4} textAlign="center">
               <Badge
-                bg="brand.900"
+                bg="primary"
                 color="white"
                 px={4}
                 py={2}
@@ -507,7 +507,7 @@ export default function TeacherApplicationPage() {
             <Stack gap={4}>
               <Button
                 type="submit"
-                bg="brand.900"
+                bg="primary"
                 color="white"
                 size="xl"
                 fontSize="lg"
@@ -515,7 +515,7 @@ export default function TeacherApplicationPage() {
                 w="100%"
                 py={7}
                 loading={isSubmitting}
-                _hover={{ bg: "brand.700" }}
+                _hover={{ bg: "primaryHover" }}
               >
                 {isSubmitting ? "جاري الإرسال..." : "إرسال الطلب 🚀"}
               </Button>

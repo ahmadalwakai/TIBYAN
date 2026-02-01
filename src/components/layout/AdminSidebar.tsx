@@ -43,8 +43,8 @@ export default function AdminSidebar() {
             إدارة تبيان
           </Text>
           <Badge
-            bg="brand.900"
-            color="white"
+            bg="primary"
+            color="primaryText"
             px={2}
             py={1}
             borderRadius="full"
@@ -64,8 +64,8 @@ export default function AdminSidebar() {
                 fontWeight="600"
                 transition="all 0.2s"
                 _hover={{
-                  bg: "brand.50",
-                  color: "brand.900",
+                  bg: "surfaceHover",
+                  color: "accent",
                   transform: "translateX(-2px)"
                 }}
                 position="relative"
@@ -77,7 +77,7 @@ export default function AdminSidebar() {
                   transform: "translateY(-50%)",
                   width: "3px",
                   height: 0,
-                  bg: "brand.500",
+                  bg: "accent",
                   borderRadius: "full",
                   transition: "height 0.2s"
                 }}

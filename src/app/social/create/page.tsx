@@ -199,7 +199,7 @@ export default function CreatePostPage() {
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
-                color="brand.900"
+                color="primary"
                 fontSize="lg"
                 fontWeight="800"
               >

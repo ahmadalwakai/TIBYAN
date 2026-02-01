@@ -260,7 +260,7 @@ export default function LessonRoomPage() {
   if (loading) {
     return (
       <Flex minH="100vh" align="center" justify="center" bg="gray.900">
-        <Spinner size="xl" color="brand.500" />
+        <Spinner size="xl" color="spinner" />
       </Flex>
     );
   }
@@ -328,7 +328,7 @@ export default function LessonRoomPage() {
                   w="120px"
                   h="120px"
                   borderRadius="full"
-                  bg="brand.500"
+                  bg="accent"
                   display="flex"
                   alignItems="center"
                   justifyContent="center"
@@ -503,7 +503,7 @@ export default function LessonRoomPage() {
                   {chatMessages.map((msg) => (
                     <Box key={msg.id} bg="gray.700" p={2} borderRadius="lg">
                       <Flex align="center" gap={2} mb={1}>
-                        <Text fontSize="xs" fontWeight="600" color="brand.400">
+                        <Text fontSize="xs" fontWeight="600" color="accent">
                           {msg.authorName}
                         </Text>
                         <Badge size="sm">

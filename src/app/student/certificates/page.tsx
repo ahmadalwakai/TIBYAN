@@ -46,7 +46,7 @@ export default function StudentCertificatesPage() {
   if (loading) {
     return (
       <Box textAlign="center" py={20}>
-        <Spinner size="xl" color="brand.500" />
+        <Spinner size="xl" color="spinner" />
         <Text mt={4} color="muted">جاري تحميل الشهادات...</Text>
       </Box>
     );
@@ -100,7 +100,7 @@ export default function StudentCertificatesPage() {
                   <Text dir="ltr">رقم الشهادة: {cert.certificateNumber}</Text>
                 </VStack>
                 <HStack justify="center" gap={2}>
-                  <Button size="sm" bg="white" color="brand.900">
+                  <Button size="sm" bg="white" color="primary">
                     📥 تحميل
                   </Button>
                   <Button size="sm" variant="outline" borderColor="white" color="white">

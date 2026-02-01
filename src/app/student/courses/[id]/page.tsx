@@ -76,7 +76,7 @@ export default function StudentCourseDetailPage({ params }: PageProps) {
   if (loading) {
     return (
       <Box textAlign="center" py={20}>
-        <Spinner size="xl" color="brand.500" />
+        <Spinner size="xl" color="spinner" />
         <Text mt={4} color="muted">جاري تحميل الدورة...</Text>
       </Box>
     );
@@ -101,7 +101,7 @@ export default function StudentCourseDetailPage({ params }: PageProps) {
         <Box p={6}>
           <HStack justify="space-between" mb={4} flexWrap="wrap" gap={2}>
             <Badge
-              bg={course.status === "COMPLETED" ? "green.500" : "brand.500"}
+              bg={course.status === "COMPLETED" ? "green.500" : "primary"}
               color="white"
               px={3}
               py={1}
@@ -109,7 +109,7 @@ export default function StudentCourseDetailPage({ params }: PageProps) {
             >
               {course.status === "COMPLETED" ? "مكتمل ✓" : "قيد الدراسة"}
             </Badge>
-            <Badge bg="white" color="brand.900" px={3} py={1} borderRadius="full">
+            <Badge bg="white" color="primary" px={3} py={1} borderRadius="full">
               {course.level === "BEGINNER"
                 ? "مبتدئ"
                 : course.level === "INTERMEDIATE"
@@ -141,7 +141,7 @@ export default function StudentCourseDetailPage({ params }: PageProps) {
           <Heading size="md" mb={4}>تقدمك في الدورة</Heading>
           <Grid templateColumns={{ base: "1fr", md: "repeat(3, 1fr)" }} gap={6}>
             <Box textAlign="center">
-              <Text fontSize="4xl" fontWeight="700" color="brand.700">
+              <Text fontSize="4xl" fontWeight="700" color="accent">
                 {course.progress}%
               </Text>
               <Text color="muted">نسبة الإنجاز</Text>

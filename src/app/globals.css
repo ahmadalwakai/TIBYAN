@@ -1,5 +1,122 @@
 :root {
 	color-scheme: light;
+	
+	/* Semantic color tokens - Light mode */
+	--color-bg: #F2F4F7;
+	--color-bg-alt: #EEF2F6;
+	--color-surface: #FFFFFF;
+	--color-surface-hover: #F8FAFC;
+	
+	--color-text: #0B1F3A;
+	--color-text-body: #344054;
+	--color-text-muted: #667085;
+	
+	--color-border: #D0D5DD;
+	--color-border-accent: #1F4B7A;
+	
+	/* Brand colors - adaptive for modes */
+	--color-primary: #0B1F3A;
+	--color-primary-hover: #12335A;
+	--color-primary-text: #FFFFFF;
+	
+	--color-secondary: #1F4B7A;
+	--color-secondary-hover: #2A5C8F;
+	--color-secondary-text: #FFFFFF;
+	
+	/* Accent color for highlights */
+	--color-accent: #1F4B7A;
+	--color-accent-subtle: #E8F0F8;
+	
+	/* Interactive states */
+	--color-outline-border: #1F4B7A;
+	--color-outline-text: #0B1F3A;
+	--color-outline-hover-bg: #E8F0F8;
+	
+	--color-ghost-text: #0B1F3A;
+	--color-ghost-hover-bg: #EEF2F6;
+	
+	/* Badge/Chip colors */
+	--color-badge-bg: linear-gradient(135deg, #1F4B7A 0%, #2A5C8F 100%);
+	--color-badge-text: #FFFFFF;
+	
+	/* Card colors */
+	--color-card-bg: #FFFFFF;
+	--color-card-border: #D0D5DD;
+	--color-card-hover-border: #1F4B7A;
+	
+	/* Status colors */
+	--color-success: #12B76A;
+	--color-warning: #F79009;
+	--color-danger: #F04438;
+	
+	/* Link colors */
+	--color-link: #1F4B7A;
+	--color-link-hover: #12335A;
+	
+	/* Spinner/Loading */
+	--color-spinner: #1F4B7A;
+	
+	/* Avatar fallback */
+	--color-avatar-bg: #1F4B7A;
+	--color-avatar-text: #FFFFFF;
+}
+
+.dark {
+	color-scheme: dark;
+	
+	/* Semantic color tokens - Dark mode */
+	--color-bg: #0A1628;
+	--color-bg-alt: #1A2B45;
+	--color-surface: #0F1D32;
+	--color-surface-hover: #1A2B45;
+	
+	--color-text: #F8F9FA;
+	--color-text-body: #E2E8F0;
+	--color-text-muted: #A0AEC0;
+	
+	--color-border: #2D3748;
+	--color-border-accent: #4A7DB5;
+	
+	/* Brand colors - adaptive for dark mode */
+	--color-primary: #4A7DB5;
+	--color-primary-hover: #7BA3D0;
+	--color-primary-text: #0A1628;
+	
+	--color-secondary: #7BA3D0;
+	--color-secondary-hover: #B8D0EA;
+	--color-secondary-text: #0A1628;
+	
+	/* Accent color for highlights */
+	--color-accent: #7BA3D0;
+	--color-accent-subtle: #1A2B45;
+	
+	/* Interactive states */
+	--color-outline-border: #4A7DB5;
+	--color-outline-text: #E8F0F8;
+	--color-outline-hover-bg: #1A2B45;
+	
+	--color-ghost-text: #E8F0F8;
+	--color-ghost-hover-bg: #1A2B45;
+	
+	/* Badge/Chip colors */
+	--color-badge-bg: linear-gradient(135deg, #4A7DB5 0%, #7BA3D0 100%);
+	--color-badge-text: #0A1628;
+	
+	/* Card colors */
+	--color-card-bg: #0F1D32;
+	--color-card-border: #2D3748;
+	--color-card-hover-border: #4A7DB5;
+	
+	/* Link colors */
+	--color-link: #7BA3D0;
+	--color-link-hover: #B8D0EA;
+	
+	/* Spinner/Loading */
+	--color-spinner: #7BA3D0;
+	
+	/* Avatar fallback */
+	--color-avatar-bg: #4A7DB5;
+	--color-avatar-text: #0A1628;
 }
 
 * {
@@ -14,8 +131,8 @@ body {
 }
 
 body {
-	background: #f7f8fa;
-	color: #0f172a;
+	background: var(--color-bg);
+	color: var(--color-text-body);
 }
 
 /* Wave animation for platform name */
@@ -26,4 +143,39 @@ body {
 	100% {
 		transform: translateX(50%);
 	}
+}
+
+/* Global text selection */
+::selection {
+	background: var(--color-primary);
+	color: var(--color-primary-text);
+}
+
+/* Focus ring for accessibility */
+:focus-visible {
+	outline: 2px solid var(--color-outline-border);
+	outline-offset: 2px;
+}
+
+/* Scrollbar styling for dark mode */
+.dark {
+	scrollbar-color: var(--color-border) var(--color-bg);
+}
+
+.dark::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+
+.dark::-webkit-scrollbar-track {
+	background: var(--color-bg);
+}
+
+.dark::-webkit-scrollbar-thumb {
+	background: var(--color-border);
+	border-radius: 4px;
+}
+
+.dark::-webkit-scrollbar-thumb:hover {
+	background: var(--color-border-accent);
 }

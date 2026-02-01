@@ -226,8 +226,8 @@ export default function CheckoutPage() {
                       p={4}
                       borderRadius="lg"
                       borderWidth="2px"
-                      borderColor="brand.500"
-                      bg="brand.50"
+                      borderColor="borderAccent"
+                      bg="accentSubtle"
                     >
                       <Flex align="center" gap={3}>
                         <Text fontSize="2xl">💵</Text>
@@ -281,7 +281,7 @@ export default function CheckoutPage() {
                     <Flex justify="space-between" align="center">
                       <Text fontWeight="700" fontSize="lg" color="text">الإجمالي</Text>
                       <Stack gap={0} align="end">
-                        <Text fontWeight="800" fontSize="2xl" color="brand.900">
+                        <Text fontWeight="800" fontSize="2xl" color="primary">
                           {course.price} {course.currency}
                         </Text>
                         <Text fontSize="sm" color="green.600">
@@ -292,7 +292,7 @@ export default function CheckoutPage() {
 
                     <Button
                       type="submit"
-                      bg="brand.900"
+                      bg="primary"
                       color="white"
                       size="lg"
                       w="100%"
@@ -301,7 +301,7 @@ export default function CheckoutPage() {
                       fontWeight="700"
                       loading={isSubmitting}
                       loadingText="جاري المعالجة..."
-                      _hover={{ bg: "brand.700" }}
+                      _hover={{ bg: "primaryHover" }}
                     >
                       إتمام التسجيل والدفع نقدًا 💵
                     </Button>

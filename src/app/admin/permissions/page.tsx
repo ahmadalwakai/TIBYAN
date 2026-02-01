@@ -283,11 +283,11 @@ export default function AdminPermissionsPage() {
                 إلغاء
               </Button>
               <Button
-                bg="brand.900"
+                bg="primary"
                 color="white"
                 onClick={handleSubmit}
                 disabled={selectedPermissions.length === 0 || (!editingRole && !name)}
-                _hover={{ bg: "brand.700" }}
+                _hover={{ bg: "primaryHover" }}
               >
                 {editingRole ? "تحديث" : "إنشاء"}
               </Button>
@@ -336,9 +336,9 @@ export default function AdminPermissionsPage() {
                 <Button
                   size="sm"
                   variant="outline"
-                  borderColor="brand.500"
+                  borderColor="outlineBorder"
                   borderWidth="2px"
-                  color="brand.900"
+                  color="outlineText"
                   onClick={() => handleEdit(role)}
                   _hover={{ bg: "brand.50", borderColor: "brand.600" }}
                   transition="all 0.3s ease"

@@ -98,7 +98,7 @@ export default function StudentProfilePage() {
   if (loading) {
     return (
       <Box textAlign="center" py={20}>
-        <Spinner size="xl" color="brand.500" />
+        <Spinner size="xl" color="spinner" />
         <Text mt={4} color="muted">جاري تحميل الملف الشخصي...</Text>
       </Box>
     );
@@ -129,7 +129,7 @@ export default function StudentProfilePage() {
         <PremiumCard variant="elevated">
           <VStack gap={4} p={6} textAlign="center">
             <Avatar.Root size="2xl">
-              <Avatar.Fallback bg="brand.500" color="white" fontSize="3xl">
+              <Avatar.Fallback bg="avatarBg" color="avatarText" fontSize="3xl">
                 {profile.name.charAt(0)}
               </Avatar.Fallback>
             </Avatar.Root>

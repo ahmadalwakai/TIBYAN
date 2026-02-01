@@ -292,7 +292,7 @@ export default function ResetPasswordPage() {
   return (
     <Suspense fallback={
       <Box as="main" bg="background" minH="100vh" display="flex" alignItems="center" justifyContent="center">
-        <Spinner size="xl" color="brand.500" />
+        <Spinner size="xl" color="spinner" />
       </Box>
     }>
       <ResetPasswordContent />

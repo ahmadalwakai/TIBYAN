@@ -133,7 +133,7 @@ export default function StudentLessonsPage() {
   if (loading) {
     return (
       <Flex minH="60vh" align="center" justify="center">
-        <Spinner size="xl" color="brand.500" />
+        <Spinner size="xl" color="spinner" />
       </Flex>
     );
   }
@@ -387,7 +387,7 @@ function LessonCard({ lesson, onJoin }: { lesson: Lesson; onJoin: () => void }) 
 
         {/* Schedule */}
         {lesson.scheduledAt && !isLive && (
-          <Text fontSize="sm" color="brand.400" mb={3}>
+          <Text fontSize="sm" color="accent" mb={3}>
             📅 {new Date(lesson.scheduledAt).toLocaleString("ar-SA")}
           </Text>
         )}

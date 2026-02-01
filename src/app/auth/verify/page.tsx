@@ -78,7 +78,7 @@ function VerifyEmailContent() {
           <Stack gap={6} align="center" textAlign="center">
             {status === "loading" && (
               <>
-                <Spinner size="xl" color="brand.500" />
+                <Spinner size="xl" color="spinner" />
                 <Heading size="lg">جاري التحقق...</Heading>
                 <Text color="muted">يرجى الانتظار بينما نتحقق من بريدك الإلكتروني</Text>
               </>
@@ -150,8 +150,8 @@ function VerifyEmailContent() {
                     asChild
                     w="100%"
                     variant="outline"
-                    borderColor="brand.500"
-                    color="brand.500"
+                    borderColor="outlineBorder"
+                    color="link"
                     _hover={{ bg: "brand.50" }}
                   >
                     <Link href="/auth/register">تسجيل جديد</Link>
@@ -181,7 +181,7 @@ export default function VerifyEmailPage() {
   return (
     <Suspense fallback={
       <Box as="main" bg="background" minH="100vh" display="flex" alignItems="center" justifyContent="center">
-        <Spinner size="xl" color="brand.500" />
+        <Spinner size="xl" color="spinner" />
       </Box>
     }>
       <VerifyEmailContent />

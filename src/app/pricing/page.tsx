@@ -126,7 +126,7 @@ export default function PricingPage() {
   return (
     <Box
       as="main"
-      bg="brand.900"
+      bg="primary"
       minH="100vh"
       position="relative"
       dir="rtl"

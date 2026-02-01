@@ -70,7 +70,7 @@ export default function StudentDashboard() {
   if (loading) {
     return (
       <Box textAlign="center" py={20}>
-        <Spinner size="xl" color="brand.500" />
+        <Spinner size="xl" color="spinner" />
         <Text mt={4} color="muted">جاري التحميل...</Text>
       </Box>
     );
@@ -94,37 +94,37 @@ export default function StudentDashboard() {
           title="الدورات المسجلة"
           value={stats?.enrolledCourses ?? 0}
           icon="📚"
-          color="brand.500"
+          color="accent"
         />
         <StatCard
           title="الدورات المكتملة"
           value={stats?.completedCourses ?? 0}
           icon="✅"
-          color="green.500"
+          color="success"
         />
         <StatCard
           title="التقدم الإجمالي"
           value={`${stats?.totalProgress ?? 0}%`}
           icon="📈"
-          color="blue.500"
+          color="secondary"
         />
         <StatCard
           title="إجمالي المدفوعات"
           value={`${stats?.totalPaid ?? 0} ر.س`}
           icon="💰"
-          color="yellow.600"
+          color="warning"
         />
         <StatCard
           title="الدروس القادمة"
           value={stats?.upcomingLessons ?? 0}
           icon="📅"
-          color="purple.500"
+          color="accent"
         />
         <StatCard
           title="الشهادات المكتسبة"
           value={stats?.certificatesEarned ?? 0}
           icon="🏆"
-          color="orange.500"
+          color="warning"
         />
       </Grid>
 
@@ -136,7 +136,7 @@ export default function StudentDashboard() {
               الدورات الأخيرة
             </Heading>
             <Link href="/student/courses">
-              <Text color="brand.500" fontWeight="600" _hover={{ textDecoration: "underline" }}>
+              <Text color="link" fontWeight="600" _hover={{ textDecoration: "underline", color: "linkHover" }}>
                 عرض الكل
               </Text>
             </Link>
@@ -147,7 +147,7 @@ export default function StudentDashboard() {
               <Text fontSize="4xl" mb={2}>📚</Text>
               <Text color="muted">لم تسجل في أي دورة بعد</Text>
               <Link href="/courses">
-                <Text color="brand.500" fontWeight="600" mt={2}>
+                <Text color="link" fontWeight="600" mt={2}>
                   تصفح الدورات المتاحة
                 </Text>
               </Link>
@@ -160,8 +160,8 @@ export default function StudentDashboard() {
                     p={4}
                     borderRadius="card"
                     border="1px solid"
-                    borderColor="border"
-                    _hover={{ borderColor: "brand.500", bg: "brand.50" }}
+                    borderColor="cardBorder"
+                    _hover={{ borderColor: "cardHoverBorder", bg: "surfaceHover" }}
                     transition="all 0.2s"
                   >
                     <HStack justify="space-between" mb={2}>
@@ -169,8 +169,8 @@ export default function StudentDashboard() {
                         {course.title}
                       </Text>
                       <Badge
-                        bg={course.progress === 100 ? "green.100" : "brand.50"}
-                        color={course.progress === 100 ? "green.700" : "brand.700"}
+                        bg={course.progress === 100 ? "green.100" : "accentSubtle"}
+                        color={course.progress === 100 ? "green.700" : "accent"}
                       >
                         {course.progress === 100 ? "مكتمل" : `${course.progress}%`}
                       </Badge>
@@ -203,7 +203,7 @@ export default function StudentDashboard() {
               المدفوعات الأخيرة
             </Heading>
             <Link href="/student/payments">
-              <Text color="brand.500" fontWeight="600" _hover={{ textDecoration: "underline" }}>
+              <Text color="link" fontWeight="600" _hover={{ textDecoration: "underline", color: "linkHover" }}>
                 عرض الكل
               </Text>
             </Link>
@@ -233,7 +233,7 @@ export default function StudentDashboard() {
                     </Text>
                   </Box>
                   <Box textAlign="left">
-                    <Text fontWeight="700" color="brand.700">
+                    <Text fontWeight="700" color="accent">
                       {payment.amount} {payment.currency}
                     </Text>
                     <Badge

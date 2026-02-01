@@ -191,7 +191,7 @@ export default function AdminUsersPage() {
 
       {loading && (
         <Flex justify="center" py={10}>
-          <Spinner size="xl" color="brand.500" />
+          <Spinner size="xl" color="spinner" />
         </Flex>
       )}
 
@@ -256,8 +256,8 @@ export default function AdminUsersPage() {
                     <Button 
                       size="sm" 
                       variant="outline" 
-                      borderColor="brand.500"
-                      color="brand.900"
+                      borderColor="outlineBorder"
+                      color="outlineText"
                       _hover={{ bg: "brand.50" }}
                       onClick={() => toggleStatus(user)}
                     >

@@ -217,7 +217,7 @@ export default function MemberPortalPage() {
               justifyContent="center"
               fontSize={{ base: "2xl", md: "4xl" }}
               fontWeight="900"
-              color="brand.900"
+              color="primary"
               boxShadow="0 8px 30px rgba(200, 162, 74, 0.4)"
             >
               {user.name.charAt(0)}
@@ -230,8 +230,8 @@ export default function MemberPortalPage() {
               <Text color="gray.300">{user.email}</Text>
               <Stack direction="row" gap={2} justify={{ base: "center", md: "flex-start" }}>
                 <Badge
-                  bg="brand.500/20"
-                  color="brand.300"
+                  bg="accentSubtle"
+                  color="accent"
                   px={3}
                   py={1}
                   borderRadius="full"
@@ -257,7 +257,7 @@ export default function MemberPortalPage() {
             <Button
               asChild
               bg="linear-gradient(135deg, #c8a24a, #ffd700)"
-              color="brand.900"
+              color="primary"
               fontWeight="700"
               px={6}
               _hover={{
@@ -281,11 +281,11 @@ export default function MemberPortalPage() {
               key={tab.id}
               onClick={() => setActiveTab(tab.id as typeof activeTab)}
               variant={activeTab === tab.id ? "solid" : "outline"}
-              bg={activeTab === tab.id ? "brand.500" : "transparent"}
+              bg={activeTab === tab.id ? "primary" : "transparent"}
               color={activeTab === tab.id ? "white" : "gray.600"}
               borderColor="gray.200"
               _hover={{
-                bg: activeTab === tab.id ? "brand.600" : "gray.50",
+                bg: activeTab === tab.id ? "primaryHover" : "gray.50",
               }}
             >
               {tab.icon} {tab.label}
@@ -299,7 +299,7 @@ export default function MemberPortalPage() {
             <PremiumCard p={6}>
               <Stack gap={2} align="center" textAlign="center">
                 <Text fontSize="3xl">📝</Text>
-                <Text fontSize="3xl" fontWeight="900" color="brand.500">
+                <Text fontSize="3xl" fontWeight="900" color="accent">
                   {posts.length}
                 </Text>
                 <Text color="muted" fontWeight="600">منشور</Text>

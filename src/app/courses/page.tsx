@@ -75,7 +75,7 @@ function AnimatedStat({ value, suffix = "", prefix = "", label }: {
   
   return (
     <Stack gap={1}>
-      <Text fontSize="3xl" fontWeight="800" color="brand.900">
+      <Text fontSize="3xl" fontWeight="800" color="accent">
         <span ref={ref}>{prefix}{count.toLocaleString()}{suffix}</span>
       </Text>
       <Text color="muted" fontSize="sm">{label}</Text>
@@ -136,10 +136,11 @@ export default function CoursesPage() {
         right="0"
         width="500px"
         height="500px"
-        bgGradient="radial(circle, brand.50 0%, transparent 70%)"
+        bg="accentSubtle"
         opacity={0.3}
         pointerEvents="none"
         zIndex={0}
+        borderRadius="full"
       />
       <Container maxW="6xl" py={{ base: 12, md: 20 }} px={{ base: 6, md: 8 }} position="relative" zIndex={1}>
         <Stack gap={10}>
@@ -147,8 +148,7 @@ export default function CoursesPage() {
           <Stack gap={4} textAlign={{ base: "center", md: "start" }}>
             <Heading 
               size="2xl"
-              bgGradient="linear(135deg, text 0%, brand.900 100%)"
-              bgClip="text"
+              color="text"
             >
               📚 البرامج التعليمية
             </Heading>
@@ -165,10 +165,10 @@ export default function CoursesPage() {
                 <Button
                   key={dept.id}
                   onClick={() => setSelectedDept(dept.id)}
-                  bg={selectedDept === dept.id ? "brand.900" : "white"}
-                  color={selectedDept === dept.id ? "white" : "text"}
+                  bg={selectedDept === dept.id ? "primary" : "surface"}
+                  color={selectedDept === dept.id ? "primaryText" : "text"}
                   borderWidth="2px"
-                  borderColor={selectedDept === dept.id ? "brand.900" : "border"}
+                  borderColor={selectedDept === dept.id ? "primary" : "border"}
                   px={5}
                   py={2}
                   borderRadius="full"
@@ -177,7 +177,7 @@ export default function CoursesPage() {
                   transition="all 0.3s ease"
                   _hover={{
                     transform: "translateY(-2px)",
-                    borderColor: "brand.500",
+                    borderColor: "borderAccent",
                     boxShadow: "md",
                   }}
                 >
@@ -200,8 +200,8 @@ export default function CoursesPage() {
                   <Stack gap={4}>
                     <Flex justify="space-between" align="start">
                       <Badge 
-                        bg="brand.900"
-                        color="white" 
+                        bg="primary"
+                        color="primaryText" 
                         px={3} 
                         py={1}
                         borderRadius="full"
@@ -249,7 +249,7 @@ export default function CoursesPage() {
                       <Flex align="center" justify="space-between" mb={3}>
                         <Stack gap={0}>
                           <Flex align="baseline" gap={1}>
-                            <Text fontWeight="800" fontSize="xl" color="brand.900">
+                            <Text fontWeight="800" fontSize="xl" color="accent">
                               {course.price}
                             </Text>
                             <Text fontSize="xs" color="muted">/شهر</Text>
@@ -265,10 +265,10 @@ export default function CoursesPage() {
                           asChild
                           size="sm" 
                           w="full"
-                          bg="brand.900"
-                          color="white" 
+                          bg="primary"
+                          color="primaryText" 
                           _hover={{ 
-                            bg: "brand.700",
+                            bg: "primaryHover",
                             transform: "translateY(-2px)",
                           }}
                           transition="all 0.3s ease"
@@ -280,10 +280,10 @@ export default function CoursesPage() {
                           size="sm" 
                           w="full"
                           variant="outline"
-                          borderColor="brand.500"
-                          color="brand.900"
+                          borderColor="outlineBorder"
+                          color="outlineText"
                           _hover={{ 
-                            bg: "brand.50",
+                            bg: "surfaceHover",
                             transform: "translateY(-2px)",
                           }}
                           transition="all 0.3s ease"

@@ -181,7 +181,7 @@ export default function AdminCoursesPage() {
 
       {loading && (
         <Flex justify="center" py={10}>
-          <Spinner size="xl" color="brand.500" />
+          <Spinner size="xl" color="spinner" />
         </Flex>
       )}
 
@@ -261,9 +261,9 @@ export default function AdminCoursesPage() {
                     <Button 
                       size="sm" 
                       variant="outline"
-                      borderColor="brand.500"
-                      color="brand.900"
-                      _hover={{ bg: "brand.50" }}
+                      borderColor="borderAccent"
+                      color="primary"
+                      _hover={{ bg: "accentSubtle" }}
                       onClick={() => updateStatus(course.id, "REVIEW")}
                     >
                       📤 للمراجعة

@@ -231,7 +231,7 @@ export default function EditCoursePage({ params }: PageProps) {
   if (loading) {
     return (
       <Box textAlign="center" py={20}>
-        <Spinner size="xl" color="brand.500" />
+        <Spinner size="xl" color="spinner" />
         <Text mt={4} color="muted">جاري تحميل الدورة...</Text>
       </Box>
     );
@@ -288,7 +288,7 @@ export default function EditCoursePage({ params }: PageProps) {
       {/* Stats */}
       <Grid templateColumns={{ base: "1fr", md: "repeat(3, 1fr)" }} gap={4}>
         <Box p={4} bg="backgroundAlt" borderRadius="card" textAlign="center">
-          <Text fontWeight="700" fontSize="2xl" color="brand.700">{course.students}</Text>
+          <Text fontWeight="700" fontSize="2xl" color="accent">{course.students}</Text>
           <Text fontSize="sm" color="muted">طالب مسجل</Text>
         </Box>
         <Box p={4} bg="backgroundAlt" borderRadius="card" textAlign="center">
@@ -404,8 +404,8 @@ export default function EditCoursePage({ params }: PageProps) {
                             w={8}
                             h={8}
                             borderRadius="full"
-                            bg="brand.100"
-                            color="brand.700"
+                            bg="accentSubtle"
+                            color="accent"
                             display="flex"
                             alignItems="center"
                             justifyContent="center"

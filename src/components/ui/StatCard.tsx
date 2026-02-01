@@ -12,6 +12,38 @@ interface StatCardProps extends BoxProps {
   accentColor?: string;
 }
 
+// Map semantic color names to CSS variable values
+const getColorValue = (color: string | undefined): string => {
+  if (!color) return "var(--color-accent)";
+  
+  // Map semantic tokens to CSS variables
+  const colorMap: Record<string, string> = {
+    "accent": "var(--color-accent)",
+    "primary": "var(--color-primary)",
+    "secondary": "var(--color-secondary)",
+    "success": "var(--color-success)",
+    "warning": "var(--color-warning)",
+    "error": "var(--color-danger)",
+    "spinner": "var(--color-spinner)",
+    "link": "var(--color-link)",
+    // Legacy brand.xxx support - map to semantic colors
+    "brand.500": "var(--color-accent)",
+    "brand.700": "var(--color-primary)",
+    "brand.900": "var(--color-primary)",
+    // Keep other colors as-is for Chakra
+    "green.500": "#12B76A",
+    "green.600": "#059669",
+    "blue.500": "#3B82F6",
+    "yellow.500": "#EAB308",
+    "yellow.600": "#CA8A04",
+    "orange.500": "#F97316",
+    "purple.500": "#8B5CF6",
+    "teal.500": "#14B8A6",
+  };
+  
+  return colorMap[color] || color;
+};
+
 export default function StatCard({
   title,
   value,
@@ -21,13 +53,13 @@ export default function StatCard({
   accentColor,
   ...props
 }: StatCardProps) {
-  const accent = accentColor || color || "brand.500";
+  const accent = getColorValue(accentColor || color);
   
   return (
     <Box
-      bg="surface"
+      bg="cardBg"
       border="1px solid"
-      borderColor="border"
+      borderColor="cardBorder"
       borderRadius="xl"
       boxShadow="sm"
       position="relative"
@@ -37,7 +69,7 @@ export default function StatCard({
       _hover={{
         boxShadow: "md",
         transform: "translateY(-2px)",
-        borderColor: accent,
+        borderColor: "cardHoverBorder",
       }}
       _before={{
         content: '""',
@@ -65,7 +97,7 @@ export default function StatCard({
       {title && value !== undefined ? (
         <Flex direction="column" gap={2}>
           <Flex align="center" justify="space-between">
-            <Text fontSize="sm" color="gray.500" fontWeight="medium">
+            <Text fontSize="sm" color="muted" fontWeight="medium">
               {title}
             </Text>
             {icon && (

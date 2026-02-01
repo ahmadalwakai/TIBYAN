@@ -267,7 +267,7 @@ export default function TeacherLessonsPage() {
   if (loading) {
     return (
       <Flex minH="100vh" align="center" justify="center" bg="background">
-        <Spinner size="xl" color="brand.500" />
+        <Spinner size="xl" color="spinner" />
       </Flex>
     );
   }
@@ -281,7 +281,7 @@ export default function TeacherLessonsPage() {
           {/* Header */}
           <Flex justify="space-between" align="center" wrap="wrap" gap={4}>
             <Stack gap={1}>
-              <Heading size="xl" color="brand.500">
+              <Heading size="xl" color="accent">
                 📖 حصصي التعليمية
               </Heading>
               <Text color="muted">أنشئ وأدر حصصك الدراسية مع الطلاب</Text>

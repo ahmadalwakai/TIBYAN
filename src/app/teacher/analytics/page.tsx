@@ -64,7 +64,7 @@ export default function TeacherAnalyticsPage() {
   if (loading) {
     return (
       <Box textAlign="center" py={20}>
-        <Spinner size="xl" color="brand.500" />
+        <Spinner size="xl" color="spinner" />
         <Text mt={4} color="muted">جاري تحميل الإحصائيات...</Text>
       </Box>
     );
@@ -88,7 +88,7 @@ export default function TeacherAnalyticsPage() {
           title="إجمالي المشاهدات"
           value={analytics?.overview.totalViews ?? 0}
           icon="👁️"
-          color="brand.500"
+          color="accent"
         />
         <StatCard
           title="إجمالي التسجيلات"
@@ -126,7 +126,7 @@ export default function TeacherAnalyticsPage() {
                     borderRadius="card"
                     textAlign="center"
                   >
-                    <Text fontWeight="700" color="brand.700" mb={2}>
+                    <Text fontWeight="700" color="accent" mb={2}>
                       {month.month}
                     </Text>
                     <VStack gap={1}>

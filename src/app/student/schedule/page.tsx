@@ -55,7 +55,7 @@ export default function StudentSchedulePage() {
   if (loading) {
     return (
       <Box textAlign="center" py={20}>
-        <Spinner size="xl" color="brand.500" />
+        <Spinner size="xl" color="spinner" />
         <Text mt={4} color="muted">جاري تحميل الجدول...</Text>
       </Box>
     );

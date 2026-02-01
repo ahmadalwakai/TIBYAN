@@ -196,9 +196,9 @@ export default function AdminIntegrationsPage() {
                 <Button
                   size="sm"
                   variant="outline"
-                  borderColor="brand.500"
+                  borderColor="outlineBorder"
                   borderWidth="2px"
-                  color="brand.900"
+                  color="outlineText"
                   flex={1}
                   _hover={{ bg: "brand.50", borderColor: "brand.600" }}
                   transition="all 0.3s ease"

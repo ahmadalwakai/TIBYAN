@@ -58,19 +58,19 @@ export default function CoursePageClient({ course }: { course: CourseData }) {
               {/* Stats */}
               <Flex gap={6} wrap="wrap">
                 <Stack gap={0}>
-                  <Text fontSize="2xl" fontWeight="700" color="brand.500">
+                  <Text fontSize="2xl" fontWeight="700" color="accent">
                     {course.totalSessions}
                   </Text>
                   <Text fontSize="sm" color="muted">حصة</Text>
                 </Stack>
                 <Stack gap={0}>
-                  <Text fontSize="2xl" fontWeight="700" color="brand.500">
+                  <Text fontSize="2xl" fontWeight="700" color="accent">
                     {course.duration}
                   </Text>
                   <Text fontSize="sm" color="muted">مدة البرنامج</Text>
                 </Stack>
                 <Stack gap={0}>
-                  <Text fontSize="2xl" fontWeight="700" color="brand.500">
+                  <Text fontSize="2xl" fontWeight="700" color="accent">
                     {course.subjects.length}
                   </Text>
                   <Text fontSize="sm" color="muted">مادة علمية</Text>
@@ -84,7 +84,7 @@ export default function CoursePageClient({ course }: { course: CourseData }) {
                 <Stack gap={2}>
                   <Text fontSize="sm" color="muted">سعر البرنامج الكامل</Text>
                   <Flex align="baseline" gap={2}>
-                    <Text fontSize="4xl" fontWeight="800" color="brand.900">
+                    <Text fontSize="4xl" fontWeight="800" color="primary">
                       {course.price}
                     </Text>
                     <Text fontSize="lg" color="muted">{course.currency}</Text>
@@ -97,14 +97,14 @@ export default function CoursePageClient({ course }: { course: CourseData }) {
                 <Stack gap={3}>
                   <Button
                     asChild
-                    bg="brand.900"
+                    bg="primary"
                     color="white"
                     size="lg"
                     fontSize="md"
                     fontWeight="700"
                     w="100%"
                     py={6}
-                    _hover={{ bg: "brand.700" }}
+                    _hover={{ bg: "primaryHover" }}
                   >
                     <Link href={`/checkout/${course.slug}`}>سجّل الآن 🚀</Link>
                   </Button>
@@ -171,8 +171,8 @@ export default function CoursePageClient({ course }: { course: CourseData }) {
                   return (
                     <Flex key={index} gap={3} align="start">
                       <Box
-                        bg="brand.100"
-                        color="brand.700"
+                        bg="accentSubtle"
+                        color="accent"
                         borderRadius="full"
                         w={8}
                         h={8}
@@ -200,7 +200,7 @@ export default function CoursePageClient({ course }: { course: CourseData }) {
           </PremiumCard>
 
           {/* CTA */}
-          <PremiumCard p={{ base: 6, md: 8 }} bg="brand.900">
+          <PremiumCard p={{ base: 6, md: 8 }} bg="primary">
             <Flex
               direction={{ base: "column", md: "row" }}
               justify="space-between"
@@ -218,7 +218,7 @@ export default function CoursePageClient({ course }: { course: CourseData }) {
               <Button
                 asChild
                 bg="white"
-                color="brand.900"
+                color="primary"
                 size="lg"
                 px={8}
                 fontWeight="700"

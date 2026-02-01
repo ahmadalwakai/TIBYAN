@@ -127,7 +127,7 @@ export default function InstructorsPage() {
   return (
     <Box 
       as="main" 
-      bg="brand.900" 
+      bg="primary" 
       minH="100vh"
       position="relative"
       overflow="hidden"
@@ -429,7 +429,7 @@ export default function InstructorsPage() {
                 w="full"
                 h="full"
                 borderRadius="3xl"
-                bg="brand.900"
+                bg="primary"
               />
             </Box>
 
@@ -515,7 +515,7 @@ export default function InstructorsPage() {
                       alignItems="center"
                       gap={2}
                       background="linear-gradient(135deg, #c8a24a, #ffd700)"
-                      color="brand.900"
+                      color="primary"
                       px={10}
                       py={4}
                       borderRadius="full"

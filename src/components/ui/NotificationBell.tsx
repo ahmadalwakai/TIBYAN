@@ -151,7 +151,7 @@ export default function NotificationBell() {
             alignItems="center"
             justifyContent="center"
             border="2px solid"
-            borderColor="brand.900"
+            borderColor="primary"
             css={{
               animation: "pulse 2s infinite",
               "@keyframes pulse": {
@@ -213,7 +213,7 @@ export default function NotificationBell() {
               <Box
                 as="button"
                 fontSize="xs"
-                color="brand.400"
+                color="accent"
                 cursor="pointer"
                 onClick={markAllAsRead}
                 _hover={{ textDecoration: "underline" }}
@@ -242,7 +242,7 @@ export default function NotificationBell() {
                             {notification.title}
                           </Text>
                           {!notification.isRead && (
-                            <Box w="6px" h="6px" borderRadius="full" bg="brand.400" />
+                            <Box w="6px" h="6px" borderRadius="full" bg="accent" />
                           )}
                         </Flex>
                         <Text fontSize="xs" color="whiteAlpha.700" lineClamp={2}>
@@ -299,7 +299,7 @@ export default function NotificationBell() {
               <Text
                 as="button"
                 fontSize="sm"
-                color="brand.400"
+                color="accent"
                 fontWeight="600"
                 cursor="pointer"
                 _hover={{ textDecoration: "underline" }}

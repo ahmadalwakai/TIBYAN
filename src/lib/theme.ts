@@ -1,5 +1,5 @@
 import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react";
-import { BRAND, BRAND_DARK } from "@/theme/brand";
+import { BRAND } from "@/theme/brand";
 
 const customConfig = defineConfig({
   theme: {
@@ -9,10 +9,13 @@ const customConfig = defineConfig({
           900: { value: BRAND.navy[900] },
           800: { value: "#0E2847" },
           700: { value: BRAND.navy[700] },
-          500: { value: BRAND.navy[500] },
           600: { value: "#16406A" },
-          400: { value: "#2A5C8F" },
-          50: { value: "#F0F4F8" },
+          500: { value: BRAND.navy[500] },
+          400: { value: BRAND.navy[400] },
+          300: { value: BRAND.navy[300] },
+          200: { value: BRAND.navy[200] },
+          100: { value: BRAND.navy[100] },
+          50: { value: BRAND.navy[50] },
         },
       },
       radii: {
@@ -24,6 +27,8 @@ const customConfig = defineConfig({
         card: { value: "0 1px 3px 0 rgba(11, 31, 58, 0.08), 0 1px 2px 0 rgba(11, 31, 58, 0.04)" },
         cardHover: { value: "0 10px 15px -3px rgba(11, 31, 58, 0.08), 0 4px 6px -2px rgba(11, 31, 58, 0.04)" },
         cardLarge: { value: "0 20px 25px -5px rgba(11, 31, 58, 0.1), 0 10px 10px -5px rgba(11, 31, 58, 0.04)" },
+        cardDark: { value: "0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2)" },
+        cardDarkHover: { value: "0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.2)" },
         subtle: { value: "0 1px 2px 0 rgba(11, 31, 58, 0.05)" },
         glow: { value: "0 0 0 3px rgba(31, 75, 122, 0.1)" },
         inner: { value: "inset 0 2px 4px 0 rgba(11, 31, 58, 0.06)" },
@@ -77,19 +82,57 @@ const customConfig = defineConfig({
     },
     semanticTokens: {
       colors: {
-        background: { value: { base: BRAND.background.base, _dark: BRAND_DARK.background.base } },
-        backgroundAlt: { value: { base: BRAND.background.subtle, _dark: BRAND_DARK.background.subtle } },
-        surface: { value: { base: BRAND.background.surface, _dark: BRAND_DARK.background.surface } },
-        surfaceHover: { value: { base: BRAND.background.subtle, _dark: BRAND_DARK.background.subtle } },
-        text: { value: { base: BRAND.text.title, _dark: BRAND_DARK.text.title } },
-        textBody: { value: { base: BRAND.text.body, _dark: BRAND_DARK.text.body } },
-        muted: { value: { base: BRAND.text.muted, _dark: BRAND_DARK.text.muted } },
-        border: { value: { base: BRAND.border.base, _dark: BRAND_DARK.border.base } },
-        borderAccent: { value: { base: BRAND.navy[500], _dark: BRAND.navy[500] } },
-        success: { value: BRAND.state.success },
-        warning: { value: BRAND.state.warning },
-        error: { value: BRAND.state.danger },
-        link: { value: { base: BRAND.link, _dark: BRAND.navy[500] } },
+        // Core semantic tokens using CSS variables for proper dark mode
+        background: { value: "var(--color-bg)" },
+        backgroundAlt: { value: "var(--color-bg-alt)" },
+        surface: { value: "var(--color-surface)" },
+        surfaceHover: { value: "var(--color-surface-hover)" },
+        text: { value: "var(--color-text)" },
+        textBody: { value: "var(--color-text-body)" },
+        muted: { value: "var(--color-text-muted)" },
+        border: { value: "var(--color-border)" },
+        borderAccent: { value: "var(--color-border-accent)" },
+        
+        // Interactive element tokens
+        primary: { value: "var(--color-primary)" },
+        primaryHover: { value: "var(--color-primary-hover)" },
+        primaryText: { value: "var(--color-primary-text)" },
+        secondary: { value: "var(--color-secondary)" },
+        secondaryHover: { value: "var(--color-secondary-hover)" },
+        secondaryText: { value: "var(--color-secondary-text)" },
+        
+        // Accent colors
+        accent: { value: "var(--color-accent)" },
+        accentSubtle: { value: "var(--color-accent-subtle)" },
+        
+        // Button-specific tokens
+        outlineBorder: { value: "var(--color-outline-border)" },
+        outlineText: { value: "var(--color-outline-text)" },
+        outlineHoverBg: { value: "var(--color-outline-hover-bg)" },
+        ghostText: { value: "var(--color-ghost-text)" },
+        ghostHoverBg: { value: "var(--color-ghost-hover-bg)" },
+        
+        // Card tokens
+        cardBg: { value: "var(--color-card-bg)" },
+        cardBorder: { value: "var(--color-card-border)" },
+        cardHoverBorder: { value: "var(--color-card-hover-border)" },
+        
+        // Status colors
+        success: { value: "var(--color-success)" },
+        warning: { value: "var(--color-warning)" },
+        error: { value: "var(--color-danger)" },
+        
+        // Link colors
+        link: { value: "var(--color-link)" },
+        linkHover: { value: "var(--color-link-hover)" },
+        
+        // Spinner/Loading
+        spinner: { value: "var(--color-spinner)" },
+        
+        // Avatar
+        avatarBg: { value: "var(--color-avatar-bg)" },
+        avatarText: { value: "var(--color-avatar-text)" },
+        
         highlight: { value: { base: "#FEF3C7", _dark: "#78350F" } },
       },
     },
@@ -128,7 +171,7 @@ const customConfig = defineConfig({
       textDecoration: "none",
       transition: "color 0.2s",
       _hover: {
-        color: "brand.700",
+        color: "linkHover",
       },
     },
   },

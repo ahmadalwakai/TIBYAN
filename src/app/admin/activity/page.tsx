@@ -110,7 +110,7 @@ export default function AdminActivityPage() {
         </Stack>
         <Button
           onClick={fetchActivity}
-          bg="brand.900"
+          bg="primary"
           color="white"
           _hover={{ bg: "brand.700" }}
         >
@@ -121,19 +121,19 @@ export default function AdminActivityPage() {
       {/* Stats Cards */}
       <SimpleGrid columns={{ base: 2, md: 4 }} gap={6}>
         <PremiumCard p={6} textAlign="center">
-          <Text fontSize="3xl" fontWeight="800" color="brand.900">{stats.totalUsers}</Text>
+          <Text fontSize="3xl" fontWeight="800" color="accent">{stats.totalUsers}</Text>
           <Text color="muted" fontSize="sm">👥 المستخدمين</Text>
         </PremiumCard>
         <PremiumCard p={6} textAlign="center">
-          <Text fontSize="3xl" fontWeight="800" color="brand.900">{stats.totalEnrollments}</Text>
+          <Text fontSize="3xl" fontWeight="800" color="accent">{stats.totalEnrollments}</Text>
           <Text color="muted" fontSize="sm">📚 التسجيلات</Text>
         </PremiumCard>
         <PremiumCard p={6} textAlign="center">
-          <Text fontSize="3xl" fontWeight="800" color="brand.900">{stats.totalPayments}</Text>
+          <Text fontSize="3xl" fontWeight="800" color="accent">{stats.totalPayments}</Text>
           <Text color="muted" fontSize="sm">💰 المدفوعات</Text>
         </PremiumCard>
         <PremiumCard p={6} textAlign="center">
-          <Text fontSize="3xl" fontWeight="800" color="brand.900">{stats.totalCourses}</Text>
+          <Text fontSize="3xl" fontWeight="800" color="accent">{stats.totalCourses}</Text>
           <Text color="muted" fontSize="sm">🎓 الدورات</Text>
         </PremiumCard>
       </SimpleGrid>

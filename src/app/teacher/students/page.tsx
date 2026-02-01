@@ -75,7 +75,7 @@ export default function TeacherStudentsPage() {
   if (loading) {
     return (
       <Box textAlign="center" py={20}>
-        <Spinner size="xl" color="brand.500" />
+        <Spinner size="xl" color="spinner" />
         <Text mt={4} color="muted">جاري تحميل الطلاب...</Text>
       </Box>
     );
@@ -99,7 +99,7 @@ export default function TeacherStudentsPage() {
           title="إجمالي الطلاب"
           value={stats?.totalStudents ?? 0}
           icon="👥"
-          color="brand.500"
+          color="accent"
         />
         <StatCard
           title="طلاب نشطين"
@@ -166,7 +166,7 @@ export default function TeacherStudentsPage() {
                       <Table.Cell>
                         <HStack gap={3}>
                           <Avatar.Root size="sm">
-                            <Avatar.Fallback bg="brand.100" color="brand.700">
+                            <Avatar.Fallback bg="avatarBg" color="avatarText">
                               {student.name.charAt(0)}
                             </Avatar.Fallback>
                           </Avatar.Root>
@@ -182,7 +182,7 @@ export default function TeacherStudentsPage() {
                       </Table.Cell>
                       <Table.Cell>
                         <VStack gap={1} align="start">
-                          <Badge bg="brand.100" color="brand.700">
+                          <Badge bg="accentSubtle" color="accent">
                             {student.enrolledCourses} دورات
                           </Badge>
                           {student.courses.slice(0, 2).map((course) => (
