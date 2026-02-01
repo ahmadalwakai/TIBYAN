@@ -29,7 +29,9 @@ export default function StudentCertificatesPage() {
   useEffect(() => {
     async function fetchCertificates() {
       try {
-        const res = await fetch("/api/student/certificates");
+        const res = await fetch("/api/student/certificates", {
+          credentials: "include",
+        });
         const data = await res.json();
         if (data.ok) {
           setCertificates(data.data);

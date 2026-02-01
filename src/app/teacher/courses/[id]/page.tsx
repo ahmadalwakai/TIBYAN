@@ -75,7 +75,9 @@ export default function EditCoursePage({ params }: PageProps) {
   useEffect(() => {
     async function fetchCourse() {
       try {
-        const res = await fetch(`/api/teacher/courses/${id}`);
+        const res = await fetch(`/api/teacher/courses/${id}`, {
+          credentials: "include",
+        });
         const data = await res.json();
         if (data.ok) {
           setCourse(data.data);
@@ -107,6 +109,7 @@ export default function EditCoursePage({ params }: PageProps) {
           price: parseFloat(formData.price) || 0,
           duration: parseInt(formData.duration) || null,
         }),
+        credentials: "include",
       });
       const data = await res.json();
 
@@ -159,6 +162,7 @@ export default function EditCoursePage({ params }: PageProps) {
           duration: parseInt(newLesson.duration) || null,
           order: (course?.lessons.length || 0) + 1,
         }),
+        credentials: "include",
       });
       const data = await res.json();
 
@@ -202,6 +206,7 @@ export default function EditCoursePage({ params }: PageProps) {
     try {
       const res = await fetch(`/api/teacher/courses/${id}/publish`, {
         method: "POST",
+        credentials: "include",
       });
       const data = await res.json();
 

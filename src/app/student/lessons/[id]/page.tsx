@@ -103,7 +103,9 @@ export default function StudentLessonRoomPage() {
         setUser(authJson.data);
 
         // Fetch session details
-        const sessionRes = await fetch(`/api/teacher/lessons/${sessionId}`);
+        const sessionRes = await fetch(`/api/teacher/lessons/${sessionId}`, {
+          credentials: "include",
+        });
         const sessionJson = await sessionRes.json();
         if (!sessionJson.ok) {
           toaster.create({ title: sessionJson.error || "الحصة غير موجودة", type: "error" });
@@ -127,6 +129,7 @@ export default function StudentLessonRoomPage() {
     try {
       const res = await fetch(`/api/teacher/lessons/${sessionId}/join`, {
         method: "POST",
+        credentials: "include",
       });
       const json = await res.json();
       if (json.ok) {
@@ -147,7 +150,9 @@ export default function StudentLessonRoomPage() {
   const fetchUpdates = useCallback(async () => {
     if (!session || !hasJoined) return;
     try {
-      const res = await fetch(`/api/teacher/lessons/${sessionId}`);
+      const res = await fetch(`/api/teacher/lessons/${sessionId}`, {
+        credentials: "include",
+      });
       const json = await res.json();
       if (json.ok) {
         setSession(json.data);
@@ -178,7 +183,10 @@ export default function StudentLessonRoomPage() {
   // Leave session
   const leaveSession = async () => {
     try {
-      await fetch(`/api/teacher/lessons/${sessionId}/join`, { method: "DELETE" });
+      await fetch(`/api/teacher/lessons/${sessionId}/join`, {
+        method: "DELETE",
+        credentials: "include",
+      });
     } catch {
       // Ignore error
     }
@@ -197,6 +205,7 @@ export default function StudentLessonRoomPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action }),
+        credentials: "include",
       });
       if (res.ok) {
         setIsMuted(!isMuted);
@@ -217,6 +226,7 @@ export default function StudentLessonRoomPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action }),
+        credentials: "include",
       });
       if (res.ok) {
         setIsCameraOff(!isCameraOff);
@@ -237,6 +247,7 @@ export default function StudentLessonRoomPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action }),
+        credentials: "include",
       });
       if (res.ok) {
         setIsHandRaised(!isHandRaised);

@@ -52,7 +52,9 @@ export default function TeacherEarningsPage() {
   useEffect(() => {
     async function fetchEarnings() {
       try {
-        const res = await fetch("/api/teacher/earnings");
+        const res = await fetch("/api/teacher/earnings", {
+          credentials: "include",
+        });
         const data = await res.json();
         if (data.ok) {
           setEarnings(data.data.earnings);

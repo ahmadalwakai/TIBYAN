@@ -41,7 +41,9 @@ export default function StudentCoursesPage() {
   useEffect(() => {
     async function fetchCourses() {
       try {
-        const res = await fetch("/api/student/courses");
+        const res = await fetch("/api/student/courses", {
+          credentials: "include",
+        });
         const data = await res.json();
         if (data.ok) {
           setCourses(data.data);

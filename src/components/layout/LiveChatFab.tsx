@@ -34,6 +34,7 @@ export default function LiveChatFab() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "create", userName: "زائر" }),
+        credentials: "include",
       });
       const result = await response.json();
       if (result.ok) {
@@ -51,7 +52,9 @@ export default function LiveChatFab() {
   const fetchMessages = async () => {
     if (!sessionId) return;
     try {
-      const response = await fetch(`/api/chat?sessionId=${sessionId}`);
+      const response = await fetch(`/api/chat?sessionId=${sessionId}`, {
+        credentials: "include",
+      });
       const result = await response.json();
       if (result.ok) {
         setMessages(result.data.messages.map((m: any) => ({
@@ -80,6 +83,7 @@ export default function LiveChatFab() {
             message: userMessage,
             sender: "user",
           }),
+          credentials: "include",
         });
         const result = await response.json();
         if (result.ok) {

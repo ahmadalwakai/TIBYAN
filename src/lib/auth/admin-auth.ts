@@ -34,6 +34,7 @@ export function useAdminAuth() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
+        credentials: "include",
       });
 
       const data = await response.json();
@@ -62,6 +63,7 @@ export function useAdminAuth() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, code }),
+        credentials: "include",
       });
 
       const data: AdminAuthResponse = await response.json();
@@ -84,8 +86,9 @@ export function useAdminAuth() {
 
   const logout = () => {
     // Clear auth cookie via API
-    fetch("/api/auth/logout", { method: "POST" });
-    router.push("/auth/admin-login");
+    fetch("/api/auth/logout", { method: "POST", credentials: "include" });
+    // Full page reload to ensure cookies are cleared
+    window.location.href = "/auth/admin-login";
   };
 
   return {

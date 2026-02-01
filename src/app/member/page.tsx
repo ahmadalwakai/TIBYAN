@@ -103,7 +103,9 @@ export default function MemberPortalPage() {
 
       // Fetch user's posts
       try {
-        const postsRes = await fetch(`/api/social/posts?authorId=${currentUser.id}`);
+        const postsRes = await fetch(`/api/social/posts?authorId=${currentUser.id}`, {
+          credentials: "include",
+        });
         const postsJson = await postsRes.json();
         if (postsJson.ok) {
           setPosts(postsJson.data.posts);
@@ -127,6 +129,7 @@ export default function MemberPortalPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: user.email }),
+        credentials: "include",
       });
       
       const json = await res.json();
@@ -156,6 +159,7 @@ export default function MemberPortalPage() {
           name: settingsForm.name,
           bio: settingsForm.bio,
         }),
+        credentials: "include",
       });
       
       const json = await res.json();

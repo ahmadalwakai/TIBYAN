@@ -24,7 +24,9 @@ export default function NotificationBell() {
 
   const fetchNotifications = useCallback(async () => {
     try {
-      const res = await fetch("/api/notifications?limit=10");
+      const res = await fetch("/api/notifications?limit=10", {
+        credentials: "include",
+      });
       const json = await res.json();
       if (json.ok) {
         setNotifications(json.data.notifications);
@@ -60,6 +62,7 @@ export default function NotificationBell() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ markAll: true }),
+        credentials: "include",
       });
       setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })));
       setUnreadCount(0);
@@ -76,6 +79,7 @@ export default function NotificationBell() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ notificationIds: [notificationId] }),
+        credentials: "include",
       });
       setNotifications((prev) =>
         prev.map((n) => (n.id === notificationId ? { ...n, isRead: true } : n))

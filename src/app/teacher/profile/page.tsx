@@ -53,7 +53,9 @@ export default function TeacherProfilePage() {
   useEffect(() => {
     async function fetchProfile() {
       try {
-        const res = await fetch("/api/teacher/profile");
+        const res = await fetch("/api/teacher/profile", {
+          credentials: "include",
+        });
         const data = await res.json();
         if (data.ok) {
           setProfile(data.data);
@@ -81,6 +83,7 @@ export default function TeacherProfilePage() {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
+        credentials: "include",
       });
       const data = await res.json();
       if (data.ok) {

@@ -149,7 +149,8 @@ function MemberSignupForm() {
 
         // Redirect members to email verification page
         // They must verify email before accessing member features
-        router.push(`/auth/verify-pending?email=${encodeURIComponent(formData.email.toLowerCase())}`);
+        // Use window.location.href to force full page reload for cookie processing
+        window.location.href = `/auth/verify-pending?email=${encodeURIComponent(formData.email.toLowerCase())}`;
         return;
       } else if (res.status === 429) {
         toaster.error({ 

@@ -45,7 +45,9 @@ export default function StudentPaymentsPage() {
   useEffect(() => {
     async function fetchPayments() {
       try {
-        const res = await fetch("/api/student/payments");
+        const res = await fetch("/api/student/payments", {
+          credentials: "include",
+        });
         const data = await res.json();
         if (data.ok) {
           setPayments(data.data.payments);

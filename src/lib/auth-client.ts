@@ -34,6 +34,9 @@ export async function logout(): Promise<void> {
   // Clear auth cookies locally
   document.cookie = "auth-token=; path=/; max-age=0; samesite=lax";
   document.cookie = "user-data=; path=/; max-age=0; samesite=lax";
+  
+  // Full page reload to ensure all auth state is cleared
+  window.location.href = "/auth/login";
 }
 
 /**

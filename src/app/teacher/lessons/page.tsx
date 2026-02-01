@@ -111,7 +111,9 @@ export default function TeacherLessonsPage() {
   // Fetch sessions
   const fetchSessions = useCallback(async () => {
     try {
-      const res = await fetch("/api/teacher/lessons?limit=20");
+      const res = await fetch("/api/teacher/lessons?limit=20", {
+        credentials: "include",
+      });
       const json = await res.json();
       if (json.ok) {
         setSessions(json.data);
@@ -127,7 +129,8 @@ export default function TeacherLessonsPage() {
     try {
       const excludeIds = selectedStudents.map((s) => s.id).join(",");
       const res = await fetch(
-        `/api/teacher/lessons/available-students?search=${encodeURIComponent(search)}&exclude=${excludeIds}`
+        `/api/teacher/lessons/available-students?search=${encodeURIComponent(search)}&exclude=${excludeIds}`,
+        { credentials: "include" }
       );
       const json = await res.json();
       if (json.ok) {
@@ -198,6 +201,7 @@ export default function TeacherLessonsPage() {
           sendInAppNotifications: notifyOnCreate,
           invitedStudentIds: privacy === "PRIVATE" ? selectedStudents.map((s) => s.id) : undefined,
         }),
+        credentials: "include",
       });
       const json = await res.json();
       if (json.ok) {
@@ -227,6 +231,7 @@ export default function TeacherLessonsPage() {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "start" }),
+        credentials: "include",
       });
       const json = await res.json();
       if (json.ok) {

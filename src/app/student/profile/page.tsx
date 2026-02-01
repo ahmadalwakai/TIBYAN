@@ -42,7 +42,9 @@ export default function StudentProfilePage() {
   useEffect(() => {
     async function fetchProfile() {
       try {
-        const res = await fetch("/api/student/profile");
+        const res = await fetch("/api/student/profile", {
+          credentials: "include",
+        });
         const data = await res.json();
         if (data.ok) {
           setProfile(data.data);
@@ -68,6 +70,7 @@ export default function StudentProfilePage() {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
+        credentials: "include",
       });
       const data = await res.json();
       if (data.ok) {

@@ -108,7 +108,9 @@ export default function SocialFeed({
   const fetchPosts = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/social/posts?limit=${maxPosts}&status=PUBLISHED&visibility=PUBLIC`);
+      const res = await fetch(`/api/social/posts?limit=${maxPosts}&status=PUBLISHED&visibility=PUBLIC`, {
+        credentials: "include",
+      });
       const json = await res.json();
 
       if (json.ok) {
@@ -129,7 +131,9 @@ export default function SocialFeed({
   const fetchComments = async (postId: string) => {
     setLoadingComments((prev) => ({ ...prev, [postId]: true }));
     try {
-      const res = await fetch(`/api/social/posts/${postId}/comments`);
+      const res = await fetch(`/api/social/posts/${postId}/comments`, {
+        credentials: "include",
+      });
       const json = await res.json();
 
       if (json.ok) {
@@ -147,6 +151,7 @@ export default function SocialFeed({
     try {
       const res = await fetch(`/api/social/posts/${postId}/like`, {
         method: "POST",
+        credentials: "include",
       });
       const json = await res.json();
 
@@ -177,6 +182,7 @@ export default function SocialFeed({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ content }),
+        credentials: "include",
       });
       const json = await res.json();
 
@@ -206,6 +212,7 @@ export default function SocialFeed({
     try {
       const res = await fetch(`/api/social/posts/${postId}/comments/${commentId}/like`, {
         method: "POST",
+        credentials: "include",
       });
       const json = await res.json();
 

@@ -29,7 +29,9 @@ export default function StudentNotificationsPage() {
   useEffect(() => {
     async function fetchNotifications() {
       try {
-        const res = await fetch("/api/student/notifications");
+        const res = await fetch("/api/student/notifications", {
+          credentials: "include",
+        });
         const data = await res.json();
         if (data.ok) {
           setNotifications(data.data);
@@ -56,7 +58,10 @@ export default function StudentNotificationsPage() {
 
   const markAsRead = async (id: string) => {
     try {
-      await fetch(`/api/student/notifications/${id}/read`, { method: "PUT" });
+      await fetch(`/api/student/notifications/${id}/read`, {
+        method: "PUT",
+        credentials: "include",
+      });
       setNotifications(notifications.map(n => 
         n.id === id ? { ...n, read: true } : n
       ));
@@ -67,7 +72,10 @@ export default function StudentNotificationsPage() {
 
   const markAllAsRead = async () => {
     try {
-      await fetch("/api/student/notifications/read-all", { method: "PUT" });
+      await fetch("/api/student/notifications/read-all", {
+        method: "PUT",
+        credentials: "include",
+      });
       setNotifications(notifications.map(n => ({ ...n, read: true })));
     } catch (error) {
       console.error("Failed to mark all as read:", error);

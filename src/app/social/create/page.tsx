@@ -58,6 +58,7 @@ export default function CreatePostPage() {
       const res = await fetch("/api/upload", {
         method: "POST",
         body: formData,
+        credentials: "include",
       });
       
       const json = await res.json();
@@ -236,6 +237,7 @@ export default function CreatePostPage() {
             order: i,
           })) : undefined,
         }),
+        credentials: "include",
       });
 
       const json = await res.json();

@@ -159,7 +159,9 @@ export default function TeacherRoomPage() {
   // Fetch messages
   const fetchMessages = useCallback(async () => {
     try {
-      const res = await fetch("/api/teacher-room/messages?limit=50");
+      const res = await fetch("/api/teacher-room/messages?limit=50", {
+        credentials: "include",
+      });
       const json = await res.json();
       if (json.ok) {
         setMessages(json.data.messages);
@@ -172,7 +174,9 @@ export default function TeacherRoomPage() {
   // Fetch meetings
   const fetchMeetings = useCallback(async () => {
     try {
-      const res = await fetch("/api/teacher-room/meetings?limit=10");
+      const res = await fetch("/api/teacher-room/meetings?limit=10", {
+        credentials: "include",
+      });
       const json = await res.json();
       if (json.ok) {
         setMeetings(json.data);
@@ -219,6 +223,7 @@ export default function TeacherRoomPage() {
           type: "TEXT",
           replyToId: replyingTo?.id,
         }),
+        credentials: "include",
       });
       const json = await res.json();
       if (json.ok) {
@@ -252,6 +257,7 @@ export default function TeacherRoomPage() {
             voiceDuration: duration,
             replyToId: replyingTo?.id,
           }),
+          credentials: "include",
         });
         const json = await res.json();
         if (json.ok) {
@@ -275,6 +281,7 @@ export default function TeacherRoomPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ emoji }),
+        credentials: "include",
       });
       const json = await res.json();
       if (json.ok) {
@@ -292,7 +299,8 @@ export default function TeacherRoomPage() {
     try {
       const excludeIds = selectedInvitees.map((u) => u.id).join(",");
       const res = await fetch(
-        `/api/teacher-room/users?search=${encodeURIComponent(search)}&exclude=${excludeIds}`
+        `/api/teacher-room/users?search=${encodeURIComponent(search)}&exclude=${excludeIds}`,
+        { credentials: "include" }
       );
       const json = await res.json();
       if (json.ok) {
@@ -343,6 +351,7 @@ export default function TeacherRoomPage() {
           sendInAppNotifications: true,
           invitedUserIds: newMeetingPrivacy === "PRIVATE" ? selectedInvitees.map((u) => u.id) : undefined,
         }),
+        credentials: "include",
       });
       const json = await res.json();
       if (json.ok) {

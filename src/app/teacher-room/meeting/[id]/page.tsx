@@ -124,7 +124,9 @@ export default function MeetingRoomPage() {
   // Fetch meeting details
   const fetchMeeting = useCallback(async () => {
     try {
-      const res = await fetch(`/api/teacher-room/meetings/${meetingId}`);
+      const res = await fetch(`/api/teacher-room/meetings/${meetingId}`, {
+        credentials: "include",
+      });
       const json = await res.json();
       if (json.ok) {
         setMeeting(json.data);
@@ -169,7 +171,9 @@ export default function MeetingRoomPage() {
   // Fetch participants
   const fetchParticipants = async () => {
     try {
-      const res = await fetch(`/api/teacher-room/meetings/${meetingId}/participant`);
+      const res = await fetch(`/api/teacher-room/meetings/${meetingId}/participant`, {
+        credentials: "include",
+      });
       const json = await res.json();
       if (json.ok) {
         setParticipants(json.data);
@@ -185,7 +189,8 @@ export default function MeetingRoomPage() {
     const after = lastMessage?.createdAt || "";
     try {
       const res = await fetch(
-        `/api/teacher-room/meetings/${meetingId}/chat${after ? `?after=${after}` : ""}`
+        `/api/teacher-room/meetings/${meetingId}/chat${after ? `?after=${after}` : ""}`,
+        { credentials: "include" }
       );
       const json = await res.json();
       if (json.ok && json.data.length > 0) {
@@ -236,6 +241,7 @@ export default function MeetingRoomPage() {
     try {
       const res = await fetch(`/api/teacher-room/meetings/${meetingId}/join`, {
         method: "POST",
+        credentials: "include",
       });
       const json = await res.json();
       if (json.ok) {
@@ -257,6 +263,7 @@ export default function MeetingRoomPage() {
     try {
       await fetch(`/api/teacher-room/meetings/${meetingId}/join`, {
         method: "DELETE",
+        credentials: "include",
       });
       stopLocalMedia();
       router.push("/teacher-room");
@@ -272,6 +279,7 @@ export default function MeetingRoomPage() {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "end" }),
+        credentials: "include",
       });
       const json = await res.json();
       if (json.ok) {
@@ -299,6 +307,7 @@ export default function MeetingRoomPage() {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ isMuted: newMuted }),
+      credentials: "include",
     });
   };
 
@@ -315,6 +324,7 @@ export default function MeetingRoomPage() {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ isCameraOff: newCameraOff }),
+      credentials: "include",
     });
   };
 
@@ -326,6 +336,7 @@ export default function MeetingRoomPage() {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ isHandRaised: newHandRaised }),
+      credentials: "include",
     });
   };
 

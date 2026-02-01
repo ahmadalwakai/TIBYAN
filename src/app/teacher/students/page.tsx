@@ -51,7 +51,9 @@ export default function TeacherStudentsPage() {
   useEffect(() => {
     async function fetchStudents() {
       try {
-        const res = await fetch("/api/teacher/students");
+        const res = await fetch("/api/teacher/students", {
+          credentials: "include",
+        });
         const data = await res.json();
         if (data.ok) {
           setStudents(data.data.students);

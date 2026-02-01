@@ -20,7 +20,12 @@ const createCertificateSchema = z.object({
   certificateNumber: z.string().optional(),
   instructorName: z.string().optional(),
   courseDuration: z.string().optional(),
-  templateType: z.enum(["classic", "modern", "elegant", "professional"]).default("classic"),
+  templateType: z.enum([
+    "template1", "template2", "template3", "template4", "template5",
+    "template6", "template7", "template8", "template9", "template10",
+    "template11", "template12", "template13", "template14", "template15",
+    "template16", "template17", "template18", "template19", "template20",
+  ]).default("template1"),
 });
 
 // GET - List certificates or get certificate by ID

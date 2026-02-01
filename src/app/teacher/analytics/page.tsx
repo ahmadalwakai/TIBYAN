@@ -47,7 +47,9 @@ export default function TeacherAnalyticsPage() {
   useEffect(() => {
     async function fetchAnalytics() {
       try {
-        const res = await fetch("/api/teacher/analytics");
+        const res = await fetch("/api/teacher/analytics", {
+          credentials: "include",
+        });
         const data = await res.json();
         if (data.ok) {
           setAnalytics(data.data);

@@ -45,7 +45,9 @@ export default function TeacherReviewsPage() {
   useEffect(() => {
     async function fetchReviews() {
       try {
-        const res = await fetch("/api/teacher/reviews");
+        const res = await fetch("/api/teacher/reviews", {
+          credentials: "include",
+        });
         const data = await res.json();
         if (data.ok) {
           setReviews(data.data.reviews);

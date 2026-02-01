@@ -52,7 +52,9 @@ export default function TeacherDashboard() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch("/api/teacher/dashboard");
+        const res = await fetch("/api/teacher/dashboard", {
+          credentials: "include",
+        });
         const data = await res.json();
         if (data.ok) {
           setStats(data.data.stats);

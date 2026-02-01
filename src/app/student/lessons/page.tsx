@@ -60,7 +60,9 @@ export default function StudentLessonsPage() {
         }
 
         // Fetch lessons
-        const lessonsRes = await fetch("/api/student/lessons");
+        const lessonsRes = await fetch("/api/student/lessons", {
+          credentials: "include",
+        });
         const lessonsJson = await lessonsRes.json();
         if (lessonsJson.ok) {
           setLessons(lessonsJson.data);
@@ -80,6 +82,7 @@ export default function StudentLessonsPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ response: "accept" }),
+        credentials: "include",
       });
       const json = await res.json();
       if (json.ok) {
@@ -101,6 +104,7 @@ export default function StudentLessonsPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ response: "decline" }),
+        credentials: "include",
       });
       const json = await res.json();
       if (json.ok) {

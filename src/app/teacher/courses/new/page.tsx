@@ -44,6 +44,7 @@ export default function CreateCoursePage() {
           price: parseFloat(formData.price) || 0,
           duration: parseInt(formData.duration) || null,
         }),
+        credentials: "include",
       });
       const data = await res.json();
 

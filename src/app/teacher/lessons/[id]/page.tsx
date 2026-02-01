@@ -104,7 +104,9 @@ export default function LessonRoomPage() {
         setUser(authJson.data);
 
         // Fetch session
-        const sessionRes = await fetch(`/api/teacher/lessons/${sessionId}`);
+        const sessionRes = await fetch(`/api/teacher/lessons/${sessionId}`, {
+          credentials: "include",
+        });
         const sessionJson = await sessionRes.json();
         if (!sessionJson.ok) {
           toaster.create({ title: sessionJson.error, type: "error" });
@@ -115,7 +117,10 @@ export default function LessonRoomPage() {
 
         // Join session if not teacher
         if (!sessionJson.data.isTeacher && sessionJson.data.status === "LIVE") {
-          await fetch(`/api/teacher/lessons/${sessionId}/join`, { method: "POST" });
+          await fetch(`/api/teacher/lessons/${sessionId}/join`, {
+            method: "POST",
+            credentials: "include",
+          });
         }
       } catch (error) {
         console.error("Error initializing:", error);
@@ -131,7 +136,9 @@ export default function LessonRoomPage() {
   const fetchUpdates = useCallback(async () => {
     if (!session) return;
     try {
-      const res = await fetch(`/api/teacher/lessons/${sessionId}`);
+      const res = await fetch(`/api/teacher/lessons/${sessionId}`, {
+        credentials: "include",
+      });
       const json = await res.json();
       if (json.ok) {
         setSession(json.data);
@@ -166,6 +173,7 @@ export default function LessonRoomPage() {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "end" }),
+        credentials: "include",
       });
       const json = await res.json();
       if (json.ok) {
@@ -179,7 +187,10 @@ export default function LessonRoomPage() {
 
   const leaveSession = async () => {
     try {
-      await fetch(`/api/teacher/lessons/${sessionId}/join`, { method: "DELETE" });
+      await fetch(`/api/teacher/lessons/${sessionId}/join`, {
+        method: "DELETE",
+        credentials: "include",
+      });
       router.push("/student/lessons");
     } catch {
       router.push("/student/lessons");
@@ -193,6 +204,7 @@ export default function LessonRoomPage() {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ participantId, action }),
+        credentials: "include",
       });
       fetchUpdates();
     } catch {
@@ -208,6 +220,7 @@ export default function LessonRoomPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action }),
+        credentials: "include",
       });
       setIsMuted(!isMuted);
     } catch {
@@ -222,6 +235,7 @@ export default function LessonRoomPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action }),
+        credentials: "include",
       });
       setIsCameraOff(!isCameraOff);
     } catch {
@@ -236,6 +250,7 @@ export default function LessonRoomPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action }),
+        credentials: "include",
       });
       setIsHandRaised(!isHandRaised);
     } catch {

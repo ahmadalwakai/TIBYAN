@@ -51,7 +51,9 @@ export default function StudentDashboard() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch("/api/student/dashboard");
+        const res = await fetch("/api/student/dashboard", {
+          credentials: "include",
+        });
         const data = await res.json();
         if (data.ok) {
           setStats(data.data.stats);

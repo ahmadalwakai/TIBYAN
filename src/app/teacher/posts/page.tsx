@@ -96,7 +96,9 @@ export default function TeacherPostsPage() {
       if (statusFilter !== "all") params.set("status", statusFilter);
       params.set("limit", "50");
 
-      const res = await fetch(`/api/social/posts?${params}`);
+      const res = await fetch(`/api/social/posts?${params}`, {
+        credentials: "include",
+      });
       const json = await res.json();
 
       if (json.ok) {
@@ -225,6 +227,7 @@ export default function TeacherPostsPage() {
     try {
       const res = await fetch(`/api/social/posts?id=${post.id}`, {
         method: "DELETE",
+        credentials: "include",
       });
       const json = await res.json();
 
@@ -246,6 +249,7 @@ export default function TeacherPostsPage() {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: post.id, status: "PUBLISHED" }),
+        credentials: "include",
       });
       const json = await res.json();
 

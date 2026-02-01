@@ -29,7 +29,9 @@ export default function StudentSchedulePage() {
   useEffect(() => {
     async function fetchSchedule() {
       try {
-        const res = await fetch("/api/student/schedule");
+        const res = await fetch("/api/student/schedule", {
+          credentials: "include",
+        });
         const data = await res.json();
         if (data.ok) {
           setSchedule(data.data);
