@@ -10,9 +10,11 @@ import {
   Image,
   Input,
   NativeSelect,
+  Spinner,
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { toaster } from "./toaster";
 import { useCallback, useRef, useState } from "react";
 
 export type MediaType = "IMAGE" | "VIDEO" | "AUDIO" | "DOCUMENT" | "PDF";
@@ -71,6 +73,12 @@ const aspectRatioOptions = [
   { value: "21/9", label: "سينمائي 21:9" },
 ];
 
+// File validation constants
+const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
+const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+const ALLOWED_VIDEO_TYPES = ["video/mp4", "video/webm", "video/ogg"];
+const ALLOWED_AUDIO_TYPES = ["audio/mpeg", "audio/wav", "audio/ogg", "audio/webm"];
+
 function getMediaType(mimeType: string): MediaType {
   if (mimeType.startsWith("image/")) return "IMAGE";
   if (mimeType.startsWith("video/")) return "VIDEO";
@@ -109,25 +117,73 @@ export default function MediaUploader({
         const file = files[i];
         const type = getMediaType(file.type);
         
+        // Validate file type
+        const isValidType = (
+          ALLOWED_IMAGE_TYPES.includes(file.type) ||
+          ALLOWED_VIDEO_TYPES.includes(file.type) ||
+          ALLOWED_AUDIO_TYPES.includes(file.type)
+        );
+
+        if (!isValidType) {
+          toaster.error({
+            title: `نوع غير مدعوم: ${file.name}`,
+            description: "الأنواع المدعومة: صور (JPEG, PNG, GIF, WebP)، فيديوهات (MP4, WebM)، صوت (MP3, WAV)",
+          });
+          continue;
+        }
+
+        // Validate file size
+        if (file.size > MAX_FILE_SIZE) {
+          toaster.error({
+            title: `ملف كبير جداً: ${file.name}`,
+            description: `الحد الأقصى 50MB`,
+          });
+          continue;
+        }
+        
         // Create preview URL for images and videos
         let preview: string | undefined;
         if (type === "IMAGE" || type === "VIDEO") {
           preview = URL.createObjectURL(file);
         }
 
-        // Get dimensions for images
+        // Get dimensions for images and videos
         let width: number | undefined;
         let height: number | undefined;
+        let duration: number | undefined;
+
         if (type === "IMAGE") {
           const img = document.createElement("img");
           img.src = preview || "";
-          await new Promise((resolve) => {
+          await new Promise<void>((resolve) => {
+            const timeout = setTimeout(() => resolve(), 5000);
             img.onload = () => {
+              clearTimeout(timeout);
               width = img.naturalWidth;
               height = img.naturalHeight;
-              resolve(null);
+              resolve();
             };
-            img.onerror = () => resolve(null);
+            img.onerror = () => {
+              clearTimeout(timeout);
+              resolve();
+            };
+          });
+        } else if (type === "VIDEO") {
+          const video = document.createElement("video");
+          video.src = preview || "";
+          await new Promise<void>((resolve) => {
+            const timeout = setTimeout(() => resolve(), 5000);
+            video.onloadedmetadata = () => {
+              clearTimeout(timeout);
+              width = video.videoWidth;
+              height = video.videoHeight;
+              duration = video.duration;
+              resolve();
+            };
+            video.onerror = () => {
+              clearTimeout(timeout);
+              resolve();
+            };
           });
         }
 
@@ -140,6 +196,7 @@ export default function MediaUploader({
           fileSize: file.size,
           width,
           height,
+          duration,
           order: media.length + i,
           file,
           preview,

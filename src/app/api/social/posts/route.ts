@@ -8,6 +8,21 @@ import { z } from "zod";
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+// Allowed MIME types for validation
+const ALLOWED_IMAGE_MIMES = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+const ALLOWED_VIDEO_MIMES = ["video/mp4", "video/webm", "video/ogg"];
+const ALLOWED_AUDIO_MIMES = ["audio/mpeg", "audio/wav", "audio/ogg", "audio/webm"];
+const ALLOWED_DOCUMENT_MIMES = ["application/pdf"];
+
+const ALLOWED_ALL_MIMES = [
+  ...ALLOWED_IMAGE_MIMES,
+  ...ALLOWED_VIDEO_MIMES,
+  ...ALLOWED_AUDIO_MIMES,
+  ...ALLOWED_DOCUMENT_MIMES,
+];
+
+const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
+
 const CreatePostSchema = z.object({
   title: z.string().optional(),
   content: z.string().min(1, "المحتوى مطلوب"),
@@ -28,8 +43,11 @@ const CreatePostSchema = z.object({
     type: z.enum(["IMAGE", "VIDEO", "AUDIO", "DOCUMENT", "PDF"]),
     url: z.string().url(),
     filename: z.string().optional(),
-    mimeType: z.string().optional(),
-    fileSize: z.number().optional(),
+    mimeType: z.string().refine(
+      (mimeType) => ALLOWED_ALL_MIMES.includes(mimeType),
+      "نوع MIME غير مدعوم"
+    ).optional(),
+    fileSize: z.number().max(MAX_FILE_SIZE, `حجم الملف يجب أن لا يتجاوز ${MAX_FILE_SIZE / 1024 / 1024}MB`).optional(),
     width: z.number().optional(),
     height: z.number().optional(),
     duration: z.number().optional(),
@@ -376,8 +394,8 @@ export async function DELETE(request: NextRequest) {
   }
 
   try {
-    const { searchParams } = new URL(request.url);
-    const id = searchParams.get("id");
+    const body = await request.json();
+    const { id } = body;
 
     if (!id) {
       return NextResponse.json(

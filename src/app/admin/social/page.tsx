@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   Checkbox,
+  Dialog,
   Flex,
   Grid,
   HStack,
@@ -19,10 +20,12 @@ import {
 } from "@chakra-ui/react";
 import { toaster } from "@/components/ui/toaster";
 import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import PremiumCard from "@/components/ui/PremiumCard";
 import RichTextEditor, { TextStyling } from "@/components/ui/RichTextEditor";
 import MediaUploader, { MediaItem } from "@/components/ui/MediaUploader";
 import { PostEditor } from "@/components/PostEditor";
+import { uploadMediaItems } from "@/lib/media-utils";
 
 interface PostMedia {
   id: string;
@@ -30,6 +33,7 @@ interface PostMedia {
   url: string;
   filename?: string;
   caption?: string;
+  altText?: string;
   styling?: {
     borderRadius?: string;
     objectFit?: string;
@@ -62,12 +66,16 @@ interface Post {
 type ModalMode = "create" | "edit" | "view" | null;
 
 export default function AdminSocialPage() {
+  const router = useRouter();
+  const [authenticated, setAuthenticated] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [modalMode, setModalMode] = useState<ModalMode>(null);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const [useMediaEditor, setUseMediaEditor] = useState(false);
+  const [deleteConfirm, setDeleteConfirm] = useState<Post | null>(null);
 
   // Filters
   const [statusFilter, setStatusFilter] = useState<string>("all");
@@ -120,9 +128,32 @@ export default function AdminSocialPage() {
     }
   }, [statusFilter, visibilityFilter, searchQuery]);
 
+  // Auth guard
   useEffect(() => {
-    fetchPosts();
-  }, [fetchPosts]);
+    const checkAuth = async () => {
+      try {
+        const res = await fetch("/api/auth/me", { credentials: "include" });
+        const data = await res.json();
+        if (data.ok && data.data?.role === "ADMIN") {
+          setAuthenticated(true);
+        } else {
+          router.push("/auth/admin-login");
+        }
+      } catch (err) {
+        console.error("Auth check failed:", err);
+        router.push("/auth/admin-login");
+      } finally {
+        setAuthLoading(false);
+      }
+    };
+    checkAuth();
+  }, [router]);
+
+  useEffect(() => {
+    if (authenticated) {
+      fetchPosts();
+    }
+  }, [authenticated, fetchPosts]);
 
   // Reset form
   const resetForm = () => {
@@ -188,15 +219,33 @@ export default function AdminSocialPage() {
 
     setSubmitting(true);
     try {
-      // For now, use placeholder URLs for media
-      // In production, upload files first and get URLs
-      const mediaToSend = media.map((m, i) => ({
+      // Upload media items that have files but no URLs
+      let uploadedMedia = media;
+      const hasUnuploadedMedia = media.some(m => m.file && !m.url);
+      
+      if (hasUnuploadedMedia) {
+        try {
+          uploadedMedia = await uploadMediaItems(media);
+        } catch (err) {
+          // Error already toasted by uploadMediaItems
+          return;
+        }
+      }
+
+      // Build media payload with proper URLs and all fields
+      const mediaToSend = uploadedMedia.map((m, i) => ({
         type: m.type,
-        url: m.url || m.preview || `https://placeholder.com/${m.id}`,
+        url: m.url,
         filename: m.filename,
+        mimeType: m.mimeType,
+        fileSize: m.fileSize,
+        width: m.width,
+        height: m.height,
+        duration: m.duration,
         caption: m.caption,
-        styling: m.styling,
+        altText: m.altText,
         order: i,
+        styling: m.styling,
       }));
 
       const method = modalMode === "create" ? "POST" : "PUT";
@@ -231,19 +280,25 @@ export default function AdminSocialPage() {
 
   // Delete post
   const handleDelete = async (post: Post) => {
-    if (!confirm(`هل أنت متأكد من حذف المنشور "${post.title || "بدون عنوان"}"؟`)) {
-      return;
-    }
+    setDeleteConfirm(post);
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteConfirm) return;
+    const post = deleteConfirm;
 
     try {
-      const res = await fetch(`/api/social/posts?id=${post.id}`, {
+      const res = await fetch("/api/social/posts", {
         method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: post.id }),
         credentials: "include",
       });
       const json = await res.json();
 
       if (json.ok) {
         toaster.success({ title: "تم حذف المنشور" });
+        setDeleteConfirm(null);
         fetchPosts();
       } else {
         toaster.error({ title: json.error || "فشل في الحذف" });
@@ -299,27 +354,37 @@ export default function AdminSocialPage() {
 
   // Handle media editor export
   const handleMediaEditorExport = async (blob: Blob, type: "image" | "video") => {
-    // Convert blob to base64 or upload it
-    const reader = new FileReader();
-    reader.onload = async () => {
-      const dataUrl = reader.result as string;
-      
-      // Update media with the exported file
+    try {
+      const formData = new FormData();
       const filename = `export_${Date.now()}.${type === "video" ? "mp4" : "png"}`;
-      
+      formData.append("file", blob, filename);
+
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+        credentials: "include",
+      });
+
+      const json = await res.json();
+      if (!json.ok || !json.data?.url) {
+        throw new Error(json.error || "Upload failed");
+      }
+
       setMedia([{
         id: `exported_${Date.now()}`,
         type: type === "video" ? "VIDEO" : "IMAGE",
-        url: dataUrl,
-        filename,
+        url: json.data.url,
+        filename: json.data.filename,
         caption: "",
         order: 0,
       }]);
 
       setUseMediaEditor(false);
-      toaster.success({ title: `تم تصدير ${type === "video" ? "الفيديو" : "الصورة"} بنجاح` });
-    };
-    reader.readAsDataURL(blob);
+      toaster.success({ title: `تم تصدير وحفظ ${type === "video" ? "الفيديو" : "الصورة"} بنجاح` });
+    } catch (err) {
+      console.error("Export error:", err);
+      toaster.error({ title: `فشل تصدير ${type === "video" ? "الفيديو" : "الصورة"}` });
+    }
   };
 
   const getStatusBadge = (status: string) => {
@@ -347,6 +412,22 @@ export default function AdminSocialPage() {
         return null;
     }
   };
+
+  if (authLoading) {
+    return (
+      <Flex justify="center" align="center" h="100vh">
+        <Spinner size="lg" />
+      </Flex>
+    );
+  }
+
+  if (!authenticated) {
+    return (
+      <Box textAlign="center" py={20}>
+        <Text color="red.500" fontWeight="600">غير مصرح</Text>
+      </Box>
+    );
+  }
 
   return (
     <Box>
@@ -529,6 +610,25 @@ export default function AdminSocialPage() {
         </Stack>
       )}
 
+      {/* Delete Confirmation Dialog */}
+      <Dialog.Root
+        open={deleteConfirm !== null}
+        onOpenChange={() => setDeleteConfirm(null)}
+      >
+        <Dialog.Content>
+          <Dialog.Header>تأكيد الحذف</Dialog.Header>
+          <Dialog.Body>
+            هل أنت متأكد من حذف المنشور "{deleteConfirm?.title || "بدون عنوان"}"؟ لا يمكن التراجع عن هذا الإجراء.
+          </Dialog.Body>
+          <Dialog.Footer>
+            <Button onClick={() => setDeleteConfirm(null)}>إلغاء</Button>
+            <Button colorPalette="red" onClick={confirmDelete}>
+              حذف
+            </Button>
+          </Dialog.Footer>
+        </Dialog.Content>
+      </Dialog.Root>
+
       {/* Create/Edit Modal */}
       {modalMode && (
         <Box
@@ -608,6 +708,115 @@ export default function AdminSocialPage() {
                       onChange={setMedia}
                       maxItems={10}
                     />
+                    
+                    {/* Media Configuration Panel */}
+                    {media.length > 0 && (
+                      <Stack gap={4} mt={6} p={4} borderWidth="1px" borderRadius="md" borderColor="border">
+                        <Text fontWeight="700" fontSize="sm">إعدادات الوسائط</Text>
+                        
+                        {media.map((item, index) => (
+                          <Box key={item.id} p={3} bg="surface" borderRadius="md" borderWidth="1px" borderColor="border">
+                            <HStack justify="space-between" mb={3}>
+                              <Text fontWeight="600" fontSize="sm">
+                                {item.filename || `${item.type}_${index + 1}`}
+                              </Text>
+                              <Badge>{item.type}</Badge>
+                            </HStack>
+                            
+                            <Stack gap={3}>
+                              {/* Alt Text */}
+                              <Box>
+                                <Text fontWeight="500" fontSize="xs" mb={1}>النص البديل (للوصولية)</Text>
+                                <Input
+                                  placeholder="وصف قصير للصورة..."
+                                  value={item.altText || ""}
+                                  onChange={(e) => {
+                                    const updated = [...media];
+                                    updated[index] = { ...updated[index], altText: e.target.value };
+                                    setMedia(updated);
+                                  }}
+                                  size="sm"
+                                />
+                              </Box>
+                              
+                              {/* Caption */}
+                              <Box>
+                                <Text fontWeight="500" fontSize="xs" mb={1}>التعليق</Text>
+                                <Input
+                                  placeholder="تعليق توضيحي..."
+                                  value={item.caption || ""}
+                                  onChange={(e) => {
+                                    const updated = [...media];
+                                    updated[index] = { ...updated[index], caption: e.target.value };
+                                    setMedia(updated);
+                                  }}
+                                  size="sm"
+                                />
+                              </Box>
+                              
+                              {/* Styling Controls */}
+                              <Stack gap={2}>
+                                <Text fontWeight="500" fontSize="xs">التنسيق</Text>
+                                <Grid templateColumns="repeat(2, 1fr)" gap={2}>
+                                  {/* Border Radius */}
+                                  <Box>
+                                    <Text fontSize="xs" color="muted" mb={1}>نصف قطر الزاوية</Text>
+                                    <NativeSelect.Root size="sm">
+                                      <NativeSelect.Field
+                                        value={item.styling?.borderRadius || "8px"}
+                                        onChange={(e) => {
+                                          const updated = [...media];
+                                          updated[index] = {
+                                            ...updated[index],
+                                            styling: {
+                                              ...updated[index].styling,
+                                              borderRadius: e.target.value,
+                                            },
+                                          };
+                                          setMedia(updated);
+                                        }}
+                                      >
+                                        <option value="0px">حاد</option>
+                                        <option value="4px">قليلاً</option>
+                                        <option value="8px">متوسط</option>
+                                        <option value="16px">مدور</option>
+                                        <option value="50%">دائري</option>
+                                      </NativeSelect.Field>
+                                    </NativeSelect.Root>
+                                  </Box>
+                                  
+                                  {/* Object Fit */}
+                                  <Box>
+                                    <Text fontSize="xs" color="muted" mb={1}>ملاءمة الصورة</Text>
+                                    <NativeSelect.Root size="sm">
+                                      <NativeSelect.Field
+                                        value={item.styling?.objectFit || "cover"}
+                                        onChange={(e) => {
+                                          const updated = [...media];
+                                          updated[index] = {
+                                            ...updated[index],
+                                            styling: {
+                                              ...updated[index].styling,
+                                              objectFit: e.target.value,
+                                            },
+                                          };
+                                          setMedia(updated);
+                                        }}
+                                      >
+                                        <option value="cover">غطاء</option>
+                                        <option value="contain">احتواء</option>
+                                        <option value="fill">ملء</option>
+                                        <option value="stretch">مد</option>
+                                      </NativeSelect.Field>
+                                    </NativeSelect.Root>
+                                  </Box>
+                                </Grid>
+                              </Stack>
+                            </Stack>
+                          </Box>
+                        ))}
+                      </Stack>
+                    )}
                   </Box>
                 </Stack>
               </Tabs.Content>
