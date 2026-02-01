@@ -8,18 +8,21 @@ interface FieldProps {
   required?: boolean;
   helperText?: string;
   children: ReactNode;
+  inputId?: string;
 }
 
-export function Field({ label, required, helperText, children }: FieldProps) {
+export function Field({ label, required, helperText, children, inputId }: FieldProps) {
   return (
     <Stack gap={2}>
-      <Text fontWeight="600" color="gray.700">
-        {label}
-        {required && <Text as="span" color="red.500" ml={1}>*</Text>}
-      </Text>
+      <label htmlFor={inputId}>
+        <Text fontWeight="600" color="gray.700">
+          {label}
+          {required && <Text as="span" color="red.500" ml={1}>*</Text>}
+        </Text>
+      </label>
       {children}
       {helperText && (
-        <Text fontSize="sm" color="gray.500">
+        <Text fontSize="sm" color="gray.500" id={`${inputId}-helper`}>
           {helperText}
         </Text>
       )}

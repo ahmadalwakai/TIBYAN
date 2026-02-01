@@ -18,10 +18,20 @@ export interface RegisterData extends LoginCredentials {
 }
 
 /**
- * Logout the current user by clearing all auth cookies
+ * Logout the current user by clearing all auth cookies and notifying server
  */
 export async function logout(): Promise<void> {
-  // Clear auth cookies by setting them to expire immediately
+  try {
+    // Notify server to clear session
+    await fetch("/api/auth/logout", {
+      method: "POST",
+      credentials: "include",
+    });
+  } catch {
+    // Ignore errors, still clear locally
+  }
+
+  // Clear auth cookies locally
   document.cookie = "auth-token=; path=/; max-age=0; samesite=lax";
   document.cookie = "user-data=; path=/; max-age=0; samesite=lax";
 }

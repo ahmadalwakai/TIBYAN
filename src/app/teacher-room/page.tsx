@@ -130,7 +130,9 @@ export default function TeacherRoomPage() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await fetch("/api/auth/me");
+        const res = await fetch("/api/auth/me", {
+          credentials: "include",
+        });
         const json = await res.json();
         if (json.ok && json.data) {
           if (json.data.role !== "INSTRUCTOR" && json.data.role !== "ADMIN") {

@@ -12,11 +12,13 @@ import {
   SimpleGrid,
   IconButton,
   Badge,
+  Image,
+  Spinner,
 } from "@chakra-ui/react";
 import { Field } from "@/components/ui/field";
 import { toaster } from "@/components/ui/toaster";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { getCurrentUserClient } from "@/lib/auth-client";
 import Link from "next/link";
 
@@ -24,10 +26,15 @@ interface MediaItem {
   type: "IMAGE" | "VIDEO";
   url: string;
   caption?: string;
+  file?: File;
+  preview?: string;
+  uploading?: boolean;
+  uploaded?: boolean;
 }
 
 export default function CreatePostPage() {
   const router = useRouter();
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [user, setUser] = useState<{ id: string; name: string; role: string } | null>(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -42,6 +49,91 @@ export default function CreatePostPage() {
   const [mediaUrl, setMediaUrl] = useState("");
   const [mediaType, setMediaType] = useState<"IMAGE" | "VIDEO">("IMAGE");
 
+  // Upload a single file
+  const uploadFile = useCallback(async (file: File): Promise<string | null> => {
+    const formData = new FormData();
+    formData.append("file", file);
+    
+    try {
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+      
+      const json = await res.json();
+      if (json.ok && json.data?.url) {
+        return json.data.url;
+      }
+      console.error("Upload failed:", json.error);
+      return null;
+    } catch (err) {
+      console.error("Upload error:", err);
+      return null;
+    }
+  }, []);
+
+  // Handle file selection
+  const handleFileSelect = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    const newItems: MediaItem[] = [];
+    
+    for (const file of Array.from(files)) {
+      const isImage = file.type.startsWith("image/");
+      const isVideo = file.type.startsWith("video/");
+      
+      if (!isImage && !isVideo) {
+        toaster.error({ title: `نوع الملف غير مدعوم: ${file.type}` });
+        continue;
+      }
+      
+      const preview = URL.createObjectURL(file);
+      
+      newItems.push({
+        type: isImage ? "IMAGE" : "VIDEO",
+        url: "",
+        file,
+        preview,
+        uploading: true,
+        uploaded: false,
+      });
+    }
+    
+    setMedia(prev => [...prev, ...newItems]);
+    
+    // Upload files immediately
+    for (let i = 0; i < newItems.length; i++) {
+      const item = newItems[i];
+      if (item.file) {
+        const url = await uploadFile(item.file);
+        
+        setMedia(prev => {
+          const updated = [...prev];
+          const idx = prev.findIndex(m => m.preview === item.preview);
+          if (idx !== -1) {
+            updated[idx] = {
+              ...updated[idx],
+              url: url || "",
+              uploading: false,
+              uploaded: !!url,
+            };
+          }
+          return updated;
+        });
+        
+        if (!url) {
+          toaster.error({ title: `فشل رفع الملف: ${item.file.name}` });
+        }
+      }
+    }
+    
+    // Reset input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  }, [uploadFile]);
+
   useEffect(() => {
     const checkAuth = async () => {
       let currentUser = getCurrentUserClient();
@@ -49,7 +141,9 @@ export default function CreatePostPage() {
       // Try fetching from API if not in cookie
       if (!currentUser) {
         try {
-          const res = await fetch("/api/auth/me");
+          const res = await fetch("/api/auth/me", {
+            credentials: "include",
+          });
           const json = await res.json();
           if (json.ok && json.data) {
             currentUser = {
@@ -86,11 +180,23 @@ export default function CreatePostPage() {
   const addMedia = () => {
     if (!mediaUrl.trim()) return;
     
-    setMedia([...media, { type: mediaType, url: mediaUrl.trim() }]);
+    // Validate URL format
+    try {
+      new URL(mediaUrl.trim());
+    } catch {
+      toaster.error({ title: "رابط غير صالح" });
+      return;
+    }
+    
+    setMedia([...media, { type: mediaType, url: mediaUrl.trim(), uploaded: true }]);
     setMediaUrl("");
   };
 
   const removeMedia = (index: number) => {
+    const item = media[index];
+    if (item.preview) {
+      URL.revokeObjectURL(item.preview);
+    }
     setMedia(media.filter((_, i) => i !== index));
   };
 
@@ -101,6 +207,15 @@ export default function CreatePostPage() {
       toaster.error({ title: "محتوى المنشور مطلوب" });
       return;
     }
+
+    // Check if any uploads are still in progress
+    if (media.some(m => m.uploading)) {
+      toaster.error({ title: "انتظر حتى يتم رفع جميع الملفات" });
+      return;
+    }
+
+    // Filter out failed uploads
+    const validMedia = media.filter(m => m.url && m.uploaded);
 
     setSubmitting(true);
     try {
@@ -114,7 +229,7 @@ export default function CreatePostPage() {
           visibility: formData.visibility,
           allowComments: true,
           allowLikes: true,
-          media: media.length > 0 ? media.map((m, i) => ({
+          media: validMedia.length > 0 ? validMedia.map((m, i) => ({
             type: m.type,
             url: m.url,
             caption: m.caption,
@@ -169,6 +284,39 @@ export default function CreatePostPage() {
             شارك أفكارك مع مجتمع تبيان
           </Text>
         </Stack>
+
+        {/* Advanced Editor Link */}
+        <Box
+          mb={6}
+          p={4}
+          bg="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+          borderRadius="xl"
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          flexWrap="wrap"
+          gap={3}
+        >
+          <Box>
+            <Text color="white" fontWeight="700" fontSize="lg">
+              ✨ جرب المحرر المتقدم
+            </Text>
+            <Text color="whiteAlpha.800" fontSize="sm">
+              حرر الصور والفيديوهات مع فلاتر ونصوص وملصقات
+            </Text>
+          </Box>
+          <Button
+            asChild
+            bg="white"
+            color="purple.700"
+            fontWeight="700"
+            borderRadius="full"
+            _hover={{ bg: "whiteAlpha.900", transform: "translateY(-2px)" }}
+            transition="all 0.2s"
+          >
+            <Link href="/social/create/edit">فتح المحرر</Link>
+          </Button>
+        </Box>
 
         {/* Form */}
         <Box
@@ -276,6 +424,37 @@ export default function CreatePostPage() {
             {/* Media */}
             <Field label="إضافة وسائط (اختياري)">
               <Stack gap={3}>
+                {/* File Upload Area */}
+                <Box
+                  p={6}
+                  borderRadius="xl"
+                  border="2px dashed"
+                  borderColor="gray.200"
+                  bg="gray.50"
+                  textAlign="center"
+                  cursor="pointer"
+                  transition="all 0.2s"
+                  _hover={{ borderColor: "brand.300", bg: "brand.50" }}
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <Text fontSize="3xl" mb={2}>📷</Text>
+                  <Text fontWeight="600" mb={1} color="gray.700">
+                    اضغط لرفع صور أو فيديوهات
+                  </Text>
+                  <Text fontSize="sm" color="gray.500">
+                    أو أضف رابط مباشر أدناه
+                  </Text>
+                  <Input
+                    ref={fileInputRef}
+                    type="file"
+                    multiple
+                    accept="image/*,video/*"
+                    onChange={handleFileSelect}
+                    display="none"
+                  />
+                </Box>
+
+                {/* URL Input */}
                 <SimpleGrid columns={{ base: 1, sm: 3 }} gap={3}>
                   <Box>
                     <select
@@ -311,37 +490,77 @@ export default function CreatePostPage() {
 
                 {/* Media preview */}
                 {media.length > 0 && (
-                  <Stack gap={2}>
+                  <SimpleGrid columns={{ base: 2, md: 3 }} gap={3}>
                     {media.map((item, index) => (
                       <Box
                         key={index}
-                        p={3}
-                        bg="gray.50"
+                        position="relative"
                         borderRadius="lg"
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="space-between"
+                        overflow="hidden"
+                        border="1px solid"
+                        borderColor={item.uploading ? "brand.300" : item.uploaded ? "green.300" : "red.300"}
+                        bg="gray.50"
                       >
-                        <Stack direction="row" align="center" gap={2}>
-                          <Badge colorPalette={item.type === "IMAGE" ? "green" : "blue"}>
-                            {item.type === "IMAGE" ? "صورة" : "فيديو"}
-                          </Badge>
-                          <Text fontSize="sm" color="gray.600" maxW="300px" truncate>
-                            {item.url}
-                          </Text>
-                        </Stack>
+                        {item.type === "IMAGE" ? (
+                          <Image
+                            src={item.preview || item.url}
+                            alt={`Media ${index + 1}`}
+                            w="100%"
+                            h="120px"
+                            objectFit="cover"
+                          />
+                        ) : (
+                          <video
+                            src={item.preview || item.url}
+                            style={{
+                              width: "100%",
+                              height: "120px",
+                              objectFit: "cover",
+                            }}
+                          />
+                        )}
+                        
+                        {/* Overlay for status */}
+                        {item.uploading && (
+                          <Box
+                            position="absolute"
+                            inset={0}
+                            bg="blackAlpha.600"
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="center"
+                          >
+                            <Spinner color="white" size="lg" />
+                          </Box>
+                        )}
+                        
+                        {/* Status badge */}
+                        <Badge
+                          position="absolute"
+                          top={2}
+                          right={2}
+                          colorPalette={item.uploading ? "yellow" : item.uploaded ? "green" : "red"}
+                          fontSize="xs"
+                        >
+                          {item.uploading ? "جاري الرفع..." : item.uploaded ? "✓ تم" : "✗ فشل"}
+                        </Badge>
+                        
+                        {/* Remove button */}
                         <IconButton
                           aria-label="حذف"
-                          size="sm"
-                          variant="ghost"
+                          size="xs"
+                          position="absolute"
+                          top={2}
+                          left={2}
                           colorPalette="red"
+                          variant="solid"
                           onClick={() => removeMedia(index)}
                         >
                           ✕
                         </IconButton>
                       </Box>
                     ))}
-                  </Stack>
+                  </SimpleGrid>
                 )}
               </Stack>
             </Field>

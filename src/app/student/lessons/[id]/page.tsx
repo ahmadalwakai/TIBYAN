@@ -92,7 +92,9 @@ export default function StudentLessonRoomPage() {
     const init = async () => {
       try {
         // Check auth
-        const authRes = await fetch("/api/auth/me");
+        const authRes = await fetch("/api/auth/me", {
+          credentials: "include",
+        });
         const authJson = await authRes.json();
         if (!authJson.ok || !authJson.data) {
           router.push(`/auth/login?redirect=/student/lessons/${sessionId}`);

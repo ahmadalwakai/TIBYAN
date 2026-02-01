@@ -8,6 +8,18 @@ import { withRateLimit, RATE_LIMITS } from "@/lib/rate-limit";
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+/**
+ * Escape HTML special characters to prevent XSS in email templates
+ */
+function escapeHtml(unsafe: string): string {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 const MemberRegisterSchema = z.object({
   name: z.string().min(2, "الاسم يجب أن يكون حرفين على الأقل"),
   email: z.string().email("البريد الإلكتروني غير صالح"),
@@ -47,8 +59,6 @@ export async function POST(request: Request) {
       const hashedPassword = await hash(password, 12);
     
       // Create member user
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore - MEMBER role is defined in schema
       const user = await prisma.user.create({
         data: {
           name,
@@ -87,14 +97,14 @@ export async function POST(request: Request) {
                     <h1 style="color: #C8A24A; margin: 0; font-size: 28px;">عضو جديد في تبيان</h1>
                   </div>
                   <div style="background: #ffffff; padding: 30px; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
-                    <p style="color: #374151; font-size: 16px; line-height: 1.8;">مرحباً ${admin.name}،</p>
+                    <p style="color: #374151; font-size: 16px; line-height: 1.8;">مرحباً ${escapeHtml(admin.name)}،</p>
                     <p style="color: #374151; font-size: 16px; line-height: 1.8;">انضم عضو جديد إلى منصة تبيان:</p>
                     
                     <div style="background: #f9fafb; border-radius: 12px; padding: 20px; margin: 20px 0; border-right: 4px solid #C8A24A;">
-                      <p style="margin: 8px 0; color: #374151;"><strong>الاسم:</strong> ${name}</p>
-                      <p style="margin: 8px 0; color: #374151;"><strong>البريد:</strong> ${email}</p>
+                      <p style="margin: 8px 0; color: #374151;"><strong>الاسم:</strong> ${escapeHtml(name)}</p>
+                      <p style="margin: 8px 0; color: #374151;"><strong>البريد:</strong> ${escapeHtml(email)}</p>
                       <p style="margin: 8px 0; color: #374151;"><strong>تاريخ التسجيل:</strong> ${signupDate}</p>
-                      ${bio ? `<p style="margin: 8px 0; color: #374151;"><strong>النبذة:</strong> ${bio}</p>` : ""}
+                      ${bio ? `<p style="margin: 8px 0; color: #374151;"><strong>النبذة:</strong> ${escapeHtml(bio)}</p>` : ""}
                     </div>
                     
                     <p style="color: #6b7280; font-size: 14px; margin-top: 20px;">

@@ -126,46 +126,55 @@ export async function GET(request: Request): Promise<NextResponse<AuthMeResponse
       try {
         const dbUser = await prisma.user.findUnique({
           where: { id: payload.userId },
-          select: { id: true, email: true, name: true, role: true },
+          select: { id: true, email: true, name: true, role: true, status: true },
         });
 
-        if (dbUser) {
-          userData = {
-            id: dbUser.id,
-            email: dbUser.email,
-            name: dbUser.name,
-            role: dbUser.role,
-          };
-
-          // Set the missing user-data cookie for future requests
-          const response = NextResponse.json({
-            ok: true,
-            data: {
-              id: userData.id,
-              email: userData.email,
-              name: userData.name,
-              role: userData.role,
-              authenticated: true,
-            },
-          });
-
-          response.cookies.set("user-data", encodeUserData(userData), {
-            httpOnly: false,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "lax",
-            maxAge: 60 * 60 * 24 * 7, // 7 days
-            path: "/",
-          });
-
-          if (isDev) console.log("[Auth/Me] Set missing user-data cookie from DB");
-          return response;
-        } else {
+        if (!dbUser) {
           if (isDev) console.log("[Auth/Me] User not found in DB");
           return NextResponse.json(
             { ok: false, error: "User not found" },
             { status: 401 }
           );
         }
+
+        // Check if user is still active
+        if (dbUser.status !== "ACTIVE") {
+          if (isDev) console.log("[Auth/Me] User status is not ACTIVE:", dbUser.status);
+          return NextResponse.json(
+            { ok: false, error: "Account is not active" },
+            { status: 401 }
+          );
+        }
+
+        userData = {
+          id: dbUser.id,
+          email: dbUser.email,
+          name: dbUser.name,
+          role: dbUser.role,
+        };
+
+        // Set the missing user-data cookie for future requests
+        const response = NextResponse.json({
+          ok: true,
+          data: {
+            id: userData.id,
+            email: userData.email,
+            name: userData.name,
+            role: userData.role,
+            authenticated: true,
+          },
+        });
+
+        response.cookies.set("user-data", encodeUserData(userData), {
+          httpOnly: false,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "lax",
+          maxAge: 60 * 60 * 24 * 7, // 7 days
+          path: "/",
+        });
+
+        if (isDev) console.log("[Auth/Me] Set missing user-data cookie from DB");
+        return response;
       } catch (dbError) {
         if (isDev) console.log("[Auth/Me] DB error:", dbError);
         return NextResponse.json(

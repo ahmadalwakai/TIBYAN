@@ -65,7 +65,9 @@ export default function MemberPortalPage() {
       
       if (!currentUser) {
         try {
-          const res = await fetch("/api/auth/me");
+          const res = await fetch("/api/auth/me", {
+            credentials: "include",
+          });
           const json = await res.json();
           if (json.ok && json.data) {
             currentUser = json.data;
@@ -82,7 +84,9 @@ export default function MemberPortalPage() {
 
       // Fetch full profile
       try {
-        const profileRes = await fetch("/api/auth/me");
+        const profileRes = await fetch("/api/auth/me", {
+          credentials: "include",
+        });
         const profileJson = await profileRes.json();
         if (profileJson.ok) {
           setUser(profileJson.data);

@@ -4,7 +4,7 @@ export const CreateUserSchema = z.object({
   email: z.string().email(),
   name: z.string().min(2),
   password: z.string().min(6),
-  role: z.enum(["STUDENT", "INSTRUCTOR", "ADMIN"]).default("STUDENT"),
+  role: z.enum(["STUDENT", "INSTRUCTOR", "ADMIN", "MEMBER"]).default("STUDENT"),
   status: z.enum(["ACTIVE", "INACTIVE", "SUSPENDED", "PENDING"]).default("ACTIVE"),
   bio: z.string().optional(),
 });
@@ -13,7 +13,7 @@ export const UpdateUserSchema = z.object({
   email: z.string().email().optional(),
   name: z.string().min(2).optional(),
   password: z.string().min(6).optional(),
-  role: z.enum(["STUDENT", "INSTRUCTOR", "ADMIN"]).optional(),
+  role: z.enum(["STUDENT", "INSTRUCTOR", "ADMIN", "MEMBER"]).optional(),
   status: z.enum(["ACTIVE", "INACTIVE", "SUSPENDED", "PENDING"]).optional(),
   bio: z.string().optional(),
 });
@@ -108,7 +108,7 @@ export const RegisterSchema = z.object({
 
 export const LoginSchema = z.object({
   email: z.string().email("البريد الإلكتروني غير صحيح"),
-  password: z.string().min(1, "كلمة المرور مطلوبة"),
+  password: z.string().min(8, "كلمة المرور يجب أن تكون 8 أحرف على الأقل"),
 });
 
 export const ForgotPasswordSchema = z.object({

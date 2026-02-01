@@ -107,9 +107,9 @@ export default function AdminLoginPage() {
 
       setSuccessMessage("تم تسجيل الدخول بنجاح");
 
-      // Redirect to admin dashboard
+      // Hard redirect to ensure cookies are properly loaded
       setTimeout(() => {
-        router.push("/admin");
+        window.location.href = "/admin";
       }, 500);
     } catch (err) {
       setError("خطأ في الاتصال بالخادم");

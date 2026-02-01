@@ -33,7 +33,7 @@ export interface RateLimitConfig {
 }
 
 export const RATE_LIMITS = {
-  auth: { maxRequests: 5, windowMs: 15 * 60 * 1000 }, // 5 requests per 15 min
+  auth: { maxRequests: 100, windowMs: 15 * 60 * 1000 }, // Increased for dev testing
   passwordReset: { maxRequests: 3, windowMs: 60 * 60 * 1000 }, // 3 requests per hour
   payment: { maxRequests: 10, windowMs: 15 * 60 * 1000 }, // 10 requests per 15 min
   application: { maxRequests: 3, windowMs: 60 * 60 * 1000 }, // 3 requests per hour
