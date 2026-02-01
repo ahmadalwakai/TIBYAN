@@ -3,43 +3,38 @@ import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { getAdminFromRequest } from "@/lib/api-auth";
 import { logAudit } from "@/lib/audit";
+import {
+  CreateCertificateSchema,
+  CertificateFilterSchema,
+} from "@/lib/validations";
 
 // Force Node.js runtime - Prisma doesn't work in Edge
-export const runtime = 'nodejs';
-export const dynamic = 'force-dynamic';
-
-// Schema for creating a certificate
-const createCertificateSchema = z.object({
-  studentName: z.string().min(2, "اسم الطالب مطلوب"),
-  studentNameEn: z.string().optional(),
-  courseName: z.string().min(2, "اسم الدورة مطلوب"),
-  courseNameEn: z.string().optional(),
-  completionDate: z.string(),
-  grade: z.string().optional(),
-  score: z.number().min(0).max(100).optional(),
-  certificateNumber: z.string().optional(),
-  instructorName: z.string().optional(),
-  courseDuration: z.string().optional(),
-  templateType: z.enum([
-    "template1", "template2", "template3", "template4", "template5",
-    "template6", "template7", "template8", "template9", "template10",
-    "template11", "template12", "template13", "template14", "template15",
-    "template16", "template17", "template18", "template19", "template20",
-  ]).default("template1"),
-});
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 // GET - List certificates or get certificate by ID
 export async function GET(request: NextRequest) {
   try {
     const admin = await getAdminFromRequest(request);
     if (!admin) {
-      return NextResponse.json({ ok: false, error: "غير مصرح" }, { status: 401 });
+      return NextResponse.json(
+        { ok: false, error: "غير مصرح" },
+        { status: 401 }
+      );
     }
 
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
 
     if (id) {
+      // Validate ID is a valid CUID
+      if (!id.match(/^[a-z0-9]{25}$/)) {
+        return NextResponse.json(
+          { ok: false, error: "معرف غير صالح" },
+          { status: 400 }
+        );
+      }
+
       // Get single certificate
       const certificate = await prisma.certificate.findUnique({
         where: { id },
@@ -59,17 +54,52 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ ok: true, data: certificate });
     }
 
-    // List certificates with pagination
-    const page = parseInt(searchParams.get("page") || "1");
-    const limit = parseInt(searchParams.get("limit") || "20");
-    const search = searchParams.get("search") || "";
+    // List certificates - validate query params with Zod
+    const filterParams = {
+      page: searchParams.get("page"),
+      limit: searchParams.get("limit"),
+      search: searchParams.get("search"),
+      sortBy: searchParams.get("sortBy"),
+      sortOrder: searchParams.get("sortOrder"),
+    };
 
-    const where = search
+    const filterValidation = CertificateFilterSchema.safeParse(filterParams);
+    if (!filterValidation.success) {
+      const firstError = filterValidation.error.issues[0];
+      return NextResponse.json(
+        { ok: false, error: `Invalid parameter: ${String(firstError.path[0])}` },
+        { status: 400 }
+      );
+    }
+
+    const filters = filterValidation.data;
+
+    // Validate page and limit ranges
+    if (filters.page < 1) {
+      return NextResponse.json(
+        { ok: false, error: "Page must be >= 1" },
+        { status: 400 }
+      );
+    }
+    if (filters.limit < 1 || filters.limit > 100) {
+      return NextResponse.json(
+        { ok: false, error: "Limit must be between 1 and 100" },
+        { status: 400 }
+      );
+    }
+
+    const where = filters.search
       ? {
           OR: [
-            { studentName: { contains: search, mode: "insensitive" as const } },
-            { courseName: { contains: search, mode: "insensitive" as const } },
-            { certificateNumber: { contains: search, mode: "insensitive" as const } },
+            {
+              studentName: { contains: filters.search, mode: "insensitive" as const },
+            },
+            {
+              courseName: { contains: filters.search, mode: "insensitive" as const },
+            },
+            {
+              certificateNumber: { contains: filters.search, mode: "insensitive" as const },
+            },
           ],
         }
       : {};
@@ -77,9 +107,13 @@ export async function GET(request: NextRequest) {
     const [certificates, total] = await Promise.all([
       prisma.certificate.findMany({
         where,
-        orderBy: { createdAt: "desc" },
-        skip: (page - 1) * limit,
-        take: limit,
+        orderBy: { [filters.sortBy || "createdAt"]: filters.sortOrder },
+        skip: (filters.page - 1) * filters.limit,
+        take: filters.limit,
+        include: {
+          user: { select: { name: true, email: true } },
+          course: { select: { title: true } },
+        },
       }),
       prisma.certificate.count({ where }),
     ]);
@@ -89,10 +123,10 @@ export async function GET(request: NextRequest) {
       data: {
         certificates,
         pagination: {
-          page,
-          limit,
+          page: filters.page,
+          limit: filters.limit,
           total,
-          totalPages: Math.ceil(total / limit),
+          totalPages: Math.ceil(total / filters.limit),
         },
       },
     });
@@ -110,15 +144,19 @@ export async function POST(request: NextRequest) {
   try {
     const admin = await getAdminFromRequest(request);
     if (!admin) {
-      return NextResponse.json({ ok: false, error: "غير مصرح" }, { status: 401 });
+      return NextResponse.json(
+        { ok: false, error: "غير مصرح" },
+        { status: 401 }
+      );
     }
 
     const body = await request.json();
-    const validation = createCertificateSchema.safeParse(body);
+    const validation = CreateCertificateSchema.safeParse(body);
 
     if (!validation.success) {
+      const firstError = validation.error.issues[0];
       return NextResponse.json(
-        { ok: false, error: validation.error.issues[0].message },
+        { ok: false, error: firstError.message },
         { status: 400 }
       );
     }
@@ -128,22 +166,43 @@ export async function POST(request: NextRequest) {
     // Generate certificate number if not provided
     const certificateNumber =
       data.certificateNumber ||
-      `TBY-${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
+      `TBY-${Date.now().toString(36).toUpperCase()}-${Math.random()
+        .toString(36)
+        .substring(2, 6)
+        .toUpperCase()}`;
+
+    // Ensure certificate number is unique
+    const existing = await prisma.certificate.findUnique({
+      where: { certificateNumber },
+    });
+
+    if (existing) {
+      return NextResponse.json(
+        { ok: false, error: "رقم الشهادة مستخدم بالفعل" },
+        { status: 400 }
+      );
+    }
 
     const certificate = await prisma.certificate.create({
       data: {
         studentName: data.studentName,
-        studentNameEn: data.studentNameEn,
+        studentNameEn: data.studentNameEn || null,
         courseName: data.courseName,
-        courseNameEn: data.courseNameEn,
+        courseNameEn: data.courseNameEn || null,
         completionDate: new Date(data.completionDate),
-        grade: data.grade,
-        score: data.score,
+        grade: data.grade || null,
+        score: data.score || null,
         certificateNumber,
-        instructorName: data.instructorName,
-        courseDuration: data.courseDuration,
+        instructorName: data.instructorName || null,
+        courseDuration: data.courseDuration || null,
         templateType: data.templateType,
+        userId: data.userId || null,
+        courseId: data.courseId || null,
         issuedBy: admin.id,
+      },
+      include: {
+        user: { select: { name: true, email: true } },
+        course: { select: { title: true } },
       },
     });
 
@@ -169,51 +228,3 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// DELETE - Delete certificate
-export async function DELETE(request: NextRequest) {
-  try {
-    const admin = await getAdminFromRequest(request);
-    if (!admin) {
-      return NextResponse.json({ ok: false, error: "غير مصرح" }, { status: 401 });
-    }
-
-    const { searchParams } = new URL(request.url);
-    const id = searchParams.get("id");
-
-    if (!id) {
-      return NextResponse.json(
-        { ok: false, error: "معرف الشهادة مطلوب" },
-        { status: 400 }
-      );
-    }
-
-    const existing = await prisma.certificate.findUnique({ where: { id } });
-    if (!existing) {
-      return NextResponse.json(
-        { ok: false, error: "الشهادة غير موجودة" },
-        { status: 404 }
-      );
-    }
-
-    await prisma.certificate.delete({ where: { id } });
-
-    await logAudit({
-      actorUserId: admin.id,
-      action: "CERTIFICATE_DELETE",
-      entityType: "CERTIFICATE",
-      entityId: id,
-      metadata: {
-        studentName: existing.studentName,
-        courseName: existing.courseName,
-      },
-    });
-
-    return NextResponse.json({ ok: true, data: { deleted: true } });
-  } catch (error) {
-    console.error("Error deleting certificate:", error);
-    return NextResponse.json(
-      { ok: false, error: "فشل في حذف الشهادة" },
-      { status: 500 }
-    );
-  }
-}

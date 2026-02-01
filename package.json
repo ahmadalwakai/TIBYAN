@@ -12,7 +12,8 @@
     "db:seed": "tsx prisma/seed.ts",
     "db:studio": "prisma studio",
     "test:auth": "tsx scripts/test-auth-encoding.ts",
-    "test:admin-media": "tsx scripts/test-admin-media.ts"
+    "test:admin-media": "tsx scripts/test-admin-media.ts",
+    "test:admin:certificates": "tsx scripts/test-admin-certificates.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

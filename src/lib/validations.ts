@@ -140,3 +140,55 @@ export type ResetPasswordInput = z.infer<typeof ResetPasswordSchema>;
 export type VerifyEmailInput = z.infer<typeof VerifyEmailSchema>;
 export type AdminLoginRequestInput = z.infer<typeof AdminLoginRequestSchema>;
 export type AdminVerifyCodeInput = z.infer<typeof AdminVerifyCodeSchema>;
+
+// Certificate Schemas
+export const CreateCertificateSchema = z.object({
+  studentName: z.string().min(2, "اسم الطالب مطلوب").max(150, "اسم الطالب طويل جداً"),
+  studentNameEn: z.string().max(150, "Student name too long").optional().nullable(),
+  courseName: z.string().min(2, "اسم الدورة مطلوب").max(150, "اسم الدورة طويل جداً"),
+  courseNameEn: z.string().max(150, "Course name too long").optional().nullable(),
+  completionDate: z.string().datetime().or(z.string().regex(/^\d{4}-\d{2}-\d{2}$/)),
+  grade: z.string().max(50, "التقدير طويل جداً").optional().nullable(),
+  score: z.number().min(0).max(100).optional().nullable(),
+  instructorName: z.string().max(150, "Instructor name too long").optional().nullable(),
+  courseDuration: z.string().max(100, "Duration too long").optional().nullable(),
+  certificateNumber: z.string().max(100, "Certificate number too long").optional().nullable(),
+  templateType: z.enum([
+    "template1", "template2", "template3", "template4", "template5",
+    "template6", "template7", "template8", "template9", "template10",
+    "template11", "template12", "template13", "template14", "template15",
+    "template16", "template17", "template18", "template19", "template20",
+  ]).default("template1"),
+  userId: z.string().cuid().optional().nullable(),
+  courseId: z.string().cuid().optional().nullable(),
+});
+
+export const UpdateCertificateSchema = z.object({
+  studentName: z.string().min(2, "اسم الطالب مطلوب").max(150, "اسم الطالب طويل جداً").optional(),
+  studentNameEn: z.string().max(150, "Student name too long").optional().nullable(),
+  courseName: z.string().min(2, "اسم الدورة مطلوب").max(150, "اسم الدورة طويل جداً").optional(),
+  courseNameEn: z.string().max(150, "Course name too long").optional().nullable(),
+  completionDate: z.string().datetime().or(z.string().regex(/^\d{4}-\d{2}-\d{2}$/)).optional(),
+  grade: z.string().max(50, "التقدير طويل جداً").optional().nullable(),
+  score: z.number().min(0).max(100).optional().nullable(),
+  instructorName: z.string().max(150, "Instructor name too long").optional().nullable(),
+  courseDuration: z.string().max(100, "Duration too long").optional().nullable(),
+  templateType: z.enum([
+    "template1", "template2", "template3", "template4", "template5",
+    "template6", "template7", "template8", "template9", "template10",
+    "template11", "template12", "template13", "template14", "template15",
+    "template16", "template17", "template18", "template19", "template20",
+  ]).optional(),
+});
+
+export const CertificateFilterSchema = z.object({
+  page: z.coerce.number().int().min(1).default(1),
+  limit: z.coerce.number().int().min(1).max(100).default(20),
+  search: z.string().max(200).optional(),
+  sortBy: z.enum(["createdAt", "studentName", "courseName", "completionDate"]).optional(),
+  sortOrder: z.enum(["asc", "desc"]).default("desc"),
+});
+
+export type CreateCertificateInput = z.infer<typeof CreateCertificateSchema>;
+export type UpdateCertificateInput = z.infer<typeof UpdateCertificateSchema>;
+export type CertificateFilterInput = z.infer<typeof CertificateFilterSchema>;

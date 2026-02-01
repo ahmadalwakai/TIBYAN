@@ -53,11 +53,44 @@ export class FabricEngine {
       controlsAboveOverlay: true,
     });
 
+    // Fix passive wheel event listener warning
+    // Fabric.js adds wheel listeners without passive flag, we need to patch this
+    this.patchWheelEventListener(canvasElement);
+
     // Set up selection events
     this.canvas.on("selection:created", this.handleSelection.bind(this));
     this.canvas.on("selection:updated", this.handleSelection.bind(this));
     this.canvas.on("selection:cleared", this.handleSelectionCleared.bind(this));
     this.canvas.on("object:modified", this.handleObjectModified.bind(this));
+  }
+
+  private patchWheelEventListener(canvasElement: HTMLCanvasElement): void {
+    // Store original addEventListener
+    const originalAddEventListener = canvasElement.addEventListener;
+    let wheelHandlers: Array<{
+      listener: EventListener;
+      options: AddEventListenerOptions;
+    }> = [];
+
+    // Override addEventListener to intercept wheel event listeners
+    canvasElement.addEventListener = function (
+      type: string,
+      listener: EventListener,
+      options?: boolean | AddEventListenerOptions
+    ): void {
+      // If it's a wheel event, ensure it's passive
+      if (type === "wheel") {
+        const opts =
+          typeof options === "boolean" ? { capture: options } : options || {};
+        wheelHandlers.push({ listener, options: opts });
+        originalAddEventListener.call(this, type, listener, {
+          ...opts,
+          passive: true, // Force passive for wheel events
+        });
+      } else {
+        originalAddEventListener.call(this, type, listener, options);
+      }
+    } as any;
   }
 
   private onSelectionChange?: (layerId: string | null) => void;
