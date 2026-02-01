@@ -560,7 +560,7 @@ export default function AdminSocialPage() {
             </Text>
 
             {/* Toggle between Rich Editor and Media Editor */}
-            <Tabs.Root defaultValue={useMediaEditor ? "media" : "text"} mb={4}>
+            <Tabs.Root defaultValue="text" mb={4}>
               <Tabs.List>
                 <Tabs.Trigger value="text">محرر النصوص</Tabs.Trigger>
                 <Tabs.Trigger value="media">محرر الوسائط المتقدم</Tabs.Trigger>
