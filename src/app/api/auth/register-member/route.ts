@@ -42,10 +42,16 @@ export async function POST(request: Request) {
       }
     
       const { name, email, password, bio } = result.data;
+      const normalizedEmail = email.trim().toLowerCase();
     
       // Check if user already exists
-      const existingUser = await prisma.user.findUnique({
-        where: { email },
+      const existingUser = await prisma.user.findFirst({
+        where: {
+          email: {
+            equals: normalizedEmail,
+            mode: "insensitive",
+          },
+        },
       });
     
       if (existingUser) {
@@ -62,7 +68,7 @@ export async function POST(request: Request) {
       const user = await prisma.user.create({
         data: {
           name,
-          email,
+          email: normalizedEmail,
           password: hashedPassword,
           role: "MEMBER",
           status: "ACTIVE",
@@ -70,6 +76,27 @@ export async function POST(request: Request) {
           bio: bio || null,
         },
       });
+
+      if (process.env.NODE_ENV === "development") {
+        console.log("[MemberRegister] Created user:", {
+          id: user.id,
+          email: user.email,
+          role: user.role,
+          status: user.status,
+        });
+
+        const verifyUser = await prisma.user.findFirst({
+          where: {
+            email: {
+              equals: normalizedEmail,
+              mode: "insensitive",
+            },
+          },
+          select: { id: true, email: true, role: true },
+        });
+
+        console.log("[MemberRegister] Verified insert:", verifyUser);
+      }
 
       // Notify admins about new member signup
       try {

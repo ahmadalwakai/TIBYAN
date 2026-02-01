@@ -1,11 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Button, Container, Heading, Input, Stack, Text, Spinner } from "@chakra-ui/react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import PremiumCard from "@/components/ui/PremiumCard";
 
 export default function RegisterPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -53,6 +56,13 @@ export default function RegisterPage() {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    const roleParam = searchParams.get("role");
+    if (roleParam === "member") {
+      router.replace("/auth/member-signup");
+    }
+  }, [router, searchParams]);
 
   return (
     <Box as="main" bg="background" minH="100vh" position="relative" overflow="hidden">
@@ -229,6 +239,17 @@ export default function RegisterPage() {
               >
                 {isLoading ? <Spinner size="sm" color="spinner" /> : "إنشاء الحساب"}
               </Button>
+              <Link href="/auth/member-signup" style={{ textDecoration: "none" }}>
+                <Button
+                  variant="outline"
+                  borderColor="border"
+                  color="text"
+                  _hover={{ borderColor: "accent", color: "accent" }}
+                  w="full"
+                >
+                  التسجيل كعضو
+                </Button>
+              </Link>
               <Text color="muted" fontSize="sm">
                 لديك حساب بالفعل؟{" "}
                 <Link href="/auth/login" style={{ textDecoration: "none" }}>

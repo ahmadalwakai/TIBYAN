@@ -2,20 +2,20 @@
 
 import {
   Box,
-  Button,
+  Button as ChakraButton,
   Container,
   Heading,
   Input,
   Stack,
   Text,
+  type ButtonProps,
 } from "@chakra-ui/react";
 import { Field } from "@/components/ui/field";
 import { toaster } from "@/components/ui/toaster";
+import { getRoleRedirect } from "@/lib/auth/roleRedirect";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useState, Suspense, useEffect, useRef } from "react";
-
-const ALLOWED_REDIRECTS = new Set(["/member", "/teacher", "/admin", "/courses", "/"]);
+import { useSearchParams } from "next/navigation";
+import { useState, Suspense, useEffect, useRef, type ComponentType } from "react";
 
 /**
  * Validate redirect URL - prevent open redirects
@@ -23,14 +23,22 @@ const ALLOWED_REDIRECTS = new Set(["/member", "/teacher", "/admin", "/courses", 
 function isSafeRedirect(url: string | null): boolean {
   if (!url || !url.startsWith("/")) return false;
 
-  const allowedPrefixes = ["/member", "/teacher", "/admin", "/courses", "/"];
+  const allowedPrefixes = ["/member", "/student", "/teacher", "/admin", "/courses", "/"];
   return allowedPrefixes.some((prefix) => url === prefix || url.startsWith(prefix + "/"));
 }
 
+type LoginButtonProps = ButtonProps & { isLoading?: boolean; isDisabled?: boolean };
+
+const ChakraButtonTyped = ChakraButton as unknown as ComponentType<LoginButtonProps>;
+
+function LoginButton({ isLoading, isDisabled, ...props }: LoginButtonProps) {
+  return <ChakraButtonTyped isLoading={isLoading} isDisabled={isDisabled} {...props} />;
+}
+
 function LoginForm() {
-  const router = useRouter();
   const searchParams = useSearchParams();
-  const redirectTo = searchParams.get("redirect") || "/member";
+  const defaultRedirect = getRoleRedirect("MEMBER");
+  const redirectTo = searchParams.get("redirect") || defaultRedirect;
   const errorParam = searchParams.get("error");
   const isSubmittingRef = useRef(false);
 
@@ -49,6 +57,7 @@ function LoginForm() {
       validation: "بيانات غير صالحة",
       "invalid-credentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
       unverified: "يرجى تأكيد بريدك الإلكتروني أولاً",
+      "wrong-portal": "هذا الحساب لا يمكنه دخول بوابة العضوية",
       suspended: "تم تعليق حسابك. يرجى التواصل مع الدعم.",
       pending: "حسابك قيد المراجعة",
       server: "حدث خطأ في الخادم",
@@ -70,18 +79,17 @@ function LoginForm() {
     setLoading(true);
 
     try {
-      const safeRedirect = isSafeRedirect(redirectTo) ? redirectTo : "/member";
+      const safeRedirect = isSafeRedirect(redirectTo) ? redirectTo : defaultRedirect;
       
-      // Use alternative GET endpoint to bypass servers that block POST
-      // This creates a URL like: /api/auth/login/test@test.com/password123?redirect=/member
-      const loginUrl = `/api/auth/login/${encodeURIComponent(formData.email)}/${encodeURIComponent(
-        formData.password
-      )}?redirect=${encodeURIComponent(safeRedirect)}`;
-
-      const res = await fetch(loginUrl, {
-        method: "GET",
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
         credentials: "include",
-        redirect: "manual",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+          redirect: safeRedirect,
+        }),
       });
 
       // Handle network errors (status 0)
@@ -101,25 +109,6 @@ function LoginForm() {
         return;
       }
 
-      // Handle redirect responses (3xx status codes)
-      if (res.status >= 300 && res.status < 400) {
-        // Server redirected with Set-Cookie headers
-        const location = res.headers.get("location");
-        const redirectUrl = location || (isSafeRedirect(redirectTo) ? redirectTo : "/member");
-        
-        toaster.success({ title: "تم تسجيل الدخول بنجاح!" });
-        console.log("[Login] Redirecting to:", redirectUrl);
-        window.location.href = redirectUrl;
-        return;
-      }
-
-      // If we somehow got 2xx on a POST, that's unexpected
-      if (res.status >= 200 && res.status < 300) {
-        console.warn("[Login] Unexpected 2xx response on POST", res.status);
-        toaster.error({ title: "استجابة غير متوقعة من الخادم" });
-        return;
-      }
-
       // Check if response is JSON before trying to parse
       const contentType = res.headers.get("content-type");
       if (!contentType || !contentType.includes("application/json")) {
@@ -135,9 +124,42 @@ function LoginForm() {
       const json = await res.json();
 
       if (!json.ok) {
+        const nextAction = json?.data?.nextAction as
+          | { type: string; url?: string }
+          | undefined;
+
+        if (nextAction?.type === "VERIFY_EMAIL") {
+          toaster.error({ title: json.error || "يرجى تأكيد بريدك الإلكتروني أولاً" });
+          if (formData.email.trim()) {
+            const verifyUrl = `/auth/verify-pending?email=${encodeURIComponent(
+              formData.email.trim()
+            )}`;
+            window.location.href = verifyUrl;
+            return;
+          }
+        }
+
+        if (nextAction?.type === "GO_TO_MEMBER_SIGNUP" && nextAction.url) {
+          toaster.error({ title: json.error || "يرجى إنشاء حساب عضوية" });
+          window.location.href = nextAction.url;
+          return;
+        }
+
+        if (nextAction?.type === "GO_TO_ROLE_PORTAL" && nextAction.url) {
+          toaster.error({ title: json.error || "انتقل إلى بوابتك الصحيحة" });
+          window.location.href = nextAction.url;
+          return;
+        }
+
         toaster.error({ title: json.error || "حدث خطأ في تسجيل الدخول" });
         return;
       }
+
+      const redirectUrl =
+        (typeof json?.data?.redirectTo === "string" && json.data.redirectTo) || safeRedirect;
+      toaster.success({ title: "تم تسجيل الدخول بنجاح!" });
+      window.location.href = redirectUrl;
+      return;
     } catch (error) {
       console.error("[Login] Error:", error);
       toaster.error({ title: "حدث خطأ في الاتصال" });
@@ -207,14 +229,14 @@ function LoginForm() {
           </Link>
         </Box>
 
-        <Button
+        <LoginButton
           type="submit"
           size="lg"
           bg="linear-gradient(135deg, #c8a24a 0%, #b8943a 100%)"
           color="white"
           fontWeight="700"
-          loading={loading}
-          disabled={loading}
+          isLoading={loading}
+          isDisabled={loading}
           loadingText="جاري تسجيل الدخول..."
           _hover={{
             bg: "linear-gradient(135deg, #d4b05a 0%, #c8a24a 100%)",
@@ -234,7 +256,7 @@ function LoginForm() {
           aria-busy={loading}
         >
           تسجيل الدخول
-        </Button>
+        </LoginButton>
 
         <Text textAlign="center" color="gray.600" fontSize="sm">
           ليس لديك حساب؟{" "}

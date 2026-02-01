@@ -42,7 +42,7 @@ model User {
   blogPosts      BlogPost[]
   
   @@map("users")
-  @@schema("students")
+  @@schema("public")
 }
 
 model VerificationToken {

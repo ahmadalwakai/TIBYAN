@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
-import { compare } from "bcryptjs";
+import { compare, hash } from "bcryptjs";
 import { prisma } from "@/lib/db";
 import { LoginSchema } from "@/lib/validations";
 import { RATE_LIMITS, checkRateLimit, getClientIp } from "@/lib/rate-limit";
 import { encodeUserData, type CookieUserData } from "@/lib/auth/cookie-encoding";
+import { getRoleRedirect } from "@/lib/auth/roleRedirect";
 
 // Force Node.js runtime for Prisma
 export const runtime = 'nodejs';
@@ -20,7 +21,7 @@ function isSafeRedirect(url: string | null, defaultPath: string = "/member"): st
     if (!url.startsWith("/")) return defaultPath;
 
     // Whitelist of allowed redirect paths
-    const allowedPrefixes = ["/member", "/teacher", "/admin", "/courses", "/"];
+    const allowedPrefixes = ["/member", "/student", "/teacher", "/admin", "/courses", "/"];
     const isAllowed = allowedPrefixes.some((prefix) => url === prefix || url.startsWith(prefix + "/"));
 
     return isAllowed ? url : defaultPath;
@@ -52,7 +53,9 @@ export async function POST(request: Request) {
     }
 
     // Validate and sanitize redirect
-    const safeRedirect = isSafeRedirect(redirectParam);
+    const memberDefaultRedirect = getRoleRedirect("MEMBER");
+    const safeRedirect = isSafeRedirect(redirectParam, memberDefaultRedirect);
+    const isMemberPortalAttempt = safeRedirect === "/member" || safeRedirect.startsWith("/member/");
 
     // Check rate limiting
     const { limited, remaining, resetTime } = checkRateLimit(
@@ -100,13 +103,22 @@ export async function POST(request: Request) {
     }
 
     const { email, password } = result.data;
+    const normalizedEmail = email.trim().toLowerCase();
 
     // Find user
-    const user = await prisma.user.findUnique({
-      where: { email },
+    const user = await prisma.user.findFirst({
+      where: {
+        email: {
+          equals: normalizedEmail,
+          mode: "insensitive",
+        },
+      },
     });
 
     if (!user) {
+      if (process.env.NODE_ENV === "development") {
+        console.warn("[Login] User not found:", { email: normalizedEmail });
+      }
       if (isJson) {
         return NextResponse.json(
           { ok: false, error: "البريد الإلكتروني أو كلمة المرور غير صحيحة" },
@@ -120,20 +132,57 @@ export async function POST(request: Request) {
       return NextResponse.redirect(loginUrl, 303);
     }
 
+    if (process.env.NODE_ENV === "development") {
+      console.log("[Login] User fetched:", {
+        email: user.email,
+        role: user.role,
+        status: user.status,
+        emailVerified: (user as { emailVerified?: boolean }).emailVerified,
+      });
+    }
+
     // Check if email is verified
     // MEMBER role can skip this (community members)
     // STUDENT, INSTRUCTOR, ADMIN must verify
     const emailVerified = (user as { emailVerified?: boolean }).emailVerified;
     if (emailVerified === false && user.role !== "MEMBER") {
       if (isJson) {
+        if (user.role === "STUDENT" && isMemberPortalAttempt) {
+          return NextResponse.json(
+            {
+              ok: false,
+              error: "هذا الحساب طالب وليس عضوية. أنشئ حساب العضوية للوصول للبوابة.",
+              code: "WRONG_PORTAL",
+              data: {
+                role: user.role,
+                nextAction: { type: "GO_TO_MEMBER_SIGNUP", url: "/auth/member-signup" },
+              },
+            },
+            { status: 403 }
+          );
+        }
+
         return NextResponse.json(
-          { ok: false, error: "يرجى تأكيد بريدك الإلكتروني أولاً" },
+          {
+            ok: false,
+            error: "يرجى تأكيد بريدك الإلكتروني أولاً",
+            code: "EMAIL_NOT_VERIFIED",
+            data: {
+              role: user.role,
+              nextAction: { type: "VERIFY_EMAIL" },
+            },
+          },
           { status: 403 }
         );
       }
 
+      if (user.role === "STUDENT" && isMemberPortalAttempt) {
+        const memberSignupUrl = new URL("/auth/member-signup", request.url);
+        return NextResponse.redirect(memberSignupUrl, 303);
+      }
+
       const verifyUrl = new URL("/auth/verify-pending", request.url);
-      verifyUrl.searchParams.set("email", email);
+      verifyUrl.searchParams.set("email", normalizedEmail);
       return NextResponse.redirect(verifyUrl, 303);
     }
 
@@ -168,7 +217,30 @@ export async function POST(request: Request) {
     }
 
     // Verify password
-    const isPasswordValid = await compare(password, user.password);
+    let isPasswordValid = await compare(password, user.password);
+
+    // Legacy fallback: accept plaintext passwords and upgrade to bcrypt
+    const isBcryptHash =
+      user.password.startsWith("$2a$") ||
+      user.password.startsWith("$2b$") ||
+      user.password.startsWith("$2y$");
+    if (!isPasswordValid && !isBcryptHash && password === user.password) {
+      const upgradedHash = await hash(password, 12);
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { password: upgradedHash },
+      });
+      isPasswordValid = true;
+    }
+
+    if (process.env.NODE_ENV === "development") {
+      console.log("[Login] Password check:", {
+        email: user.email,
+        isPasswordValid,
+        isBcryptHash,
+      });
+    }
+
     if (!isPasswordValid) {
       if (isJson) {
         return NextResponse.json(
@@ -180,6 +252,29 @@ export async function POST(request: Request) {
       const loginUrl = new URL("/auth/login", request.url);
       loginUrl.searchParams.set("error", "invalid-credentials");
       loginUrl.searchParams.set("redirect", safeRedirect);
+      return NextResponse.redirect(loginUrl, 303);
+    }
+
+    if (isMemberPortalAttempt && user.role !== "MEMBER") {
+      const roleRedirect = getRoleRedirect(user.role);
+      if (isJson) {
+        return NextResponse.json(
+          {
+            ok: false,
+            error: "هذا الحساب غير مخصص لبوابة العضوية. انتقل إلى بوابتك الصحيحة.",
+            code: "WRONG_PORTAL",
+            data: {
+              role: user.role,
+              nextAction: { type: "GO_TO_ROLE_PORTAL", url: roleRedirect },
+            },
+          },
+          { status: 403 }
+        );
+      }
+
+      const loginUrl = new URL("/auth/login", request.url);
+      loginUrl.searchParams.set("error", "wrong-portal");
+      loginUrl.searchParams.set("redirect", roleRedirect);
       return NextResponse.redirect(loginUrl, 303);
     }
 
@@ -212,17 +307,16 @@ export async function POST(request: Request) {
     const authTokenCookie = `auth-token=${authToken}; Path=/; Max-Age=604800; SameSite=${sameSiteValue}${secureAttr}; HttpOnly`;
     const userDataCookie = `user-data=${encodeUserData(cookieUserData)}; Path=/; Max-Age=604800; SameSite=${sameSiteValue}${secureAttr}`;
 
-    const defaultRedirect =
-      user.role === "ADMIN" ? "/admin" : user.role === "INSTRUCTOR" ? "/teacher" : user.role === "MEMBER" ? "/member" : "/courses";
-    const requestedRedirect = isSafeRedirect(redirectParam);
+    const defaultRedirect = getRoleRedirect(user.role);
+    const requestedRedirect = isSafeRedirect(redirectParam, defaultRedirect);
     const successRedirect =
       requestedRedirect.startsWith("/admin") && user.role !== "ADMIN"
-        ? "/courses"
+        ? defaultRedirect
         : requestedRedirect;
 
-    // ALWAYS use redirect for login success, not JSON
-    // This ensures Set-Cookie headers are processed by browser before page loads
-    const response = NextResponse.redirect(new URL(successRedirect, request.url), 303);
+    const response = isJson
+      ? NextResponse.json({ ok: true, data: { redirectTo: successRedirect } })
+      : NextResponse.redirect(new URL(successRedirect, request.url), 303);
 
     // Set cookies with proper headers
     // Use Set-Cookie headers directly for reliability

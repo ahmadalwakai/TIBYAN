@@ -23,10 +23,16 @@ export async function POST(request: Request) {
     }
     
     const { name, email, password } = result.data;
+    const normalizedEmail = email.trim().toLowerCase();
     
     // Check if user already exists
-    const existingUser = await prisma.user.findUnique({
-      where: { email },
+    const existingUser = await prisma.user.findFirst({
+      where: {
+        email: {
+          equals: normalizedEmail,
+          mode: "insensitive",
+        },
+      },
     });
     
     if (existingUser) {
@@ -43,7 +49,7 @@ export async function POST(request: Request) {
     const user = await prisma.user.create({
       data: {
         name,
-        email,
+        email: normalizedEmail,
         password: hashedPassword,
         role: "STUDENT",
         status: "ACTIVE", // Set to ACTIVE so user can login immediately
