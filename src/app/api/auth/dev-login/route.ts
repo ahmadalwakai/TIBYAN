@@ -37,11 +37,11 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     const cookieMaxAge = 60 * 60 * 24; // 1 day for dev sessions
 
-    // Cookie options for development
+    // Cookie options for development (dev-login only runs in dev)
     const cookieOptions = {
       httpOnly: true,
-      secure: true, // Use Secure with SameSite=None
-      sameSite: "none" as const, // Allow cross-domain
+      secure: false,
+      sameSite: "lax" as const,
       maxAge: cookieMaxAge,
       path: "/",
     };

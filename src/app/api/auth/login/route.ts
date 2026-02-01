@@ -204,17 +204,13 @@ export async function POST(request: Request) {
       role: user.role,
     };
 
-    const isProduction = process.env.NODE_ENV === "production";
-    const cookieMaxAge = 60 * 60 * 24 * 7; // 7 days
-
-    // Cookie options - use SameSite=None for cross-domain, Secure required
-    const cookieOptions = {
-      httpOnly: true,
-      secure: true, // Always use Secure with SameSite=None
-      sameSite: "none" as const, // Required for cross-domain cookies
-      maxAge: cookieMaxAge,
-      path: "/",
-    };
+    // Cookie options: production uses SameSite=None; Secure, dev uses SameSite=Lax
+    const isDev = process.env.NODE_ENV !== "production";
+    const sameSiteValue = isDev ? "Lax" : "None";
+    const secureAttr = isDev ? "" : "; Secure";
+    
+    const authTokenCookie = `auth-token=${authToken}; Path=/; Max-Age=604800; SameSite=${sameSiteValue}${secureAttr}; HttpOnly`;
+    const userDataCookie = `user-data=${encodeUserData(cookieUserData)}; Path=/; Max-Age=604800; SameSite=${sameSiteValue}${secureAttr}`;
 
     const defaultRedirect =
       user.role === "ADMIN" ? "/admin" : user.role === "INSTRUCTOR" ? "/teacher" : user.role === "MEMBER" ? "/member" : "/courses";
@@ -228,11 +224,8 @@ export async function POST(request: Request) {
     // This ensures Set-Cookie headers are processed by browser before page loads
     const response = NextResponse.redirect(new URL(successRedirect, request.url), 303);
 
-    // Set cookies with proper headers for cross-domain support
+    // Set cookies with proper headers
     // Use Set-Cookie headers directly for reliability
-    const authTokenCookie = `auth-token=${authToken}; Path=/; Max-Age=${cookieOptions.maxAge}; SameSite=None; Secure; HttpOnly`;
-    const userDataCookie = `user-data=${encodeUserData(cookieUserData)}; Path=/; Max-Age=${cookieOptions.maxAge}; SameSite=None; Secure`;
-    
     response.headers.append("Set-Cookie", authTokenCookie);
     response.headers.append("Set-Cookie", userDataCookie);
 
@@ -242,6 +235,7 @@ export async function POST(request: Request) {
         email: user.email,
         role: user.role,
         redirectTo: successRedirect,
+        cookieSettings: { sameSite: sameSiteValue, isDev },
       });
     }
 

@@ -52,8 +52,10 @@ export async function POST(request: Request) {
       );
     }
 
-    const isProduction = process.env.NODE_ENV === "production";
+    const isDev = process.env.NODE_ENV !== "production";
     const cookieMaxAge = 60 * 60 * 24 * 7; // 7 days
+    const sameSiteValue = isDev ? "lax" : "none";
+    const secureValue = !isDev;
 
     const safeRedirect = redirect && redirect.startsWith("/") ? redirect : "/admin";
 
@@ -63,21 +65,24 @@ export async function POST(request: Request) {
     );
     response.cookies.set("auth-token", token, {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: secureValue,
+      sameSite: sameSiteValue as "none" | "lax",
       maxAge: cookieMaxAge,
       path: "/",
     });
     response.cookies.set("user-data", encodeUserData(user), {
       httpOnly: false,
-      secure: true,
-      sameSite: "none",
+      secure: secureValue,
+      sameSite: sameSiteValue as "none" | "lax",
       maxAge: cookieMaxAge,
       path: "/",
     });
 
     if (process.env.NODE_ENV === "development") {
-      console.log("[Auth/Establish] Cookies set, redirecting to:", safeRedirect);
+      console.log("[Auth/Establish] Cookies set, redirecting to:", safeRedirect, {
+        sameSite: sameSiteValue,
+        secure: secureValue,
+      });
     }
 
     return response;

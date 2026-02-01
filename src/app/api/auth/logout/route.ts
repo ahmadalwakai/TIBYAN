@@ -10,11 +10,15 @@ export async function POST() {
     { status: 200 }
   );
 
+  const isDev = process.env.NODE_ENV !== "production";
+  const sameSiteValue = isDev ? "lax" : "none";
+  const secureValue = !isDev;
+
   // Clear auth-token cookie
   response.cookies.set("auth-token", "", {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "none" as const,
+    secure: secureValue,
+    sameSite: sameSiteValue as "none" | "lax",
     maxAge: 0,
     path: "/",
   });

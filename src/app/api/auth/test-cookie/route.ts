@@ -40,11 +40,16 @@ export async function POST(): Promise<NextResponse> {
     testValue,
   });
 
+  // In development, use SameSite=Lax; in production use SameSite=None; Secure
+  const isDev = process.env.NODE_ENV === "development";
+  const sameSiteValue = isDev ? "lax" : "none";
+  const secureValue = !isDev;
+
   // Set a simple test cookie
   response.cookies.set("test-cookie", testValue, {
     httpOnly: false,
-    secure: true,
-    sameSite: "none",
+    secure: secureValue,
+    sameSite: sameSiteValue as "none" | "lax",
     maxAge: 60 * 5, // 5 minutes
     path: "/",
   });

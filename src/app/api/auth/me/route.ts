@@ -78,6 +78,7 @@ const isDev = process.env.NODE_ENV === "development";
  */
 export async function GET(request: Request): Promise<NextResponse<AuthMeResponse>> {
   try {
+    const isDev = process.env.NODE_ENV !== "production";
     const cookieStore = await cookies();
 
     // Debug: Log all cookies received
@@ -165,10 +166,13 @@ export async function GET(request: Request): Promise<NextResponse<AuthMeResponse
           },
         });
 
+        const sameSiteValue = isDev ? "lax" : "none";
+        const secureValue = !isDev;
+
         response.cookies.set("user-data", encodeUserData(userData), {
           httpOnly: false,
-          secure: process.env.NODE_ENV === "production",
-          sameSite: "none" as const,
+          secure: secureValue,
+          sameSite: sameSiteValue as "none" | "lax",
           maxAge: 60 * 60 * 24 * 7, // 7 days
           path: "/",
         });
