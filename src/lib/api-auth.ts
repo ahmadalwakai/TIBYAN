@@ -8,7 +8,7 @@ import { cookies } from "next/headers";
 import { verifyToken } from "@/lib/jwt";
 import { prisma } from "@/lib/db";
 
-export type UserRole = "ADMIN" | "INSTRUCTOR" | "STUDENT" | "GUEST";
+export type UserRole = "ADMIN" | "INSTRUCTOR" | "STUDENT" | "MEMBER" | "GUEST";
 
 export interface AuthenticatedUser {
   id: string;

@@ -179,6 +179,7 @@ enum Role {
   STUDENT
   INSTRUCTOR
   ADMIN
+  MEMBER
   
   @@schema("public")
 }
@@ -542,6 +543,7 @@ model CommentLike {
 enum AuthorType {
   ADMIN
   INSTRUCTOR
+  MEMBER
   
   @@schema("public")
 }

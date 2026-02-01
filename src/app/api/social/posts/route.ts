@@ -162,9 +162,22 @@ export async function GET(request: NextRequest) {
 
 // POST /api/social/posts - Create post
 export async function POST(request: NextRequest) {
-  // Only admins and instructors can create posts
-  const authResult = await requireRole(request, "INSTRUCTOR");
-  if (authResult instanceof NextResponse) return authResult;
+  // Allow admins, instructors, and members to create posts
+  const user = await getUserFromRequest(request);
+  if (!user) {
+    return NextResponse.json(
+      { ok: false, error: "يجب تسجيل الدخول أولاً" },
+      { status: 401 }
+    );
+  }
+
+  // Check if user has permission to create posts
+  if (!["ADMIN", "INSTRUCTOR", "MEMBER"].includes(user.role)) {
+    return NextResponse.json(
+      { ok: false, error: "ليس لديك صلاحية إنشاء منشورات. يرجى التسجيل كعضو." },
+      { status: 403 }
+    );
+  }
 
   try {
     const body = await request.json();
@@ -178,13 +191,11 @@ export async function POST(request: NextRequest) {
     }
 
     const data = validation.data;
-    const user = await getUserFromRequest(request);
-    if (!user) {
-      return NextResponse.json(
-        { ok: false, error: "غير مصرح" },
-        { status: 401 }
-      );
-    }
+
+    // Determine author type based on role
+    let authorType: "ADMIN" | "INSTRUCTOR" | "MEMBER" = "MEMBER";
+    if (user.role === "ADMIN") authorType = "ADMIN";
+    else if (user.role === "INSTRUCTOR") authorType = "INSTRUCTOR";
 
     // Create post with media
     const post = await db.post.create({
@@ -194,7 +205,7 @@ export async function POST(request: NextRequest) {
         excerpt: data.excerpt,
         styling: data.styling || {},
         authorId: user.id,
-        authorType: user.role === "ADMIN" ? "ADMIN" : "INSTRUCTOR",
+        authorType: authorType,
         status: data.status,
         visibility: data.visibility,
         isPinned: user.role === "ADMIN" ? data.isPinned : false, // Only admin can pin
@@ -229,7 +240,7 @@ export async function POST(request: NextRequest) {
       action: "NOTIFICATION_CREATE", // Using existing action type
       entityType: "NOTIFICATION",
       entityId: post.id,
-      metadata: { type: "post_create", title: data.title },
+      metadata: { type: "post_create", title: data.title, authorType },
     });
 
     return NextResponse.json({

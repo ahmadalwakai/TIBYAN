@@ -22,12 +22,14 @@ const roleIcons: Record<string, string> = {
   STUDENT: "👩‍🎓",
   INSTRUCTOR: "👨‍🏫",
   ADMIN: "👨‍💻",
+  MEMBER: "👤",
 };
 
 const roleLabels: Record<string, string> = {
   STUDENT: "طالب",
   INSTRUCTOR: "مدرّس",
   ADMIN: "مدير",
+  MEMBER: "عضو",
 };
 
 const statusLabels: Record<string, string> = {

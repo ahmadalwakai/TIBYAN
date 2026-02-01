@@ -42,7 +42,7 @@ interface Post {
   excerpt?: string;
   styling: TextStyling;
   authorId: string;
-  authorType: "ADMIN" | "INSTRUCTOR";
+  authorType: "ADMIN" | "INSTRUCTOR" | "MEMBER";
   status: "DRAFT" | "PUBLISHED" | "ARCHIVED";
   visibility: "PUBLIC" | "TEACHERS_ONLY" | "PRIVATE";
   isPinned: boolean;

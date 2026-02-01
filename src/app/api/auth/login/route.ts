@@ -99,9 +99,9 @@ export async function POST(request: Request) {
       return NextResponse.redirect(loginUrl, 303);
     }
 
-    // Check if email is verified (only if field exists)
+    // Check if email is verified (only if field exists, and skip for MEMBER role)
     const emailVerified = (user as { emailVerified?: boolean }).emailVerified;
-    if (emailVerified === false) {
+    if (emailVerified === false && user.role !== "MEMBER") {
       if (isJson) {
         return NextResponse.json(
           { ok: false, error: "يرجى تأكيد بريدك الإلكتروني أولاً" },
@@ -186,7 +186,7 @@ export async function POST(request: Request) {
     const cookieMaxAge = 60 * 60 * 24 * 7; // 7 days
 
     const defaultRedirect =
-      user.role === "ADMIN" ? "/admin" : user.role === "INSTRUCTOR" ? "/teacher" : "/courses";
+      user.role === "ADMIN" ? "/admin" : user.role === "INSTRUCTOR" ? "/teacher" : user.role === "MEMBER" ? "/member" : "/courses";
     const requestedRedirect = redirectParam && redirectParam.startsWith("/") ? redirectParam : defaultRedirect;
     const successRedirect =
       requestedRedirect.startsWith("/admin") && user.role !== "ADMIN"

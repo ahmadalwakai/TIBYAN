@@ -175,6 +175,12 @@ export async function GET(request: Request): Promise<NextResponse<AuthMeResponse
       }
     }
 
+    // At this point, userData is guaranteed non-null (we return early if fetch failed)
+    // TypeScript doesn't track this control flow perfectly, so we assert
+    if (!userData) {
+      return NextResponse.json({ ok: false, error: "User data unavailable" }, { status: 401 });
+    }
+
     // Step 4: Verify user IDs match between JWT and user-data cookie
     if (userData.id !== payload.userId) {
       if (isDev) {

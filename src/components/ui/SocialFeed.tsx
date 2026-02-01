@@ -58,7 +58,7 @@ interface Post {
     textAlign?: string;
   };
   authorId: string;
-  authorType: "ADMIN" | "INSTRUCTOR";
+  authorType: "ADMIN" | "INSTRUCTOR" | "MEMBER";
   status: string;
   visibility: string;
   isPinned: boolean;

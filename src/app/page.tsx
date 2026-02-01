@@ -258,8 +258,8 @@ export default function Home() {
           position="absolute"
           inset={0}
           zIndex={2}
-          bg="linear-gradient(180deg, rgba(10, 22, 40, 0.7) 0%, rgba(11, 31, 59, 0.8) 50%, rgba(10, 22, 40, 0.9) 100%)"
-          backdropFilter="blur(2px)"
+          bg="linear-gradient(180deg, rgba(10, 22, 40, 0.65) 0%, rgba(11, 31, 59, 0.7) 40%, rgba(10, 22, 40, 0.75) 70%, rgba(10, 22, 40, 0.85) 100%)"
+          backdropFilter="blur(1px)"
           pointerEvents="none"
         />
 
@@ -269,12 +269,9 @@ export default function Home() {
           bottom={0}
           left={0}
           right={0}
-          h="40%"
+          h="50%"
           zIndex={3}
-          bgGradient="to-t"
-          gradientFrom="background"
-          gradientVia="rgba(10, 22, 40, 0.8)"
-          gradientTo="transparent"
+          bg="linear-gradient(to top, var(--chakra-colors-background) 0%, var(--chakra-colors-background) 5%, rgba(245, 243, 240, 0.95) 15%, rgba(245, 243, 240, 0.7) 30%, rgba(10, 22, 40, 0.4) 60%, transparent 100%)"
           pointerEvents="none"
         />
 
@@ -548,47 +545,159 @@ export default function Home() {
               </Box>
             </SimpleGrid>
 
-            {/* Scroll indicator */}
+            {/* Scroll indicator - Premium Design */}
             <Box
               pt={{ base: 6, md: 10 }}
-              css={{
-                animation: "heroFloat 2s ease-in-out infinite",
-              }}
             >
-              <Stack gap={2} align="center" color="gray.500">
-                <Text fontSize="xs" fontWeight="500">استكشف المزيد</Text>
+              <Box
+                as="button"
+                onClick={() => {
+                  document.getElementById('content-section')?.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                  });
+                }}
+                position="relative"
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                gap={3}
+                cursor="pointer"
+                bg="rgba(255, 255, 255, 0.05)"
+                backdropFilter="blur(10px)"
+                px={6}
+                py={4}
+                borderRadius="2xl"
+                border="1px solid"
+                borderColor="rgba(200, 162, 74, 0.2)"
+                transition="all 0.4s cubic-bezier(0.4, 0, 0.2, 1)"
+                _hover={{
+                  bg: "rgba(200, 162, 74, 0.1)",
+                  borderColor: "rgba(200, 162, 74, 0.5)",
+                  transform: "translateY(-4px)",
+                  boxShadow: "0 20px 40px rgba(200, 162, 74, 0.2)",
+                }}
+                css={{
+                  animation: "floatButton 3s ease-in-out infinite",
+                  "@keyframes floatButton": {
+                    "0%, 100%": { transform: "translateY(0)" },
+                    "50%": { transform: "translateY(-8px)" },
+                  },
+                  "&:hover": {
+                    animation: "none",
+                  },
+                }}
+              >
+                {/* Glow effect */}
                 <Box
-                  w="24px"
-                  h="40px"
-                  borderRadius="full"
-                  border="2px solid"
-                  borderColor="gray.600"
+                  position="absolute"
+                  inset="-1px"
+                  borderRadius="2xl"
+                  bg="linear-gradient(135deg, rgba(200, 162, 74, 0.3), transparent, rgba(200, 162, 74, 0.3))"
+                  filter="blur(8px)"
+                  opacity={0.5}
+                  pointerEvents="none"
+                  css={{
+                    animation: "glowPulse 2s ease-in-out infinite",
+                    "@keyframes glowPulse": {
+                      "0%, 100%": { opacity: 0.3 },
+                      "50%": { opacity: 0.6 },
+                    },
+                  }}
+                />
+                
+                <Text 
+                  fontSize="sm" 
+                  fontWeight="600" 
+                  color="white"
+                  letterSpacing="wide"
                   position="relative"
-                  overflow="hidden"
                 >
-                  <Box
-                    position="absolute"
-                    top="8px"
-                    left="50%"
-                    transform="translateX(-50%)"
-                    w="4px"
-                    h="8px"
-                    borderRadius="full"
-                    bg="gray.500"
-                    css={{
-                      animation: "scrollBounce 1.5s ease-in-out infinite",
-                      "@keyframes scrollBounce": {
-                        "0%, 100%": { transform: "translateX(-50%) translateY(0)", opacity: 1 },
-                        "50%": { transform: "translateX(-50%) translateY(12px)", opacity: 0.3 },
-                      },
-                    }}
-                  />
+                  استكشف المزيد
+                </Text>
+                
+                {/* Animated chevrons */}
+                <Box position="relative" h="32px" w="24px">
+                  {[0, 1, 2].map((i) => (
+                    <Box
+                      key={i}
+                      position="absolute"
+                      left="50%"
+                      transform="translateX(-50%)"
+                      top={`${i * 10}px`}
+                      css={{
+                        animation: `chevronBounce 1.5s ease-in-out infinite ${i * 0.15}s`,
+                        "@keyframes chevronBounce": {
+                          "0%, 100%": { opacity: 0.3, transform: "translateX(-50%) translateY(0)" },
+                          "50%": { opacity: 1, transform: "translateX(-50%) translateY(4px)" },
+                        },
+                      }}
+                    >
+                      <svg 
+                        width="16" 
+                        height="10" 
+                        viewBox="0 0 16 10" 
+                        fill="none"
+                      >
+                        <path 
+                          d="M1 1L8 8L15 1" 
+                          stroke="#c8a24a" 
+                          strokeWidth="2" 
+                          strokeLinecap="round" 
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </Box>
+                  ))}
                 </Box>
-              </Stack>
+              </Box>
             </Box>
           </Stack>
         </Container>
       </Box>
+
+      {/* Seamless Transition Zone */}
+      <Box
+        id="content-section"
+        position="relative"
+        mt="-120px"
+        pt="120px"
+        bg="background"
+        zIndex={5}
+        _before={{
+          content: '""',
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: "120px",
+          background: "linear-gradient(to bottom, transparent 0%, var(--chakra-colors-background) 100%)",
+          pointerEvents: "none",
+        }}
+      >
+        {/* Subtle decorative elements for depth */}
+        <Box
+          position="absolute"
+          top="60px"
+          left="10%"
+          w="200px"
+          h="200px"
+          borderRadius="full"
+          bg="radial-gradient(circle, rgba(200, 162, 74, 0.06) 0%, transparent 70%)"
+          filter="blur(40px)"
+          pointerEvents="none"
+        />
+        <Box
+          position="absolute"
+          top="100px"
+          right="15%"
+          w="150px"
+          h="150px"
+          borderRadius="full"
+          bg="radial-gradient(circle, rgba(0, 212, 255, 0.04) 0%, transparent 70%)"
+          filter="blur(30px)"
+          pointerEvents="none"
+        />
 
       {/* Rest of Page Content */}
       <Container maxW="7xl" py={{ base: 12, md: 20 }} px={{ base: 6, md: 8 }} position="relative">
@@ -598,6 +707,11 @@ export default function Home() {
           <Box
             position="relative"
             py={{ base: 8, md: 12 }}
+            bg="background"
+            borderRadius="3xl"
+            boxShadow="0 -20px 60px rgba(0, 0, 0, 0.03)"
+            mx={{ base: -4, md: -6 }}
+            px={{ base: 4, md: 6 }}
           >
             <Stack gap={8}>
               {/* Section Header */}
@@ -2221,6 +2335,7 @@ export default function Home() {
           </Box>
         </Stack>
       </Container>
+      </Box>
     </Box>
   );
 }

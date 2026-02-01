@@ -570,9 +570,53 @@ export default function Header() {
                 >
                   🚪 {t("common.logout")}
                 </Button>
+
+                {/* Create Post Button - For Members, Instructors, and Admins */}
+                {(user.role === "MEMBER" || user.role === "INSTRUCTOR" || user.role === "ADMIN") && (
+                  <Button
+                    asChild
+                    bg="linear-gradient(135deg, #c8a24a 0%, #ffd700 100%)"
+                    color="brand.900"
+                    size="sm"
+                    borderRadius="full"
+                    px={5}
+                    fontWeight="700"
+                    boxShadow="0 4px 15px rgba(200, 162, 74, 0.3)"
+                    _hover={{
+                      bg: "linear-gradient(135deg, #d4b05a 0%, #ffe066 100%)",
+                      transform: "translateY(-2px)",
+                      boxShadow: "0 6px 20px rgba(200, 162, 74, 0.4)",
+                    }}
+                    transition="all 0.3s ease"
+                  >
+                    <Link href="/social/create">✍️ {t("common.createPost") || "أنشئ منشوراً"}</Link>
+                  </Button>
+                )}
               </>
             ) : (
               <>
+                {/* Create Post Button for guests - redirects to member signup */}
+                <Button
+                  asChild
+                  variant="outline"
+                  borderColor="brand.500"
+                  color="brand.400"
+                  size="sm"
+                  borderRadius="full"
+                  px={5}
+                  fontWeight="600"
+                  transition="all 0.3s ease"
+                  _hover={{
+                    bg: "rgba(200, 162, 74, 0.1)",
+                    borderColor: "brand.400",
+                    color: "brand.300",
+                    transform: "translateY(-2px)",
+                  }}
+                  suppressHydrationWarning
+                >
+                  <Link href="/auth/member-signup?redirect=/social/create">✍️ {t("common.createPost") || "أنشئ منشوراً"}</Link>
+                </Button>
+
                 <Button
                   asChild
                   variant="ghost"

@@ -13,7 +13,7 @@ export interface CookieUserData {
   id: string;
   email: string;
   name: string;
-  role: "ADMIN" | "INSTRUCTOR" | "STUDENT" | "GUEST";
+  role: "ADMIN" | "INSTRUCTOR" | "STUDENT" | "MEMBER" | "GUEST";
 }
 
 /**
@@ -45,7 +45,7 @@ export function decodeUserData(encoded: string): CookieUserData | null {
       typeof (parsed as CookieUserData).id === "string" &&
       typeof (parsed as CookieUserData).email === "string" &&
       typeof (parsed as CookieUserData).name === "string" &&
-      ["ADMIN", "INSTRUCTOR", "STUDENT", "GUEST"].includes(
+      ["ADMIN", "INSTRUCTOR", "STUDENT", "MEMBER", "GUEST"].includes(
         (parsed as CookieUserData).role
       )
     ) {

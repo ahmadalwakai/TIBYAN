@@ -11,7 +11,7 @@ interface CookieUserData {
   id: string;
   email: string;
   name: string;
-  role: "ADMIN" | "INSTRUCTOR" | "STUDENT" | "GUEST";
+  role: "ADMIN" | "INSTRUCTOR" | "STUDENT" | "MEMBER" | "GUEST";
 }
 
 function encodeUserData(user: CookieUserData): string {
