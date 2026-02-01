@@ -74,6 +74,7 @@ export class FabricEngine {
 
     // Override addEventListener to intercept wheel event listeners
     canvasElement.addEventListener = function (
+      this: HTMLCanvasElement,
       type: string,
       listener: EventListener,
       options?: boolean | AddEventListenerOptions
