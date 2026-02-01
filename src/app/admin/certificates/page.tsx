@@ -18,7 +18,7 @@ import {
   Dialog,
   SimpleGrid,
 } from "@chakra-ui/react";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useTransition } from "react";
 import { toaster } from "@/components/ui/toaster";
 import CertificateTemplate, { templateNames } from "@/components/ui/CertificateTemplate";
 import type { CertificateDTO } from "@/types/certificate";
@@ -85,6 +85,7 @@ export default function CertificatesPage() {
   const [totalPages, setTotalPages] = useState(1);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
+  const [, startTransition] = useTransition();
   const certificateRef = useRef<HTMLDivElement>(null);
 
   const loadCertificates = useCallback(
@@ -125,8 +126,10 @@ export default function CertificatesPage() {
   );
 
   useEffect(() => {
-    loadCertificates(1);
-  }, [search, loadCertificates]);
+    startTransition(() => {
+      loadCertificates(1);
+    });
+  }, [search, loadCertificates, startTransition]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
