@@ -20,6 +20,18 @@ import { toaster } from "@/components/ui/toaster";
 import { useCallback, useEffect, useState } from "react";
 import PremiumCard from "@/components/ui/PremiumCard";
 
+// Helper to check if URL is valid (not a blob URL from another origin)
+function isValidMediaUrl(url: string): boolean {
+  if (!url) return false;
+  // Blob URLs from other origins won't work
+  if (url.startsWith("blob:") && typeof window !== "undefined") {
+    // Only allow blob URLs from current origin
+    const currentOrigin = window.location.origin;
+    return url.startsWith(`blob:${currentOrigin}`);
+  }
+  return true;
+}
+
 interface PostMedia {
   id: string;
   type: "IMAGE" | "VIDEO" | "AUDIO" | "DOCUMENT" | "PDF";
@@ -310,15 +322,15 @@ export default function SocialFeed({
               <Box px={4} pb={4}>
                 <Grid
                   templateColumns={
-                    post.media.length === 1
+                    post.media.filter(m => isValidMediaUrl(m.url)).length === 1
                       ? "1fr"
-                      : post.media.length === 2
+                      : post.media.filter(m => isValidMediaUrl(m.url)).length === 2
                       ? "repeat(2, 1fr)"
                       : "repeat(3, 1fr)"
                   }
                   gap={2}
                 >
-                  {post.media.slice(0, 6).map((m, index) => (
+                  {post.media.filter(m => isValidMediaUrl(m.url)).slice(0, 6).map((m, index) => (
                     <Box
                       key={m.id}
                       position="relative"
@@ -383,7 +395,7 @@ export default function SocialFeed({
                           {m.caption}
                         </Text>
                       )}
-                      {index === 5 && post.media.length > 6 && (
+                      {index === 5 && post.media.filter(m => isValidMediaUrl(m.url)).length > 6 && (
                         <Flex
                           position="absolute"
                           inset={0}
@@ -392,7 +404,7 @@ export default function SocialFeed({
                           justify="center"
                         >
                           <Text color="white" fontSize="xl" fontWeight="700">
-                            +{post.media.length - 6}
+                            +{post.media.filter(m => isValidMediaUrl(m.url)).length - 6}
                           </Text>
                         </Flex>
                       )}

@@ -1,4 +1,39 @@
 {
+  "nav": {
+    "home": "Inicio",
+    "courses": "Cursos",
+    "programs": "Programas",
+    "instructors": "Instructores",
+    "about": "Nosotros",
+    "blog": "Blog",
+    "community": "Comunidad",
+    "dashboard": "Panel",
+    "profile": "Perfil",
+    "settings": "Configuración",
+    "language": "Idioma"
+  },
+  "auth": {
+    "login": "Iniciar sesión",
+    "register": "Registrarse",
+    "logout": "Cerrar sesión",
+    "loginTitle": "Iniciar sesión",
+    "registerTitle": "Crear cuenta",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "name": "Nombre completo",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "noAccount": "¿No tienes cuenta?",
+    "hasAccount": "¿Ya tienes cuenta?",
+    "loginButton": "Iniciar sesión",
+    "registerButton": "Crear cuenta"
+  },
+  "roles": {
+    "admin": "Administrador",
+    "instructor": "Instructor",
+    "student": "Estudiante",
+    "member": "Miembro"
+  },
   "common": {
     "home": "Inicio",
     "courses": "Cursos",

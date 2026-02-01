@@ -1,4 +1,39 @@
 {
+  "nav": {
+    "home": "Home",
+    "courses": "Courses",
+    "programs": "Programs",
+    "instructors": "Instructors",
+    "about": "About",
+    "blog": "Blog",
+    "community": "Community",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "settings": "Settings",
+    "language": "Language"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "loginTitle": "Login",
+    "registerTitle": "Create Account",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "name": "Full Name",
+    "forgotPassword": "Forgot Password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "loginButton": "Login",
+    "registerButton": "Create Account"
+  },
+  "roles": {
+    "admin": "Admin",
+    "instructor": "Instructor",
+    "student": "Student",
+    "member": "Member"
+  },
   "common": {
     "home": "Home",
     "courses": "Courses",
@@ -291,19 +326,6 @@
       "title": "Free Plan",
       "description": "Introductory content to explore the platform and start your learning journey"
     }
-  },
-  "auth": {
-    "loginTitle": "Login",
-    "registerTitle": "Create New Account",
-    "email": "Email",
-    "password": "Password",
-    "confirmPassword": "Confirm Password",
-    "name": "Full Name",
-    "forgotPassword": "Forgot Password?",
-    "noAccount": "Don't have an account?",
-    "hasAccount": "Already have an account?",
-    "loginButton": "Login",
-    "registerButton": "Create Account"
   },
   "assessment": {
     "badge": "📋 Free Assessment",

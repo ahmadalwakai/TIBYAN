@@ -1,4 +1,39 @@
 {
+  "nav": {
+    "home": "Hem",
+    "courses": "Kurser",
+    "programs": "Program",
+    "instructors": "Lärare",
+    "about": "Om oss",
+    "blog": "Blogg",
+    "community": "Gemenskap",
+    "dashboard": "Kontrollpanel",
+    "profile": "Profil",
+    "settings": "Inställningar",
+    "language": "Språk"
+  },
+  "auth": {
+    "login": "Logga in",
+    "register": "Registrera",
+    "logout": "Logga ut",
+    "loginTitle": "Logga in",
+    "registerTitle": "Skapa konto",
+    "email": "E-post",
+    "password": "Lösenord",
+    "confirmPassword": "Bekräfta lösenord",
+    "name": "Fullständigt namn",
+    "forgotPassword": "Glömt lösenord?",
+    "noAccount": "Har du inget konto?",
+    "hasAccount": "Har du redan ett konto?",
+    "loginButton": "Logga in",
+    "registerButton": "Skapa konto"
+  },
+  "roles": {
+    "admin": "Administratör",
+    "instructor": "Lärare",
+    "student": "Student",
+    "member": "Medlem"
+  },
   "common": {
     "home": "Hem",
     "courses": "Kurser",

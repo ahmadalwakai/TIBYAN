@@ -1,4 +1,39 @@
 {
+  "nav": {
+    "home": "Ana Sayfa",
+    "courses": "Kurslar",
+    "programs": "Programlar",
+    "instructors": "Eğitmenler",
+    "about": "Hakkımızda",
+    "blog": "Blog",
+    "community": "Topluluk",
+    "dashboard": "Kontrol Paneli",
+    "profile": "Profil",
+    "settings": "Ayarlar",
+    "language": "Dil"
+  },
+  "auth": {
+    "login": "Giriş Yap",
+    "register": "Kayıt Ol",
+    "logout": "Çıkış Yap",
+    "loginTitle": "Giriş Yap",
+    "registerTitle": "Hesap Oluştur",
+    "email": "E-posta",
+    "password": "Şifre",
+    "confirmPassword": "Şifreyi Onayla",
+    "name": "Tam Ad",
+    "forgotPassword": "Şifrenizi mi unuttunuz?",
+    "noAccount": "Hesabınız yok mu?",
+    "hasAccount": "Zaten hesabınız var mı?",
+    "loginButton": "Giriş Yap",
+    "registerButton": "Hesap Oluştur"
+  },
+  "roles": {
+    "admin": "Yönetici",
+    "instructor": "Eğitmen",
+    "student": "Öğrenci",
+    "member": "Üye"
+  },
   "common": {
     "home": "Ana Sayfa",
     "courses": "Kurslar",
