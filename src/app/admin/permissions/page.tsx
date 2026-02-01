@@ -49,7 +49,9 @@ export default function AdminPermissionsPage() {
   const fetchRoles = async () => {
     setLoading(true);
     try {
-      const response = await fetch("/api/admin/permissions");
+      const response = await fetch("/api/admin/permissions", {
+        credentials: "include",
+      });
       const data = await response.json();
       if (data.ok) {
         setRoles(data.data.roles);
@@ -114,6 +116,7 @@ export default function AdminPermissionsPage() {
     try {
       const response = await fetch(`/api/admin/permissions?id=${id}`, {
         method: "DELETE",
+        credentials: "include",
       });
       const data = await response.json();
       if (data.ok) {

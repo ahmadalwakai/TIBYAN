@@ -78,6 +78,7 @@ export default function CheckoutPage() {
           courseId: course.id,
           ...formData,
         }),
+        credentials: "include",
       });
 
       const data = await response.json();

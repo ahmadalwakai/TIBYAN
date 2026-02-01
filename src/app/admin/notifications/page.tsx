@@ -66,7 +66,9 @@ export default function AdminNotificationsPage() {
       const params = new URLSearchParams();
       if (filter) params.set("status", filter);
       
-      const response = await fetch(`/api/admin/notifications?${params}`);
+      const response = await fetch(`/api/admin/notifications?${params}`, {
+        credentials: "include",
+      });
       const data = await response.json();
       if (data.ok) {
         setNotifications(data.data.notifications);
@@ -136,6 +138,7 @@ export default function AdminNotificationsPage() {
     try {
       const response = await fetch(`/api/admin/notifications?id=${id}`, {
         method: "DELETE",
+        credentials: "include",
       });
       const data = await response.json();
       if (data.ok) {
@@ -152,6 +155,7 @@ export default function AdminNotificationsPage() {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, status: "SENT", sentAt: new Date().toISOString() }),
+        credentials: "include",
       });
       const data = await response.json();
       if (data.ok) {

@@ -37,7 +37,9 @@ export default function AdminStoragePage() {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch("/api/admin/storage?action=stats");
+      const response = await fetch("/api/admin/storage?action=stats", {
+        credentials: "include",
+      });
       const data = await response.json();
       if (data.ok) {
         setStats(data.data);
@@ -49,7 +51,9 @@ export default function AdminStoragePage() {
 
   const fetchFiles = async (folder: string = "") => {
     try {
-      const response = await fetch(`/api/admin/storage?action=files&folder=${encodeURIComponent(folder)}`);
+      const response = await fetch(`/api/admin/storage?action=files&folder=${encodeURIComponent(folder)}`, {
+        credentials: "include",
+      });
       const data = await response.json();
       if (data.ok) {
         setFiles(data.data.files);
@@ -85,6 +89,7 @@ export default function AdminStoragePage() {
     try {
       const response = await fetch(`/api/admin/storage?path=${encodeURIComponent(filePath)}`, {
         method: "DELETE",
+        credentials: "include",
       });
       const data = await response.json();
       if (data.ok) {

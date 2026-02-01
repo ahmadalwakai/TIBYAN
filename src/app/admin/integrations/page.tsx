@@ -49,7 +49,9 @@ export default function AdminIntegrationsPage() {
   const fetchIntegrations = async () => {
     setLoading(true);
     try {
-      const response = await fetch("/api/admin/integrations");
+      const response = await fetch("/api/admin/integrations", {
+        credentials: "include",
+      });
       const data = await response.json();
       if (data.ok) {
         setIntegrations(data.data.integrations);

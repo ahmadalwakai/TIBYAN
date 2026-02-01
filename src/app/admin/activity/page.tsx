@@ -47,7 +47,9 @@ export default function AdminActivityPage() {
       params.set("limit", "50");
       if (filter) params.set("type", filter);
 
-      const response = await fetch(`/api/admin/activity?${params}`);
+      const response = await fetch(`/api/admin/activity?${params}`, {
+        credentials: "include",
+      });
       const data = await response.json();
 
       if (data.ok) {

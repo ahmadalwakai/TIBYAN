@@ -45,7 +45,9 @@ export default function AdminLiveChatPage() {
 
   const fetchSessions = async () => {
     try {
-      const response = await fetch("/api/chat");
+      const response = await fetch("/api/chat", {
+        credentials: "include",
+      });
       const result = await response.json();
       if (result.ok) {
         setSessions(result.data);

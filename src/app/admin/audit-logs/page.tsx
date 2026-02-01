@@ -71,7 +71,9 @@ export default function AdminAuditLogsPage() {
       if (search) params.set("search", search);
       if (actionFilter) params.set("action", actionFilter);
 
-      const response = await fetch(`/api/admin/audit-logs?${params}`);
+      const response = await fetch(`/api/admin/audit-logs?${params}`, {
+        credentials: "include",
+      });
       const data = await response.json();
 
       if (data.ok) {

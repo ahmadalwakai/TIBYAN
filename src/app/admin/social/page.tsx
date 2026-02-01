@@ -101,7 +101,9 @@ export default function AdminSocialPage() {
       if (searchQuery) params.set("search", searchQuery);
       params.set("limit", "50");
 
-      const res = await fetch(`/api/social/posts?${params}`);
+      const res = await fetch(`/api/social/posts?${params}`, {
+        credentials: "include",
+      });
       const json = await res.json();
 
       if (json.ok) {
@@ -204,6 +206,7 @@ export default function AdminSocialPage() {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
+        credentials: "include",
       });
       const json = await res.json();
 
@@ -233,6 +236,7 @@ export default function AdminSocialPage() {
     try {
       const res = await fetch(`/api/social/posts?id=${post.id}`, {
         method: "DELETE",
+        credentials: "include",
       });
       const json = await res.json();
 
@@ -254,6 +258,7 @@ export default function AdminSocialPage() {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: post.id, isPinned: !post.isPinned }),
+        credentials: "include",
       });
       const json = await res.json();
 
@@ -275,6 +280,7 @@ export default function AdminSocialPage() {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: post.id, status }),
+        credentials: "include",
       });
       const json = await res.json();
 

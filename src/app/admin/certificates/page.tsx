@@ -92,7 +92,9 @@ export default function CertificatesPage() {
       const params = new URLSearchParams();
       if (search) params.append("search", search);
 
-      const res = await fetch(`/api/admin/certificates?${params}`);
+      const res = await fetch(`/api/admin/certificates?${params}`, {
+        credentials: "include",
+      });
       const data = await res.json();
       if (data.ok) {
         setCertificates(data.data.certificates);
@@ -160,6 +162,7 @@ export default function CertificatesPage() {
     try {
       const res = await fetch(`/api/admin/certificates?id=${id}`, {
         method: "DELETE",
+        credentials: "include",
       });
       const data = await res.json();
       if (data.ok) {

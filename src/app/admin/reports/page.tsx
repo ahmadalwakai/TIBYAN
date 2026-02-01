@@ -78,7 +78,9 @@ export default function AdminReportsPage() {
   const fetchReport = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/admin/reports?type=${reportType}&period=${period}`);
+      const response = await fetch(`/api/admin/reports?type=${reportType}&period=${period}`, {
+        credentials: "include",
+      });
       const result = await response.json();
       if (result.ok) {
         setData(result.data.metrics);

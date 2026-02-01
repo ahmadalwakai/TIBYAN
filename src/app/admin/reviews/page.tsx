@@ -34,7 +34,9 @@ export default function AdminReviewsPage() {
         params.set("maxRating", filter.toString());
       }
 
-      const response = await fetch(`/api/admin/reviews?${params}`);
+      const response = await fetch(`/api/admin/reviews?${params}`, {
+        credentials: "include",
+      });
       const data = await response.json();
       if (data.ok) {
         setReviews(data.data.reviews);
@@ -57,6 +59,7 @@ export default function AdminReviewsPage() {
     try {
       const response = await fetch(`/api/admin/reviews?id=${id}`, {
         method: "DELETE",
+        credentials: "include",
       });
       const data = await response.json();
       if (data.ok) {
@@ -73,6 +76,7 @@ export default function AdminReviewsPage() {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, status }),
+        credentials: "include",
       });
       const data = await response.json();
       if (data.ok) {

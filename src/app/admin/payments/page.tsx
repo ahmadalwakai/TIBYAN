@@ -87,7 +87,9 @@ export default function AdminPaymentsPage() {
       const params = new URLSearchParams();
       if (statusFilter) params.set("status", statusFilter);
 
-      const response = await fetch(`/api/admin/payments?${params}`);
+      const response = await fetch(`/api/admin/payments?${params}`, {
+        credentials: "include",
+      });
       const data = await response.json();
 
       if (data.ok) {
@@ -110,6 +112,7 @@ export default function AdminPaymentsPage() {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status }),
+        credentials: "include",
       });
       const data = await response.json();
 

@@ -62,7 +62,9 @@ export default function AdminCoursesPage() {
       if (statusFilter) params.set("status", statusFilter);
       if (search) params.set("search", search);
 
-      const response = await fetch(`/api/admin/courses?${params}`);
+      const response = await fetch(`/api/admin/courses?${params}`, {
+        credentials: "include",
+      });
       const result = await response.json();
 
       if (result.ok) {
@@ -83,6 +85,7 @@ export default function AdminCoursesPage() {
     try {
       const response = await fetch(`/api/admin/courses/${id}`, {
         method: "DELETE",
+        credentials: "include",
       });
       const result = await response.json();
 
@@ -102,6 +105,7 @@ export default function AdminCoursesPage() {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: newStatus }),
+        credentials: "include",
       });
       const result = await response.json();
 

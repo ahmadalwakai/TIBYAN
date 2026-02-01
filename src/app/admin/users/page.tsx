@@ -59,7 +59,9 @@ export default function AdminUsersPage() {
       if (statusFilter) params.set("status", statusFilter);
       if (search) params.set("search", search);
 
-      const response = await fetch(`/api/admin/users?${params}`);
+      const response = await fetch(`/api/admin/users?${params}`, {
+        credentials: "include",
+      });
       const result = await response.json();
 
       if (result.ok) {
@@ -80,6 +82,7 @@ export default function AdminUsersPage() {
     try {
       const response = await fetch(`/api/admin/users/${id}`, {
         method: "DELETE",
+        credentials: "include",
       });
       const result = await response.json();
 
@@ -101,6 +104,7 @@ export default function AdminUsersPage() {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: newStatus }),
+        credentials: "include",
       });
       const result = await response.json();
 

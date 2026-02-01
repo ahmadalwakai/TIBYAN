@@ -140,7 +140,9 @@ export default function AdminSettingsPage() {
 
   const fetchAdmins = useCallback(async () => {
     try {
-      const response = await fetch("/api/admin/admins");
+      const response = await fetch("/api/admin/admins", {
+        credentials: "include",
+      });
       const data = await response.json();
       if (data.ok) {
         setAdmins(data.data.admins);
@@ -203,6 +205,7 @@ export default function AdminSettingsPage() {
           name: editName.trim() || undefined,
           newEmail: editEmail.trim() !== editingAdmin.email ? editEmail.trim() : undefined,
         }),
+        credentials: "include",
       });
       
       const data = await response.json();
@@ -232,6 +235,7 @@ export default function AdminSettingsPage() {
           email,
           reason: suspendReason.trim() || undefined,
         }),
+        credentials: "include",
       });
       
       const data = await response.json();
@@ -261,6 +265,7 @@ export default function AdminSettingsPage() {
           action: "activate",
           email,
         }),
+        credentials: "include",
       });
       
       const data = await response.json();
@@ -283,6 +288,7 @@ export default function AdminSettingsPage() {
     try {
       const response = await fetch(`/api/admin/admins?email=${encodeURIComponent(email)}`, {
         method: "DELETE",
+        credentials: "include",
       });
       
       const data = await response.json();
@@ -320,7 +326,9 @@ export default function AdminSettingsPage() {
   const fetchSettings = async () => {
     setLoading(true);
     try {
-      const response = await fetch("/api/admin/settings");
+      const response = await fetch("/api/admin/settings", {
+        credentials: "include",
+      });
       const data = await response.json();
       if (data.ok) {
         setAllSettings(data.data);

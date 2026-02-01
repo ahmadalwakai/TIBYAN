@@ -57,7 +57,9 @@ export default function AdminApplicationsPage() {
       const params = new URLSearchParams();
       if (statusFilter) params.set("status", statusFilter);
 
-      const response = await fetch(`/api/admin/applications?${params}`);
+      const response = await fetch(`/api/admin/applications?${params}`, {
+        credentials: "include",
+      });
       const data = await response.json();
 
       if (data.ok) {
@@ -79,6 +81,7 @@ export default function AdminApplicationsPage() {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status, reviewNotes }),
+        credentials: "include",
       });
       const data = await response.json();
 
