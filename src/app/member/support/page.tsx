@@ -6,6 +6,7 @@ import {
   Button as ChakraButton,
   Container,
   Heading,
+  HStack,
   Stack,
   Text,
   Textarea,
@@ -15,6 +16,7 @@ import {
 import { Field } from "@/components/ui/field";
 import PremiumCard from "@/components/ui/PremiumCard";
 import { toaster } from "@/components/ui/toaster";
+import Link from "next/link";
 
 export default function MemberSupportPage() {
   const [formData, setFormData] = useState({ subject: "", message: "" });
@@ -55,7 +57,12 @@ export default function MemberSupportPage() {
   return (
     <Container maxW="4xl" px={{ base: 4, md: 6 }}>
       <Stack gap={6}>
-        <Heading size="lg">الدعم والمساعدة</Heading>
+        <HStack justify="space-between" flexWrap="wrap">
+          <Heading size="lg">الدعم والمساعدة</Heading>
+          <ChakraButton asChild variant="outline" size="sm" borderColor="border">
+            <Link href="/member/support/tickets">سجل الطلبات</Link>
+          </ChakraButton>
+        </HStack>
         <Text color="muted">
           أرسل لنا طلبك وسنقوم بالمتابعة معك بأقرب وقت ممكن.
         </Text>

@@ -8,16 +8,20 @@ import PremiumCard from "@/components/ui/PremiumCard";
 
 const memberLinks = [
   { label: "نظرة عامة", href: "/member", icon: "📊" },
+  { label: "الإعلانات", href: "/member/announcements", icon: "📣" },
   { label: "الموارد الحصرية", href: "/member/resources", icon: "📚" },
   { label: "الدعم والمساعدة", href: "/member/support", icon: "🛟" },
+  { label: "سجل الدعم", href: "/member/support/tickets", icon: "🧾" },
   { label: "الملف الشخصي", href: "/member/profile", icon: "👤" },
+  { label: "الإعدادات", href: "/member/settings", icon: "⚙️" },
 ];
 
 interface MemberSidebarProps {
   userName: string;
+  onNavigate?: () => void;
 }
 
-export default function MemberSidebar({ userName }: MemberSidebarProps) {
+export default function MemberSidebar({ userName, onNavigate }: MemberSidebarProps) {
   const handleLogout = useLogout();
   const pathname = usePathname();
 
@@ -60,7 +64,12 @@ export default function MemberSidebar({ userName }: MemberSidebarProps) {
           {memberLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
-              <Link key={link.href} href={link.href} style={{ textDecoration: "none" }}>
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={onNavigate}
+                style={{ textDecoration: "none" }}
+              >
                 <Box
                   px={3}
                   py={2}
@@ -75,7 +84,7 @@ export default function MemberSidebar({ userName }: MemberSidebarProps) {
                   _hover={{
                     bg: "surfaceHover",
                     color: "accent",
-                    transform: "translateX(-2px)"
+                    transform: "translateX(2px)"
                   }}
                 >
                   <Text as="span">{link.icon}</Text>
@@ -89,7 +98,10 @@ export default function MemberSidebar({ userName }: MemberSidebarProps) {
         {/* Logout */}
         <Box pt={4} borderTop="1px solid" borderColor="border">
           <Button
-            onClick={handleLogout}
+            onClick={() => {
+              handleLogout();
+              onNavigate?.();
+            }}
             w="100%"
             variant="outline"
             borderColor="error"

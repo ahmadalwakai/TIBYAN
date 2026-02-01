@@ -27,6 +27,11 @@ model User {
   emailVerified Boolean  @default(false)
   avatar        String?
   bio           String?
+  notificationPrefs Json?
+  membershipStatus MembershipStatus @default(ACTIVE)
+  membershipPlan   String?
+  membershipExpiresAt DateTime?
+  membershipPerks  Json?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   lastActiveAt  DateTime @default(now())
@@ -125,6 +130,15 @@ model MemberAnnouncement {
 enum MemberSupportStatus {
   OPEN
   CLOSED
+
+  @@schema("public")
+}
+
+enum MembershipStatus {
+  ACTIVE
+  TRIAL
+  EXPIRED
+  CANCELED
 
   @@schema("public")
 }

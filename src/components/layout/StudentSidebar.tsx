@@ -19,9 +19,10 @@ const studentLinks = [
 
 interface StudentSidebarProps {
   userName: string;
+  onNavigate?: () => void;
 }
 
-export default function StudentSidebar({ userName }: StudentSidebarProps) {
+export default function StudentSidebar({ userName, onNavigate }: StudentSidebarProps) {
   const handleLogout = useLogout();
   const pathname = usePathname();
 
@@ -64,7 +65,12 @@ export default function StudentSidebar({ userName }: StudentSidebarProps) {
           {studentLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
-              <Link key={link.href} href={link.href} style={{ textDecoration: "none" }}>
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={onNavigate}
+                style={{ textDecoration: "none" }}
+              >
                 <Box
                   px={3}
                   py={2}
@@ -79,7 +85,7 @@ export default function StudentSidebar({ userName }: StudentSidebarProps) {
                   _hover={{
                     bg: "surfaceHover",
                     color: "accent",
-                    transform: "translateX(-2px)"
+                    transform: "translateX(2px)"
                   }}
                 >
                   <Text as="span">{link.icon}</Text>
@@ -93,7 +99,10 @@ export default function StudentSidebar({ userName }: StudentSidebarProps) {
         {/* Logout */}
         <Box pt={4} borderTop="1px solid" borderColor="border">
           <Button
-            onClick={handleLogout}
+            onClick={() => {
+              handleLogout();
+              onNavigate?.();
+            }}
             w="100%"
             variant="outline"
             borderColor="error"

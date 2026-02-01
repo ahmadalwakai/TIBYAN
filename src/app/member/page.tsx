@@ -41,10 +41,18 @@ interface UserPost {
   createdAt: string;
 }
 
+interface MembershipInfo {
+  status: "ACTIVE" | "TRIAL" | "EXPIRED" | "CANCELED";
+  plan: string;
+  expiresAt?: string | null;
+  perks: string[];
+}
+
 export default function MemberPortalPage() {
   const router = useRouter();
   const [user, setUser] = useState<UserProfile | null>(null);
   const [posts, setPosts] = useState<UserPost[]>([]);
+  const [membership, setMembership] = useState<MembershipInfo | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<"overview" | "posts" | "settings">("overview");
   
@@ -99,6 +107,19 @@ export default function MemberPortalPage() {
       } catch {
         // Use basic info
         setUser(currentUser as UserProfile);
+      }
+
+      // Fetch membership status
+      try {
+        const membershipRes = await fetch("/api/member/membership", {
+          credentials: "include",
+        });
+        const membershipJson = await membershipRes.json();
+        if (membershipJson.ok) {
+          setMembership(membershipJson.data.membership);
+        }
+      } catch {
+        // Ignore
       }
 
       // Fetch user's posts
@@ -303,7 +324,39 @@ export default function MemberPortalPage() {
 
         {/* Tab Content */}
         {activeTab === "overview" && (
-          <SimpleGrid columns={{ base: 1, md: 3 }} gap={6}>
+          <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} gap={6}>
+            <PremiumCard p={6}>
+              <Stack gap={3} align="center" textAlign="center">
+                <Text fontSize="3xl">🎫</Text>
+                <Text fontSize="lg" fontWeight="700">
+                  {membership?.plan ?? "الخطة الأساسية"}
+                </Text>
+                <Badge
+                  bg="accentSubtle"
+                  color="accent"
+                  px={3}
+                  py={1}
+                  borderRadius="full"
+                  fontSize="xs"
+                >
+                  {membership?.status === "ACTIVE" && "نشطة"}
+                  {membership?.status === "TRIAL" && "تجريبية"}
+                  {membership?.status === "EXPIRED" && "منتهية"}
+                  {membership?.status === "CANCELED" && "ملغاة"}
+                  {!membership?.status && "غير متوفر"}
+                </Badge>
+                <Text color="muted" fontSize="sm">
+                  {membership?.expiresAt
+                    ? `تنتهي في ${new Date(membership.expiresAt).toLocaleDateString("ar-SA")}`
+                    : "لا يوجد تاريخ انتهاء"}
+                </Text>
+                {membership?.perks && membership.perks.length > 0 && (
+                  <Text color="muted" fontSize="xs">
+                    {membership.perks.slice(0, 2).join(" • ")}
+                  </Text>
+                )}
+              </Stack>
+            </PremiumCard>
             <PremiumCard p={6}>
               <Stack gap={2} align="center" textAlign="center">
                 <Text fontSize="3xl">📝</Text>

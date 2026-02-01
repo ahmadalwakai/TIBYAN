@@ -9,6 +9,7 @@ import {
   Input,
   Stack,
   Text,
+  Avatar,
 } from "@chakra-ui/react";
 import { Field } from "@/components/ui/field";
 import PremiumCard from "@/components/ui/PremiumCard";
@@ -21,6 +22,7 @@ interface MemberProfile {
   name: string;
   email: string;
   bio?: string;
+  avatar?: string;
 }
 
 export default function MemberProfilePage() {
@@ -29,7 +31,7 @@ export default function MemberProfilePage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [requestingReset, setRequestingReset] = useState(false);
-  const [formData, setFormData] = useState({ name: "", bio: "" });
+  const [formData, setFormData] = useState({ name: "", bio: "", avatar: "" });
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -40,15 +42,19 @@ export default function MemberProfilePage() {
       }
 
       try {
-        const res = await fetch("/api/auth/me", { credentials: "include" });
+        const res = await fetch("/api/member/profile", { credentials: "include" });
         const json = await res.json();
         if (json.ok) {
           setProfile(json.data);
-          setFormData({ name: json.data.name, bio: json.data.bio || "" });
+          setFormData({
+            name: json.data.name,
+            bio: json.data.bio || "",
+            avatar: json.data.avatar || "",
+          });
         }
       } catch {
         setProfile(cached as MemberProfile);
-        setFormData({ name: cached.name, bio: "" });
+        setFormData({ name: cached.name, bio: "", avatar: "" });
       } finally {
         setLoading(false);
       }
@@ -60,10 +66,14 @@ export default function MemberProfilePage() {
   const handleSave = async () => {
     setSaving(true);
     try {
-      const res = await fetch("/api/auth/update-profile", {
-        method: "PUT",
+      const res = await fetch("/api/member/profile", {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: formData.name, bio: formData.bio }),
+        body: JSON.stringify({
+          name: formData.name,
+          bio: formData.bio,
+          avatar: formData.avatar,
+        }),
         credentials: "include",
       });
       const json = await res.json();
@@ -123,6 +133,23 @@ export default function MemberProfilePage() {
       <Stack gap={6}>
         <Heading size="lg">الملف الشخصي والإعدادات</Heading>
 
+        <PremiumCard variant="bordered" p={{ base: 5, md: 6 }}>
+          <Stack direction={{ base: "column", md: "row" }} gap={4} align="center">
+            <Avatar.Root size="2xl">
+              <Avatar.Image src={profile.avatar || undefined} alt={profile.name} />
+              <Avatar.Fallback bg="avatarBg" color="avatarText">
+                {profile.name.charAt(0)}
+              </Avatar.Fallback>
+            </Avatar.Root>
+            <Stack gap={1} textAlign={{ base: "center", md: "start" }}>
+              <Text fontWeight="700">{profile.name}</Text>
+              <Text color="muted" fontSize="sm">
+                {profile.email}
+              </Text>
+            </Stack>
+          </Stack>
+        </PremiumCard>
+
         <PremiumCard variant="elevated" p={{ base: 6, md: 8 }}>
           <Stack gap={4}>
             <Field label="الاسم الكامل" required inputId="member-name">
@@ -141,6 +168,16 @@ export default function MemberProfilePage() {
                 value={formData.bio}
                 onChange={(e) => setFormData((prev) => ({ ...prev, bio: e.target.value }))}
                 placeholder="نبذة قصيرة"
+                bg="background"
+              />
+            </Field>
+
+            <Field label="رابط الصورة الشخصية" inputId="member-avatar">
+              <Input
+                id="member-avatar"
+                value={formData.avatar}
+                onChange={(e) => setFormData((prev) => ({ ...prev, avatar: e.target.value }))}
+                placeholder="https://..."
                 bg="background"
               />
             </Field>
