@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { db } from "@/lib/db";
+import { prisma } from "@/lib/db";
 import { getAdminFromRequest } from "@/lib/api-auth";
 import { logAudit } from "@/lib/audit";
 
@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
 
     if (id) {
       // Get single certificate
-      const certificate = await db.certificate.findUnique({
+      const certificate = await prisma.certificate.findUnique({
         where: { id },
         include: {
           user: { select: { name: true, email: true } },
@@ -70,13 +70,13 @@ export async function GET(request: NextRequest) {
       : {};
 
     const [certificates, total] = await Promise.all([
-      db.certificate.findMany({
+      prisma.certificate.findMany({
         where,
         orderBy: { createdAt: "desc" },
         skip: (page - 1) * limit,
         take: limit,
       }),
-      db.certificate.count({ where }),
+      prisma.certificate.count({ where }),
     ]);
 
     return NextResponse.json({
@@ -125,7 +125,7 @@ export async function POST(request: NextRequest) {
       data.certificateNumber ||
       `TBY-${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
 
-    const certificate = await db.certificate.create({
+    const certificate = await prisma.certificate.create({
       data: {
         studentName: data.studentName,
         studentNameEn: data.studentNameEn,
@@ -182,7 +182,7 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    const existing = await db.certificate.findUnique({ where: { id } });
+    const existing = await prisma.certificate.findUnique({ where: { id } });
     if (!existing) {
       return NextResponse.json(
         { ok: false, error: "الشهادة غير موجودة" },
@@ -190,7 +190,7 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    await db.certificate.delete({ where: { id } });
+    await prisma.certificate.delete({ where: { id } });
 
     await logAudit({
       actorUserId: admin.id,

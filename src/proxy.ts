@@ -12,7 +12,7 @@ function getJWTSecretEdge(): Uint8Array {
 }
 
 /**
- * Verify JWT token in middleware (Edge runtime compatible)
+ * Verify JWT token in proxy (Edge runtime compatible)
  * Returns the role if valid, null otherwise
  */
 async function verifyTokenEdge(token: string): Promise<{ userId: string; role: string } | null> {
@@ -31,9 +31,9 @@ async function verifyTokenEdge(token: string): Promise<{ userId: string; role: s
 }
 
 /**
- * Next.js Middleware - protects /admin routes
+ * Next.js Proxy - protects /admin routes
  */
-export default async function middleware(request: NextRequest) {
+export default async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname;
 
   // Allow admin login page without authentication
@@ -44,7 +44,7 @@ export default async function middleware(request: NextRequest) {
     return response;
   }
 
-  // Skip middleware for non-admin routes
+  // Skip proxy for non-admin routes
   if (!path.startsWith("/admin")) {
     return NextResponse.next();
   }
@@ -92,4 +92,7 @@ export default async function middleware(request: NextRequest) {
   return response;
 }
 
-// Middleware matcher - only admin routes
+// Proxy matcher - only admin routes
+export const config = {
+  matcher: ["/admin/:path*", "/auth/admin-login"],
+};
