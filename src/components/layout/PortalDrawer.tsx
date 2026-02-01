@@ -44,6 +44,8 @@ export default function PortalDrawer({
           pr={safeAreaRight}
           zIndex={1402}
           boxShadow="xl"
+          display="flex"
+          flexDirection="column"
         >
           <Drawer.Header px={4} py={3} borderBottom="1px solid" borderColor="border">
             <Flex align="center" justify="space-between">
@@ -62,7 +64,13 @@ export default function PortalDrawer({
               </Drawer.CloseTrigger>
             </Flex>
           </Drawer.Header>
-          <Drawer.Body px={3} py={4}>
+          <Drawer.Body
+            px={3}
+            py={4}
+            flex="1"
+            overflowY="auto"
+            pb={`calc(env(safe-area-inset-bottom) + 16px)`}
+          >
             <Box>{children}</Box>
           </Drawer.Body>
         </Drawer.Content>
