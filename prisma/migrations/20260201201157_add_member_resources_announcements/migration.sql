@@ -1,0 +1,2 @@
+-- NOTE: Consolidated into 20260201123000_add_member_resources_announcements.
+-- This migration is a no-op and kept only for historical consistency.

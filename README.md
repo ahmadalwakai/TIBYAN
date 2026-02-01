@@ -61,6 +61,11 @@ npm run dev
 
 Tibyan (TBY) is an Arabic-first LMS built with Next.js App Router, TypeScript, and Chakra UI.
 
+### Portal Definitions
+
+- **Student Portal (/student)**: Enrolled learner experience (courses, progress, certificates, enrollment payments, reviews). Access requires role=STUDENT and verified email.
+- **Member Portal (/member)**: Community/club membership experience (member-only resources, perks, community features, member settings). Access requires role=MEMBER. Email verification for members is optional by policy to reduce onboarding friction.
+
 ### Features
 
 - 🌐 7 language support (Arabic, English, German, Turkish, French, Spanish, Swedish)

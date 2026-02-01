@@ -5,6 +5,7 @@ import { Box, Button, Container, Heading, Input, Stack, Text, Spinner } from "@c
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import PremiumCard from "@/components/ui/PremiumCard";
+import { toaster } from "@/components/ui/toaster";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -47,9 +48,27 @@ export default function RegisterPage() {
         return;
       }
 
-      setSuccess(data.data.message);
+      const emailSent = Boolean(data?.data?.emailSent);
+      setSuccess(
+        emailSent
+          ? "تم إرسال رسالة إلى بريدك الإلكتروني. يرجى تأكيد بريدك الإلكتروني."
+          : "تم إنشاء الحساب. إذا لم تصلك رسالة التفعيل، يمكنك طلب إعادة الإرسال."
+      );
+      toaster.success({
+        title: "تم إرسال رسالة إلى بريدك الإلكتروني. يرجى تأكيد بريدك الإلكتروني.",
+        description: emailSent
+          ? "افحص البريد الوارد والرسائل غير المرغوبة (Spam)."
+          : "تم إنشاء الحساب. إذا لم تصلك رسالة التفعيل، يمكنك طلب إعادة الإرسال.",
+      });
       // Clear form
+      const emailForRedirect = formData.email.trim();
       setFormData({ name: "", email: "", password: "" });
+      if (emailForRedirect) {
+        const redirectUrl = `/auth/verify-pending?email=${encodeURIComponent(emailForRedirect)}`;
+        setTimeout(() => {
+          router.push(redirectUrl);
+        }, 900);
+      }
     } catch {
       setError("حدث خطأ في الاتصال بالخادم");
     } finally {

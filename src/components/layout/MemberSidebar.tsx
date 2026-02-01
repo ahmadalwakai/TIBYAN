@@ -8,9 +8,8 @@ import PremiumCard from "@/components/ui/PremiumCard";
 
 const memberLinks = [
   { label: "نظرة عامة", href: "/member", icon: "📊" },
-  { label: "مشاركاتي", href: "/member/posts", icon: "📝" },
-  { label: "الكورسات المجانية", href: "/member/courses", icon: "📚" },
-  { label: "الإشعارات", href: "/member/notifications", icon: "🔔" },
+  { label: "الموارد الحصرية", href: "/member/resources", icon: "📚" },
+  { label: "الدعم والمساعدة", href: "/member/support", icon: "🛟" },
   { label: "الملف الشخصي", href: "/member/profile", icon: "👤" },
 ];
 

@@ -52,12 +52,13 @@ export async function POST(request: Request) {
         email: normalizedEmail,
         password: hashedPassword,
         role: "STUDENT",
-        status: "ACTIVE", // Set to ACTIVE so user can login immediately
+        status: "ACTIVE", // Account is active, but STUDENT login still requires email verification
         emailVerified: false,
       },
     });
     
     // Try to send verification email (non-blocking)
+    let emailSent = false;
     try {
       const { createVerificationToken } = await import("@/lib/auth/tokens");
       const { sendEmail } = await import("@/lib/email/resend");
@@ -79,6 +80,7 @@ export async function POST(request: Request) {
           subject: "تأكيد بريدك الإلكتروني - تبيان",
           html: emailHtml,
         });
+        emailSent = true;
       }
     } catch (emailError) {
       // Log but don't fail registration if email fails
@@ -88,8 +90,10 @@ export async function POST(request: Request) {
     return NextResponse.json({
       ok: true,
       data: {
-        message: "تم إنشاء الحساب بنجاح! يمكنك تسجيل الدخول الآن.",
+        message: "تم إرسال رسالة إلى بريدك الإلكتروني. يرجى تأكيد بريدك الإلكتروني.",
+        email: user.email,
         userId: user.id,
+        emailSent,
       },
     });
   } catch (error) {

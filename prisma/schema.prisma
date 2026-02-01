@@ -40,6 +40,8 @@ model User {
   auditLogs      AuditLog[] @relation("AuditLogActor")
   certificates   Certificate[]
   blogPosts      BlogPost[]
+  memberResources MemberResource[]
+  memberSupportTickets MemberSupportTicket[]
   
   @@map("users")
   @@schema("public")
@@ -83,6 +85,62 @@ model EmailVerificationCode {
   @@index([email])
   @@index([code])
   @@map("email_verification_codes")
+  @@schema("public")
+}
+
+enum MemberResourceType {
+  LINK
+  DOCUMENT
+  ARTICLE
+
+  @@schema("public")
+}
+
+model MemberResource {
+  id              String             @id @default(cuid())
+  title           String
+  type            MemberResourceType @default(LINK)
+  url             String?
+  content         String?
+  createdByUserId String
+  createdAt       DateTime           @default(now())
+
+  createdBy       User               @relation(fields: [createdByUserId], references: [id], onDelete: Restrict)
+
+  @@index([createdByUserId])
+  @@map("member_resources")
+  @@schema("public")
+}
+
+model MemberAnnouncement {
+  id        String   @id @default(cuid())
+  title     String
+  body      String
+  createdAt DateTime @default(now())
+
+  @@map("member_announcements")
+  @@schema("public")
+}
+
+enum MemberSupportStatus {
+  OPEN
+  CLOSED
+
+  @@schema("public")
+}
+
+model MemberSupportTicket {
+  id        String              @id @default(cuid())
+  userId    String
+  subject   String
+  message   String
+  status    MemberSupportStatus @default(OPEN)
+  createdAt DateTime            @default(now())
+
+  user      User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("member_support_tickets")
   @@schema("public")
 }
 
