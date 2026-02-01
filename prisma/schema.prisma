@@ -39,6 +39,7 @@ model User {
   verificationTokens VerificationToken[]
   auditLogs      AuditLog[] @relation("AuditLogActor")
   certificates   Certificate[]
+  blogPosts      BlogPost[]
   
   @@map("users")
   @@schema("students")
@@ -559,6 +560,96 @@ enum PostStatus {
 enum PostVisibility {
   PUBLIC
   TEACHERS_ONLY
+  PRIVATE
+  
+  @@schema("public")
+}
+
+// ==========================================
+// BLOG POSTS - For blog/article content
+// ==========================================
+
+model BlogPost {
+  id            String   @id @default(cuid())
+  title         String
+  slug          String   @unique // URL-friendly slug
+  content       String   @db.Text // Rich text HTML content
+  excerpt       String?  // Short preview text
+  
+  // Styling options (stored as JSON)
+  styling       Json?    // { fontFamily, fontSize, fontColor, backgroundColor, textAlign, etc. }
+  
+  // Author info
+  authorId      String
+  author        User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  
+  // Status and visibility
+  status        PostStatus @default(DRAFT)
+  visibility    BlogVisibility @default(PUBLIC)
+  featured      Boolean  @default(false)
+  allowComments Boolean  @default(true)
+  
+  // Tags for categorization
+  tags          String[] @default([])
+  
+  // Engagement counts (denormalized for performance)
+  likesCount    Int      @default(0)
+  commentsCount Int      @default(0)
+  viewsCount    Int      @default(0)
+  
+  // Timestamps
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  publishedAt   DateTime?
+  
+  // Relations
+  media         BlogPostMedia[]
+  
+  @@index([authorId])
+  @@index([status])
+  @@index([slug])
+  @@index([featured])
+  @@index([createdAt])
+  @@map("blog_posts")
+  @@schema("public")
+}
+
+model BlogPostMedia {
+  id          String   @id @default(cuid())
+  postId      String
+  
+  // Media details
+  type        MediaType
+  url         String
+  filename    String?
+  mimeType    String?
+  fileSize    Int?     // in bytes
+  
+  // Media dimensions/duration
+  width       Int?
+  height      Int?
+  duration    Int?     // for audio/video in seconds
+  
+  // Display options
+  caption     String?
+  altText     String?
+  order       Int      @default(0)
+  styling     Json?    // { borderRadius, objectFit, aspectRatio, etc. }
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  
+  // Relations
+  post        BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  
+  @@index([postId])
+  @@map("blog_post_media")
+  @@schema("public")
+}
+
+enum BlogVisibility {
+  PUBLIC
+  MEMBERS_ONLY
   PRIVATE
   
   @@schema("public")

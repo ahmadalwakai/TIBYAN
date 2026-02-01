@@ -37,7 +37,10 @@ export type AuditAction =
   | "FILE_DELETE"
   | "INTEGRATION_TEST"
   | "CERTIFICATE_CREATE"
-  | "CERTIFICATE_DELETE";
+  | "CERTIFICATE_DELETE"
+  | "CREATE_BLOG_POST"
+  | "UPDATE_BLOG_POST"
+  | "DELETE_BLOG_POST";
 
 export type EntityType =
   | "USER"
@@ -52,7 +55,8 @@ export type EntityType =
   | "REVIEW"
   | "FILE"
   | "INTEGRATION"
-  | "CERTIFICATE";
+  | "CERTIFICATE"
+  | "BLOG_POST";
 
 interface LogAuditParams {
   actorUserId?: string;

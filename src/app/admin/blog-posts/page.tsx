@@ -8,7 +8,6 @@ import {
   Flex,
   Grid,
   HStack,
-  Image,
   Input,
   NativeSelect,
   Spinner,
@@ -24,7 +23,7 @@ import RichTextEditor, { TextStyling } from "@/components/ui/RichTextEditor";
 import MediaUploader, { MediaItem } from "@/components/ui/MediaUploader";
 import { PostEditor } from "@/components/PostEditor";
 
-interface PostMedia {
+interface BlogMedia {
   id: string;
   type: "IMAGE" | "VIDEO" | "AUDIO" | "DOCUMENT" | "PDF";
   url: string;
@@ -37,45 +36,46 @@ interface PostMedia {
   };
 }
 
-interface Post {
+interface BlogPost {
   id: string;
-  title?: string;
+  title: string;
+  slug: string;
   content: string;
   excerpt?: string;
   styling: TextStyling;
   authorId: string;
-  authorType: "ADMIN" | "INSTRUCTOR" | "MEMBER";
   status: "DRAFT" | "PUBLISHED" | "ARCHIVED";
-  visibility: "PUBLIC" | "TEACHERS_ONLY" | "PRIVATE";
-  isPinned: boolean;
+  visibility: "PUBLIC" | "MEMBERS_ONLY" | "PRIVATE";
+  featured: boolean;
   allowComments: boolean;
-  allowLikes: boolean;
+  tags?: string[];
+  viewsCount: number;
   likesCount: number;
   commentsCount: number;
-  viewsCount: number;
   publishedAt?: string;
   createdAt: string;
   updatedAt: string;
-  media: PostMedia[];
+  media: BlogMedia[];
 }
 
 type ModalMode = "create" | "edit" | "view" | null;
 
-export default function AdminSocialPage() {
-  const [posts, setPosts] = useState<Post[]>([]);
+export default function AdminBlogPostsPage() {
+  const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [modalMode, setModalMode] = useState<ModalMode>(null);
-  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
-  const [useMediaEditor, setUseMediaEditor] = useState(false);
+  const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
 
   // Filters
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [visibilityFilter, setVisibilityFilter] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
+
   // Form state
   const [formData, setFormData] = useState({
     title: "",
+    slug: "",
     content: "",
     excerpt: "",
     styling: {
@@ -86,12 +86,13 @@ export default function AdminSocialPage() {
       textAlign: "right",
     } as TextStyling,
     status: "DRAFT" as "DRAFT" | "PUBLISHED" | "ARCHIVED",
-    visibility: "PUBLIC" as "PUBLIC" | "TEACHERS_ONLY" | "PRIVATE",
-    isPinned: false,
+    visibility: "PUBLIC" as "PUBLIC" | "MEMBERS_ONLY" | "PRIVATE",
+    featured: false,
     allowComments: true,
-    allowLikes: true,
+    tags: [] as string[],
   });
   const [media, setMedia] = useState<MediaItem[]>([]);
+  const [tagsInput, setTagsInput] = useState("");
 
   // Fetch posts
   const fetchPosts = useCallback(async () => {
@@ -103,7 +104,7 @@ export default function AdminSocialPage() {
       if (searchQuery) params.set("search", searchQuery);
       params.set("limit", "50");
 
-      const res = await fetch(`/api/social/posts?${params}`, {
+      const res = await fetch(`/api/blog/posts?${params}`, {
         credentials: "include",
       });
       const json = await res.json();
@@ -111,7 +112,7 @@ export default function AdminSocialPage() {
       if (json.ok) {
         setPosts(json.data.posts);
       } else {
-        toaster.error({ title: json.error || "فشل في جلب المنشورات" });
+        toaster.error({ title: json.error || "فشل في جلب المدونات" });
       }
     } catch {
       toaster.error({ title: "خطأ في الاتصال" });
@@ -128,6 +129,7 @@ export default function AdminSocialPage() {
   const resetForm = () => {
     setFormData({
       title: "",
+      slug: "",
       content: "",
       excerpt: "",
       styling: {
@@ -139,12 +141,23 @@ export default function AdminSocialPage() {
       },
       status: "DRAFT",
       visibility: "PUBLIC",
-      isPinned: false,
+      featured: false,
       allowComments: true,
-      allowLikes: true,
+      tags: [],
     });
     setMedia([]);
+    setTagsInput("");
     setSelectedPost(null);
+  };
+
+  // Auto-generate slug
+  const generateSlug = (title: string) => {
+    return title
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-");
   };
 
   // Open create modal
@@ -154,18 +167,19 @@ export default function AdminSocialPage() {
   };
 
   // Open edit modal
-  const handleEdit = (post: Post) => {
+  const handleEdit = (post: BlogPost) => {
     setSelectedPost(post);
     setFormData({
-      title: post.title || "",
+      title: post.title,
+      slug: post.slug,
       content: post.content,
       excerpt: post.excerpt || "",
       styling: post.styling || {},
       status: post.status,
       visibility: post.visibility,
-      isPinned: post.isPinned,
+      featured: post.featured,
       allowComments: post.allowComments,
-      allowLikes: post.allowLikes,
+      tags: post.tags || [],
     });
     setMedia(post.media.map((m, i) => ({
       id: m.id,
@@ -176,11 +190,16 @@ export default function AdminSocialPage() {
       styling: m.styling,
       order: i,
     })));
+    setTagsInput(post.tags?.join(", ") || "");
     setModalMode("edit");
   };
 
   // Submit form
   const handleSubmit = async () => {
+    if (!formData.title.trim()) {
+      toaster.error({ title: "العنوان مطلوب" });
+      return;
+    }
     if (!formData.content.trim()) {
       toaster.error({ title: "المحتوى مطلوب" });
       return;
@@ -188,8 +207,12 @@ export default function AdminSocialPage() {
 
     setSubmitting(true);
     try {
-      // For now, use placeholder URLs for media
-      // In production, upload files first and get URLs
+      const slug = formData.slug || generateSlug(formData.title);
+      const tags = tagsInput
+        .split(",")
+        .map(t => t.trim())
+        .filter(t => t.length > 0);
+
       const mediaToSend = media.map((m, i) => ({
         type: m.type,
         url: m.url || m.preview || `https://placeholder.com/${m.id}`,
@@ -201,10 +224,10 @@ export default function AdminSocialPage() {
 
       const method = modalMode === "create" ? "POST" : "PUT";
       const body = modalMode === "create"
-        ? { ...formData, media: mediaToSend }
-        : { ...formData, id: selectedPost?.id, media: mediaToSend };
+        ? { ...formData, slug, tags, media: mediaToSend }
+        : { ...formData, id: selectedPost?.id, slug, tags, media: mediaToSend };
 
-      const res = await fetch("/api/social/posts", {
+      const res = await fetch("/api/blog/posts", {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -214,7 +237,7 @@ export default function AdminSocialPage() {
 
       if (json.ok) {
         toaster.success({
-          title: modalMode === "create" ? "تم إنشاء المنشور" : "تم تحديث المنشور",
+          title: modalMode === "create" ? "تم إنشاء المدونة" : "تم تحديث المدونة",
         });
         setModalMode(null);
         resetForm();
@@ -222,7 +245,8 @@ export default function AdminSocialPage() {
       } else {
         toaster.error({ title: json.error || "حدث خطأ" });
       }
-    } catch {
+    } catch (error) {
+      console.error("Error:", error);
       toaster.error({ title: "خطأ في الاتصال" });
     } finally {
       setSubmitting(false);
@@ -230,20 +254,20 @@ export default function AdminSocialPage() {
   };
 
   // Delete post
-  const handleDelete = async (post: Post) => {
-    if (!confirm(`هل أنت متأكد من حذف المنشور "${post.title || "بدون عنوان"}"؟`)) {
+  const handleDelete = async (post: BlogPost) => {
+    if (!confirm(`هل أنت متأكد من حذف المدونة "${post.title}"؟`)) {
       return;
     }
 
     try {
-      const res = await fetch(`/api/social/posts?id=${post.id}`, {
+      const res = await fetch(`/api/blog/posts?id=${post.id}`, {
         method: "DELETE",
         credentials: "include",
       });
       const json = await res.json();
 
       if (json.ok) {
-        toaster.success({ title: "تم حذف المنشور" });
+        toaster.success({ title: "تم حذف المدونة" });
         fetchPosts();
       } else {
         toaster.error({ title: json.error || "فشل في الحذف" });
@@ -253,19 +277,19 @@ export default function AdminSocialPage() {
     }
   };
 
-  // Toggle pin
-  const handleTogglePin = async (post: Post) => {
+  // Toggle featured
+  const handleToggleFeatured = async (post: BlogPost) => {
     try {
-      const res = await fetch("/api/social/posts", {
+      const res = await fetch("/api/blog/posts", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: post.id, isPinned: !post.isPinned }),
+        body: JSON.stringify({ id: post.id, featured: !post.featured }),
         credentials: "include",
       });
       const json = await res.json();
 
       if (json.ok) {
-        toaster.success({ title: post.isPinned ? "تم إلغاء التثبيت" : "تم التثبيت" });
+        toaster.success({ title: post.featured ? "تم إلغاء التميز" : "تم تمييز المدونة" });
         fetchPosts();
       } else {
         toaster.error({ title: json.error });
@@ -276,9 +300,9 @@ export default function AdminSocialPage() {
   };
 
   // Quick status change
-  const handleStatusChange = async (post: Post, status: "DRAFT" | "PUBLISHED" | "ARCHIVED") => {
+  const handleStatusChange = async (post: BlogPost, status: "DRAFT" | "PUBLISHED" | "ARCHIVED") => {
     try {
-      const res = await fetch("/api/social/posts", {
+      const res = await fetch("/api/blog/posts", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: post.id, status }),
@@ -299,12 +323,9 @@ export default function AdminSocialPage() {
 
   // Handle media editor export
   const handleMediaEditorExport = async (blob: Blob, type: "image" | "video") => {
-    // Convert blob to base64 or upload it
     const reader = new FileReader();
     reader.onload = async () => {
       const dataUrl = reader.result as string;
-      
-      // Update media with the exported file
       const filename = `export_${Date.now()}.${type === "video" ? "mp4" : "png"}`;
       
       setMedia([{
@@ -316,7 +337,6 @@ export default function AdminSocialPage() {
         order: 0,
       }]);
 
-      setUseMediaEditor(false);
       toaster.success({ title: `تم تصدير ${type === "video" ? "الفيديو" : "الصورة"} بنجاح` });
     };
     reader.readAsDataURL(blob);
@@ -339,8 +359,8 @@ export default function AdminSocialPage() {
     switch (visibility) {
       case "PUBLIC":
         return <Badge colorPalette="blue">عام</Badge>;
-      case "TEACHERS_ONLY":
-        return <Badge colorPalette="purple">للمعلمين</Badge>;
+      case "MEMBERS_ONLY":
+        return <Badge colorPalette="purple">للأعضاء</Badge>;
       case "PRIVATE":
         return <Badge colorPalette="gray">خاص</Badge>;
       default:
@@ -353,14 +373,14 @@ export default function AdminSocialPage() {
       <Flex justify="space-between" align="center" mb={6}>
         <Box>
           <Text as="h1" fontSize="2xl" fontWeight="700">
-            المنشورات الاجتماعية
+            مدونة المشروع
           </Text>
           <Text color="muted" fontSize="sm">
-            إدارة المنشورات والتفاعلات
+            إدارة مقالات المدونة والمحتوى التعليمي
           </Text>
         </Box>
         <Button colorPalette="brand" onClick={handleCreate}>
-          ➕ منشور جديد
+          ➕ مقالة جديدة
         </Button>
       </Flex>
 
@@ -397,7 +417,7 @@ export default function AdminSocialPage() {
               >
                 <option value="all">كل الظهور</option>
                 <option value="PUBLIC">عام</option>
-                <option value="TEACHERS_ONLY">للمعلمين</option>
+                <option value="MEMBERS_ONLY">للأعضاء</option>
                 <option value="PRIVATE">خاص</option>
               </NativeSelect.Field>
             </NativeSelect.Root>
@@ -413,9 +433,9 @@ export default function AdminSocialPage() {
       ) : posts.length === 0 ? (
         <PremiumCard variant="bordered" p={8} textAlign="center">
           <Text fontSize="4xl" mb={2}>📝</Text>
-          <Text fontWeight="600">لا توجد منشورات</Text>
+          <Text fontWeight="600">لا توجد مقالات</Text>
           <Text color="muted" fontSize="sm">
-            أنشئ أول منشور للبدء
+            أنشئ أول مقالة للبدء
           </Text>
         </PremiumCard>
       ) : (
@@ -425,84 +445,42 @@ export default function AdminSocialPage() {
               <Flex justify="space-between" align="start" gap={4}>
                 <Box flex={1}>
                   <HStack gap={2} mb={2}>
-                    {post.isPinned && <Badge colorPalette="orange">📌 مثبت</Badge>}
+                    {post.featured && <Badge colorPalette="orange">⭐ مميز</Badge>}
                     {getStatusBadge(post.status)}
                     {getVisibilityBadge(post.visibility)}
-                    {post.authorType === "INSTRUCTOR" && (
-                      <Badge colorPalette="cyan">معلم</Badge>
-                    )}
                   </HStack>
-                  
                   <Text fontWeight="600" fontSize="lg" mb={1}>
-                    {post.title || "(بدون عنوان)"}
+                    {post.title}
                   </Text>
-                  
-                  <Text color="muted" fontSize="sm" lineClamp={2} mb={2}>
-                    {post.excerpt || post.content.substring(0, 150)}
+                  <Text color="muted" fontSize="sm" mb={2}>
+                    {post.excerpt || post.content.substring(0, 150) + "..."}
                   </Text>
-
-                  {/* Media preview */}
-                  {post.media.length > 0 && (
-                    <HStack gap={2} mb={2}>
-                      {post.media.slice(0, 4).map((m) => (
-                        <Box
-                          key={m.id}
-                          w={12}
-                          h={12}
-                          borderRadius="md"
-                          overflow="hidden"
-                          bg="surface"
-                          border="1px solid"
-                          borderColor="border"
-                        >
-                          {m.type === "IMAGE" ? (
-                            <Image src={m.url} alt="" w="100%" h="100%" objectFit="cover" />
-                          ) : (
-                            <Flex w="100%" h="100%" align="center" justify="center">
-                              {m.type === "VIDEO" && "🎬"}
-                              {m.type === "AUDIO" && "🎵"}
-                              {m.type === "PDF" && "📄"}
-                              {m.type === "DOCUMENT" && "📁"}
-                            </Flex>
-                          )}
-                        </Box>
-                      ))}
-                      {post.media.length > 4 && (
-                        <Text fontSize="xs" color="muted">
-                          +{post.media.length - 4}
-                        </Text>
-                      )}
-                    </HStack>
-                  )}
-
-                  <HStack gap={4} fontSize="sm" color="muted">
-                    <Text>👁️ {post.viewsCount} مشاهدة</Text>
-                    <Text>❤️ {post.likesCount} إعجاب</Text>
-                    <Text>💬 {post.commentsCount} تعليق</Text>
-                    <Text>
-                      {new Date(post.createdAt).toLocaleDateString("ar")}
-                    </Text>
+                  <HStack gap={4} fontSize="xs" color="muted">
+                    <Text>📊 {post.viewsCount} مشاهدات</Text>
+                    <Text>❤️ {post.likesCount} إعجابات</Text>
+                    <Text>💬 {post.commentsCount} تعليقات</Text>
+                    <Text>📅 {new Date(post.createdAt).toLocaleDateString("ar")}</Text>
                   </HStack>
                 </Box>
 
-                <Stack gap={2}>
+                <Stack gap={2} align="flex-start">
                   <Button size="sm" variant="outline" onClick={() => handleEdit(post)}>
-                    ✏️ تعديل
+                    ✏️ تحرير
                   </Button>
                   <Button
                     size="sm"
                     variant="outline"
-                    onClick={() => handleTogglePin(post)}
+                    onClick={() => handleToggleFeatured(post)}
                   >
-                    {post.isPinned ? "📌 إلغاء التثبيت" : "📌 تثبيت"}
+                    {post.featured ? "🔄 إلغاء تمييز" : "⭐ تمييز"}
                   </Button>
-                  {post.status !== "PUBLISHED" && (
+                  {post.status === "DRAFT" && (
                     <Button
                       size="sm"
-                      colorPalette="green"
+                      variant="outline"
                       onClick={() => handleStatusChange(post, "PUBLISHED")}
                     >
-                      نشر
+                      📤 نشر
                     </Button>
                   )}
                   {post.status === "PUBLISHED" && (
@@ -543,24 +521,22 @@ export default function AdminSocialPage() {
           onClick={() => {
             setModalMode(null);
             resetForm();
-            setUseMediaEditor(false);
           }}
         >
           <PremiumCard
             variant="bordered"
             p={6}
             w="100%"
-            maxW="900px"
+            maxW="950px"
             maxH="90vh"
             overflow="auto"
             onClick={(e: React.MouseEvent) => e.stopPropagation()}
           >
             <Text fontSize="xl" fontWeight="700" mb={4}>
-              {modalMode === "create" ? "إنشاء منشور جديد" : "تعديل المنشور"}
+              {modalMode === "create" ? "إنشاء مقالة جديدة" : "تعديل المقالة"}
             </Text>
 
-            {/* Toggle between Rich Editor and Media Editor */}
-            <Tabs.Root defaultValue={useMediaEditor ? "media" : "text"} mb={4}>
+            <Tabs.Root defaultValue="text" mb={4}>
               <Tabs.List>
                 <Tabs.Trigger value="text">محرر النصوص</Tabs.Trigger>
                 <Tabs.Trigger value="media">محرر الوسائط المتقدم</Tabs.Trigger>
@@ -570,11 +546,26 @@ export default function AdminSocialPage() {
                 <Stack gap={4} py={4}>
                   {/* Title */}
                   <Box>
-                    <Text fontWeight="600" mb={2}>العنوان (اختياري)</Text>
+                    <Text fontWeight="600" mb={2}>العنوان *</Text>
                     <Input
                       value={formData.title}
-                      onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                      placeholder="عنوان المنشور..."
+                      onChange={(e) => {
+                        setFormData({ ...formData, title: e.target.value });
+                        if (!formData.slug) {
+                          setFormData(prev => ({ ...prev, slug: generateSlug(e.target.value) }));
+                        }
+                      }}
+                      placeholder="عنوان المقالة..."
+                    />
+                  </Box>
+
+                  {/* Slug */}
+                  <Box>
+                    <Text fontWeight="600" mb={2}>الرابط (Slug)</Text>
+                    <Input
+                      value={formData.slug}
+                      onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
+                      placeholder="رابط-المقالة-الفريد"
                     />
                   </Box>
 
@@ -595,9 +586,22 @@ export default function AdminSocialPage() {
                     <Textarea
                       value={formData.excerpt}
                       onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
-                      placeholder="ملخص قصير للمنشور..."
+                      placeholder="ملخص قصير للمقالة..."
                       rows={2}
                     />
+                  </Box>
+
+                  {/* Tags */}
+                  <Box>
+                    <Text fontWeight="600" mb={2}>الوسوم (اختياري)</Text>
+                    <Input
+                      value={tagsInput}
+                      onChange={(e) => setTagsInput(e.target.value)}
+                      placeholder="وسم1, وسم2, وسم3..."
+                    />
+                    <Text fontSize="xs" color="muted" mt={1}>
+                      أدخل الوسوم مفصولة بفواصل
+                    </Text>
                   </Box>
 
                   {/* Media */}
@@ -615,11 +619,11 @@ export default function AdminSocialPage() {
               <Tabs.Content value="media">
                 <Box py={4}>
                   <Text fontSize="sm" color="muted" mb={4}>
-                    استخدم محرر الوسائط المتقدم لإنشاء صور وفيديوهات احترافية مع تأثيرات وطبقات متقدمة
+                    استخدم محرر الوسائط المتقدم لإنشاء صور وفيديوهات احترافية للمقالة
                   </Text>
                   <PostEditor
                     onExport={handleMediaEditorExport}
-                    onCancel={() => setUseMediaEditor(false)}
+                    onCancel={() => {}}
                     initialMedia={media
                       .filter(m => m.type === "IMAGE" || m.type === "VIDEO")
                       .map(m => ({
@@ -637,7 +641,7 @@ export default function AdminSocialPage() {
             </Tabs.Root>
 
             {/* Options Grid */}
-            <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }} gap={4} mb={4}>
+            <Grid templateColumns={{ base: "1fr", md: "repeat(3, 1fr)" }} gap={4} mb={4}>
               <Box>
                 <Text fontWeight="600" mb={2}>الحالة</Text>
                 <NativeSelect.Root>
@@ -657,29 +661,31 @@ export default function AdminSocialPage() {
                 <NativeSelect.Root>
                   <NativeSelect.Field
                     value={formData.visibility}
-                    onChange={(e) => setFormData({ ...formData, visibility: e.target.value as "PUBLIC" | "TEACHERS_ONLY" | "PRIVATE" })}
+                    onChange={(e) => setFormData({ ...formData, visibility: e.target.value as "PUBLIC" | "MEMBERS_ONLY" | "PRIVATE" })}
                   >
                     <option value="PUBLIC">عام للجميع</option>
-                    <option value="TEACHERS_ONLY">للمعلمين فقط</option>
+                    <option value="MEMBERS_ONLY">للأعضاء فقط</option>
                     <option value="PRIVATE">خاص</option>
                   </NativeSelect.Field>
                 </NativeSelect.Root>
               </Box>
+
+              <Box>
+                <Checkbox.Root
+                  checked={formData.featured}
+                  onCheckedChange={(e) => setFormData({ ...formData, featured: !!e.checked })}
+                >
+                  <Checkbox.HiddenInput />
+                  <Checkbox.Control>
+                    <Checkbox.Indicator />
+                  </Checkbox.Control>
+                  <Checkbox.Label>⭐ مقالة مميزة</Checkbox.Label>
+                </Checkbox.Root>
+              </Box>
             </Grid>
 
-            {/* Toggles */}
+            {/* Allow Comments */}
             <HStack gap={6} mb={4}>
-              <Checkbox.Root
-                checked={formData.isPinned}
-                onCheckedChange={(e) => setFormData({ ...formData, isPinned: !!e.checked })}
-              >
-                <Checkbox.HiddenInput />
-                <Checkbox.Control>
-                  <Checkbox.Indicator />
-                </Checkbox.Control>
-                <Checkbox.Label>📌 تثبيت في الأعلى</Checkbox.Label>
-              </Checkbox.Root>
-
               <Checkbox.Root
                 checked={formData.allowComments}
                 onCheckedChange={(e) => setFormData({ ...formData, allowComments: !!e.checked })}
@@ -690,17 +696,6 @@ export default function AdminSocialPage() {
                 </Checkbox.Control>
                 <Checkbox.Label>💬 السماح بالتعليقات</Checkbox.Label>
               </Checkbox.Root>
-
-              <Checkbox.Root
-                checked={formData.allowLikes}
-                onCheckedChange={(e) => setFormData({ ...formData, allowLikes: !!e.checked })}
-              >
-                <Checkbox.HiddenInput />
-                <Checkbox.Control>
-                  <Checkbox.Indicator />
-                </Checkbox.Control>
-                <Checkbox.Label>❤️ السماح بالإعجابات</Checkbox.Label>
-              </Checkbox.Root>
             </HStack>
 
             {/* Actions */}
@@ -710,7 +705,6 @@ export default function AdminSocialPage() {
                 onClick={() => {
                   setModalMode(null);
                   resetForm();
-                  setUseMediaEditor(false);
                 }}
               >
                 إلغاء
