@@ -168,7 +168,7 @@ export async function GET(request: Request): Promise<NextResponse<AuthMeResponse
         response.cookies.set("user-data", encodeUserData(userData), {
           httpOnly: false,
           secure: process.env.NODE_ENV === "production",
-          sameSite: "lax",
+          sameSite: "none" as const,
           maxAge: 60 * 60 * 24 * 7, // 7 days
           path: "/",
         });

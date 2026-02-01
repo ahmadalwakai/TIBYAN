@@ -63,15 +63,15 @@ export async function POST(request: Request) {
     );
     response.cookies.set("auth-token", token, {
       httpOnly: true,
-      secure: isProduction,
-      sameSite: "lax",
+      secure: true,
+      sameSite: "none",
       maxAge: cookieMaxAge,
       path: "/",
     });
     response.cookies.set("user-data", encodeUserData(user), {
       httpOnly: false,
-      secure: isProduction,
-      sameSite: "lax",
+      secure: true,
+      sameSite: "none",
       maxAge: cookieMaxAge,
       path: "/",
     });

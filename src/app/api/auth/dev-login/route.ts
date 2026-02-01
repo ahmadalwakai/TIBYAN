@@ -40,8 +40,8 @@ export async function POST(request: Request): Promise<NextResponse> {
     // Cookie options for development
     const cookieOptions = {
       httpOnly: true,
-      secure: false, // Dev is HTTP
-      sameSite: "lax" as const,
+      secure: true, // Use Secure with SameSite=None
+      sameSite: "none" as const, // Allow cross-domain
       maxAge: cookieMaxAge,
       path: "/",
     };

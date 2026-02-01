@@ -207,11 +207,11 @@ export async function POST(request: Request) {
     const isProduction = process.env.NODE_ENV === "production";
     const cookieMaxAge = 60 * 60 * 24 * 7; // 7 days
 
-    // Cookie options
+    // Cookie options - use SameSite=None for cross-domain, Secure required
     const cookieOptions = {
       httpOnly: true,
-      secure: isProduction, // HTTPS only in production
-      sameSite: "lax" as const, // Works with HTTP on localhost
+      secure: true, // Always use Secure with SameSite=None
+      sameSite: "none" as const, // Required for cross-domain cookies
       maxAge: cookieMaxAge,
       path: "/",
     };
@@ -228,10 +228,10 @@ export async function POST(request: Request) {
     // This ensures Set-Cookie headers are processed by browser before page loads
     const response = NextResponse.redirect(new URL(successRedirect, request.url), 303);
 
-    // Set cookies with proper headers
+    // Set cookies with proper headers for cross-domain support
     // Use Set-Cookie headers directly for reliability
-    const authTokenCookie = `auth-token=${authToken}; Path=/; Max-Age=${cookieOptions.maxAge}; SameSite=Lax${isProduction ? "; Secure" : ""}; HttpOnly`;
-    const userDataCookie = `user-data=${encodeUserData(cookieUserData)}; Path=/; Max-Age=${cookieOptions.maxAge}; SameSite=Lax${isProduction ? "; Secure" : ""}`;
+    const authTokenCookie = `auth-token=${authToken}; Path=/; Max-Age=${cookieOptions.maxAge}; SameSite=None; Secure; HttpOnly`;
+    const userDataCookie = `user-data=${encodeUserData(cookieUserData)}; Path=/; Max-Age=${cookieOptions.maxAge}; SameSite=None; Secure`;
     
     response.headers.append("Set-Cookie", authTokenCookie);
     response.headers.append("Set-Cookie", userDataCookie);

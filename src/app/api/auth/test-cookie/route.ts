@@ -43,8 +43,8 @@ export async function POST(): Promise<NextResponse> {
   // Set a simple test cookie
   response.cookies.set("test-cookie", testValue, {
     httpOnly: false,
-    secure: false,
-    sameSite: "lax",
+    secure: true,
+    sameSite: "none",
     maxAge: 60 * 5, // 5 minutes
     path: "/",
   });
