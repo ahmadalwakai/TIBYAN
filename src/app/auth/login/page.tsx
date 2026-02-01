@@ -70,16 +70,18 @@ function LoginForm() {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
+      const safeRedirect = isSafeRedirect(redirectTo) ? redirectTo : "/member";
+      
+      // Use alternative GET endpoint to bypass servers that block POST
+      // This creates a URL like: /api/auth/login/test@test.com/password123?redirect=/member
+      const loginUrl = `/api/auth/login/${encodeURIComponent(formData.email)}/${encodeURIComponent(
+        formData.password
+      )}?redirect=${encodeURIComponent(safeRedirect)}`;
+
+      const res = await fetch(loginUrl, {
+        method: "GET",
         credentials: "include",
-        headers: { "Content-Type": "application/json" },
         redirect: "manual",
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-          redirect: isSafeRedirect(redirectTo) ? redirectTo : "/member",
-        }),
       });
 
       // Handle network errors (status 0)
