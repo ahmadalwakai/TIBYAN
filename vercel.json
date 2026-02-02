@@ -1,13 +1,16 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
-  "buildCommand": "prisma generate && next build",
+  "buildCommand": "PRISMA_ENGINES_MIRROR=https://binaries.prisma.sh prisma generate --no-hints && next build",
   "installCommand": "npm install",
   "regions": ["fra1"],
   "build": {
     "env": {
       "PRISMA_CLI_BINARY_TARGETS": "rhel-openssl-3.0.x",
-      "PRISMA_SKIP_POSTINSTALL_GENERATE": "true"
+      "PRISMA_ENGINES_MIRROR": "https://binaries.prisma.sh",
+      "PRISMA_SKIP_POSTINSTALL_GENERATE": "true",
+      "PRISMA_GENERATE_SKIP_AUTOINSTALL": "false",
+      "DEBUG": "prisma:*"
     }
   },
   "functions": {
