@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { IBM_Plex_Sans_Arabic, Inter } from "next/font/google";
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
+import AiAgentFab from "@/components/layout/AiAgentFab";
 import LiveChatFab from "@/components/layout/LiveChatFab";
 import WhatsAppFab from "@/components/layout/WhatsAppFab";
 import Providers from "./providers";
@@ -114,6 +115,7 @@ export default async function RootLayout({
             <Header />
             {children}
             <Footer />
+            <AiAgentFab />
             <LiveChatFab />
             <WhatsAppFab />
           </Providers>

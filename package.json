@@ -7,7 +7,10 @@
     "build": "prisma generate && next build",
     "postinstall": "prisma generate",
     "start": "next start",
-    "lint": "eslint",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "quality": "npm run lint && npm run typecheck && npm run test && npm run build",
     "db:push": "prisma db push",
     "db:seed": "tsx prisma/seed.ts",
     "db:studio": "prisma studio",
@@ -33,6 +36,7 @@
     "@tiptap/react": "^3.18.0",
     "@tiptap/starter-kit": "^3.18.0",
     "@types/bcryptjs": "^2.4.6",
+    "@types/pdf-parse": "^1.1.5",
     "bcryptjs": "^3.0.3",
     "dotenv": "^17.2.3",
     "fabric": "^7.1.0",
@@ -44,11 +48,14 @@
     "next-auth": "^4.24.13",
     "next-intl": "^4.8.0",
     "next-themes": "^0.4.6",
+    "pdf-lib": "^1.17.1",
+    "pdf-parse": "^2.4.5",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-hook-form": "^7.71.1",
     "react-icons": "^5.5.0",
     "resend": "^6.9.1",
+    "sharp": "^0.34.5",
     "ws": "^8.19.0",
     "zod": "^4.3.6",
     "zustand": "^5.0.10"
@@ -58,10 +65,12 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/ws": "^8.18.1",
+    "@vitest/coverage-v8": "^4.0.18",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "prisma": "^7.3.0",
     "tsx": "^4.21.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.0.18"
   }
 }

@@ -127,6 +127,17 @@ Open http://localhost:3000 to view the app.
 | `NEXTAUTH_URL` | ✅ | Your app URL |
 | `NEXT_PUBLIC_APP_URL` | ❌ | Public app URL |
 
+### AI Agent Providers
+
+Tibyan ships with a tiered LLM provider stack for the in-app AI agent:
+
+- `LLM_PROVIDER` supports `local`, `zyphon`, `mock`, or `auto` (default). Auto mode tries the local llama.cpp server first, then Zyphon Cloud, and finally falls back to the mock provider.
+- Local mode uses the bundled llama.cpp tooling (`LLAMA_SERVER_URL`, `LLM_TIMEOUT_MS`, etc.).
+- Zyphon Cloud mode requires `ZYPHON_API_KEY`, with optional tuning via `ZYPHON_API_BASE_URL`, `ZYPHON_MODEL_ID`, `ZYPHON_ORG_ID`, and `ZYPHON_TIMEOUT_MS`.
+- Mock mode stays entirely offline with deterministic Arabic-first replies.
+
+> **Tip:** Committers should keep local development on `LLM_PROVIDER=auto` so the AI agent automatically degrades to mock responses when neither the local server nor Zyphon are available.
+
 ### Recommended Database Providers
 
 - [Vercel Postgres](https://vercel.com/storage/postgres) - Seamless integration

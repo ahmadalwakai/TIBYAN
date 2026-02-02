@@ -12,6 +12,11 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // External dependencies / AI model infrastructure (not project code)
+    "AI Agent/**",
+    "test D/**",
+    // Node modules (should be default but explicit)
+    "node_modules/**",
   ]),
 ]);
 

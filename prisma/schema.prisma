@@ -12,7 +12,7 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  schemas   = ["public", "students", "teachers", "admins"]
+  schemas   = ["public", "students", "teachers", "admins", "ai"]
 }
 
 model User {
@@ -1191,3 +1191,91 @@ enum MeetingStatus {
   
   @@schema("public")
 }
+
+// ==========================================
+// AI AGENT SYSTEM
+// ==========================================
+
+model AgentSession {
+  id          String   @id @default(cuid())
+  userId      String?
+  userRole    Role?
+  locale      String   @default("ar")
+  
+  // Session data
+  context     Json?    // Current context (courseId, lessonId, etc.)
+  preferences Json?    // User preferences for this session
+  
+  // Conversation
+  messageCount Int     @default(0)
+  
+  // Timestamps
+  startedAt   DateTime @default(now())
+  lastActiveAt DateTime @default(now())
+  expiresAt   DateTime
+  
+  // Relations
+  messages    AgentMessage[]
+  
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("agent_sessions")
+  @@schema("ai")
+}
+
+model AgentMessage {
+  id          String   @id @default(cuid())
+  sessionId   String
+  session     AgentSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  
+  role        AgentMessageRole
+  content     String   @db.Text
+  
+  // For tool calls
+  toolName    String?
+  toolInput   Json?
+  toolOutput  Json?
+  
+  // Metadata
+  tokenCount  Int?
+  durationMs  Int?
+  cached      Boolean  @default(false)
+  
+  createdAt   DateTime @default(now())
+  
+  @@index([sessionId])
+  @@map("agent_messages")
+  @@schema("ai")
+}
+
+model AgentPromptTemplate {
+  id          String   @id @default(cuid())
+  name        String
+  templateId  String   // Logical ID (e.g., "system_prompt")
+  version     Int      @default(1)
+  locale      String   @default("ar")
+  
+  template    String   @db.Text
+  variables   String[] @default([])
+  
+  isActive    Boolean  @default(true)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdBy   String?
+  
+  @@unique([templateId, version, locale])
+  @@index([templateId, isActive])
+  @@map("agent_prompt_templates")
+  @@schema("ai")
+}
+
+enum AgentMessageRole {
+  SYSTEM
+  USER
+  ASSISTANT
+  TOOL
+  
+  @@schema("ai")
+}
+
