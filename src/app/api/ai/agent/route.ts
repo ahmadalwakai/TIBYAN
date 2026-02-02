@@ -166,6 +166,141 @@ export async function POST(request: NextRequest) {
     request.headers.get("accept-language")?.split(",")[0]?.split("-")[0] ??
     "ar";
 
-  return NextResponse.json({ ok: true, data: { reply: "AI Agent is under development" } });
+  try {
+    // Parse and validate request body
+    const body = await request.json().catch(() => null);
+    if (!body) {
+      return NextResponse.json(
+        {
+          ok: false,
+          error: "Invalid JSON body",
+          errorCode: "INVALID_INPUT",
+        },
+        { status: 400 }
+      );
+    }
+
+    const parsed = AgentRequestSchema.safeParse(body);
+    if (!parsed.success) {
+      return NextResponse.json(
+        {
+          ok: false,
+          error: "Invalid request format",
+          errorCode: "INVALID_INPUT",
+          details: parsed.error.issues,
+        },
+        { status: 400 }
+      );
+    }
+
+    const { message, sessionId, history = [] } = parsed.data;
+
+    // Input size validation
+    const sizeCheck = validateInputSize(message);
+    if (!sizeCheck.isValid) {
+      return NextResponse.json(
+        {
+          ok: false,
+          error: `Input too large: ${sizeCheck.characterCount}/${sizeCheck.limit} characters`,
+          errorCode: "INPUT_TOO_LARGE",
+        },
+        { status: 413 }
+      );
+    }
+
+    // Identity lock check (HIGHEST PRIORITY)
+    const identityCheck = identityGuard(message);
+    if (identityCheck.intercepted) {
+      return NextResponse.json({
+        ok: true,
+        data: {
+          reply: identityCheck.response || "Security policy enforced",
+          provider: "identity-lock",
+          sessionId: sessionId || generateSessionId(userId),
+        },
+      });
+    }
+
+    // Rate limit check
+    const rateLimitCheck = await policy.checkRateLimit(userId || "anonymous");
+    if (!rateLimitCheck.allowed) {
+      return NextResponse.json(
+        {
+          ok: false,
+          error: "Rate limit exceeded",
+          errorCode: "RATE_LIMITED",
+          retryAfter: rateLimitCheck.retryAfterMs,
+        },
+        { status: 429 }
+      );
+    }
+
+    // Build conversation history
+    const messages: LLMMessage[] = [
+      { role: "system" as const, content: buildSystemPrompt([], { isAdmin: userRole === "ADMIN" }) },
+      ...history.map(h => ({ role: h.role as "user" | "assistant", content: h.content })),
+      { role: "user" as const, content: message },
+    ];
+
+    // Call LLM with automatic provider resolution
+    const result = await chatCompletion(messages, {
+      temperature: 0.7,
+      maxTokens: 1024,
+    });
+
+    // Audit log
+    if (userId) {
+      await audit.log({
+        userId,
+        userRole: (user?.role === "STUDENT" || user?.role === "INSTRUCTOR" || user?.role === "ADMIN") ? user.role : undefined,
+        action: "AGENT_REQUEST",
+        requestId,
+        sessionId: sessionId,
+        metadata: {
+          provider: result.provider,
+          fallbackUsed: result.fallbackUsed,
+          tokensUsed: result.usage?.totalTokens,
+          cached: result.cached,
+        },
+      });
+    }
+
+    if (!result.ok) {
+      return NextResponse.json(
+        {
+          ok: false,
+          error: result.error,
+          errorCode: result.errorCode,
+          provider: result.provider,
+          fallbackUsed: result.fallbackUsed,
+        },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json({
+      ok: true,
+      data: {
+        reply: result.content,
+        provider: result.provider,
+        fallbackUsed: result.fallbackUsed,
+        sessionId: sessionId || generateSessionId(userId),
+        usage: result.usage,
+        cached: result.cached,
+      },
+    });
+
+  } catch (error) {
+    console.error("[AI Agent] POST error:", error);
+
+    return NextResponse.json(
+      {
+        ok: false,
+        error: "Internal server error",
+        errorCode: "INTERNAL_ERROR",
+      },
+      { status: 500 }
+    );
+  }
 }
 
