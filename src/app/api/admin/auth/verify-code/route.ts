@@ -3,6 +3,8 @@ import { prisma } from "@/lib/db";
 import { signToken } from "@/lib/jwt";
 import { AdminVerifyCodeSchema } from "@/lib/validations";
 import { isAuthorizedAdmin } from "@/config/admin";
+import { encodeUserData, type CookieUserData } from "@/lib/auth/cookie-encoding";
+import { createCsrfToken, CSRF_COOKIE_NAME, CSRF_MAX_AGE } from "@/lib/csrf";
 
 // Force Node.js runtime - Prisma doesn't work in Edge
 export const runtime = 'nodejs';
@@ -139,6 +141,20 @@ export async function POST(request: Request) {
       role: user.role,
     });
 
+    // Prepare user data for cookie
+    const cookieUserData: CookieUserData = {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      role: user.role,
+    };
+
+    // Cookie settings (match login route)
+    const isDev = process.env.NODE_ENV !== "production";
+    const sameSiteValue: "lax" | "none" = isDev ? "lax" : "none";
+    const secureValue = !isDev;
+    const maxAge = 7 * 24 * 60 * 60; // 7 days
+
     // Create response with secure cookie
     const response = NextResponse.json(
       {
@@ -156,12 +172,30 @@ export async function POST(request: Request) {
       { status: 200 }
     );
 
-    // Set secure HTTP-only cookie
+    // Set auth-token cookie (httpOnly)
     response.cookies.set("auth-token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      maxAge: 7 * 24 * 60 * 60, // 7 days
+      secure: secureValue,
+      sameSite: sameSiteValue,
+      maxAge,
+      path: "/",
+    });
+
+    // Set user-data cookie (readable by JS)
+    response.cookies.set("user-data", encodeUserData(cookieUserData), {
+      httpOnly: false,
+      secure: secureValue,
+      sameSite: sameSiteValue,
+      maxAge,
+      path: "/",
+    });
+
+    // Set CSRF token cookie
+    response.cookies.set(CSRF_COOKIE_NAME, createCsrfToken(), {
+      httpOnly: false,
+      secure: secureValue,
+      sameSite: sameSiteValue,
+      maxAge: CSRF_MAX_AGE,
       path: "/",
     });
 

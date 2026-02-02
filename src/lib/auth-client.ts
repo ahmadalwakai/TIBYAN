@@ -18,22 +18,56 @@ export interface RegisterData extends LoginCredentials {
 }
 
 /**
+ * Get a cookie value by name
+ */
+function getCookieValue(name: string): string | null {
+  if (typeof document === "undefined") return null;
+  const match = document.cookie.match(new RegExp(`(^| )${name}=([^;]+)`));
+  return match ? match[2] : null;
+}
+
+/**
+ * Clear a cookie with various attribute combinations for robustness
+ */
+function clearCookie(name: string): void {
+  const paths = ["/", ""];
+  const sameSites = ["lax", "strict", "none"];
+  
+  for (const path of paths) {
+    for (const sameSite of sameSites) {
+      document.cookie = `${name}=; path=${path || "/"}; max-age=0; samesite=${sameSite}`;
+    }
+  }
+}
+
+/**
  * Logout the current user by clearing all auth cookies and notifying server
  */
 export async function logout(): Promise<void> {
   try {
+    // Get CSRF token for authenticated request
+    const csrfToken = getCookieValue("csrf-token");
+    
+    // Build headers with CSRF token if available
+    const headers: HeadersInit = {};
+    if (csrfToken) {
+      headers["x-csrf-token"] = csrfToken;
+    }
+
     // Notify server to clear session
     await fetch("/api/auth/logout", {
       method: "POST",
       credentials: "include",
+      headers,
     });
   } catch {
     // Ignore errors, still clear locally
   }
 
-  // Clear auth cookies locally
-  document.cookie = "auth-token=; path=/; max-age=0; samesite=lax";
-  document.cookie = "user-data=; path=/; max-age=0; samesite=lax";
+  // Clear all auth cookies locally (robustly)
+  clearCookie("auth-token");
+  clearCookie("user-data");
+  clearCookie("csrf-token");
   
   // Full page reload to ensure all auth state is cleared
   window.location.href = "/auth/login";
@@ -103,12 +137,17 @@ export function getCurrentUserClient(): CookieUserData | null {
  * Check if user is authenticated (client-side)
  * Note: This only checks if cookies exist, not if they're valid
  */
-export function isAuthenticatedClient(): boolean {
+export async function isAuthenticatedClient(): Promise<boolean> {
   if (typeof window === "undefined") return false;
 
-  const cookies = document.cookie;
-  const hasAuthToken = cookies.includes("auth-token=");
-  const hasUserData = cookies.includes("user-data=");
+  try {
+    const response = await fetch("/api/auth/me", {
+      method: "GET",
+      credentials: "include",
+    });
 
-  return hasAuthToken && hasUserData;
+    return response.ok;
+  } catch {
+    return false;
+  }
 }

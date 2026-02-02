@@ -5,6 +5,7 @@ import { LoginSchema } from "@/lib/validations";
 import { RATE_LIMITS, checkRateLimit, getClientIp } from "@/lib/rate-limit";
 import { encodeUserData, type CookieUserData } from "@/lib/auth/cookie-encoding";
 import { getRoleRedirect } from "@/lib/auth/roleRedirect";
+import { createCsrfToken, CSRF_COOKIE_NAME, CSRF_MAX_AGE } from "@/lib/csrf";
 
 // Force Node.js runtime for Prisma
 export const runtime = 'nodejs';
@@ -306,6 +307,7 @@ export async function POST(request: Request) {
     
     const authTokenCookie = `auth-token=${authToken}; Path=/; Max-Age=604800; SameSite=${sameSiteValue}${secureAttr}; HttpOnly`;
     const userDataCookie = `user-data=${encodeUserData(cookieUserData)}; Path=/; Max-Age=604800; SameSite=${sameSiteValue}${secureAttr}`;
+    const csrfTokenCookie = `${CSRF_COOKIE_NAME}=${createCsrfToken()}; Path=/; Max-Age=${CSRF_MAX_AGE}; SameSite=${sameSiteValue}${secureAttr}`;
 
     const defaultRedirect = getRoleRedirect(user.role);
     const requestedRedirect = isSafeRedirect(redirectParam, defaultRedirect);
@@ -322,6 +324,7 @@ export async function POST(request: Request) {
     // Use Set-Cookie headers directly for reliability
     response.headers.append("Set-Cookie", authTokenCookie);
     response.headers.append("Set-Cookie", userDataCookie);
+    response.headers.append("Set-Cookie", csrfTokenCookie);
 
     if (process.env.NODE_ENV === "development") {
       console.log("[Login] ✅ Login successful for:", {
