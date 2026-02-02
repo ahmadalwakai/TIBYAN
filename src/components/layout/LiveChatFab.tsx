@@ -9,7 +9,7 @@ export default function LiveChatFab() {
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [messages, setMessages] = useState<{ text: string; sender: "user" | "support" }[]>([]);
   const [inputValue, setInputValue] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [_isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     // Create session when chat is opened for the first time
@@ -39,7 +39,7 @@ export default function LiveChatFab() {
       const result = await response.json();
       if (result.ok) {
         setSessionId(result.data.sessionId);
-        setMessages(result.data.session.messages.map((m: any) => ({
+        setMessages(result.data.session.messages.map((m: { text: string; sender: string }) => ({
           text: m.text,
           sender: m.sender,
         })));
@@ -57,7 +57,7 @@ export default function LiveChatFab() {
       });
       const result = await response.json();
       if (result.ok) {
-        setMessages(result.data.messages.map((m: any) => ({
+        setMessages(result.data.messages.map((m: { text: string; sender: string }) => ({
           text: m.text,
           sender: m.sender,
         })));
@@ -87,7 +87,7 @@ export default function LiveChatFab() {
         });
         const result = await response.json();
         if (result.ok) {
-          setMessages(result.data.session.messages.map((m: any) => ({
+          setMessages(result.data.session.messages.map((m: { text: string; sender: string }) => ({
             text: m.text,
             sender: m.sender,
           })));

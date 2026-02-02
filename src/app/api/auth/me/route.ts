@@ -58,8 +58,6 @@ interface AuthMeResponse {
   error?: string;
 }
 
-const isDev = process.env.NODE_ENV === "development";
-
 /**
  * GET /api/auth/me
  *

@@ -81,9 +81,9 @@ export async function GET(request: NextRequest) {
     };
 
     return NextResponse.json({ ok: true, data: stats });
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json(
-      { ok: false, error: error.message || "Failed to fetch statistics" },
+      { ok: false, error: error instanceof Error ? error.message : "Failed to fetch statistics" },
       { status: 500 }
     );
   }

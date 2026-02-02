@@ -1,4 +1,4 @@
-import { Box, Button, Container, Heading, SimpleGrid, Stack, Text } from "@chakra-ui/react";
+import { Box, Container, Heading, SimpleGrid, Stack, Text } from "@chakra-ui/react";
 import PremiumCard from "@/components/ui/PremiumCard";
 
 const faqs = [

@@ -224,7 +224,7 @@ export function PreviewStage() {
       const filterPreset = FILTER_PRESETS.find((f) => f.id === activeFilter);
       if (filterPreset?.cssFilter) {
         // Apply with intensity
-        const intensity = filterIntensity / 100;
+        const _intensity = filterIntensity / 100;
         filters.push(filterPreset.cssFilter);
       }
     }
@@ -296,7 +296,7 @@ export function PreviewStage() {
         {isVideoMode && activeMedia ? (
           <>
             {/* Video Element */}
-            {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+            { }
             <video
               ref={videoRef}
               src={activeMedia.url}

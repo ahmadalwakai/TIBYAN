@@ -7,7 +7,7 @@
  * - Prisma model fields
  */
 
-import { resolve } from "path";
+
 
 async function verifyAdminCertificates() {
   console.log("🔍 Starting Admin Certificates Module Verification...\n");

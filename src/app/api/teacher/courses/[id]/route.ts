@@ -42,7 +42,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       price: course.price,
       duration: course.duration,
       level: course.level,
-      lessons: course.lessons.map((l) => ({
+      lessons: course.lessons.map((l: (typeof course.lessons)[number]) => ({
         id: l.id,
         title: l.title,
         description: l.description,
@@ -51,7 +51,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
         videoUrl: l.videoUrl,
       })),
       students: course.enrollments.length,
-      earnings: Math.round(course.payments.reduce((sum, p) => sum + p.amount * 0.8, 0)),
+      earnings: Math.round(course.payments.reduce((sum: number, p: (typeof course.payments)[number]) => sum + p.amount * 0.8, 0)),
       createdAt: new Date(course.createdAt).toLocaleDateString("ar-SA"),
       publishedAt: course.publishedAt ? new Date(course.publishedAt).toLocaleDateString("ar-SA") : null,
     };

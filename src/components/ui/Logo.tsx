@@ -12,7 +12,7 @@ interface LogoProps {
 export default function Logo({ size = 392, showText = true }: LogoProps) {
   const [imageError, setImageError] = useState(false);
   // Calculate height maintaining aspect ratio (logo is roughly square with text below)
-  const imageHeight = showText ? size * 1.4 : size;
+  const _imageHeight = showText ? size * 1.4 : size;
 
   // Fallback text logo when image is not available
   if (imageError) {

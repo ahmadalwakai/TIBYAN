@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
 
     const platformFeeRate = 0.2; // 20%
 
-    const earnings = payments.map((p) => ({
+    const earnings = payments.map((p: (typeof payments)[number]) => ({
       id: p.id,
       courseName: p.course.title,
       studentName: p.user.name,
@@ -42,22 +42,22 @@ export async function GET(request: NextRequest) {
     }));
 
     // Stats
-    const totalEarnings = payments.reduce((sum, p) => sum + p.amount * (1 - platformFeeRate), 0);
-    const platformFees = payments.reduce((sum, p) => sum + p.amount * platformFeeRate, 0);
+    const totalEarnings = payments.reduce((sum: number, p: (typeof payments)[number]) => sum + p.amount * (1 - platformFeeRate), 0);
+    const platformFees = payments.reduce((sum: number, p: (typeof payments)[number]) => sum + p.amount * platformFeeRate, 0);
     
-    const thisMonthPayments = payments.filter((p) => p.paidAt && new Date(p.paidAt) >= startOfMonth);
-    const thisMonthEarnings = thisMonthPayments.reduce((sum, p) => sum + p.amount * (1 - platformFeeRate), 0);
+    const thisMonthPayments = payments.filter((p: (typeof payments)[number]) => p.paidAt && new Date(p.paidAt) >= startOfMonth);
+    const thisMonthEarnings = thisMonthPayments.reduce((sum: number, p: (typeof thisMonthPayments)[number]) => sum + p.amount * (1 - platformFeeRate), 0);
 
     const lastMonthPayments = payments.filter(
-      (p) => p.paidAt && new Date(p.paidAt) >= startOfLastMonth && new Date(p.paidAt) < startOfMonth
+      (p: (typeof payments)[number]) => p.paidAt && new Date(p.paidAt) >= startOfLastMonth && new Date(p.paidAt) < startOfMonth
     );
-    const lastMonthEarnings = lastMonthPayments.reduce((sum, p) => sum + p.amount * (1 - platformFeeRate), 0);
+    const lastMonthEarnings = lastMonthPayments.reduce((sum: number, p: (typeof lastMonthPayments)[number]) => sum + p.amount * (1 - platformFeeRate), 0);
 
     // Pending earnings (could be from pending payments)
     const pendingPayments = await prisma.payment.findMany({
       where: { course: { instructorId: userId }, status: "PENDING" },
     });
-    const pendingEarnings = pendingPayments.reduce((sum, p) => sum + p.amount * (1 - platformFeeRate), 0);
+    const pendingEarnings = pendingPayments.reduce((sum: number, p: (typeof pendingPayments)[number]) => sum + p.amount * (1 - platformFeeRate), 0);
 
     const stats = {
       totalEarnings: Math.round(totalEarnings),

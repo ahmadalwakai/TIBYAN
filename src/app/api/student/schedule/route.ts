@@ -6,7 +6,7 @@ export async function GET(request: NextRequest) {
   if (authResult instanceof NextResponse) return authResult;
 
   try {
-    const userId = authResult.id;
+    const _userId = authResult.id;
 
     // Return empty schedule for now (can be extended with LiveSession model)
     return NextResponse.json({ ok: true, data: [] });

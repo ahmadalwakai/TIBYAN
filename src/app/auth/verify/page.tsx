@@ -3,12 +3,11 @@
 import { useEffect, useState, Suspense } from "react";
 import { Box, Button, Container, Heading, Stack, Text, Spinner } from "@chakra-ui/react";
 import Link from "next/link";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import PremiumCard from "@/components/ui/PremiumCard";
 
 function VerifyEmailContent() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
   const [message, setMessage] = useState("");
 
@@ -16,6 +15,8 @@ function VerifyEmailContent() {
     const token = searchParams.get("token");
     
     if (!token) {
+      // Setting initial error state - legitimate setState in effect for validation
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setStatus("error");
       setMessage("رابط التحقق غير صالح");
       return;

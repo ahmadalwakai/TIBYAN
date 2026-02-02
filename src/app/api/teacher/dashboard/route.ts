@@ -27,9 +27,9 @@ export async function GET(request: NextRequest) {
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 
     // Calculate stats
-    const totalStudents = courses.reduce((sum, c) => sum + c.enrollments.length, 0);
+    const totalStudents = courses.reduce((sum: number, c: (typeof courses)[number]) => sum + c.enrollments.length, 0);
     const totalEarnings = courses.reduce(
-      (sum, c) => sum + c.payments.reduce((pSum, p) => pSum + p.amount * 0.8, 0),
+      (sum: number, c: (typeof courses)[number]) => sum + c.payments.reduce((pSum: number, p: (typeof c.payments)[number]) => pSum + p.amount * 0.8, 0),
       0
     );
     const pendingPayments = await prisma.payment.findMany({
@@ -38,33 +38,33 @@ export async function GET(request: NextRequest) {
         status: "PENDING",
       },
     });
-    const pendingEarnings = pendingPayments.reduce((sum, p) => sum + p.amount * 0.8, 0);
+    const pendingEarnings = pendingPayments.reduce((sum: number, p: (typeof pendingPayments)[number]) => sum + p.amount * 0.8, 0);
 
     // This month stats
     const thisMonthEnrollments = courses.reduce(
-      (sum, c) =>
-        sum + c.enrollments.filter((e) => new Date(e.enrolledAt) >= startOfMonth).length,
+      (sum: number, c: (typeof courses)[number]) =>
+        sum + c.enrollments.filter((e: (typeof c.enrollments)[number]) => new Date(e.enrolledAt) >= startOfMonth).length,
       0
     );
     const thisMonthPayments = courses.reduce(
-      (sum, c) =>
+      (sum: number, c: (typeof courses)[number]) =>
         sum +
         c.payments
-          .filter((p) => p.paidAt && new Date(p.paidAt) >= startOfMonth)
-          .reduce((pSum, p) => pSum + p.amount * 0.8, 0),
+          .filter((p: (typeof c.payments)[number]) => p.paidAt && new Date(p.paidAt) >= startOfMonth)
+          .reduce((pSum: number, p: (typeof c.payments)[number]) => pSum + p.amount * 0.8, 0),
       0
     );
 
     // Average rating
-    const allReviews = courses.flatMap((c) => c.reviews);
+    const allReviews = courses.flatMap((c: (typeof courses)[number]) => c.reviews);
     const averageRating =
       allReviews.length > 0
-        ? allReviews.reduce((sum, r) => sum + r.rating, 0) / allReviews.length
+        ? allReviews.reduce((sum: number, r: (typeof allReviews)[number]) => sum + r.rating, 0) / allReviews.length
         : 0;
 
     const stats = {
       totalCourses: courses.length,
-      publishedCourses: courses.filter((c) => c.status === "PUBLISHED").length,
+      publishedCourses: courses.filter((c: (typeof courses)[number]) => c.status === "PUBLISHED").length,
       totalStudents,
       totalEarnings: Math.round(totalEarnings),
       pendingEarnings: Math.round(pendingEarnings),
@@ -85,10 +85,10 @@ export async function GET(request: NextRequest) {
       take: 5,
     });
 
-    const recentEnrollmentsList = recentEnrollments.map((e) => {
+    const recentEnrollmentsList = recentEnrollments.map((e: (typeof recentEnrollments)[number]) => {
       const payment = courses
-        .find((c) => c.id === e.courseId)
-        ?.payments.find((p) => p.userId === e.userId);
+        .find((c: (typeof courses)[number]) => c.id === e.courseId)
+        ?.payments.find((p: (typeof courses)[number]["payments"][number]) => p.userId === e.userId);
       return {
         id: e.id,
         studentName: e.user.name,
@@ -100,17 +100,17 @@ export async function GET(request: NextRequest) {
 
     // Top courses
     const topCourses = courses
-      .map((c) => ({
+      .map((c: (typeof courses)[number]) => ({
         id: c.id,
         title: c.title,
         students: c.enrollments.length,
-        earnings: Math.round(c.payments.reduce((sum, p) => sum + p.amount * 0.8, 0)),
+        earnings: Math.round(c.payments.reduce((sum: number, p: (typeof c.payments)[number]) => sum + p.amount * 0.8, 0)),
         rating:
           c.reviews.length > 0
-            ? c.reviews.reduce((sum, r) => sum + r.rating, 0) / c.reviews.length
+            ? c.reviews.reduce((sum: number, r: (typeof c.reviews)[number]) => sum + r.rating, 0) / c.reviews.length
             : 0,
       }))
-      .sort((a, b) => b.earnings - a.earnings)
+      .sort((a: { earnings: number }, b: { earnings: number }) => b.earnings - a.earnings)
       .slice(0, 5);
 
     return NextResponse.json({

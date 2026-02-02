@@ -14,9 +14,7 @@ import {
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import PremiumCard from "@/components/ui/PremiumCard";
 import StatCard from "@/components/ui/StatCard";
-import FeatureCard from "@/components/ui/FeatureCard";
 import InstructorVerification from "@/components/ui/InstructorVerification";
 import SocialFeed from "@/components/ui/SocialFeed";
 
@@ -59,53 +57,6 @@ function useCountUp(end: number, duration: number = 3000) {
   }, [end, duration, hasStarted]);
 
   return { count, ref };
-}
-
-// Animated stat card component
-function AnimatedStatCard({ 
-  value, 
-  label, 
-  color, 
-  icon, 
-  suffix = "", 
-  decimals = 0 
-}: { 
-  value: number; 
-  label: string; 
-  color: string; 
-  icon: string; 
-  suffix?: string;
-  decimals?: number;
-}) {
-  const { count, ref } = useCountUp(decimals > 0 ? value * 10 : value, 3000);
-  const displayValue = decimals > 0 ? (count / 10).toFixed(decimals) : count;
-
-  return (
-    <StatCard 
-      accentColor={color} 
-      p={4}
-      transition="all 0.3s ease"
-      _hover={{
-        transform: "translateY(-4px)",
-        boxShadow: "cardHover",
-      }}
-    >
-      <Stack gap={1} align="center">
-        <Text fontSize="lg">{icon}</Text>
-        <Text 
-          fontSize={{ base: "xl", md: "2xl" }}
-          fontWeight="900"
-          color={color}
-          letterSpacing="tight"
-        >
-          <span ref={ref}>{displayValue}{suffix}</span>
-        </Text>
-        <Text fontSize="xs" color="muted" fontWeight="700">
-          {label}
-        </Text>
-      </Stack>
-    </StatCard>
-  );
 }
 
 export default function Home() {
@@ -1678,7 +1629,7 @@ export default function Home() {
                         gradient: "linear-gradient(135deg, #00d4ff, #0099ff)",
                         delay: "0.3s",
                       },
-                    ].map((item, index) => (
+                    ].map((item, _index) => (
                       <Box
                         key={item.text}
                         position="relative"

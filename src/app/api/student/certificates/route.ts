@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    const certificates = completedEnrollments.map((e, index) => ({
+    const certificates = completedEnrollments.map((e: (typeof completedEnrollments)[number], index: number) => ({
       id: e.id,
       courseId: e.courseId,
       courseName: e.course.title,

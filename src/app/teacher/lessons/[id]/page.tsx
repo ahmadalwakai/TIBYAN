@@ -5,7 +5,6 @@ import {
   Badge,
   Box,
   Button,
-  Container,
   Flex,
   Heading,
   HStack,
@@ -19,7 +18,6 @@ import {
 import { toaster } from "@/components/ui/toaster";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
-import PremiumCard from "@/components/ui/PremiumCard";
 
 interface Participant {
   id: string;

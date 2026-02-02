@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Button, Flex, IconButton, Text } from "@chakra-ui/react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface VoiceRecorderProps {
   onRecordingComplete: (blob: Blob, duration: number) => void;
@@ -17,11 +17,13 @@ export default function VoiceRecorder({
   const [isRecording, setIsRecording] = useState(false);
   const [duration, setDuration] = useState(0);
   const [audioLevel, setAudioLevel] = useState(0);
+  const [waveOffset, setWaveOffset] = useState(0);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const animationRef = useRef<number | null>(null);
+  const isRecordingRef = useRef(false);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -29,16 +31,33 @@ export default function VoiceRecorder({
     return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
-  const updateAudioLevel = useCallback(() => {
-    if (analyserRef.current) {
-      const dataArray = new Uint8Array(analyserRef.current.frequencyBinCount);
-      analyserRef.current.getByteFrequencyData(dataArray);
-      const average = dataArray.reduce((a, b) => a + b) / dataArray.length;
-      setAudioLevel(average / 255);
-    }
-    if (isRecording) {
-      animationRef.current = requestAnimationFrame(updateAudioLevel);
-    }
+  // Use ref to track recording state for animation callback
+  useEffect(() => {
+    isRecordingRef.current = isRecording;
+  }, [isRecording]);
+
+  // Animation loop for audio level visualization
+  useEffect(() => {
+    if (!isRecording) return;
+
+    const updateAudioLevel = () => {
+      if (analyserRef.current && isRecordingRef.current) {
+        const dataArray = new Uint8Array(analyserRef.current.frequencyBinCount);
+        analyserRef.current.getByteFrequencyData(dataArray);
+        const average = dataArray.reduce((a, b) => a + b) / dataArray.length;
+        setAudioLevel(average / 255);
+        setWaveOffset((prev) => prev + 0.05);
+        animationRef.current = requestAnimationFrame(updateAudioLevel);
+      }
+    };
+
+    animationRef.current = requestAnimationFrame(updateAudioLevel);
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
   }, [isRecording]);
 
   const startRecording = async () => {
@@ -90,8 +109,7 @@ export default function VoiceRecorder({
         });
       }, 1000);
 
-      // Start audio level monitoring
-      updateAudioLevel();
+      // Audio level monitoring starts automatically via useEffect when isRecording becomes true
     } catch (error) {
       console.error("Error starting recording:", error);
       alert("لا يمكن الوصول للميكروفون. يرجى السماح بالوصول.");
@@ -192,7 +210,7 @@ export default function VoiceRecorder({
               w="3px"
               bg="red.400"
               borderRadius="full"
-              h={`${Math.max(4, audioLevel * 20 * (1 + Math.sin(i * 0.8 + Date.now() / 200) * 0.5))}px`}
+              h={`${Math.max(4, audioLevel * 20 * (1 + Math.sin(i * 0.8 + waveOffset) * 0.5))}px`}
               transition="height 0.05s"
             />
           ))}

@@ -150,8 +150,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Calculate amount (apply coupon if provided)
-    let amount = coursePrice;
-    let discountAmount = 0;
+    const amount = coursePrice;
+    const discountAmount = 0;
 
     // TODO: Implement coupon validation
     // if (couponCode) { ... }

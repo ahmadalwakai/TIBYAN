@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { CreateUserSchema, UpdateUserSchema } from "@/lib/validations";
+import { CreateUserSchema } from "@/lib/validations";
 import bcrypt from "bcryptjs";
 import { requireAdmin, getAdminFromRequest } from "@/lib/api-auth";
 import { logAudit } from "@/lib/audit";
@@ -106,7 +106,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ ok: true, data: filteredUsers });
     }
 
-    const where: any = {};
+    const where: Record<string, unknown> = {};
     
     if (role) where.role = role;
     if (status) where.status = status;
@@ -140,9 +140,9 @@ export async function GET(request: NextRequest) {
     });
 
     return NextResponse.json({ ok: true, data: users });
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json(
-      { ok: false, error: error.message || "Failed to fetch users" },
+      { ok: false, error: error instanceof Error ? error.message : "Failed to fetch users" },
       { status: 500 }
     );
   }
@@ -210,9 +210,9 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json({ ok: true, data: user }, { status: 201 });
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json(
-      { ok: false, error: error.message || "Failed to create user" },
+      { ok: false, error: error instanceof Error ? error.message : "Failed to create user" },
       { status: 500 }
     );
   }

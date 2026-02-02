@@ -15,7 +15,6 @@ import {
   Avatar,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import PremiumCard from "@/components/ui/PremiumCard";
 import StatCard from "@/components/ui/StatCard";
 

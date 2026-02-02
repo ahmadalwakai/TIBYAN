@@ -48,9 +48,9 @@ export async function GET(
     }
 
     return NextResponse.json({ ok: true, data: course });
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json(
-      { ok: false, error: error.message || "Failed to fetch course" },
+      { ok: false, error: error instanceof Error ? error.message : "Failed to fetch course" },
       { status: 500 }
     );
   }
@@ -91,9 +91,9 @@ export async function PATCH(
     });
 
     return NextResponse.json({ ok: true, data: course });
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json(
-      { ok: false, error: error.message || "Failed to update course" },
+      { ok: false, error: error instanceof Error ? error.message : "Failed to update course" },
       { status: 500 }
     );
   }
@@ -114,9 +114,9 @@ export async function DELETE(
     });
 
     return NextResponse.json({ ok: true, data: { message: "Course deleted successfully" } });
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json(
-      { ok: false, error: error.message || "Failed to delete course" },
+      { ok: false, error: error instanceof Error ? error.message : "Failed to delete course" },
       { status: 500 }
     );
   }

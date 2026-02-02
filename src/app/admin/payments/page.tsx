@@ -1,6 +1,6 @@
 "use client";
 
-import { Badge, Box, Button, Flex, Heading, Input, SimpleGrid, Stack, Text, Spinner } from "@chakra-ui/react";
+import { Badge, Button, Flex, Heading, Input, SimpleGrid, Stack, Text, Spinner } from "@chakra-ui/react";
 import PremiumCard from "@/components/ui/PremiumCard";
 import StatCard from "@/components/ui/StatCard";
 import { useEffect, useState } from "react";

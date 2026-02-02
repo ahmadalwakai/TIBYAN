@@ -34,11 +34,11 @@ export async function GET(request: NextRequest) {
     });
 
     // Calculate stats
-    const totalPaid = payments.reduce((sum, p) => sum + p.amount, 0);
-    const completedCourses = enrollments.filter((e) => e.status === "COMPLETED").length;
+    const totalPaid = payments.reduce((sum: number, p: (typeof payments)[number]) => sum + p.amount, 0);
+    const completedCourses = enrollments.filter((e: (typeof enrollments)[number]) => e.status === "COMPLETED").length;
     const totalProgress =
       enrollments.length > 0
-        ? Math.round(enrollments.reduce((sum, e) => sum + e.progress, 0) / enrollments.length)
+        ? Math.round(enrollments.reduce((sum: number, e: (typeof enrollments)[number]) => sum + e.progress, 0) / enrollments.length)
         : 0;
 
     const stats = {
@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
     };
 
     // Recent courses
-    const recentCourses = enrollments.slice(0, 5).map((e) => ({
+    const recentCourses = enrollments.slice(0, 5).map((e: (typeof enrollments)[number]) => ({
       id: e.course.id,
       title: e.course.title,
       progress: Math.round(e.progress),
@@ -67,7 +67,7 @@ export async function GET(request: NextRequest) {
       take: 5,
     });
 
-    const recentPayments = recentPaymentsData.map((p) => ({
+    const recentPayments = recentPaymentsData.map((p: (typeof recentPaymentsData)[number]) => ({
       id: p.id,
       courseName: p.course.title,
       amount: p.amount,

@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
       orderBy: { createdAt: "desc" },
     });
 
-    const reviewsList = reviews.map((r) => ({
+    const reviewsList = reviews.map((r: (typeof reviews)[number]) => ({
       id: r.id,
       courseName: r.course.title,
       courseId: r.courseId,
@@ -37,14 +37,14 @@ export async function GET(request: NextRequest) {
     // Stats
     const totalReviews = reviews.length;
     const averageRating = totalReviews > 0
-      ? reviews.reduce((sum, r) => sum + r.rating, 0) / totalReviews
+      ? reviews.reduce((sum: number, r: (typeof reviews)[number]) => sum + r.rating, 0) / totalReviews
       : 0;
 
-    const fiveStars = reviews.filter((r) => r.rating === 5).length;
-    const fourStars = reviews.filter((r) => r.rating === 4).length;
-    const threeStars = reviews.filter((r) => r.rating === 3).length;
-    const twoStars = reviews.filter((r) => r.rating === 2).length;
-    const oneStar = reviews.filter((r) => r.rating === 1).length;
+    const fiveStars = reviews.filter((r: (typeof reviews)[number]) => r.rating === 5).length;
+    const fourStars = reviews.filter((r: (typeof reviews)[number]) => r.rating === 4).length;
+    const threeStars = reviews.filter((r: (typeof reviews)[number]) => r.rating === 3).length;
+    const twoStars = reviews.filter((r: (typeof reviews)[number]) => r.rating === 2).length;
+    const oneStar = reviews.filter((r: (typeof reviews)[number]) => r.rating === 1).length;
 
     const stats = {
       totalReviews,

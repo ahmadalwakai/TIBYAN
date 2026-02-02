@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
       orderBy: { createdAt: "desc" },
     });
 
-    const coursesList = courses.map((c) => ({
+    const coursesList = courses.map((c: (typeof courses)[number]) => ({
       id: c.id,
       title: c.title,
       description: c.description,
@@ -33,10 +33,10 @@ export async function GET(request: NextRequest) {
       status: c.status,
       price: c.price,
       students: c.enrollments.length,
-      earnings: Math.round(c.payments.reduce((sum, p) => sum + p.amount * 0.8, 0)),
+      earnings: Math.round(c.payments.reduce((sum: number, p: (typeof c.payments)[number]) => sum + p.amount * 0.8, 0)),
       rating:
         c.reviews.length > 0
-          ? c.reviews.reduce((sum, r) => sum + r.rating, 0) / c.reviews.length
+          ? c.reviews.reduce((sum: number, r: (typeof c.reviews)[number]) => sum + r.rating, 0) / c.reviews.length
           : 0,
       reviewCount: c.reviews.length,
       lessons: c.lessons.length,

@@ -127,7 +127,7 @@ interface BottomToolbarProps {
   activeTool?: ToolId | null;
 }
 
-export function BottomToolbar({ onToolSelect, activeTool }: BottomToolbarProps) {
+export function BottomToolbar({ onToolSelect, activeTool: _activeTool }: BottomToolbarProps) {
   const activePanel = useEditorStore((s) => s.activePanel);
   const setActivePanel = useEditorStore((s) => s.setActivePanel);
   const isVideoMode = useEditorStore(selectIsVideoMode);

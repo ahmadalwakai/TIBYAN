@@ -9,7 +9,6 @@ import { Box } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useEditorStore, selectActiveLayer } from "@/lib/editor/store";
-import type { Layer } from "@/lib/editor/types";
 
 const MotionBox = motion.create(Box);
 
@@ -29,20 +28,10 @@ export function LayerTransformHandles({ containerRef }: LayerTransformHandlesPro
   const startLayerPos = useRef({ x: 0, y: 0 });
   const startLayerSize = useRef({ width: 100, height: 100 });
 
-  if (!activeLayer || !activeLayer.visible || activeLayer.locked) {
-    return null;
-  }
-
-  const { x, y, rotation, width, height } = activeLayer;
-
-  // Use layer's own width/height for display
-  const displayWidth = width || 100;
-  const displayHeight = height || 100;
-
-  // Drag handlers
+  // Drag handlers - all hooks must be called before early return
   const handleDragStart = useCallback(
     (e: React.MouseEvent | React.TouchEvent) => {
-      if (activeLayer.locked) return;
+      if (!activeLayer || activeLayer.locked) return;
       e.preventDefault();
       e.stopPropagation();
 
@@ -58,7 +47,7 @@ export function LayerTransformHandles({ containerRef }: LayerTransformHandlesPro
 
   const handleDrag = useCallback(
     (e: MouseEvent | TouchEvent) => {
-      if (!isDragging || !containerRef.current) return;
+      if (!isDragging || !containerRef.current || !activeLayer) return;
 
       const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
       const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
@@ -75,7 +64,7 @@ export function LayerTransformHandles({ containerRef }: LayerTransformHandlesPro
 
       updateLayer(activeLayer.id, { x: newX, y: newY });
     },
-    [isDragging, activeLayer?.id, updateLayer, containerRef]
+    [isDragging, activeLayer, updateLayer, containerRef]
   );
 
   const handleDragEnd = useCallback(() => {
@@ -85,7 +74,7 @@ export function LayerTransformHandles({ containerRef }: LayerTransformHandlesPro
   // Resize handlers
   const handleResizeStart = useCallback(
     (handle: string, e: React.MouseEvent | React.TouchEvent) => {
-      if (activeLayer.locked) return;
+      if (!activeLayer || activeLayer.locked) return;
       e.preventDefault();
       e.stopPropagation();
 
@@ -102,7 +91,7 @@ export function LayerTransformHandles({ containerRef }: LayerTransformHandlesPro
 
   const handleResize = useCallback(
     (e: MouseEvent | TouchEvent) => {
-      if (!isResizing || !resizeHandle) return;
+      if (!isResizing || !resizeHandle || !activeLayer) return;
 
       const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
       const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
@@ -116,7 +105,7 @@ export function LayerTransformHandles({ containerRef }: LayerTransformHandlesPro
 
       updateLayer(activeLayer.id, { width: newWidth, height: newHeight });
     },
-    [isResizing, resizeHandle, activeLayer?.id, updateLayer]
+    [isResizing, resizeHandle, activeLayer, updateLayer]
   );
 
   const handleResizeEnd = useCallback(() => {
@@ -156,6 +145,17 @@ export function LayerTransformHandles({ containerRef }: LayerTransformHandlesPro
       window.removeEventListener("touchend", handleResizeEnd);
     };
   }, [isResizing, handleResize, handleResizeEnd]);
+
+  // Early return AFTER all hooks
+  if (!activeLayer || !activeLayer.visible || activeLayer.locked) {
+    return null;
+  }
+
+  const { x, y, rotation, width, height } = activeLayer;
+
+  // Use layer's own width/height for display
+  const displayWidth = width || 100;
+  const displayHeight = height || 100;
 
   return (
     <MotionBox

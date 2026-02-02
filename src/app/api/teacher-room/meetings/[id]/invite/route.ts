@@ -114,7 +114,7 @@ export async function POST(request: NextRequest, { params }: Params) {
       select: { userId: true },
     });
 
-    const existingUserIds = existingInvitations.map((i) => i.userId);
+    const existingUserIds = existingInvitations.map((i: (typeof existingInvitations)[number]) => i.userId);
     const newUserIds = data.userIds.filter((uid) => !existingUserIds.includes(uid));
 
     if (newUserIds.length === 0) {
@@ -132,7 +132,7 @@ export async function POST(request: NextRequest, { params }: Params) {
 
     // Create new invitations with user details
     await db.meetingInvitation.createMany({
-      data: usersToInvite.map((invitedUser) => ({
+      data: usersToInvite.map((invitedUser: (typeof usersToInvite)[number]) => ({
         meetingId: id,
         userId: invitedUser.id,
         userName: invitedUser.name,

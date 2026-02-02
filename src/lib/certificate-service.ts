@@ -4,7 +4,6 @@
  */
 
 import {
-  CertificateDTO,
   CertificateListResponse,
   CertificateDetailResponse,
   CertificateCreateResponse,

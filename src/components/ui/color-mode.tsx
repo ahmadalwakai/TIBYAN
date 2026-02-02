@@ -24,6 +24,8 @@ export function useColorMode() {
   const [mounted, setMounted] = useState(false);
   
   useEffect(() => {
+    // Needed for SSR hydration - legitimate setState in effect
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
   

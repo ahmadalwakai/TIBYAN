@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
 
     for (const enrollment of enrollments) {
       const studentId = enrollment.user.id;
-      const studentPayments = payments.filter((p) => p.userId === studentId);
+      const studentPayments = payments.filter((p: (typeof payments)[number]) => p.userId === studentId);
       
       if (!studentMap.has(studentId)) {
         studentMap.set(studentId, {
@@ -55,7 +55,7 @@ export async function GET(request: NextRequest) {
           email: enrollment.user.email,
           avatar: enrollment.user.avatar,
           enrolledCourses: 0,
-          totalPaid: studentPayments.reduce((sum, p) => sum + p.amount, 0),
+          totalPaid: studentPayments.reduce((sum: number, p: (typeof studentPayments)[number]) => sum + p.amount, 0),
           lastActive: new Date(enrollment.user.lastActiveAt).toLocaleDateString("ar-SA"),
           enrolledAt: new Date(enrollment.enrolledAt).toLocaleDateString("ar-SA"),
           courses: [],
@@ -74,14 +74,14 @@ export async function GET(request: NextRequest) {
     const students = Array.from(studentMap.values());
 
     // Stats
-    const activeStudents = students.filter((s) => {
-      const lastActive = enrollments.find((e) => e.userId === s.id)?.user.lastActiveAt;
+    const activeStudents = students.filter((s: (typeof students)[number]) => {
+      const lastActive = enrollments.find((e: (typeof enrollments)[number]) => e.userId === s.id)?.user.lastActiveAt;
       return lastActive && new Date(lastActive) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
     }).length;
 
-    const newThisMonth = enrollments.filter((e) => new Date(e.enrolledAt) >= startOfMonth).length;
+    const newThisMonth = enrollments.filter((e: (typeof enrollments)[number]) => new Date(e.enrolledAt) >= startOfMonth).length;
     const avgProgress = students.length > 0
-      ? Math.round(students.flatMap((s) => s.courses.map((c) => c.progress)).reduce((a, b) => a + b, 0) / students.flatMap((s) => s.courses).length)
+      ? Math.round(students.flatMap((s: (typeof students)[number]) => s.courses.map((c: (typeof s.courses)[number]) => c.progress)).reduce((a: number, b: number) => a + b, 0) / students.flatMap((s: (typeof students)[number]) => s.courses).length)
       : 0;
 
     const stats = {

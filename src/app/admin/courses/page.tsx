@@ -1,6 +1,6 @@
 "use client";
 
-import { Badge, Box, Button, Flex, Heading, Input, SimpleGrid, Stack, Text, Spinner } from "@chakra-ui/react";
+import { Badge, Button, Flex, Heading, Input, SimpleGrid, Stack, Text, Spinner } from "@chakra-ui/react";
 import PremiumCard from "@/components/ui/PremiumCard";
 import { useEffect, useState } from "react";
 
@@ -72,8 +72,8 @@ export default function AdminCoursesPage() {
       } else {
         setError(result.error);
       }
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unknown error");
     } finally {
       setLoading(false);
     }
@@ -94,8 +94,8 @@ export default function AdminCoursesPage() {
       } else {
         alert(result.error);
       }
-    } catch (err: any) {
-      alert(err.message);
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Unknown error");
     }
   };
 
@@ -114,8 +114,8 @@ export default function AdminCoursesPage() {
       } else {
         alert(result.error);
       }
-    } catch (err: any) {
-      alert(err.message);
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Unknown error");
     }
   };
 

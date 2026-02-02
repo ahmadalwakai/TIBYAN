@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { getUserFromRequest, requireRole } from "@/lib/api-auth";
+import { getUserFromRequest } from "@/lib/api-auth";
 import { logAudit } from "@/lib/audit";
 import { z } from "zod";
 
@@ -143,14 +143,14 @@ export async function GET(request: NextRequest) {
       const likes = await db.postLike.findMany({
         where: {
           userId: user.id,
-          postId: { in: posts.map(p => p.id) },
+          postId: { in: posts.map((p: (typeof posts)[number]) => p.id) },
         },
         select: { postId: true },
       });
-      userLikes = new Set(likes.map(l => l.postId));
+      userLikes = new Set(likes.map((l: (typeof likes)[number]) => l.postId));
     }
 
-    const postsWithLikeStatus = posts.map(post => ({
+    const postsWithLikeStatus = posts.map((post: (typeof posts)[number]) => ({
       ...post,
       likesCount: post._count.likes,
       commentsCount: post._count.comments,
@@ -331,7 +331,7 @@ export async function PUT(request: NextRequest) {
       delete updateData.isPinned;
     }
 
-    const post = await db.post.update({
+    const _post = await db.post.update({
       where: { id },
       data: updateData,
       include: { media: true },

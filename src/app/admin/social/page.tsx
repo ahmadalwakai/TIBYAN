@@ -74,7 +74,7 @@ export default function AdminSocialPage() {
   const [submitting, setSubmitting] = useState(false);
   const [modalMode, setModalMode] = useState<ModalMode>(null);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
-  const [useMediaEditor, setUseMediaEditor] = useState(false);
+  const [_useMediaEditor, setUseMediaEditor] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState<Post | null>(null);
 
   // Filters
@@ -226,7 +226,7 @@ export default function AdminSocialPage() {
       if (hasUnuploadedMedia) {
         try {
           uploadedMedia = await uploadMediaItems(media);
-        } catch (err) {
+        } catch (_err) {
           // Error already toasted by uploadMediaItems
           return;
         }
@@ -618,7 +618,7 @@ export default function AdminSocialPage() {
         <Dialog.Content>
           <Dialog.Header>تأكيد الحذف</Dialog.Header>
           <Dialog.Body>
-            هل أنت متأكد من حذف المنشور "{deleteConfirm?.title || "بدون عنوان"}"؟ لا يمكن التراجع عن هذا الإجراء.
+            هل أنت متأكد من حذف المنشور &quot;{deleteConfirm?.title || "بدون عنوان"}&quot;؟ لا يمكن التراجع عن هذا الإجراء.
           </Dialog.Body>
           <Dialog.Footer>
             <Button onClick={() => setDeleteConfirm(null)}>إلغاء</Button>

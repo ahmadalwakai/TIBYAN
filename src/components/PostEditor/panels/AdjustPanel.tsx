@@ -65,7 +65,7 @@ export function AdjustPanel() {
     setAdjustments({ [key]: value });
   };
 
-  const handleChangeEnd = () => {
+  const _handleChangeEnd = () => {
     saveToHistory();
   };
 

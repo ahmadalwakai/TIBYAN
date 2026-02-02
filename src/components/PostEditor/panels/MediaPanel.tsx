@@ -12,7 +12,6 @@ import {
   Button,
   IconButton,
   Input,
-  SimpleGrid,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useRef, useCallback } from "react";
@@ -26,7 +25,7 @@ import {
   FaCheck,
 } from "react-icons/fa";
 import { useEditorStore, selectActiveMedia } from "@/lib/editor/store";
-import { createObjectUrl, getImageDimensions, getVideoDimensions, formatFileSize, formatTime } from "@/lib/editor/utils";
+import { createObjectUrl, getImageDimensions, getVideoDimensions, formatTime } from "@/lib/editor/utils";
 
 const MotionBox = motion.create(Box);
 
@@ -170,7 +169,7 @@ export function MediaPanel() {
                       />
                     ) : (
                       <>
-                        {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+                        { }
                         <video
                           src={asset.url}
                           style={{

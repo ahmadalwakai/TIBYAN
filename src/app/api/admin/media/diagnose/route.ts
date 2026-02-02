@@ -110,8 +110,8 @@ export async function GET(request: NextRequest) {
   // 6. Upload directory check
   try {
     const fs = await import("fs/promises");
-    const path = require("path");
-    const uploadsDir = path.join(process.cwd(), "public", "uploads");
+    const pathModule = await import("path");
+    const uploadsDir = pathModule.join(process.cwd(), "public", "uploads");
     await fs.access(uploadsDir);
     checks.push({
       name: "Upload Directory",
@@ -180,7 +180,7 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  const allPass = checks.every((c) => c.status === 'pass');
+  const _allPass = checks.every((c) => c.status === 'pass');
   const hasFailures = checks.some((c) => c.status === 'fail');
 
   return NextResponse.json({

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { CreateCourseSchema, UpdateCourseSchema } from "@/lib/validations";
+import { CreateCourseSchema } from "@/lib/validations";
 import { allCourses, teachers } from "@/content/courses.ar";
 import { requireAdmin } from "@/lib/api-auth";
 
@@ -175,7 +175,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ ok: true, data: filteredCourses });
     }
 
-    const where: any = {};
+    const where: Record<string, unknown> = {};
     
     if (status) where.status = status;
     if (level) where.level = level;
@@ -209,9 +209,9 @@ export async function GET(request: NextRequest) {
     });
 
     return NextResponse.json({ ok: true, data: courses });
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json(
-      { ok: false, error: error.message || "Failed to fetch courses" },
+      { ok: false, error: error instanceof Error ? error.message : "Failed to fetch courses" },
       { status: 500 }
     );
   }
@@ -258,9 +258,9 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json({ ok: true, data: course }, { status: 201 });
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json(
-      { ok: false, error: error.message || "Failed to create course" },
+      { ok: false, error: error instanceof Error ? error.message : "Failed to create course" },
       { status: 500 }
     );
   }

@@ -27,7 +27,7 @@
     "@hookform/resolvers": "^5.2.2",
     "@neondatabase/serverless": "^1.0.2",
     "@prisma/adapter-neon": "^7.3.0",
-    "@prisma/client": "^5.22.0",
+    "@prisma/client": "^7.3.0",
     "@sentry/nextjs": "^10.38.0",
     "@tanstack/react-query": "^5.90.20",
     "@tiptap/react": "^3.18.0",
@@ -35,7 +35,7 @@
     "@types/bcryptjs": "^2.4.6",
     "bcryptjs": "^3.0.3",
     "dotenv": "^17.2.3",
-    "fabric": "^6.5.1",
+    "fabric": "^7.1.0",
     "framer-motion": "^12.29.2",
     "html2canvas": "^1.4.1",
     "ioredis": "^5.9.2",
@@ -44,7 +44,6 @@
     "next-auth": "^4.24.13",
     "next-intl": "^4.8.0",
     "next-themes": "^0.4.6",
-    "prisma": "^5.22.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-hook-form": "^7.71.1",
@@ -61,6 +60,7 @@
     "@types/ws": "^8.18.1",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
+    "prisma": "^7.3.0",
     "tsx": "^4.21.0",
     "typescript": "^5"
   }

@@ -251,7 +251,7 @@ export default function AdminBlogPostsPage() {
       if (hasUnuploadedMedia) {
         try {
           uploadedMedia = await uploadMediaItems(media);
-        } catch (err) {
+        } catch (_err) {
           // Error already toasted by uploadMediaItems
           return;
         }
@@ -601,7 +601,7 @@ export default function AdminBlogPostsPage() {
         <Dialog.Content>
           <Dialog.Header>تأكيد الحذف</Dialog.Header>
           <Dialog.Body>
-            هل أنت متأكد من حذف المدونة "{deleteConfirm?.title}"؟ لا يمكن التراجع عن هذا الإجراء.
+            هل أنت متأكد من حذف المدونة &quot;{deleteConfirm?.title}&quot;؟ لا يمكن التراجع عن هذا الإجراء.
           </Dialog.Body>
           <Dialog.Footer>
             <Button onClick={() => setDeleteConfirm(null)}>إلغاء</Button>

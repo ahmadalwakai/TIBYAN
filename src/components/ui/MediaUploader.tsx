@@ -10,7 +10,6 @@ import {
   Image,
   Input,
   NativeSelect,
-  Spinner,
   Stack,
   Text,
 } from "@chakra-ui/react";

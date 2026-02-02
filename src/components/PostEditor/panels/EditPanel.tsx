@@ -15,9 +15,6 @@ import {
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import {
-  FaUndo,
-  FaRedo,
-  FaCut,
   FaSyncAlt,
   FaArrowsAltH,
   FaArrowsAltV,

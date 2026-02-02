@@ -1,6 +1,7 @@
 "use client";
 
 import { Box, Button, Container, Heading, Stack, Text } from "@chakra-ui/react";
+import Link from "next/link";
 import { useEffect } from "react";
 
 export default function Error({
@@ -98,7 +99,7 @@ export default function Error({
               ↻ إعادة المحاولة
             </Button>
             <Button asChild size="lg" variant="outline" fontWeight="700">
-              <a href="/">← العودة للرئيسية</a>
+              <Link href="/">← العودة للرئيسية</Link>
             </Button>
           </Stack>
 

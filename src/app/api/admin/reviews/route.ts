@@ -67,7 +67,7 @@ export async function GET(request: NextRequest) {
         stats: {
           total: stats._count.id,
           averageRating: stats._avg.rating?.toFixed(1) || "0",
-          distribution: ratingDistribution.reduce<Record<number, number>>((acc, r) => {
+          distribution: ratingDistribution.reduce<Record<number, number>>((acc: Record<number, number>, r: (typeof ratingDistribution)[number]) => {
             acc[r.rating] = r._count.id;
             return acc;
           }, {}),

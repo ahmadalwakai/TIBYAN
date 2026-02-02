@@ -19,20 +19,20 @@ export async function GET(request: NextRequest) {
       orderBy: { createdAt: "desc" },
     });
 
-    const completedPayments = payments.filter((p) => p.status === "COMPLETED");
-    const pendingPayments = payments.filter((p) => p.status === "PENDING");
+    const completedPayments = payments.filter((p: (typeof payments)[number]) => p.status === "COMPLETED");
+    const pendingPayments = payments.filter((p: (typeof payments)[number]) => p.status === "PENDING");
 
     const stats = {
-      totalPaid: completedPayments.reduce((sum, p) => sum + p.amount, 0),
-      pendingPayments: pendingPayments.reduce((sum, p) => sum + p.amount, 0),
+      totalPaid: completedPayments.reduce((sum: number, p: (typeof completedPayments)[number]) => sum + p.amount, 0),
+      pendingPayments: pendingPayments.reduce((sum: number, p: (typeof pendingPayments)[number]) => sum + p.amount, 0),
       totalCourses: completedPayments.length,
       averagePerCourse:
         completedPayments.length > 0
-          ? Math.round(completedPayments.reduce((sum, p) => sum + p.amount, 0) / completedPayments.length)
+              ? Math.round(completedPayments.reduce((sum: number, p: (typeof completedPayments)[number]) => sum + p.amount, 0) / completedPayments.length)
           : 0,
     };
 
-    const paymentsList = payments.map((p) => ({
+            const paymentsList = payments.map((p: (typeof payments)[number]) => ({
       id: p.id,
       courseName: p.course.title,
       courseId: p.courseId,

@@ -12,12 +12,10 @@ import {
   Text,
   Button,
   IconButton,
-  Drawer,
-  Portal,
 } from "@chakra-ui/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRef, useState, useCallback, useEffect } from "react";
-import { useEditorStore, selectActiveMedia, selectCssFilters } from "@/lib/editor/store";
+import { useEditorStore, selectActiveMedia } from "@/lib/editor/store";
 import { PreviewStage } from "./PreviewStage";
 import { BottomToolbar, type ToolId } from "./BottomToolbar";
 import { LayerList } from "./LayerList";
@@ -63,7 +61,7 @@ export function PostEditor({ onExport, onCancel, initialMedia }: PostEditorProps
   const historyIndex = useEditorStore((s) => s.historyIndex);
   const historyLength = useEditorStore((s) => s.history.length);
   const loadDraft = useEditorStore((s) => s.loadDraft);
-  const reset = useEditorStore((s) => s.reset);
+  const _reset = useEditorStore((s) => s.reset);
 
   const canUndo = historyIndex > 0;
   const canRedo = historyIndex < historyLength - 1;

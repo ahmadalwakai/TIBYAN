@@ -40,7 +40,7 @@ const statusConfig: Record<string, { label: string; color: string }> = {
 
 export default function AdminIntegrationsPage() {
   const [integrations, setIntegrations] = useState<Integration[]>([]);
-  const [byCategory, setByCategory] = useState<Record<string, Integration[]>>({});
+  const [, setByCategory] = useState<Record<string, Integration[]>>({});
   const [stats, setStats] = useState<Stats>({ total: 0, connected: 0, disconnected: 0, error: 0 });
   const [loading, setLoading] = useState(true);
   const [testing, setTesting] = useState<string | null>(null);

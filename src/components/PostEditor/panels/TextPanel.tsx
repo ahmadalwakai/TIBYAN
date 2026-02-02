@@ -26,7 +26,7 @@ import {
   FaItalic,
 } from "react-icons/fa";
 import { useEditorStore, selectActiveLayer, selectTextLayers } from "@/lib/editor/store";
-import { FONT_OPTIONS, getContrastColor } from "@/lib/editor/utils";
+import { FONT_OPTIONS } from "@/lib/editor/utils";
 import type { TextLayer } from "@/lib/editor/types";
 
 const MotionBox = motion.create(Box);
@@ -385,7 +385,7 @@ export function TextPanel() {
               لم يتم إضافة نصوص بعد
             </Text>
             <Text color="gray.400" fontSize="xs" mt={1}>
-              اضغط على "إضافة نص" لإضافة طبقة نص
+              اضغط على &quot;إضافة نص&quot; لإضافة طبقة نص
             </Text>
           </Box>
         )}

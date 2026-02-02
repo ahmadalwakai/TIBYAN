@@ -16,6 +16,8 @@ export default function MemberShell({ userName, children }: MemberShellProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
+    // Close menu on route change - legitimate setState in effect
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsOpen(false);
   }, [pathname]);
 

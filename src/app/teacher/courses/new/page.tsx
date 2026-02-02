@@ -6,8 +6,6 @@ import {
   Heading,
   Text,
   VStack,
-  HStack,
-  Spinner,
   Input,
   Button,
   Fieldset,

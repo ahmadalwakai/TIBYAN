@@ -13,12 +13,10 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 type Step = "email" | "code";
 
 export default function AdminLoginPage() {
-  const router = useRouter();
 
   const [step, setStep] = useState<Step>("email");
   const [email, setEmail] = useState("");

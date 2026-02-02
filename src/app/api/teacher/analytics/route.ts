@@ -23,9 +23,9 @@ export async function GET(request: NextRequest) {
     });
 
     // Calculate overview
-    const totalEnrollments = courses.reduce((sum, c) => sum + c.enrollments.length, 0);
-    const totalEarnings = courses.reduce(
-      (sum, c) => sum + c.payments.reduce((pSum, p) => pSum + p.amount * 0.8, 0),
+    const totalEnrollments = courses.reduce((sum: number, c: (typeof courses)[number]) => sum + c.enrollments.length, 0);
+    const _totalEarnings = courses.reduce(
+      (sum: number, c: (typeof courses)[number]) => sum + c.payments.reduce((pSum: number, p: (typeof c.payments)[number]) => pSum + p.amount * 0.8, 0),
       0
     );
 
@@ -45,20 +45,20 @@ export async function GET(request: NextRequest) {
       const monthEnd = new Date(now.getFullYear(), now.getMonth() - i + 1, 0);
       
       const monthEnrollments = courses.reduce(
-        (sum, c) =>
+        (sum: number, c: (typeof courses)[number]) =>
           sum +
           c.enrollments.filter(
-            (e) => new Date(e.enrolledAt) >= monthStart && new Date(e.enrolledAt) <= monthEnd
+            (e: (typeof c.enrollments)[number]) => new Date(e.enrolledAt) >= monthStart && new Date(e.enrolledAt) <= monthEnd
           ).length,
         0
       );
 
       const monthEarnings = courses.reduce(
-        (sum, c) =>
+        (sum: number, c: (typeof courses)[number]) =>
           sum +
           c.payments
-            .filter((p) => p.paidAt && new Date(p.paidAt) >= monthStart && new Date(p.paidAt) <= monthEnd)
-            .reduce((pSum, p) => pSum + p.amount * 0.8, 0),
+            .filter((p: (typeof c.payments)[number]) => p.paidAt && new Date(p.paidAt) >= monthStart && new Date(p.paidAt) <= monthEnd)
+            .reduce((pSum: number, p: (typeof c.payments)[number]) => pSum + p.amount * 0.8, 0),
         0
       );
 
@@ -72,14 +72,14 @@ export async function GET(request: NextRequest) {
 
     // Top courses
     const topCourses = courses
-      .map((c) => ({
+      .map((c: (typeof courses)[number]) => ({
         id: c.id,
         title: c.title,
         views: c.enrollments.length * 5, // Estimate
         enrollments: c.enrollments.length,
-        earnings: Math.round(c.payments.reduce((sum, p) => sum + p.amount * 0.8, 0)),
+        earnings: Math.round(c.payments.reduce((sum: number, p: (typeof c.payments)[number]) => sum + p.amount * 0.8, 0)),
       }))
-      .sort((a, b) => b.earnings - a.earnings)
+      .sort((a: { earnings: number }, b: { earnings: number }) => b.earnings - a.earnings)
       .slice(0, 5);
 
     // Recent activity
@@ -90,7 +90,7 @@ export async function GET(request: NextRequest) {
       take: 10,
     });
 
-    const recentActivity = recentEnrollments.map((e) => ({
+    const recentActivity = recentEnrollments.map((e: (typeof recentEnrollments)[number]) => ({
       type: "enrollment" as const,
       courseName: e.course.title,
       timestamp: new Date(e.enrolledAt).toLocaleDateString("ar-SA"),

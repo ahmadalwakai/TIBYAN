@@ -763,6 +763,8 @@ export default function Header() {
   // Fetch session on mount
   useEffect(() => {
     const userData = getCurrentUserClient();
+    // Sync client state with cookie - legitimate setState in effect
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setUser(userData);
   }, []);
 
@@ -777,6 +779,8 @@ export default function Header() {
 
   // Close mobile menu on route change
   useEffect(() => {
+    // Close menu on route change - legitimate setState in effect
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMobileMenuOpen(false);
   }, [pathname]);
 

@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
       orderBy: { enrolledAt: "desc" },
     });
 
-    const courses = enrollments.map((e) => ({
+    const courses = enrollments.map((e: (typeof enrollments)[number]) => ({
       id: e.course.id,
       title: e.course.title,
       description: e.course.description,

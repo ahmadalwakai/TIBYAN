@@ -52,7 +52,7 @@ export function ShapePanel() {
 
         {/* Shape Options */}
         <SimpleGrid columns={3} gap={3}>
-          {SHAPE_OPTIONS.map(({ type, label, icon }) => (
+          {SHAPE_OPTIONS.map(({ type, label, icon: _icon }) => (
             <Box
               key={type}
               p={4}

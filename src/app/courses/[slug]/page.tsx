@@ -4,21 +4,6 @@ import { allCourses } from "@/content/courses.ar";
 import { courseJsonLd } from "@/lib/seo/jsonld";
 import CoursePageClient from "./CoursePageClient";
 
-interface CourseData {
-  id: string;
-  name: string;
-  slug: string;
-  description: string;
-  price: number;
-  currency: string;
-  duration: string;
-  totalSessions: number;
-  monthlyPayment: number;
-  level: string;
-  subjects: string[];
-  objectives: string[];
-}
-
 export async function generateMetadata({
   params,
 }: {

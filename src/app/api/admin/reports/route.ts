@@ -159,9 +159,9 @@ async function getUsersReport(startDate: Date) {
     data: {
       type: "users",
       metrics: {
-        byRole: byRole.map((r) => ({ role: r.role, count: r._count.id })),
-        byStatus: byStatus.map((s) => ({ status: s.status, count: s._count.id })),
-        registrationTrend: registrationTrend.map((r) => ({
+        byRole: byRole.map((r: (typeof byRole)[number]) => ({ role: r.role, count: r._count.id })),
+        byStatus: byStatus.map((s: (typeof byStatus)[number]) => ({ status: s.status, count: s._count.id })),
+        registrationTrend: registrationTrend.map((r: (typeof registrationTrend)[number]) => ({
           date: r.date,
           count: Number(r.count),
         })),
@@ -171,7 +171,7 @@ async function getUsersReport(startDate: Date) {
   });
 }
 
-async function getCoursesReport(startDate: Date) {
+async function getCoursesReport(_startDate: Date) {
   const [
     byStatus,
     byLevel,
@@ -209,9 +209,9 @@ async function getCoursesReport(startDate: Date) {
     data: {
       type: "courses",
       metrics: {
-        byStatus: byStatus.map((s) => ({ status: s.status, count: s._count.id })),
-        byLevel: byLevel.map((l) => ({ level: l.level, count: l._count.id })),
-        topCourses: topCourses.map((c) => ({
+        byStatus: byStatus.map((s: (typeof byStatus)[number]) => ({ status: s.status, count: s._count.id })),
+        byLevel: byLevel.map((l: (typeof byLevel)[number]) => ({ level: l.level, count: l._count.id })),
+        topCourses: topCourses.map((c: (typeof topCourses)[number]) => ({
           id: c.id,
           title: c.title,
           enrollments: c._count.enrollments,
@@ -285,13 +285,13 @@ async function getRevenueReport(startDate: Date) {
           amount: periodRevenue._sum.amount || 0,
           transactions: periodRevenue._count.id,
         },
-        byStatus: byStatus.map((s) => ({
+        byStatus: byStatus.map((s: (typeof byStatus)[number]) => ({
           status: s.status,
           count: s._count.id,
           amount: s._sum.amount || 0,
         })),
         recentPayments,
-        dailyRevenue: dailyRevenue.map((d) => ({
+        dailyRevenue: dailyRevenue.map((d: (typeof dailyRevenue)[number]) => ({
           date: d.date,
           total: Number(d.total),
         })),
@@ -337,8 +337,8 @@ async function getEngagementReport(startDate: Date) {
           averageRating: (avgRating._avg.rating || 0).toFixed(1),
         },
         ratingDistribution: ratingDistribution
-          .map((r) => ({ rating: r.rating, count: r._count.id }))
-          .sort((a, b) => a.rating - b.rating),
+          .map((r: (typeof ratingDistribution)[number]) => ({ rating: r.rating, count: r._count.id }))
+          .sort((a: { rating: number }, b: { rating: number }) => a.rating - b.rating),
         completions: completedEnrollments,
       },
     },

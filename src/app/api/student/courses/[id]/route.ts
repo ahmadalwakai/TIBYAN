@@ -56,7 +56,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       status: enrollment.status,
       level: course.level,
       duration: course.duration,
-      lessons: course.lessons.map((lesson, index) => ({
+      lessons: course.lessons.map((lesson: (typeof course.lessons)[number], index: number) => ({
         id: lesson.id,
         title: lesson.title,
         description: lesson.description,

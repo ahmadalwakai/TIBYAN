@@ -14,16 +14,8 @@ import {
   StickerLayer,
   OverlayLayer,
   CaptionLayer,
-  AdjustmentSettings,
-  BackgroundSettings,
-  AspectRatioSettings,
-  ShapeMaskSettings,
-  VideoEditSettings,
   AudioTrack,
-  AiAvatarSettings,
   HistoryState,
-  ExportProgress,
-  ToolbarItem,
   DEFAULT_ADJUSTMENTS,
   DEFAULT_BACKGROUND,
   DEFAULT_ASPECT_RATIO,
@@ -644,7 +636,7 @@ export const selectHasMedia = (state: EditorStore): boolean => {
 };
 
 export const selectCssFilters = (state: EditorStore): string => {
-  const { adjustments, activeFilter, filterIntensity } = state;
+  const { adjustments, activeFilter: _activeFilter, filterIntensity: _filterIntensity } = state;
   const filters: string[] = [];
 
   // Base adjustments

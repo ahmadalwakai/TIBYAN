@@ -3,7 +3,6 @@
  * Utilities for client-side admin authentication
  */
 
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export interface AdminAuthResponse {
@@ -21,7 +20,6 @@ export interface AdminAuthResponse {
 }
 
 export function useAdminAuth() {
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

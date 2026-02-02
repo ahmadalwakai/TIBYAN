@@ -277,7 +277,7 @@ export const exportVideo = async (
     }
 
     // Handle audio
-    let audioFilters: string[] = [];
+    const audioFilters: string[] = [];
     
     // Original audio volume
     if (ctx.originalAudioVolume !== 1) {

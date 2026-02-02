@@ -1,6 +1,6 @@
 "use client";
 
-import { Badge, Box, Button, Flex, Heading, Input, SimpleGrid, Stack, Text, Spinner } from "@chakra-ui/react";
+import { Badge, Button, Flex, Heading, Input, SimpleGrid, Stack, Text, Spinner } from "@chakra-ui/react";
 import PremiumCard from "@/components/ui/PremiumCard";
 import { useEffect, useState } from "react";
 
@@ -45,7 +45,7 @@ export default function AdminUsersPage() {
   const [error, setError] = useState("");
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState("");
-  const [statusFilter, setStatusFilter] = useState("");
+  const [statusFilter, _setStatusFilter] = useState("");
 
   useEffect(() => {
     fetchUsers();
@@ -69,8 +69,8 @@ export default function AdminUsersPage() {
       } else {
         setError(result.error);
       }
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unknown error");
     } finally {
       setLoading(false);
     }
@@ -91,8 +91,8 @@ export default function AdminUsersPage() {
       } else {
         alert(result.error);
       }
-    } catch (err: any) {
-      alert(err.message);
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Unknown error");
     }
   };
 
@@ -113,8 +113,8 @@ export default function AdminUsersPage() {
       } else {
         alert(result.error);
       }
-    } catch (err: any) {
-      alert(err.message);
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Unknown error");
     }
   };
 

@@ -8,7 +8,6 @@ import {
   Flex,
   Heading,
   HStack,
-  IconButton,
   Input,
   Spinner,
   Stack,
@@ -80,7 +79,6 @@ export default function StudentLessonRoomPage() {
   const [isMuted, setIsMuted] = useState(true);
   const [isCameraOff, setIsCameraOff] = useState(true);
   const [isHandRaised, setIsHandRaised] = useState(false);
-  const [showParticipants, setShowParticipants] = useState(false);
   const [showChat, setShowChat] = useState(true);
   const [hasJoined, setHasJoined] = useState(false);
 

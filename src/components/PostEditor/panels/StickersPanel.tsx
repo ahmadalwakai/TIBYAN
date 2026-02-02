@@ -7,7 +7,6 @@
 import {
   Box,
   VStack,
-  HStack,
   Text,
   SimpleGrid,
   Tabs,

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, Suspense, useEffect } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import {
   Box,
   Button,
@@ -17,11 +17,9 @@ import Link from "next/link";
 
 function VerifyPendingContent() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const email = searchParams.get("email") || "";
   
   const [resendEmail, setResendEmail] = useState(email);
-  const [loading, setLoading] = useState(false);
   const [resendLoading, setResendLoading] = useState(false);
   const [resendSent, setResendSent] = useState(false);
 

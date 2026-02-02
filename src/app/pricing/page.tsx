@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Container, Heading, Stack, Text, Tabs } from "@chakra-ui/react";
+import { Box, Container, Heading, Stack, Text } from "@chakra-ui/react";
 import PricingComparisonTable, { PricingPlan } from "@/components/ui/PricingComparisonTable";
 import RefundSecurityBlock from "@/components/ui/RefundSecurityBlock";
 import InstructorVerification from "@/components/ui/InstructorVerification";

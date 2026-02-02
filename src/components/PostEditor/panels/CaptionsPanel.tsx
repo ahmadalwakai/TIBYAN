@@ -11,7 +11,6 @@ import {
   Text,
   Button,
   IconButton,
-  Input,
   Textarea,
   Slider,
 } from "@chakra-ui/react";
@@ -23,7 +22,7 @@ import {
   FaClosedCaptioning,
 } from "react-icons/fa";
 import { useEditorStore, selectActiveMedia, selectCaptionLayers, selectActiveLayer } from "@/lib/editor/store";
-import { formatTime, parseTime } from "@/lib/editor/utils";
+import { formatTime } from "@/lib/editor/utils";
 import type { CaptionLayer } from "@/lib/editor/types";
 
 const MotionBox = motion.create(Box);
@@ -47,6 +46,16 @@ export function CaptionsPanel() {
   const [newCaption, setNewCaption] = useState("");
 
   const activeCaptionLayer = activeLayer?.type === "caption" ? activeLayer as CaptionLayer : null;
+
+  // Define callback before early return to satisfy rules of hooks
+  const handleUpdateCaption = useCallback(
+    (updates: Partial<CaptionLayer>) => {
+      if (activeCaptionLayer) {
+        updateLayer(activeCaptionLayer.id, updates);
+      }
+    },
+    [activeCaptionLayer, updateLayer]
+  );
 
   if (!activeMedia || activeMedia.type !== "video") {
     return (
@@ -83,15 +92,6 @@ export function CaptionsPanel() {
     addLayer(captionLayer);
     setNewCaption("");
   };
-
-  const handleUpdateCaption = useCallback(
-    (updates: Partial<CaptionLayer>) => {
-      if (activeCaptionLayer) {
-        updateLayer(activeCaptionLayer.id, updates);
-      }
-    },
-    [activeCaptionLayer, updateLayer]
-  );
 
   return (
     <MotionBox

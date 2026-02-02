@@ -41,14 +41,14 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    const totalStudents = courses.reduce((sum, c) => sum + c.enrollments.length, 0);
+    const totalStudents = courses.reduce((sum: number, c: (typeof courses)[number]) => sum + c.enrollments.length, 0);
     const totalEarnings = courses.reduce(
-      (sum, c) => sum + c.payments.reduce((pSum, p) => pSum + p.amount * 0.8, 0),
+      (sum: number, c: (typeof courses)[number]) => sum + c.payments.reduce((pSum: number, p: (typeof c.payments)[number]) => pSum + p.amount * 0.8, 0),
       0
     );
-    const allReviews = courses.flatMap((c) => c.reviews);
+    const allReviews = courses.flatMap((c: (typeof courses)[number]) => c.reviews);
     const averageRating = allReviews.length > 0
-      ? allReviews.reduce((sum, r) => sum + r.rating, 0) / allReviews.length
+      ? allReviews.reduce((sum: number, r: (typeof allReviews)[number]) => sum + r.rating, 0) / allReviews.length
       : 0;
 
     const data = {

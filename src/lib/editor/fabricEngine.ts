@@ -3,7 +3,7 @@
  * Handles image editing with layers using Fabric.js
  */
 
-import type { Canvas, FabricObject, FabricImage, FabricText, Rect, Circle, Group } from "fabric";
+import type { Canvas, FabricObject, FabricImage } from "fabric";
 import type {
   Layer,
   TextLayer,
@@ -67,7 +67,7 @@ export class FabricEngine {
   private patchWheelEventListener(canvasElement: HTMLCanvasElement): void {
     // Store original addEventListener
     const originalAddEventListener = canvasElement.addEventListener;
-    let wheelHandlers: Array<{
+    const wheelHandlers: Array<{
       listener: EventListener;
       options: AddEventListenerOptions;
     }> = [];
@@ -91,7 +91,7 @@ export class FabricEngine {
       } else {
         originalAddEventListener.call(this, type, listener, options);
       }
-    } as any;
+    } as typeof EventTarget.prototype.addEventListener;
   }
 
   private onSelectionChange?: (layerId: string | null) => void;
@@ -515,8 +515,8 @@ export class FabricEngine {
     if (updates.locked !== undefined) fabricUpdates.selectable = !updates.locked;
 
     if (updates.width !== undefined || updates.height !== undefined) {
-      const currentWidth = (obj.width || 1) * (obj.scaleX || 1);
-      const currentHeight = (obj.height || 1) * (obj.scaleY || 1);
+      const _currentWidth = (obj.width || 1) * (obj.scaleX || 1);
+      const _currentHeight = (obj.height || 1) * (obj.scaleY || 1);
       if (updates.width !== undefined) {
         fabricUpdates.scaleX = updates.width / (obj.width || 1);
       }

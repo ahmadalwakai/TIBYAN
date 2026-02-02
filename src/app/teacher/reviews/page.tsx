@@ -7,14 +7,12 @@ import {
   Text,
   VStack,
   HStack,
-  Badge,
   Spinner,
   Avatar,
   Progress,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import PremiumCard from "@/components/ui/PremiumCard";
-import StatCard from "@/components/ui/StatCard";
 
 interface Review {
   id: string;

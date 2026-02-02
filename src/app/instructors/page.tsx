@@ -21,6 +21,8 @@ function useCountUp(end: number, duration: number = 2000, startOnView: boolean =
 
   useEffect(() => {
     if (!startOnView) {
+      // Initial state based on prop - legitimate setState in effect
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setHasStarted(true);
     }
   }, [startOnView]);

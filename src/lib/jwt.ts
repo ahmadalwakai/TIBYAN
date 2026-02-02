@@ -54,7 +54,7 @@ export async function verifyToken(token: string): Promise<JWTPayload | null> {
     }
     
     return payload as JWTPayload;
-  } catch (error) {
+  } catch (_error) {
     // Token invalid, expired, or tampered
     return null;
   }

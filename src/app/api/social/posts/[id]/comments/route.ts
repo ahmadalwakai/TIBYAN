@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { getUserFromRequest, requireRole } from "@/lib/api-auth";
+import { getUserFromRequest } from "@/lib/api-auth";
 import { z } from "zod";
 
 // Force Node.js runtime - Prisma doesn't work in Edge
@@ -84,8 +84,8 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     let userLikes: Set<string> = new Set();
     if (user) {
       const allCommentIds = [
-        ...comments.map(c => c.id),
-        ...comments.flatMap(c => c.replies.map(r => r.id)),
+        ...comments.map((c: (typeof comments)[number]) => c.id),
+        ...comments.flatMap((c: (typeof comments)[number]) => c.replies.map((r: (typeof c.replies)[number]) => r.id)),
       ];
       
       const likes = await db.commentLike.findMany({
@@ -95,15 +95,15 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
         },
         select: { commentId: true },
       });
-      userLikes = new Set(likes.map(l => l.commentId));
+      userLikes = new Set(likes.map((l: (typeof likes)[number]) => l.commentId));
     }
 
-    const commentsWithLikes = comments.map(comment => ({
+    const commentsWithLikes = comments.map((comment: (typeof comments)[number]) => ({
       ...comment,
       likesCount: comment._count.likes,
       repliesCount: comment._count.replies,
       isLiked: userLikes.has(comment.id),
-      replies: comment.replies.map(reply => ({
+      replies: comment.replies.map((reply: (typeof comment.replies)[number]) => ({
         ...reply,
         likesCount: reply._count.likes,
         isLiked: userLikes.has(reply.id),

@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { agreeTerms, ...applicationData } = result.data;
+    const { agreeTerms: _agreeTerms, ...applicationData } = result.data;
 
     // Check if application with same email already exists and is pending
     const existingApplication = await prisma.teacherApplication.findFirst({

@@ -3,12 +3,11 @@
 import { useState, Suspense } from "react";
 import { Box, Button, Container, Heading, Input, Stack, Text, Spinner } from "@chakra-ui/react";
 import Link from "next/link";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import PremiumCard from "@/components/ui/PremiumCard";
 
 function ResetPasswordContent() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const token = searchParams.get("token");
   
   const [isLoading, setIsLoading] = useState(false);

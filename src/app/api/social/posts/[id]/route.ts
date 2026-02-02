@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { getUserFromRequest } from "@/lib/api-auth";
-import { z } from "zod";
 
 // Force Node.js runtime - Prisma doesn't work in Edge
 export const runtime = 'nodejs';

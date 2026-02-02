@@ -50,9 +50,9 @@ export async function GET(
     }
 
     return NextResponse.json({ ok: true, data: user });
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json(
-      { ok: false, error: error.message || "Failed to fetch user" },
+      { ok: false, error: error instanceof Error ? error.message : "Failed to fetch user" },
       { status: 500 }
     );
   }
@@ -78,7 +78,7 @@ export async function PATCH(
       );
     }
 
-    const data: any = { ...validation.data };
+    const data = { ...validation.data };
 
     // Hash password if provided
     if (data.password) {
@@ -112,9 +112,9 @@ export async function PATCH(
     });
 
     return NextResponse.json({ ok: true, data: user });
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json(
-      { ok: false, error: error.message || "Failed to update user" },
+      { ok: false, error: error instanceof Error ? error.message : "Failed to update user" },
       { status: 500 }
     );
   }
@@ -152,9 +152,9 @@ export async function DELETE(
     });
 
     return NextResponse.json({ ok: true, data: { message: "User deleted successfully" } });
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json(
-      { ok: false, error: error.message || "Failed to delete user" },
+      { ok: false, error: error instanceof Error ? error.message : "Failed to delete user" },
       { status: 500 }
     );
   }

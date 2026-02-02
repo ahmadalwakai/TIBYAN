@@ -186,7 +186,7 @@ export function AudioPanel() {
               لم يتم إضافة مسارات صوتية
             </Text>
             <Text color="gray.400" fontSize="xs" mt={1}>
-              اضغط على "إضافة صوت" لإضافة موسيقى أو تعليق صوتي
+              اضغط على &quot;إضافة صوت&quot; لإضافة موسيقى أو تعليق صوتي
             </Text>
           </Box>
         ) : (

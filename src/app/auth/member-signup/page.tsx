@@ -13,7 +13,7 @@ import {
 import { Field } from "@/components/ui/field";
 import { toaster } from "@/components/ui/toaster";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useState, Suspense, useRef } from "react";
 
 /**
@@ -37,7 +37,6 @@ function isSafeRedirect(url: string | null, defaultPath: string = "/member"): st
 }
 
 function MemberSignupForm() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const redirectTo = isSafeRedirect(searchParams.get("redirect"));
   

@@ -52,7 +52,7 @@ export function AspectRatioPanel() {
 
         {/* Aspect Ratio Grid */}
         <SimpleGrid columns={3} gap={3}>
-          {ASPECT_RATIO_OPTIONS.map(({ preset, icon }) => {
+          {ASPECT_RATIO_OPTIONS.map(({ preset, icon: _icon }) => {
             const ratio = ASPECT_RATIOS[preset];
             return (
               <Box

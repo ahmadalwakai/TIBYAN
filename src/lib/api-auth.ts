@@ -69,7 +69,7 @@ async function getAuthenticatedUser(): Promise<AuthenticatedUser | null> {
  * Returns user if authenticated, or 401 error response
  */
 export async function requireUser(
-  request: NextRequest
+  _request: NextRequest
 ): Promise<AuthenticatedUser | NextResponse> {
   const user = await getAuthenticatedUser();
 
@@ -88,7 +88,7 @@ export async function requireUser(
  * Returns user if authorized, or 403 error response
  */
 export async function requireRole(
-  request: NextRequest,
+  _request: NextRequest,
   role: UserRole
 ): Promise<AuthenticatedUser | NextResponse> {
   const user = await getAuthenticatedUser();
@@ -115,7 +115,7 @@ export async function requireRole(
  * Returns user if admin, or 403 error response
  */
 export async function requireAdmin(
-  request: NextRequest
+  _request: NextRequest
 ): Promise<AuthenticatedUser | NextResponse> {
   const user = await getAuthenticatedUser();
 

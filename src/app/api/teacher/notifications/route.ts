@@ -15,7 +15,7 @@ type Notification = {
 const notificationStore = new Map<string, Notification[]>();
 
 // Initialize sample notifications for teachers
-function getOrInitNotifications(userId: string, role: string): Notification[] {
+function getOrInitNotifications(userId: string, _role: string): Notification[] {
   if (!notificationStore.has(userId)) {
     const notifications: Notification[] = [
       {

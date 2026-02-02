@@ -108,7 +108,7 @@ export async function POST(request: NextRequest, { params }: Params) {
       select: { userId: true },
     });
 
-    const existingIds = existing.map((e) => e.userId);
+    const existingIds = existing.map((e: (typeof existing)[number]) => e.userId);
     const newIds = data.studentIds.filter((sid) => !existingIds.includes(sid));
 
     if (newIds.length === 0) {
@@ -126,7 +126,7 @@ export async function POST(request: NextRequest, { params }: Params) {
 
     // Create invitations
     await db.sessionInvitation.createMany({
-      data: students.map((student) => ({
+      data: students.map((student: (typeof students)[number]) => ({
         sessionId: id,
         userId: student.id,
         userName: student.name,

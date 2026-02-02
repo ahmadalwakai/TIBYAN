@@ -5,14 +5,12 @@
  * Full-featured media editor for creating posts
  */
 
-import { Box, Text, Spinner, Button, VStack } from "@chakra-ui/react";
+import { Box, Text, Spinner, VStack } from "@chakra-ui/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState, Suspense } from "react";
 import { getCurrentUserClient } from "@/lib/auth-client";
 import { toaster } from "@/components/ui/toaster";
 import dynamic from "next/dynamic";
-import Link from "next/link";
-import type { MediaAsset } from "@/lib/editor/types";
 
 // Dynamic import to avoid SSR issues with canvas/ffmpeg
 const PostEditor = dynamic(

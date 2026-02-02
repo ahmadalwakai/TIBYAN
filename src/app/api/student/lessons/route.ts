@@ -73,7 +73,7 @@ export async function GET(request: NextRequest) {
     });
 
     // Add user context to each session
-    const sessionsWithContext = sessions.map((session) => ({
+    const sessionsWithContext = sessions.map((session: (typeof sessions)[number]) => ({
       id: session.id,
       title: session.title,
       description: session.description,

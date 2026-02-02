@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Heading, Stack, Text, Accordion } from "@chakra-ui/react";
+import { Box, Heading, Stack, Text } from "@chakra-ui/react";
 
 interface CurriculumModule {
   title: string;

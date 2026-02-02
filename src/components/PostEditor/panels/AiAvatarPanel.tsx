@@ -11,7 +11,6 @@ import {
   HStack,
   Text,
   Button,
-  Image,
   Badge,
   Spinner,
 } from "@chakra-ui/react";
@@ -125,7 +124,7 @@ export function AiAvatarPanel() {
               <VStack gap={2}>
                 <Text fontSize="4xl">🤖</Text>
                 <Text fontSize="sm" color="gray.500" textAlign="center">
-                  اختر أسلوبًا ثم اضغط "إنشاء"
+                  اختر أسلوبًا ثم اضغط &quot;إنشاء&quot;
                 </Text>
               </VStack>
             )}

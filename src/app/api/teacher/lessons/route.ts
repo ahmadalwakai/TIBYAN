@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { getUserFromRequest } from "@/lib/api-auth";
 import { z } from "zod";
-import { MeetingPrivacy, InvitationStatus } from "@prisma/client";
+import { InvitationStatus } from "@prisma/client";
 
 // Force Node.js runtime - Prisma doesn't work in Edge
 export const runtime = 'nodejs';
@@ -174,7 +174,7 @@ export async function POST(request: NextRequest) {
 
       // Create invitations
       await db.sessionInvitation.createMany({
-        data: studentsToInvite.map((student) => ({
+        data: studentsToInvite.map((student: (typeof studentsToInvite)[number]) => ({
           sessionId: session.id,
           userId: student.id,
           userName: student.name,

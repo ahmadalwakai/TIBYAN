@@ -106,7 +106,7 @@ export async function GET(request: NextRequest) {
     });
 
     // Add user's invitation status to each meeting
-    const meetingsWithStatus = meetings.map((meeting) => ({
+    const meetingsWithStatus = meetings.map((meeting: (typeof meetings)[number]) => ({
       ...meeting,
       userInvitationStatus: meeting.invitations[0]?.status || null,
       isHost: meeting.hostId === user.id,
@@ -205,7 +205,7 @@ export async function POST(request: NextRequest) {
 
       // Create invitation records with user details
       await db.meetingInvitation.createMany({
-        data: usersToInvite.map((invitedUser) => ({
+        data: usersToInvite.map((invitedUser: (typeof usersToInvite)[number]) => ({
           meetingId: meeting.id,
           userId: invitedUser.id,
           userName: invitedUser.name,
