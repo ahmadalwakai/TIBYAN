@@ -6,6 +6,7 @@
   "regions": ["fra1"],
   "build": {
     "env": {
+      "PRISMA_CLIENT_ENGINE_TYPE": "binary",
       "PRISMA_CLI_BINARY_TARGETS": "rhel-openssl-3.0.x",
       "PRISMA_ENGINES_MIRROR": "https://binaries.prisma.sh",
       "PRISMA_SKIP_POSTINSTALL_GENERATE": "true",
