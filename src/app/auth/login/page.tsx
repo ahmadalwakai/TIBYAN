@@ -13,6 +13,7 @@ import {
 import { Field } from "@/components/ui/field";
 import { toaster } from "@/components/ui/toaster";
 import { getRoleRedirect } from "@/lib/auth/roleRedirect";
+import { Link as ChakraLink } from "@chakra-ui/react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useState, Suspense, useEffect, useRef, type ComponentType } from "react";
@@ -43,6 +44,9 @@ function LoginForm() {
   const isSubmittingRef = useRef(false);
 
   const [loading, setLoading] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [portalUrl, setPortalUrl] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -67,11 +71,15 @@ function LoginForm() {
     // Only show error if it's in whitelist (XSS protection)
     if (errorParam in errorMessages) {
       toaster.error({ title: errorMessages[errorParam] });
+      setFormError(errorMessages[errorParam]);
     }
   }, [errorParam]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setFormError(null);
+    setSuccessMessage(null);
+    setPortalUrl(null);
 
     // Prevent double submission (critical for preventing brute force)
     if (isSubmittingRef.current || loading) return;
@@ -95,6 +103,7 @@ function LoginForm() {
       // Handle network errors (status 0)
       if (res.status === 0) {
         toaster.error({ title: "خطأ في الاتصال. يرجى التأكد من الإنترنت." });
+        setFormError("خطأ في الاتصال. يرجى التأكد من الإنترنت.");
         return;
       }
 
@@ -106,6 +115,7 @@ function LoginForm() {
           title: "حسابك مقفل مؤقتاً",
           description: `حاول مرة أخرى خلال ${Math.max(1, secondsLeft)} ثانية`,
         });
+        setFormError("حسابك مقفل مؤقتاً. يرجى المحاولة لاحقاً.");
         return;
       }
 
@@ -118,6 +128,7 @@ function LoginForm() {
           contentType,
         });
         toaster.error({ title: "خطأ في الخادم. يرجى المحاولة لاحقاً." });
+        setFormError("خطأ في الخادم. يرجى المحاولة لاحقاً.");
         return;
       }
 
@@ -130,6 +141,7 @@ function LoginForm() {
 
         if (nextAction?.type === "VERIFY_EMAIL") {
           toaster.error({ title: json.error || "يرجى تأكيد بريدك الإلكتروني أولاً" });
+          setFormError(json.error || "يرجى تأكيد بريدك الإلكتروني أولاً");
           if (formData.email.trim()) {
             const verifyUrl = `/auth/verify-pending?email=${encodeURIComponent(
               formData.email.trim()
@@ -141,28 +153,33 @@ function LoginForm() {
 
         if (nextAction?.type === "GO_TO_MEMBER_SIGNUP" && nextAction.url) {
           toaster.error({ title: json.error || "يرجى إنشاء حساب عضوية" });
+          setFormError(json.error || "يرجى إنشاء حساب عضوية");
           window.location.href = nextAction.url;
           return;
         }
 
         if (nextAction?.type === "GO_TO_ROLE_PORTAL" && nextAction.url) {
           toaster.error({ title: json.error || "انتقل إلى بوابتك الصحيحة" });
+          setFormError(json.error || "انتقل إلى بوابتك الصحيحة");
           window.location.href = nextAction.url;
           return;
         }
 
         toaster.error({ title: json.error || "حدث خطأ في تسجيل الدخول" });
+        setFormError(json.error || "حدث خطأ في تسجيل الدخول");
         return;
       }
 
       const redirectUrl =
         (typeof json?.data?.redirectTo === "string" && json.data.redirectTo) || safeRedirect;
       toaster.success({ title: "تم تسجيل الدخول بنجاح!" });
-      window.location.href = redirectUrl;
+      setSuccessMessage("تم تسجيل الدخول بنجاح!");
+      setPortalUrl(redirectUrl);
       return;
     } catch (error) {
       console.error("[Login] Error:", error);
       toaster.error({ title: "حدث خطأ في الاتصال" });
+      setFormError("حدث خطأ في الاتصال");
     } finally {
       // Only reset if we didn't navigate
       if (isSubmittingRef.current) {
@@ -185,6 +202,51 @@ function LoginForm() {
       borderColor="border"
     >
       <Stack gap={5}>
+        {successMessage && (
+          <Box
+            bg="green.50"
+            border="1px solid"
+            borderColor="green.200"
+            borderRadius="md"
+            p={3}
+            textAlign="center"
+          >
+            <Text color="green.700" fontSize="sm" fontWeight="600">
+              {successMessage}
+            </Text>
+            {portalUrl && (
+              <ChakraLink
+                as={Link}
+                href={portalUrl}
+                display="inline-flex"
+                mt={2}
+                px={4}
+                py={2}
+                borderRadius="md"
+                bg="green.600"
+                color="white"
+                fontSize="sm"
+                fontWeight="600"
+                _hover={{ bg: "green.700" }}
+              >
+                عرض بوابتي
+              </ChakraLink>
+            )}
+          </Box>
+        )}
+        {formError && (
+          <Box
+            bg="red.50"
+            border="1px solid"
+            borderColor="red.200"
+            borderRadius="md"
+            p={3}
+          >
+            <Text color="red.700" fontSize="sm">
+              {formError}
+            </Text>
+          </Box>
+        )}
         <Field label="البريد الإلكتروني" required inputId="email-input">
           <Input
             id="email-input"

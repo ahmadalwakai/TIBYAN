@@ -6,6 +6,7 @@ import {
   Container,
   Heading,
   Input,
+  Link as ChakraLink,
   Stack,
   Text,
   Textarea,
@@ -42,6 +43,9 @@ function MemberSignupForm() {
   
   const [loading, setLoading] = useState(false);
   const isSubmittingRef = useRef(false);
+  const [formError, setFormError] = useState<string | null>(null);
+  const [formSuccess, setFormSuccess] = useState<string | null>(null);
+  const [actionUrl, setActionUrl] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -52,6 +56,9 @@ function MemberSignupForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setFormError(null);
+    setFormSuccess(null);
+    setActionUrl(null);
     
     // Prevent double-submit attacks
     if (isSubmittingRef.current || loading) return;
@@ -62,18 +69,21 @@ function MemberSignupForm() {
       // Validate passwords match
       if (formData.password !== formData.confirmPassword) {
         toaster.error({ title: "كلمتا المرور غير متطابقتين" });
+        setFormError("كلمتا المرور غير متطابقتين");
         return;
       }
 
       // Validate password strength on client
       if (formData.password.length < 8) {
         toaster.error({ title: "كلمة المرور يجب أن تكون 8 أحرف على الأقل" });
+        setFormError("كلمة المرور يجب أن تكون 8 أحرف على الأقل");
         return;
       }
 
       // Validate name
       if (formData.name.trim().length < 2) {
         toaster.error({ title: "الاسم يجب أن يكون حرفين على الأقل" });
+        setFormError("الاسم يجب أن يكون حرفين على الأقل");
         return;
       }
 
@@ -81,6 +91,7 @@ function MemberSignupForm() {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(formData.email)) {
         toaster.error({ title: "البريد الإلكتروني غير صحيح" });
+        setFormError("البريد الإلكتروني غير صحيح");
         return;
       }
 
@@ -100,6 +111,7 @@ function MemberSignupForm() {
       // Handle network errors (status 0)
       if (res.status === 0) {
         toaster.error({ title: "خطأ في الاتصال. يرجى التأكد من الإنترنت." });
+        setFormError("خطأ في الاتصال. يرجى التأكد من الإنترنت.");
         return;
       }
 
@@ -112,14 +124,11 @@ function MemberSignupForm() {
           title: "تم إنشاء حسابك بنجاح!",
           description: "يرجى تأكيد بريدك الإلكتروني للمتابعة",
         });
-        window.location.href = redirectUrl;
-        return;
-      }
-
-      // If we somehow got 2xx on a POST, that's unexpected
-      if (res.status >= 200 && res.status < 300) {
-        console.warn("[MemberSignup] Unexpected 2xx response on POST");
-        toaster.error({ title: "استجابة غير متوقعة من الخادم" });
+        setFormSuccess("تم إنشاء حسابك بنجاح! يرجى تأكيد بريدك الإلكتروني للمتابعة.");
+        setActionUrl(redirectUrl);
+        setTimeout(() => {
+          window.location.href = redirectUrl;
+        }, 1200);
         return;
       }
 
@@ -132,6 +141,7 @@ function MemberSignupForm() {
           contentType,
         });
         toaster.error({ title: "خطأ في الخادم. يرجى المحاولة لاحقاً." });
+        setFormError("خطأ في الخادم. يرجى المحاولة لاحقاً.");
         return;
       }
       
@@ -143,31 +153,41 @@ function MemberSignupForm() {
           description: "يرجى تأكيد بريدك الإلكتروني للمتابعة",
         });
 
+        setFormSuccess("تم إنشاء حسابك بنجاح! يرجى تأكيد بريدك الإلكتروني للمتابعة.");
+        const verifyUrl = `/auth/verify-pending?email=${encodeURIComponent(formData.email.toLowerCase())}`;
+        setActionUrl(verifyUrl);
+
         // Wait for Set-Cookie headers to be processed
         await new Promise((resolve) => setTimeout(resolve, 300));
 
         // Redirect members to email verification page
         // They must verify email before accessing member features
         // Use window.location.href to force full page reload for cookie processing
-        window.location.href = `/auth/verify-pending?email=${encodeURIComponent(formData.email.toLowerCase())}`;
+        setTimeout(() => {
+          window.location.href = verifyUrl;
+        }, 1200);
         return;
       } else if (res.status === 429) {
         toaster.error({ 
           title: "عدد المحاولات كثير جداً",
           description: "يرجى المحاولة لاحقاً" 
         });
+        setFormError("عدد المحاولات كثير جداً. يرجى المحاولة لاحقاً.");
       } else if (json.error === "البريد الإلكتروني مسجل مسبقاً") {
         toaster.error({ 
           title: "البريد الإلكتروني مسجل بالفعل",
           description: "جرب بريد آخر أو سجل دخول" 
         });
+        setFormError("البريد الإلكتروني مسجل بالفعل. جرب بريدًا آخر أو سجل دخول.");
       } else if (res.status === 500) {
         toaster.error({ 
           title: "خطأ في الخادم",
           description: "يرجى المحاولة لاحقاً" 
         });
+        setFormError("خطأ في الخادم. يرجى المحاولة لاحقاً.");
       } else {
         toaster.error({ title: json.error || "حدث خطأ في التسجيل" });
+        setFormError(json.error || "حدث خطأ في التسجيل");
       }
     } catch (error) {
       console.error("[MemberSignup]", error);
@@ -176,8 +196,10 @@ function MemberSignupForm() {
           title: "خطأ في الاتصال",
           description: "تأكد من اتصالك بالإنترنت" 
         });
+        setFormError("خطأ في الاتصال. تأكد من اتصالك بالإنترنت.");
       } else {
         toaster.error({ title: "حدث خطأ غير متوقع" });
+        setFormError("حدث خطأ غير متوقع");
       }
     } finally {
       setLoading(false);
@@ -197,6 +219,51 @@ function MemberSignupForm() {
       borderColor="border"
     >
       <Stack gap={5}>
+        {formSuccess && (
+          <Box
+            bg="green.50"
+            border="1px solid"
+            borderColor="green.200"
+            borderRadius="md"
+            p={3}
+            textAlign="center"
+          >
+            <Text color="green.700" fontSize="sm" fontWeight="600">
+              {formSuccess}
+            </Text>
+            {actionUrl && (
+              <ChakraLink
+                as={Link}
+                href={actionUrl}
+                display="inline-flex"
+                mt={3}
+                px={4}
+                py={2}
+                borderRadius="md"
+                bg="green.600"
+                color="white"
+                fontSize="sm"
+                fontWeight="600"
+                _hover={{ bg: "green.700" }}
+              >
+                تأكيد البريد الآن
+              </ChakraLink>
+            )}
+          </Box>
+        )}
+        {formError && (
+          <Box
+            bg="red.50"
+            border="1px solid"
+            borderColor="red.200"
+            borderRadius="md"
+            p={3}
+          >
+            <Text color="red.700" fontSize="sm">
+              {formError}
+            </Text>
+          </Box>
+        )}
         <Field label="الاسم الكامل" required inputId="name-input">
           <Input
             id="name-input"

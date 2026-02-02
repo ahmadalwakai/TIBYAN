@@ -206,16 +206,16 @@ function VerifyPendingContent() {
 
           {/* Links */}
           <Stack gap={3} w="100%" textAlign="center">
-            <Link href="/auth/login">
-              <ChakraLink
-                display="block"
-                color="gray.300"
-                fontSize="sm"
-                _hover={{ color: "white", textDecoration: "underline" }}
-              >
-                العودة لتسجيل الدخول
-              </ChakraLink>
-            </Link>
+            <ChakraLink
+              as={Link}
+              href="/auth/login"
+              display="block"
+              color="gray.300"
+              fontSize="sm"
+              _hover={{ color: "white", textDecoration: "underline" }}
+            >
+              العودة لتسجيل الدخول
+            </ChakraLink>
             <Text fontSize="xs" color="gray.500">
               هل تحتاج لمساعدة؟{" "}
               <ChakraLink as={Link} href="/help" color="link" _hover={{ textDecoration: "underline" }}>
