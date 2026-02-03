@@ -22,6 +22,7 @@ const adminLinks = [
   { label: "الدردشة المباشرة", href: "/admin/live-chat" },
   { label: "سجل الأنشطة التعليمية", href: "/admin/activity" },
   { label: "التكاملات الخارجية", href: "/admin/integrations" },
+  { label: "Zyphon AI", href: "/admin/zyphon-ai" },
   { label: "الإعدادات", href: "/admin/settings" },
 ];
 

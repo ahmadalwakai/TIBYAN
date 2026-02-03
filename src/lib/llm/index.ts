@@ -28,10 +28,8 @@ export {
   getLLMBaseUrl,
   logLLMConfig,
   DEFAULT_LLM_CONFIG,
-  getZyphonConfig,
   type LLMConfig,
   type LLMProvider as LLMProviderType,
-  type ZyphonConfig,
 } from "./config";
 
 // Health
@@ -46,7 +44,6 @@ export {
 // Providers
 export { mockProvider, MockLLMProvider } from "./providers/mock";
 export { localProvider, LocalLLMProvider } from "./providers/local";
-export { zyphonProvider, ZyphonLLMProvider } from "./providers/zyphon";
 
 // Client
 export {

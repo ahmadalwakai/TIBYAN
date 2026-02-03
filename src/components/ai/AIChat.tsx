@@ -1,3 +1,9 @@
+/**
+ * @deprecated Replaced by AIChatPage at /[locale]/ai
+ * This component is kept for backward compatibility but should not be used.
+ * All new AI chat implementations must use AIChatPage instead.
+ * To remove: delete this file and the export in index.ts
+ */
 "use client";
 
 import {
@@ -19,6 +25,18 @@ import {
 } from "@chakra-ui/react";
 import { toaster } from "@/components/ui/toaster";
 import { useCallback, useEffect, useRef, useState } from "react";
+
+// Pulsing animation for streaming avatar
+const pulseAnimation = `
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.4;
+    }
+  }
+`;
 import { 
   LuBot, 
   LuImage, 
@@ -31,7 +49,12 @@ import {
   LuBrain,
   LuFileQuestion,
   LuCalendar,
+  LuCircleStop,
+  LuRefreshCw,
 } from "react-icons/lu";
+import { TypingIndicator } from "./TypingIndicator";
+import { ChatStatusBar } from "./ChatStatusBar";
+import { MessageActions } from "./MessageActions";
 
 interface Message {
   id: string;
@@ -113,19 +136,54 @@ export default function AIChat({
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isStreaming, setIsStreaming] = useState(false);
   const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [sessionId] = useState(() => `chat_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`);
+  const [lastUserMessage, setLastUserMessage] = useState<string>("");
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const batchBufferRef = useRef<string>("");
+  const batchTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const lastScrollCheckRef = useRef<number>(0);
 
   const isRTL = language === "ar";
 
-  // Scroll to bottom
+  // Smart scroll: stick to bottom if user is near bottom
+  const scrollToBottom = useCallback((force = false) => {
+    const container = messagesContainerRef.current;
+    if (!container) return;
+
+    const now = Date.now();
+    // Throttle scroll checks to every 100ms
+    if (!force && now - lastScrollCheckRef.current < 100) return;
+    lastScrollCheckRef.current = now;
+
+    const { scrollHeight, scrollTop, clientHeight } = container;
+    const distanceFromBottom = scrollHeight - scrollTop - clientHeight;
+    const isNearBottom = distanceFromBottom < 100;
+    
+    if (force || isNearBottom) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    }
+  }, []);
+
+  // Scroll on new messages
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+    scrollToBottom();
+  }, [messages, scrollToBottom]);
+
+  // Cleanup batch timer on unmount
+  useEffect(() => {
+    return () => {
+      if (batchTimerRef.current) {
+        clearTimeout(batchTimerRef.current);
+      }
+    };
+  }, []);
 
   // Welcome message
   useEffect(() => {
@@ -195,9 +253,66 @@ export default function AIChat({
     setAttachments((prev) => prev.filter((a) => a.id !== id));
   }, []);
 
-  // Send message
+  // Flush batch buffer to state (throttled updates)
+  const flushBatch = useCallback((messageId: string, force = false) => {
+    if (!batchBufferRef.current && !force) return;
+
+    const content = batchBufferRef.current;
+    batchBufferRef.current = "";
+
+    setMessages((prev) =>
+      prev.map((m) =>
+        m.id === messageId ? { ...m, content } : m
+      )
+    );
+
+    scrollToBottom();
+  }, [scrollToBottom]);
+
+  // Stop streaming
+  const stopStreaming = useCallback(() => {
+    if (abortControllerRef.current) {
+      if (process.env.NODE_ENV === "development") {
+        console.log("[AIChat] Stopping stream via AbortController");
+      }
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+
+    // Clear batch timer and flush any pending content
+    if (batchTimerRef.current) {
+      clearTimeout(batchTimerRef.current);
+      batchTimerRef.current = null;
+    }
+
+    setIsStreaming(false);
+    setIsLoading(false);
+    
+    toaster.create({
+      title: isRTL ? "تم إيقاف التوليد" : "Generation stopped",
+      type: "info",
+    });
+  }, [isRTL]);
+
+  // Regenerate last response
+  const regenerateLastResponse = useCallback(() => {
+    if (!lastUserMessage) return;
+    
+    // Remove last assistant message
+    setMessages((prev) => {
+      const filtered = prev.filter((m) => m.role === "user" || m.id !== prev[prev.length - 1]?.id);
+      return filtered;
+    });
+
+    // Resend last user message
+    sendMessage(lastUserMessage);
+  }, [lastUserMessage]);
+
+  // Send message with streaming support
   const sendMessage = useCallback(async (content: string, action?: string) => {
     if (!content.trim() && attachments.length === 0) return;
+
+    setLastUserMessage(content.trim());
 
     const userMessage: Message = {
       id: `msg_${Date.now()}`,
@@ -207,26 +322,28 @@ export default function AIChat({
       timestamp: new Date(),
     };
 
-    const loadingMessage: Message = {
-      id: `loading_${Date.now()}`,
+    const assistantMessageId = `msg_${Date.now() + 1}`;
+    const streamingMessage: Message = {
+      id: assistantMessageId,
       role: "assistant",
       content: "",
       timestamp: new Date(),
-      isLoading: true,
+      isLoading: false,
     };
 
-    setMessages((prev) => [...prev, userMessage, loadingMessage]);
+    setMessages((prev) => [...prev, userMessage, streamingMessage]);
     setInput("");
     setAttachments([]);
     setIsLoading(true);
 
     try {
-      // Build request based on action or general chat
+      // Build request
       let endpoint = "/api/ai/agent";
       interface RequestBody {
         message: string;
         sessionId: string;
         history: Array<{ role: "user" | "assistant"; content: string }>;
+        stream?: boolean;
         context?: {
           lessonId?: string;
           courseId?: string;
@@ -244,6 +361,7 @@ export default function AIChat({
       let requestBody: RequestBody = {
         message: content,
         sessionId,
+        stream: true, // Enable streaming
         history: messages
           .filter((m) => !m.isLoading)
           .map((m) => ({ role: m.role, content: m.content })),
@@ -254,40 +372,126 @@ export default function AIChat({
         },
       };
 
-      // Handle quick actions
+      // Handle quick actions (non-streaming endpoints)
       if (action === "summarize_lesson" && lessonId) {
         endpoint = "/api/ai/summarize";
-        requestBody = { lessonId, type: "brief", language, message: "", sessionId, history: [] };
+        requestBody = { lessonId, type: "brief", language, message: "", sessionId, history: [], stream: false };
       } else if (action === "generate_quiz" && (lessonId || courseId)) {
         endpoint = "/api/ai/quiz";
-        requestBody = { lessonId, courseId, questionCount: 5, difficulty: "medium", language, message: "", sessionId, history: [] };
+        requestBody = { lessonId, courseId, questionCount: 5, difficulty: "medium", language, message: "", sessionId, history: [], stream: false };
       } else if (action === "create_study_plan" && courseId) {
         endpoint = "/api/ai/study-plan";
-        requestBody = { courseId, goalType: "complete_course", availableHoursPerWeek: 10, language, message: "", sessionId, history: [] };
+        requestBody = { courseId, goalType: "complete_course", availableHoursPerWeek: 10, language, message: "", sessionId, history: [], stream: false };
       }
+
+      // Create AbortController for stop functionality
+      abortControllerRef.current = new AbortController();
 
       const response = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify(requestBody),
+        signal: abortControllerRef.current.signal,
       });
 
-      const data = await response.json() as { 
-        ok: boolean; 
-        data?: { 
-          response?: string; 
-          summary?: string;
-          quiz?: { questions: Array<{ question: string; options?: string[]; correctAnswer: number | string }> };
-          plan?: { title: string; weeklySchedule: Array<{ day: string; topic: string }> };
-        }; 
-        error?: string 
-      };
+      // Check if streaming response
+      const contentType = response.headers.get("content-type");
+      const isStreamResponse = contentType?.includes("text/event-stream");
 
-      // Remove loading message and add response
-      setMessages((prev) => {
-        const filtered = prev.filter((m) => !m.isLoading);
-        
+      if (isStreamResponse && requestBody.stream) {
+        // STREAMING MODE
+        setIsStreaming(true);
+        setIsLoading(false);
+
+        if (process.env.NODE_ENV === "development") {
+          console.log("[AIChat] Starting SSE stream");
+        }
+
+        const reader = response.body?.getReader();
+        if (!reader) throw new Error("No response stream");
+
+        const decoder = new TextDecoder();
+        let buffer = "";
+        let accumulatedContent = "";
+        batchBufferRef.current = "";
+        let deltaCount = 0;
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) {
+            if (process.env.NODE_ENV === "development") {
+              console.log(`[AIChat] Stream done: ${deltaCount} deltas received`);
+            }
+            break;
+          }
+
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split("\n");
+          buffer = lines.pop() || "";
+
+          for (const line of lines) {
+            const trimmed = line.trim();
+            if (!trimmed || trimmed === "data: [DONE]") continue;
+
+            if (trimmed.startsWith("data: ")) {
+              try {
+                const jsonStr = trimmed.slice(6).trim();
+                if (!jsonStr || jsonStr === "[DONE]") continue;
+
+                const data = JSON.parse(jsonStr);
+
+                if (data.delta) {
+                  deltaCount++;
+                  accumulatedContent += data.delta;
+                  batchBufferRef.current = accumulatedContent;
+                  
+                  // Throttled batch update: flush every 50ms
+                  if (!batchTimerRef.current) {
+                    batchTimerRef.current = setTimeout(() => {
+                      batchTimerRef.current = null;
+                      flushBatch(assistantMessageId);
+                    }, 50);
+                  }
+                }
+              } catch (err) {
+                if (process.env.NODE_ENV === "development") {
+                  console.error("[AIChat] Failed to parse SSE:", err);
+                }
+              }
+            } else if (trimmed.startsWith("event: error")) {
+              const errorLine = lines.find(l => l.trim().startsWith("data: "));
+              if (errorLine) {
+                const errorData = JSON.parse(errorLine.trim().slice(6));
+                throw new Error(errorData.message || errorData.error || "Streaming error");
+              }
+            }
+          }
+        }
+
+        // Final flush
+        if (batchTimerRef.current) {
+          clearTimeout(batchTimerRef.current);
+          batchTimerRef.current = null;
+        }
+        flushBatch(assistantMessageId, true);
+
+        setIsStreaming(false);
+        abortControllerRef.current = null;
+
+      } else {
+        // NON-STREAMING MODE (fallback for quick actions)
+        const data = await response.json() as {
+          ok: boolean;
+          data?: {
+            response?: string;
+            summary?: string;
+            quiz?: { questions: Array<{ question: string; options?: string[]; correctAnswer: number | string }> };
+            plan?: { title: string; weeklySchedule: Array<{ day: string; topic: string }> };
+          };
+          error?: string;
+        };
+
         let responseContent = "";
         if (data.ok && data.data) {
           if (action === "summarize_lesson" && data.data.summary) {
@@ -312,38 +516,62 @@ export default function AIChat({
             responseContent = data.data.response || JSON.stringify(data.data, null, 2);
           }
         } else {
-          responseContent = data.error || (isRTL ? "عذراً، حدث خطأ. حاول مرة أخرى." : "Sorry, an error occurred. Please try again.");
+          responseContent = data.error || (isRTL ? "عذراً، حدث خطأ." : "Sorry, an error occurred.");
         }
 
-        const assistantMessage: Message = {
-          id: `msg_${Date.now()}`,
-          role: "assistant",
-          content: responseContent,
-          timestamp: new Date(),
-        };
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === assistantMessageId
+              ? { ...m, content: responseContent }
+              : m
+          )
+        );
+      }
+    } catch (error: unknown) {
+      if (process.env.NODE_ENV === "development") {
+        console.error("[AIChat] Error:", error);
+      }
+      
+      let errorMessage = isRTL
+        ? "عذراً، لا يمكن الاتصال بالخادم."
+        : "Sorry, cannot connect to the server.";
 
-        return [...filtered, assistantMessage];
-      });
-    } catch (error) {
-      console.error("Chat error:", error);
-      setMessages((prev) => {
-        const filtered = prev.filter((m) => !m.isLoading);
-        return [
-          ...filtered,
-          {
-            id: `msg_${Date.now()}`,
-            role: "assistant",
-            content: isRTL
-              ? "عذراً، لا يمكن الاتصال بالخادم. تأكد من تشغيل خدمة الذكاء الاصطناعي."
-              : "Sorry, cannot connect to the server. Make sure the AI service is running.",
-            timestamp: new Date(),
-          },
-        ];
-      });
+      if (error instanceof Error) {
+        if (error.name === "AbortError") {
+          // Don't show error for user-initiated stop
+          if (process.env.NODE_ENV === "development") {
+            console.log("[AIChat] Request aborted by user");
+          }
+          return;
+        }
+        errorMessage = error.message;
+      }
+
+      // Clear batch timer
+      if (batchTimerRef.current) {
+        clearTimeout(batchTimerRef.current);
+        batchTimerRef.current = null;
+      }
+
+      setMessages((prev) =>
+        prev.map((m) =>
+          m.id === assistantMessageId
+            ? { ...m, content: `❌ ${errorMessage}` }
+            : m
+        )
+      );
     } finally {
       setIsLoading(false);
+      setIsStreaming(false);
+      abortControllerRef.current = null;
+
+      // Clear batch timer
+      if (batchTimerRef.current) {
+        clearTimeout(batchTimerRef.current);
+        batchTimerRef.current = null;
+      }
     }
-  }, [attachments, messages, sessionId, lessonId, courseId, language, isRTL]);
+  }, [attachments, messages, sessionId, lessonId, courseId, language, isRTL, scrollToBottom, flushBatch]);
 
   // Handle quick action
   const handleQuickAction = useCallback((action: QuickAction) => {
@@ -366,35 +594,25 @@ export default function AIChat({
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
 
-  const containerStyles = isFloating
-    ? {
-        position: "fixed" as const,
-        bottom: "20px",
-        left: isRTL ? "20px" : "auto",
-        right: isRTL ? "auto" : "20px",
-        width: "400px",
-        maxWidth: "calc(100vw - 40px)",
-        height: "600px",
-        maxHeight: "calc(100vh - 40px)",
-        borderRadius: "2xl",
-        boxShadow: "2xl",
-        zIndex: 1000,
-      }
-    : {
-        width: "100%",
-        height: "100%",
-        minHeight: "500px",
-      };
+  const containerStyles = {
+    width: "100%",
+    height: "100%",
+    minHeight: isFloating ? "500px" : "100vh",
+  };
 
   return (
-    <Flex
-      direction="column"
-      bg="gray.900"
-      color="white"
-      dir={isRTL ? "rtl" : "ltr"}
-      overflow="hidden"
-      {...containerStyles}
-    >
+    <>
+      <style>{pulseAnimation}</style>
+      <Flex
+        direction="column"
+        bg="gray.900"
+        color="white"
+        dir={isRTL ? "rtl" : "ltr"}
+        overflow="hidden"
+        position="relative"
+        zIndex={50}
+        {...containerStyles}
+      >
       {/* Header */}
       <Flex
         align="center"
@@ -418,9 +636,23 @@ export default function AIChat({
           </Box>
           <Box>
             <Heading size="sm">{isRTL ? "مساعد تبيان الذكي" : "Tibyan AI Assistant"}</Heading>
-            <Text fontSize="xs" color="gray.400">
-              {isRTL ? "مدعوم بالذكاء الاصطناعي" : "Powered by AI"}
-            </Text>
+            <HStack gap={2}>
+              <Box
+                w={2}
+                h={2}
+                borderRadius="full"
+                bg={isStreaming ? "yellow.400" : "green.400"}
+              />
+              <Text fontSize="xs" color="gray.400">
+                {isStreaming
+                  ? isRTL
+                    ? "جاري الكتابة..."
+                    : "Typing..."
+                  : isRTL
+                  ? "متصل"
+                  : "Online"}
+              </Text>
+            </HStack>
           </Box>
         </HStack>
         {isFloating && onClose && (
@@ -436,6 +668,11 @@ export default function AIChat({
           </IconButton>
         )}
       </Flex>
+
+      {/* Status Bar - Debug Only */}
+      {process.env.NEXT_PUBLIC_AI_DEBUG_UI === "true" && (
+        <ChatStatusBar language={language} />
+      )}
 
       {/* Quick Actions */}
       {messages.length <= 1 && (
@@ -467,6 +704,7 @@ export default function AIChat({
 
       {/* Messages */}
       <VStack
+        ref={messagesContainerRef}
         flex={1}
         gap={4}
         p={4}
@@ -482,6 +720,8 @@ export default function AIChat({
             key={message.id}
             justify={message.role === "user" ? "flex-end" : "flex-start"}
             w="100%"
+            direction="column"
+            align={message.role === "user" ? "flex-end" : "flex-start"}
           >
             <HStack
               align="start"
@@ -489,72 +729,102 @@ export default function AIChat({
               maxW="85%"
               flexDir={message.role === "user" ? "row-reverse" : "row"}
             >
-              <Avatar.Root size="sm">
-                {message.role === "assistant" ? (
-                  <Box p={1} bg="accent" borderRadius="full">
-                    <Icon asChild boxSize={4} color="white">
-                      <LuBot />
-                    </Icon>
-                  </Box>
-                ) : (
+              {message.role === "assistant" ? (
+                <Box
+                  w={10}
+                  h={10}
+                  borderRadius="full"
+                  bg="green.700"
+                  animation={isStreaming ? "pulse 1.5s ease-in-out infinite" : "none"}
+                />
+              ) : (
+                <Avatar.Root size="sm">
                   <Avatar.Fallback>
                     {message.role === "user" ? "أ" : "AI"}
                   </Avatar.Fallback>
+                </Avatar.Root>
+              )}
+              <VStack align="stretch" gap={1}>
+                <Box
+                  bg={message.role === "user" ? "accent" : "gray.700"}
+                  px={4}
+                  py={3}
+                  borderRadius="xl"
+                  borderTopLeftRadius={message.role === "assistant" && !isRTL ? "sm" : undefined}
+                  borderTopRightRadius={message.role === "assistant" && isRTL ? "sm" : undefined}
+                >
+                  {message.isLoading ? (
+                    <HStack gap={2}>
+                      <Spinner size="sm" />
+                      <Text fontSize="sm" color="gray.400">
+                        {isRTL ? "جاري التفكير..." : "Thinking..."}
+                      </Text>
+                    </HStack>
+                  ) : (
+                    <>
+                      {message.attachments && message.attachments.length > 0 && (
+                        <Stack gap={2} mb={2}>
+                          {message.attachments.map((att) => (
+                            <HStack
+                              key={att.id}
+                              bg="gray.600"
+                              px={2}
+                              py={1}
+                              borderRadius="md"
+                              fontSize="xs"
+                            >
+                              <Icon asChild boxSize={4}>
+                                {att.type === "image" ? <LuImage /> : <LuFileText />}
+                              </Icon>
+                              <Text truncate maxW="150px">{att.name}</Text>
+                              <Badge size="sm">{formatFileSize(att.size)}</Badge>
+                            </HStack>
+                          ))}
+                        </Stack>
+                      )}
+                      <Text
+                        fontSize="sm"
+                        whiteSpace="pre-wrap"
+                        css={{
+                          "& strong": { fontWeight: "bold" },
+                          "& code": { bg: "gray.800", px: 1, borderRadius: "sm" },
+                        }}
+                      >
+                        {message.content}
+                      </Text>
+                    </>
+                  )}
+                </Box>
+                {/* Message Actions for assistant messages */}
+                {message.role === "assistant" && !message.isLoading && message.content && (
+                  <MessageActions
+                    messageId={message.id}
+                    content={message.content}
+                    onRegenerate={regenerateLastResponse}
+                    language={language}
+                  />
                 )}
-              </Avatar.Root>
-              <Box
-                bg={message.role === "user" ? "accent" : "gray.700"}
-                px={4}
-                py={3}
-                borderRadius="xl"
-                borderTopLeftRadius={message.role === "assistant" && !isRTL ? "sm" : undefined}
-                borderTopRightRadius={message.role === "assistant" && isRTL ? "sm" : undefined}
-              >
-                {message.isLoading ? (
-                  <HStack gap={2}>
-                    <Spinner size="sm" />
-                    <Text fontSize="sm" color="gray.400">
-                      {isRTL ? "جاري التفكير..." : "Thinking..."}
-                    </Text>
-                  </HStack>
-                ) : (
-                  <>
-                    {message.attachments && message.attachments.length > 0 && (
-                      <Stack gap={2} mb={2}>
-                        {message.attachments.map((att) => (
-                          <HStack
-                            key={att.id}
-                            bg="gray.600"
-                            px={2}
-                            py={1}
-                            borderRadius="md"
-                            fontSize="xs"
-                          >
-                            <Icon asChild boxSize={4}>
-                              {att.type === "image" ? <LuImage /> : <LuFileText />}
-                            </Icon>
-                            <Text truncate maxW="150px">{att.name}</Text>
-                            <Badge size="sm">{formatFileSize(att.size)}</Badge>
-                          </HStack>
-                        ))}
-                      </Stack>
-                    )}
-                    <Text
-                      fontSize="sm"
-                      whiteSpace="pre-wrap"
-                      css={{
-                        "& strong": { fontWeight: "bold" },
-                        "& code": { bg: "gray.800", px: 1, borderRadius: "sm" },
-                      }}
-                    >
-                      {message.content}
-                    </Text>
-                  </>
-                )}
-              </Box>
+              </VStack>
             </HStack>
           </Flex>
         ))}
+        
+        {/* Typing Indicator */}
+        {isStreaming && (
+          <Flex justify="flex-start" w="100%">
+            <HStack align="start" gap={2} maxW="85%">
+              <Box
+                w={10}
+                h={10}
+                borderRadius="full"
+                bg="green.700"
+                animation="pulse 1.5s ease-in-out infinite"
+              />
+              <TypingIndicator />
+            </HStack>
+          </Flex>
+        )}
+        
         <div ref={messagesEndRef} />
       </VStack>
 
@@ -578,9 +848,13 @@ export default function AIChat({
                 aria-label="Remove"
                 size="xs"
                 variant="ghost"
+                _hover={{ bg: "whiteAlpha.100" }}
+                _active={{ bg: "whiteAlpha.200" }}
                 onClick={() => removeAttachment(att.id)}
               >
-                <LuX />
+                <Icon boxSize={4} color="whiteAlpha.800" _groupHover={{ color: "whiteAlpha.900" }} asChild>
+                  <LuX />
+                </Icon>
               </IconButton>
             </HStack>
           ))}
@@ -594,7 +868,9 @@ export default function AIChat({
         bg="gray.800"
         borderTop="1px"
         borderColor="gray.700"
-        align="end"
+        align="flex-end"
+        w="100%"
+        flexShrink={0}
       >
         <Input
           type="file"
@@ -609,10 +885,14 @@ export default function AIChat({
           variant="ghost"
           size="sm"
           onClick={() => fileInputRef.current?.click()}
-          color="gray.400"
-          _hover={{ color: "white", bg: "gray.700" }}
+          _hover={{ bg: "whiteAlpha.100" }}
+          _active={{ bg: "whiteAlpha.200" }}
+          _disabled={{ cursor: "not-allowed" }}
+          disabled={isStreaming}
         >
-          <LuPaperclip />
+          <Icon boxSize={5} color="whiteAlpha.800" _groupHover={{ color: "whiteAlpha.900" }} _disabled={{ color: "whiteAlpha.400" }} asChild>
+            <LuPaperclip />
+          </Icon>
         </IconButton>
         <Textarea
           ref={textareaRef}
@@ -625,21 +905,51 @@ export default function AIChat({
           border="none"
           resize="none"
           minH="40px"
-          maxH="120px"
+          maxH="100px"
           rows={1}
+          disabled={isStreaming}
           _focus={{ outline: "none", ring: "1px", ringColor: "accent" }}
           _placeholder={{ color: "gray.500" }}
         />
-        <IconButton
-          aria-label="Send"
-          colorPalette="accent"
-          size="sm"
-          onClick={() => sendMessage(input)}
-          disabled={isLoading || (!input.trim() && attachments.length === 0)}
-        >
-          <LuSend />
-        </IconButton>
+        
+        {/* Stop or Send button */}
+        {isStreaming ? (
+          <IconButton
+            aria-label={isRTL ? "إيقاف التوليد" : "Stop generation"}
+            variant="ghost"
+            size="sm"
+            _hover={{ bg: "red.900/20" }}
+            _active={{ bg: "red.900/40" }}
+            onClick={stopStreaming}
+          >
+            <Icon boxSize={5} color="red.400" _groupHover={{ color: "red.300" }} asChild>
+              <LuCircleStop />
+            </Icon>
+          </IconButton>
+        ) : (
+          <IconButton
+            aria-label="Send"
+            variant="ghost"
+            size="sm"
+            _hover={{ bg: "accent/20" }}
+            _active={{ bg: "accent/40" }}
+            _disabled={{ cursor: "not-allowed" }}
+            onClick={() => sendMessage(input)}
+            disabled={isLoading || (!input.trim() && attachments.length === 0)}
+          >
+            <Icon
+              boxSize={5}
+              color="accent"
+              _groupHover={{ color: "accent" }}
+              _disabled={{ color: "whiteAlpha.400" }}
+              asChild
+            >
+              <LuSend />
+            </Icon>
+          </IconButton>
+        )}
       </Flex>
-    </Flex>
+      </Flex>
+    </>
   );
 }

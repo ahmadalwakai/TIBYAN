@@ -85,7 +85,7 @@ export class LocalLLMProvider implements LLMProvider {
         model: "local",
         messages: messages.map(m => ({ role: m.role, content: m.content })),
         temperature: options?.temperature ?? 0.7,
-        max_tokens: options?.maxTokens ?? 1024,
+        max_tokens: options?.maxTokens ?? 256,
         stream: false,
       };
 
@@ -153,7 +153,7 @@ export class LocalLLMProvider implements LLMProvider {
 
       if (error instanceof Error) {
         if (error.name === "AbortError") {
-          errorMessage = `Request timed out after ${config.timeoutMs}ms`;
+          errorMessage = `Request timed out after ${config.timeoutMs}ms (${durationMs}ms elapsed, provider: local)`;
           errorCode = "LLM_TIMEOUT";
         } else if (
           error.message.includes("ECONNREFUSED") ||
@@ -174,6 +174,146 @@ export class LocalLLMProvider implements LLMProvider {
         error: errorMessage,
         errorCode,
         durationMs,
+      };
+    }
+  }
+
+  /**
+   * Stream completion from local LLM (async generator)
+   */
+  async *streamCompletion(
+    messages: LLMMessage[],
+    options?: { temperature?: number; maxTokens?: number; signal?: AbortSignal }
+  ): AsyncGenerator<{ ok: boolean; delta?: string; error?: string; done?: boolean }> {
+    const config = getLLMConfig();
+    const startTime = Date.now();
+
+    try {
+      const requestBody: LlamaCompletionRequest = {
+        model: "local",
+        messages: messages.map(m => ({ role: m.role, content: m.content })),
+        temperature: options?.temperature ?? 0.7,
+        max_tokens: options?.maxTokens ?? 256,
+        stream: true,
+      };
+
+      if (process.env.NODE_ENV === "development") {
+        console.log(`[Local LLM] Starting SSE stream to ${config.baseUrl}/v1/chat/completions`);
+      }
+
+      const response = await fetch(`${config.baseUrl}/v1/chat/completions`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestBody),
+        signal: options?.signal,
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text().catch(() => "Unknown error");
+        console.error(`[Local LLM] Stream error ${response.status}: ${errorText}`);
+        yield {
+          ok: false,
+          error: `LLM API error: ${response.status}`,
+        };
+        return;
+      }
+
+      const reader = response.body?.getReader();
+      if (!reader) {
+        yield { ok: false, error: "No response stream" };
+        return;
+      }
+
+      const decoder = new TextDecoder();
+      let buffer = "";
+      let deltaCount = 0;
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        // Append to buffer
+        buffer += decoder.decode(value, { stream: true });
+        
+        // Process complete lines only
+        const lines = buffer.split("\n");
+        // Keep incomplete line in buffer
+        buffer = lines.pop() || "";
+
+        for (const line of lines) {
+          const trimmed = line.trim();
+          
+          // Skip empty lines
+          if (!trimmed) continue;
+          
+          // Handle [DONE] marker
+          if (trimmed === "data: [DONE]") {
+            if (process.env.NODE_ENV === "development") {
+              console.log(`[Local LLM] Received [DONE] marker after ${deltaCount} deltas`);
+            }
+            continue;
+          }
+
+          // Only process data: lines
+          if (trimmed.startsWith("data: ")) {
+            try {
+              const jsonStr = trimmed.slice(6).trim();
+              
+              // Skip if empty or just "[DONE]"
+              if (!jsonStr || jsonStr === "[DONE]") continue;
+              
+              const data = JSON.parse(jsonStr);
+              
+              // Extract delta content
+              const delta = data.choices?.[0]?.delta?.content;
+              if (delta) {
+                deltaCount++;
+                yield { ok: true, delta };
+              }
+
+              // Check for completion
+              if (data.choices?.[0]?.finish_reason) {
+                yield { ok: true, done: true };
+                break;
+              }
+            } catch (err) {
+              // Log parse errors in dev only
+              if (process.env.NODE_ENV === "development") {
+                console.error("[Local LLM] Failed to parse SSE line:", trimmed.slice(0, 100));
+              }
+              // Continue processing other lines
+            }
+          }
+          // Ignore non-data lines (event:, id:, etc.)
+        }
+      }
+
+      const durationMs = Date.now() - startTime;
+      if (process.env.NODE_ENV === "development") {
+        console.log(`[Local LLM] ✓ Stream completed: ${deltaCount} deltas in ${durationMs}ms`);
+      }
+
+    } catch (error) {
+      const durationMs = Date.now() - startTime;
+      let errorMessage = "Unknown error";
+
+      if (error instanceof Error) {
+        if (error.name === "AbortError") {
+          errorMessage = `Request aborted after ${durationMs}ms`;
+          if (process.env.NODE_ENV === "development") {
+            console.log(`[Local LLM] ⊗ Stream aborted by client (${durationMs}ms)`);
+          }
+        } else {
+          errorMessage = error.message;
+        }
+      }
+
+      if (process.env.NODE_ENV !== "development" || error instanceof Error && error.name !== "AbortError") {
+        console.error(`[Local LLM] ✗ Stream error: ${errorMessage}`);
+      }
+      yield {
+        ok: false,
+        error: errorMessage,
       };
     }
   }

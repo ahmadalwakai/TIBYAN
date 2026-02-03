@@ -317,6 +317,35 @@ export {
 } from "./errors";
 
 // ============================================
+// Language Guard (Prevents CJK/Chinese responses)
+// ============================================
+export {
+  languageGuard,
+  detectLanguage,
+  containsCJK,
+  isArabicText,
+  isEnglishText,
+  sanitizeHistory,
+  determineSessionLanguage,
+  generateLanguageGuard,
+  generateLanguageGuardMessage,
+  filterStreamChunk,
+  getLanguageFallbackMessage,
+  generateLanguageDebugInfo,
+  logLanguageDebug,
+} from "./languageGuard";
+
+export type {
+  AllowedLanguage,
+  DetectedLanguage,
+  LanguageDetectionResult,
+  SessionLanguageLock,
+  SanitizedHistory,
+  StreamFilterResult,
+  LanguageDebugInfo,
+} from "./languageGuard";
+
+// ============================================
 // Validators
 // ============================================
 export {

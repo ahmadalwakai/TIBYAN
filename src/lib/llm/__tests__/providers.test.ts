@@ -7,7 +7,6 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
 import { MockLLMProvider } from "../providers/mock";
 import { LocalLLMProvider } from "../providers/local";
-import { ZyphonLLMProvider } from "../providers/zyphon";
 import { checkLLMHealth, clearHealthCache } from "../health";
 import { updateLLMConfig, resetLLMConfig } from "../config";
 import type { LLMMessage } from "../types";
@@ -20,7 +19,6 @@ const mockFetch = vi.fn();
 global.fetch = mockFetch;
 
 afterEach(() => {
-  delete process.env.ZYPHON_API_KEY;
   resetLLMConfig();
 });
 
@@ -226,52 +224,6 @@ describe("LocalLLMProvider", () => {
   });
 });
 
-describe("ZyphonLLMProvider", () => {
-  const provider = new ZyphonLLMProvider();
-  const messages: LLMMessage[] = [
-    { role: "user", content: "اختبر الاتصال" },
-  ];
-
-  beforeEach(() => {
-    mockFetch.mockReset();
-    process.env.ZYPHON_API_KEY = "test-key";
-    updateLLMConfig({
-      zyphonBaseUrl: "https://api.zyphon.test/v1",
-      zyphonModel: "zyphon-educator",
-      zyphonTimeoutMs: 5000,
-    });
-  });
-
-  it("should error when API key is missing", async () => {
-    delete process.env.ZYPHON_API_KEY;
-    const result = await provider.chatCompletion(messages);
-    expect(result.ok).toBe(false);
-    expect(result.errorCode).toBe("AUTH_REQUIRED");
-  });
-
-  it("should call Zyphon API when configured", async () => {
-    mockFetch.mockResolvedValueOnce({
-      ok: true,
-      json: async () => ({
-        choices: [{ message: { content: "رد من زيفون" } }],
-        usage: { prompt_tokens: 4, completion_tokens: 6, total_tokens: 10 },
-      }),
-    });
-
-    const result = await provider.chatCompletion(messages);
-
-    expect(mockFetch).toHaveBeenCalledWith(
-      expect.stringContaining("/chat/completions"),
-      expect.objectContaining({
-        headers: expect.objectContaining({ Authorization: "Bearer test-key" }),
-      })
-    );
-    expect(result.ok).toBe(true);
-    expect(result.provider).toBe("zyphon");
-    expect(result.content).toContain("رد");
-  });
-});
-
 describe("LLMClient with auto-fallback", () => {
   const messages: LLMMessage[] = [
     { role: "user", content: "مرحباً" },
@@ -323,36 +275,6 @@ describe("LLMClient with auto-fallback", () => {
     expect(result.fallbackUsed).toBe(true);
   });
 
-  it("should fallback to Zyphon before mock when available", async () => {
-    vi.mocked(checkLLMHealth).mockResolvedValue({
-      available: false,
-      responseTimeMs: 10,
-      error: "unavailable",
-      errorCode: "CONNECTION_REFUSED",
-    });
-
-    process.env.ZYPHON_API_KEY = "test-key";
-    updateLLMConfig({
-      zyphonBaseUrl: "https://api.zyphon.test/v1",
-      zyphonModel: "zyphon-educator",
-    });
-
-    mockFetch.mockResolvedValueOnce({
-      ok: true,
-      json: async () => ({
-        choices: [{ message: { content: "رد من زيفون" } }],
-        usage: { prompt_tokens: 5, completion_tokens: 5, total_tokens: 10 },
-      }),
-    });
-
-    const { llmClient } = await import("../client");
-    const result = await llmClient.chatCompletion(messages);
-
-    expect(result.ok).toBe(true);
-    expect(result.provider).toBe("zyphon");
-    expect(result.fallbackUsed).toBe(true);
-  });
-
   it("should return error when forced local and unavailable", async () => {
     vi.mocked(checkLLMHealth).mockResolvedValue({
       available: false,
@@ -375,29 +297,6 @@ describe("LLMClient with auto-fallback", () => {
     
     expect(result.ok).toBe(true);
     expect(result.provider).toBe("mock");
-    expect(result.fallbackUsed).toBe(false);
-  });
-
-  it("should allow forcing Zyphon provider", async () => {
-    process.env.ZYPHON_API_KEY = "test-key";
-    updateLLMConfig({
-      zyphonBaseUrl: "https://api.zyphon.test/v1",
-      zyphonModel: "zyphon-educator",
-    });
-
-    mockFetch.mockResolvedValueOnce({
-      ok: true,
-      json: async () => ({
-        choices: [{ message: { content: "رد من زيفون" } }],
-        usage: { prompt_tokens: 5, completion_tokens: 7, total_tokens: 12 },
-      }),
-    });
-
-    const { llmClient } = await import("../client");
-    const result = await llmClient.chatCompletion(messages, { forceProvider: "zyphon" });
-
-    expect(result.ok).toBe(true);
-    expect(result.provider).toBe("zyphon");
     expect(result.fallbackUsed).toBe(false);
   });
 });

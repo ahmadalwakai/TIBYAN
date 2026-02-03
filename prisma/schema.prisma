@@ -11,58 +11,58 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  schemas   = ["public", "students", "teachers", "admins", "ai"]
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["public", "students", "teachers", "admins", "ai"]
 }
 
 model User {
-  id            String   @id @default(cuid())
-  email         String   @unique
-  name          String
-  password      String
-  role          Role     @default(STUDENT)
-  status        UserStatus @default(ACTIVE)
-  emailVerified Boolean  @default(false)
-  avatar        String?
-  bio           String?
-  notificationPrefs Json?
-  membershipStatus MembershipStatus @default(ACTIVE)
-  membershipPlan   String?
+  id                  String           @id @default(cuid())
+  email               String           @unique
+  name                String
+  password            String
+  role                Role             @default(STUDENT)
+  status              UserStatus       @default(ACTIVE)
+  emailVerified       Boolean          @default(false)
+  avatar              String?
+  bio                 String?
+  notificationPrefs   Json?
+  membershipStatus    MembershipStatus @default(ACTIVE)
+  membershipPlan      String?
   membershipExpiresAt DateTime?
-  membershipPerks  Json?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  lastActiveAt  DateTime @default(now())
-  
+  membershipPerks     Json?
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+  lastActiveAt        DateTime         @default(now())
+
   // Relations
-  coursesCreated Course[] @relation("CourseInstructor")
-  enrollments    Enrollment[]
-  reviews        Review[]
-  payments       Payment[]
-  verificationTokens VerificationToken[]
-  auditLogs      AuditLog[] @relation("AuditLogActor")
-  certificates   Certificate[]
-  blogPosts      BlogPost[]
-  memberResources MemberResource[]
+  coursesCreated       Course[]              @relation("CourseInstructor")
+  enrollments          Enrollment[]
+  reviews              Review[]
+  payments             Payment[]
+  verificationTokens   VerificationToken[]
+  auditLogs            AuditLog[]            @relation("AuditLogActor")
+  certificates         Certificate[]
+  blogPosts            BlogPost[]
+  memberResources      MemberResource[]
   memberSupportTickets MemberSupportTicket[]
-  
+
   @@map("users")
   @@schema("public")
 }
 
 model VerificationToken {
-  id        String   @id @default(cuid())
-  token     String   @unique
+  id        String       @id @default(cuid())
+  token     String       @unique
   purpose   TokenPurpose
   userId    String
   expiresAt DateTime
   usedAt    DateTime?
-  createdAt DateTime @default(now())
-  
+  createdAt DateTime     @default(now())
+
   // Relations
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@index([token])
   @@index([userId])
   @@map("verification_tokens")
@@ -73,19 +73,19 @@ enum TokenPurpose {
   EMAIL_VERIFICATION
   PASSWORD_RESET
   TEACHER_CONFIRMATION
-  
+
   @@schema("public")
 }
 
 model EmailVerificationCode {
-  id        String   @id @default(cuid())
+  id        String                  @id @default(cuid())
   email     String
-  code      String   @unique
+  code      String                  @unique
   purpose   VerificationCodePurpose @default(ADMIN_LOGIN)
   expiresAt DateTime
   usedAt    DateTime?
-  createdAt DateTime @default(now())
-  
+  createdAt DateTime                @default(now())
+
   @@index([email])
   @@index([code])
   @@map("email_verification_codes")
@@ -109,7 +109,7 @@ model MemberResource {
   createdByUserId String
   createdAt       DateTime           @default(now())
 
-  createdBy       User               @relation(fields: [createdByUserId], references: [id], onDelete: Restrict)
+  createdBy User @relation(fields: [createdByUserId], references: [id], onDelete: Restrict)
 
   @@index([createdByUserId])
   @@map("member_resources")
@@ -150,7 +150,7 @@ model MemberSupportTicket {
   status    MemberSupportStatus @default(OPEN)
   createdAt DateTime            @default(now())
 
-  user      User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@map("member_support_tickets")
@@ -161,33 +161,33 @@ enum VerificationCodePurpose {
   ADMIN_LOGIN
   EMAIL_VERIFICATION
   PASSWORD_RESET
-  
+
   @@schema("public")
 }
 
 model Course {
-  id            String   @id @default(cuid())
-  title         String
-  slug          String   @unique
-  description   String
-  thumbnail     String?
-  status        CourseStatus @default(DRAFT)
-  price         Float    @default(0)
-  duration      Int?     // in minutes
-  level         CourseLevel @default(BEGINNER)
-  instructorId  String
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  publishedAt   DateTime?
-  
+  id           String       @id @default(cuid())
+  title        String
+  slug         String       @unique
+  description  String
+  thumbnail    String?
+  status       CourseStatus @default(DRAFT)
+  price        Float        @default(0)
+  duration     Int? // in minutes
+  level        CourseLevel  @default(BEGINNER)
+  instructorId String
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  publishedAt  DateTime?
+
   // Relations
-  instructor    User     @relation("CourseInstructor", fields: [instructorId], references: [id], onDelete: Cascade)
-  lessons       Lesson[]
-  enrollments   Enrollment[]
-  reviews       Review[]
-  payments      Payment[]
-  certificates  Certificate[]
-  
+  instructor   User          @relation("CourseInstructor", fields: [instructorId], references: [id], onDelete: Cascade)
+  lessons      Lesson[]
+  enrollments  Enrollment[]
+  reviews      Review[]
+  payments     Payment[]
+  certificates Certificate[]
+
   @@map("courses")
   @@schema("teachers")
 }
@@ -198,50 +198,50 @@ model Lesson {
   description String?
   content     String
   videoUrl    String?
-  duration    Int?     // in minutes
+  duration    Int? // in minutes
   order       Int
   courseId    String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  
+
   // Relations
-  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
   @@map("lessons")
   @@schema("teachers")
 }
 
 model Enrollment {
-  id          String   @id @default(cuid())
+  id          String           @id @default(cuid())
   userId      String
   courseId    String
   status      EnrollmentStatus @default(ACTIVE)
-  progress    Float    @default(0) // 0-100
-  enrolledAt  DateTime @default(now())
+  progress    Float            @default(0) // 0-100
+  enrolledAt  DateTime         @default(now())
   completedAt DateTime?
-  
+
   // Relations
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
   @@unique([userId, courseId])
   @@map("enrollments")
   @@schema("students")
 }
 
 model Review {
-  id          String   @id @default(cuid())
-  rating      Int      // 1-5
-  comment     String?
-  userId      String
-  courseId    String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
+  id        String   @id @default(cuid())
+  rating    Int // 1-5
+  comment   String?
+  userId    String
+  courseId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   // Relations
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
   @@unique([userId, courseId])
   @@map("reviews")
   @@schema("students")
@@ -252,7 +252,7 @@ enum Role {
   INSTRUCTOR
   ADMIN
   MEMBER
-  
+
   @@schema("public")
 }
 
@@ -261,7 +261,7 @@ enum UserStatus {
   INACTIVE
   SUSPENDED
   PENDING
-  
+
   @@schema("public")
 }
 
@@ -270,7 +270,7 @@ enum CourseStatus {
   REVIEW
   PUBLISHED
   ARCHIVED
-  
+
   @@schema("public")
 }
 
@@ -278,7 +278,7 @@ enum CourseLevel {
   BEGINNER
   INTERMEDIATE
   ADVANCED
-  
+
   @@schema("public")
 }
 
@@ -286,37 +286,37 @@ enum EnrollmentStatus {
   ACTIVE
   COMPLETED
   CANCELLED
-  
+
   @@schema("public")
 }
 
 model Payment {
-  id              String   @id @default(cuid())
-  userId          String
-  courseId        String
-  amount          Float
-  currency        String   @default("SAR")
-  status          PaymentStatus @default(PENDING)
-  paymentMethod   String?  // stripe, paypal, bank_transfer, etc.
-  transactionId   String?  // external payment provider ID
-  couponCode      String?
-  discountAmount  Float    @default(0)
-  
+  id             String        @id @default(cuid())
+  userId         String
+  courseId       String
+  amount         Float
+  currency       String        @default("SAR")
+  status         PaymentStatus @default(PENDING)
+  paymentMethod  String? // stripe, paypal, bank_transfer, etc.
+  transactionId  String? // external payment provider ID
+  couponCode     String?
+  discountAmount Float         @default(0)
+
   // Customer info (for guests or record keeping)
-  customerName    String?
-  customerEmail   String?
-  customerPhone   String?
-  
+  customerName  String?
+  customerEmail String?
+  customerPhone String?
+
   // Metadata
-  notes           String?
-  paidAt          DateTime?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  
+  notes     String?
+  paidAt    DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
   // Relations
-  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  course          Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
   @@map("payments")
   @@schema("students")
 }
@@ -328,52 +328,52 @@ enum PaymentStatus {
   FAILED
   REFUNDED
   CANCELLED
-  
+
   @@schema("public")
 }
 
 model TeacherApplication {
-  id                String   @id @default(cuid())
-  
+  id String @id @default(cuid())
+
   // Personal Information
-  fullName          String
-  email             String
-  phone             String
-  dateOfBirth       String?
-  nationality       String?
-  gender            String?
-  
+  fullName    String
+  email       String
+  phone       String
+  dateOfBirth String?
+  nationality String?
+  gender      String?
+
   // Education
-  degree            String?
-  fieldOfStudy      String?
-  university        String?
-  graduationYear    String?
-  
+  degree         String?
+  fieldOfStudy   String?
+  university     String?
+  graduationYear String?
+
   // Teaching Experience
   yearsExperience   String?
   subjectsToTeach   String
   quranMemorization String?
   tajweedLevel      String?
   onlineExperience  String?
-  
+
   // Availability
-  availableDays     String?
-  hoursPerWeek      String?
-  startDate         String?
-  
+  availableDays String?
+  hoursPerWeek  String?
+  startDate     String?
+
   // Other
-  motivation        String?
-  expectedSalary    String?
-  
+  motivation     String?
+  expectedSalary String?
+
   // Application Status
-  status            ApplicationStatus @default(PENDING)
-  reviewedBy        String?
-  reviewedAt        DateTime?
-  reviewNotes       String?
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  status      ApplicationStatus @default(PENDING)
+  reviewedBy  String?
+  reviewedAt  DateTime?
+  reviewNotes String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@map("teacher_applications")
   @@schema("teachers")
 }
@@ -383,22 +383,22 @@ enum ApplicationStatus {
   UNDER_REVIEW
   APPROVED
   REJECTED
-  
+
   @@schema("public")
 }
 
 model AuditLog {
-  id            String   @id @default(cuid())
-  actorUserId   String?
-  action        String
-  entityType    String?
-  entityId      String?
-  metadata      Json?
-  createdAt     DateTime @default(now())
-  
+  id          String   @id @default(cuid())
+  actorUserId String?
+  action      String
+  entityType  String?
+  entityId    String?
+  metadata    Json?
+  createdAt   DateTime @default(now())
+
   // Relations
-  actor         User?    @relation("AuditLogActor", fields: [actorUserId], references: [id], onDelete: SetNull)
-  
+  actor User? @relation("AuditLogActor", fields: [actorUserId], references: [id], onDelete: SetNull)
+
   @@index([actorUserId])
   @@index([action])
   @@index([createdAt])
@@ -414,25 +414,25 @@ model SystemSetting {
   description String?
   updatedAt   DateTime @updatedAt
   updatedBy   String?
-  
+
   @@index([category])
   @@map("system_settings")
   @@schema("admins")
 }
 
 model Notification {
-  id          String   @id @default(cuid())
+  id          String              @id @default(cuid())
   title       String
   content     String
   channel     NotificationChannel @default(EMAIL)
-  status      NotificationStatus @default(DRAFT)
-  targetType  NotificationTarget @default(ALL_USERS)
+  status      NotificationStatus  @default(DRAFT)
+  targetType  NotificationTarget  @default(ALL_USERS)
   scheduledAt DateTime?
   sentAt      DateTime?
   createdBy   String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+
   @@index([status])
   @@index([channel])
   @@map("notifications")
@@ -444,7 +444,7 @@ enum NotificationChannel {
   IN_APP
   SMS
   PUSH
-  
+
   @@schema("public")
 }
 
@@ -454,7 +454,7 @@ enum NotificationStatus {
   SENDING
   SENT
   FAILED
-  
+
   @@schema("public")
 }
 
@@ -463,47 +463,47 @@ enum NotificationTarget {
   STUDENTS
   TEACHERS
   SPECIFIC_USERS
-  
+
   @@schema("public")
 }
 
 // ==================== SOCIAL/POSTS SYSTEM ====================
 
 model Post {
-  id              String   @id @default(cuid())
-  title           String?
-  content         String   @db.Text // Rich text HTML content
-  excerpt         String?  // Short preview text
-  
+  id      String  @id @default(cuid())
+  title   String?
+  content String  @db.Text // Rich text HTML content
+  excerpt String? // Short preview text
+
   // Styling options (stored as JSON)
-  styling         Json?    // { fontFamily, fontSize, fontColor, backgroundColor, textAlign, etc. }
-  
+  styling Json? // { fontFamily, fontSize, fontColor, backgroundColor, textAlign, etc. }
+
   // Author info
-  authorId        String
-  authorType      AuthorType @default(ADMIN)
-  
+  authorId   String
+  authorType AuthorType @default(ADMIN)
+
   // Status and visibility
-  status          PostStatus @default(DRAFT)
-  visibility      PostVisibility @default(PUBLIC)
-  isPinned        Boolean  @default(false)
-  allowComments   Boolean  @default(true)
-  allowLikes      Boolean  @default(true)
-  
+  status        PostStatus     @default(DRAFT)
+  visibility    PostVisibility @default(PUBLIC)
+  isPinned      Boolean        @default(false)
+  allowComments Boolean        @default(true)
+  allowLikes    Boolean        @default(true)
+
   // Engagement counts (denormalized for performance)
-  likesCount      Int      @default(0)
-  commentsCount   Int      @default(0)
-  viewsCount      Int      @default(0)
-  
+  likesCount    Int @default(0)
+  commentsCount Int @default(0)
+  viewsCount    Int @default(0)
+
   // Timestamps
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  publishedAt     DateTime?
-  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  publishedAt DateTime?
+
   // Relations
-  media           PostMedia[]
-  comments        PostComment[]
-  likes           PostLike[]
-  
+  media    PostMedia[]
+  comments PostComment[]
+  likes    PostLike[]
+
   @@index([authorId])
   @@index([status])
   @@index([createdAt])
@@ -513,66 +513,66 @@ model Post {
 }
 
 model PostMedia {
-  id          String   @id @default(cuid())
-  postId      String
-  
+  id     String @id @default(cuid())
+  postId String
+
   // Media details
-  type        MediaType
-  url         String
-  filename    String?
-  mimeType    String?
-  fileSize    Int?     // in bytes
-  
+  type     MediaType
+  url      String
+  filename String?
+  mimeType String?
+  fileSize Int? // in bytes
+
   // Media dimensions/duration
-  width       Int?
-  height      Int?
-  duration    Int?     // for audio/video in seconds
-  
+  width    Int?
+  height   Int?
+  duration Int? // for audio/video in seconds
+
   // Display options
-  caption     String?
-  altText     String?
-  order       Int      @default(0)
-  styling     Json?    // { borderRadius, objectFit, aspectRatio, etc. }
-  
+  caption String?
+  altText String?
+  order   Int     @default(0)
+  styling Json? // { borderRadius, objectFit, aspectRatio, etc. }
+
   // Timestamps
-  createdAt   DateTime @default(now())
-  
+  createdAt DateTime @default(now())
+
   // Relations
-  post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
   @@index([postId])
   @@map("post_media")
   @@schema("public")
 }
 
 model PostComment {
-  id          String   @id @default(cuid())
-  postId      String
-  authorId    String
-  authorName  String   // Denormalized for display
+  id           String  @id @default(cuid())
+  postId       String
+  authorId     String
+  authorName   String // Denormalized for display
   authorAvatar String?
-  
-  content     String   @db.Text
-  
+
+  content String @db.Text
+
   // Nested comments support
-  parentId    String?
-  
+  parentId String?
+
   // Moderation
-  status      CommentStatus @default(APPROVED)
-  
+  status CommentStatus @default(APPROVED)
+
   // Engagement
-  likesCount  Int      @default(0)
-  
+  likesCount Int @default(0)
+
   // Timestamps
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   // Relations
-  post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  parent      PostComment? @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
-  replies     PostComment[] @relation("CommentReplies")
-  likes       CommentLike[]
-  
+  post    Post          @relation(fields: [postId], references: [id], onDelete: Cascade)
+  parent  PostComment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies PostComment[] @relation("CommentReplies")
+  likes   CommentLike[]
+
   @@index([postId])
   @@index([authorId])
   @@index([parentId])
@@ -585,10 +585,10 @@ model PostLike {
   postId    String
   userId    String
   createdAt DateTime @default(now())
-  
+
   // Relations
-  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
   @@unique([postId, userId])
   @@index([postId])
   @@index([userId])
@@ -601,10 +601,10 @@ model CommentLike {
   commentId String
   userId    String
   createdAt DateTime @default(now())
-  
+
   // Relations
-  comment   PostComment @relation(fields: [commentId], references: [id], onDelete: Cascade)
-  
+  comment PostComment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
   @@unique([commentId, userId])
   @@index([commentId])
   @@index([userId])
@@ -616,7 +616,7 @@ enum AuthorType {
   ADMIN
   INSTRUCTOR
   MEMBER
-  
+
   @@schema("public")
 }
 
@@ -624,7 +624,7 @@ enum PostStatus {
   DRAFT
   PUBLISHED
   ARCHIVED
-  
+
   @@schema("public")
 }
 
@@ -632,7 +632,7 @@ enum PostVisibility {
   PUBLIC
   TEACHERS_ONLY
   PRIVATE
-  
+
   @@schema("public")
 }
 
@@ -641,41 +641,41 @@ enum PostVisibility {
 // ==========================================
 
 model BlogPost {
-  id            String   @id @default(cuid())
-  title         String
-  slug          String   @unique // URL-friendly slug
-  content       String   @db.Text // Rich text HTML content
-  excerpt       String?  // Short preview text
-  
+  id      String  @id @default(cuid())
+  title   String
+  slug    String  @unique // URL-friendly slug
+  content String  @db.Text // Rich text HTML content
+  excerpt String? // Short preview text
+
   // Styling options (stored as JSON)
-  styling       Json?    // { fontFamily, fontSize, fontColor, backgroundColor, textAlign, etc. }
-  
+  styling Json? // { fontFamily, fontSize, fontColor, backgroundColor, textAlign, etc. }
+
   // Author info
-  authorId      String
-  author        User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
   // Status and visibility
-  status        PostStatus @default(DRAFT)
+  status        PostStatus     @default(DRAFT)
   visibility    BlogVisibility @default(PUBLIC)
-  featured      Boolean  @default(false)
-  allowComments Boolean  @default(true)
-  
+  featured      Boolean        @default(false)
+  allowComments Boolean        @default(true)
+
   // Tags for categorization
-  tags          String[] @default([])
-  
+  tags String[] @default([])
+
   // Engagement counts (denormalized for performance)
-  likesCount    Int      @default(0)
-  commentsCount Int      @default(0)
-  viewsCount    Int      @default(0)
-  
+  likesCount    Int @default(0)
+  commentsCount Int @default(0)
+  viewsCount    Int @default(0)
+
   // Timestamps
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  publishedAt   DateTime?
-  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  publishedAt DateTime?
+
   // Relations
-  media         BlogPostMedia[]
-  
+  media BlogPostMedia[]
+
   @@index([authorId])
   @@index([status])
   @@index([slug])
@@ -686,33 +686,33 @@ model BlogPost {
 }
 
 model BlogPostMedia {
-  id          String   @id @default(cuid())
-  postId      String
-  
+  id     String @id @default(cuid())
+  postId String
+
   // Media details
-  type        MediaType
-  url         String
-  filename    String?
-  mimeType    String?
-  fileSize    Int?     // in bytes
-  
+  type     MediaType
+  url      String
+  filename String?
+  mimeType String?
+  fileSize Int? // in bytes
+
   // Media dimensions/duration
-  width       Int?
-  height      Int?
-  duration    Int?     // for audio/video in seconds
-  
+  width    Int?
+  height   Int?
+  duration Int? // for audio/video in seconds
+
   // Display options
-  caption     String?
-  altText     String?
-  order       Int      @default(0)
-  styling     Json?    // { borderRadius, objectFit, aspectRatio, etc. }
-  
+  caption String?
+  altText String?
+  order   Int     @default(0)
+  styling Json? // { borderRadius, objectFit, aspectRatio, etc. }
+
   // Timestamps
-  createdAt   DateTime @default(now())
-  
+  createdAt DateTime @default(now())
+
   // Relations
-  post        BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
-  
+  post BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+
   @@index([postId])
   @@map("blog_post_media")
   @@schema("public")
@@ -722,7 +722,7 @@ enum BlogVisibility {
   PUBLIC
   MEMBERS_ONLY
   PRIVATE
-  
+
   @@schema("public")
 }
 
@@ -732,7 +732,7 @@ enum MediaType {
   AUDIO
   DOCUMENT
   PDF
-  
+
   @@schema("public")
 }
 
@@ -741,7 +741,7 @@ enum CommentStatus {
   APPROVED
   REJECTED
   SPAM
-  
+
   @@schema("public")
 }
 
@@ -750,12 +750,12 @@ model AdminRole {
   name        String   @unique
   nameAr      String
   description String?
-  permissions Json     // Array of permission strings
+  permissions Json // Array of permission strings
   isSystem    Boolean  @default(false) // System roles cannot be deleted
   status      String   @default("active") // active, inactive
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  
+
   @@map("admin_roles")
   @@schema("admins")
 }
@@ -773,20 +773,20 @@ model Certificate {
   instructorName    String?
   courseDuration    String?
   templateType      String   @default("classic")
-  
+
   // Optional relations to actual user/course
-  userId            String?
-  courseId          String?
-  
+  userId   String?
+  courseId String?
+
   // Metadata
-  issuedBy          String?  // Admin who issued
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
+  issuedBy  String? // Admin who issued
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   // Relations (optional - certificates can exist without user/course records)
-  user              User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
-  course            Course?  @relation(fields: [courseId], references: [id], onDelete: SetNull)
-  
+  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+  course Course? @relation(fields: [courseId], references: [id], onDelete: SetNull)
+
   @@index([studentName])
   @@index([courseName])
   @@index([certificateNumber])
@@ -799,37 +799,37 @@ model Certificate {
 // ==========================================
 
 model TeacherRoomMessage {
-  id          String      @id @default(cuid())
-  content     String?     // Text content (null for voice-only messages)
-  type        MessageType @default(TEXT)
-  voiceUrl    String?     // URL to voice message file
-  voiceDuration Int?      // Duration in seconds
-  attachmentUrl String?   // Optional file attachment
+  id             String      @id @default(cuid())
+  content        String? // Text content (null for voice-only messages)
+  type           MessageType @default(TEXT)
+  voiceUrl       String? // URL to voice message file
+  voiceDuration  Int? // Duration in seconds
+  attachmentUrl  String? // Optional file attachment
   attachmentName String?
   attachmentType String?
-  
+
   // Author info
-  authorId    String
-  authorName  String
+  authorId     String
+  authorName   String
   authorAvatar String?
-  authorRole  Role
-  
+  authorRole   Role
+
   // Reply to another message
-  replyToId   String?
-  replyTo     TeacherRoomMessage? @relation("MessageReplies", fields: [replyToId], references: [id], onDelete: SetNull)
-  replies     TeacherRoomMessage[] @relation("MessageReplies")
-  
+  replyToId String?
+  replyTo   TeacherRoomMessage?  @relation("MessageReplies", fields: [replyToId], references: [id], onDelete: SetNull)
+  replies   TeacherRoomMessage[] @relation("MessageReplies")
+
   // Reactions
-  reactions   MessageReaction[]
-  
+  reactions MessageReaction[]
+
   // Status
-  isEdited    Boolean  @default(false)
-  isDeleted   Boolean  @default(false)
-  isPinned    Boolean  @default(false)
-  
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
+  isEdited  Boolean @default(false)
+  isDeleted Boolean @default(false)
+  isPinned  Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@index([authorId])
   @@index([createdAt])
   @@map("teacher_room_messages")
@@ -837,14 +837,14 @@ model TeacherRoomMessage {
 }
 
 model MessageReaction {
-  id        String   @id @default(cuid())
-  emoji     String   // The emoji reaction
+  id        String             @id @default(cuid())
+  emoji     String // The emoji reaction
   userId    String
   userName  String
   messageId String
   message   TeacherRoomMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  
+  createdAt DateTime           @default(now())
+
   @@unique([messageId, userId, emoji])
   @@map("message_reactions")
   @@schema("teachers")
@@ -856,46 +856,46 @@ model TeacherMeeting {
   description String?
   type        MeetingType   @default(VIDEO)
   status      MeetingStatus @default(SCHEDULED)
-  
+
   // Scheduling
   scheduledAt DateTime?
   startedAt   DateTime?
   endedAt     DateTime?
-  duration    Int?          // Duration in minutes
-  
+  duration    Int? // Duration in minutes
+
   // Host info
-  hostId      String
-  hostName    String
-  hostAvatar  String?
-  
+  hostId     String
+  hostName   String
+  hostAvatar String?
+
   // Meeting settings
-  isRecorded  Boolean @default(false)
-  recordingUrl String?
-  maxParticipants Int @default(50)
-  
+  isRecorded      Boolean @default(false)
+  recordingUrl    String?
+  maxParticipants Int     @default(50)
+
   // Privacy & Access Control
-  privacy     MeetingPrivacy @default(PUBLIC)
-  requireApproval Boolean @default(false) // Host must approve join requests
-  allowChat   Boolean @default(true)
-  allowScreenShare Boolean @default(true)
-  allowHandRaise Boolean @default(true)
-  
+  privacy          MeetingPrivacy @default(PUBLIC)
+  requireApproval  Boolean        @default(false) // Host must approve join requests
+  allowChat        Boolean        @default(true)
+  allowScreenShare Boolean        @default(true)
+  allowHandRaise   Boolean        @default(true)
+
   // Notification settings
-  notifyOnCreate Boolean @default(true)  // Send notifications when created
+  notifyOnCreate    Boolean @default(true) // Send notifications when created
   notifyBeforeStart Int? // Minutes before start to send reminder
-  
+
   // Participants
   participants MeetingParticipant[]
-  
+
   // Invitations (for private meetings)
   invitations MeetingInvitation[]
-  
+
   // Chat during meeting
   chatMessages MeetingChatMessage[]
-  
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@index([hostId])
   @@index([status])
   @@index([scheduledAt])
@@ -905,26 +905,26 @@ model TeacherMeeting {
 }
 
 model MeetingInvitation {
-  id          String   @id @default(cuid())
-  meetingId   String
-  meeting     TeacherMeeting @relation(fields: [meetingId], references: [id], onDelete: Cascade)
-  
-  userId      String
-  userName    String
-  userEmail   String
-  userRole    Role
-  
+  id        String         @id @default(cuid())
+  meetingId String
+  meeting   TeacherMeeting @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+
+  userId    String
+  userName  String
+  userEmail String
+  userRole  Role
+
   // Invitation status
   status      InvitationStatus @default(PENDING)
   respondedAt DateTime?
-  
+
   // Notification tracking
-  emailSent   Boolean @default(false)
-  emailSentAt DateTime?
-  notificationSent Boolean @default(false)
-  
-  createdAt   DateTime @default(now())
-  
+  emailSent        Boolean   @default(false)
+  emailSentAt      DateTime?
+  notificationSent Boolean   @default(false)
+
+  createdAt DateTime @default(now())
+
   @@unique([meetingId, userId])
   @@index([userId])
   @@index([status])
@@ -934,23 +934,23 @@ model MeetingInvitation {
 
 // User notifications (in-app)
 model UserNotification {
-  id          String   @id @default(cuid())
-  userId      String
-  
-  type        UserNotificationType
-  title       String
-  message     String
-  link        String?  // URL to navigate to
-  
+  id     String @id @default(cuid())
+  userId String
+
+  type    UserNotificationType
+  title   String
+  message String
+  link    String? // URL to navigate to
+
   // Reference to related entity
   referenceType String? // "meeting", "post", etc.
   referenceId   String?
-  
-  isRead      Boolean @default(false)
-  readAt      DateTime?
-  
-  createdAt   DateTime @default(now())
-  
+
+  isRead Boolean   @default(false)
+  readAt DateTime?
+
+  createdAt DateTime @default(now())
+
   @@index([userId])
   @@index([isRead])
   @@index([createdAt])
@@ -959,9 +959,9 @@ model UserNotification {
 }
 
 enum MeetingPrivacy {
-  PUBLIC      // All teachers/admins can join
-  PRIVATE     // Only invited users can join
-  
+  PUBLIC // All teachers/admins can join
+  PRIVATE // Only invited users can join
+
   @@schema("public")
 }
 
@@ -969,7 +969,7 @@ enum InvitationStatus {
   PENDING
   ACCEPTED
   DECLINED
-  
+
   @@schema("public")
 }
 
@@ -979,53 +979,53 @@ enum UserNotificationType {
   MEETING_CANCELLED
   NEW_MESSAGE
   SYSTEM
-  
+
   @@schema("public")
 }
 
 model MeetingParticipant {
-  id          String   @id @default(cuid())
-  meetingId   String
-  meeting     TeacherMeeting @relation(fields: [meetingId], references: [id], onDelete: Cascade)
-  
-  userId      String
-  userName    String
-  userAvatar  String?
-  userRole    Role
-  
+  id        String         @id @default(cuid())
+  meetingId String
+  meeting   TeacherMeeting @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+
+  userId     String
+  userName   String
+  userAvatar String?
+  userRole   Role
+
   // Participant status
-  joinedAt    DateTime?
-  leftAt      DateTime?
-  isActive    Boolean  @default(false)
-  isMuted     Boolean  @default(false)
-  isCameraOff Boolean  @default(false)
-  isHandRaised Boolean @default(false)
-  
+  joinedAt     DateTime?
+  leftAt       DateTime?
+  isActive     Boolean   @default(false)
+  isMuted      Boolean   @default(false)
+  isCameraOff  Boolean   @default(false)
+  isHandRaised Boolean   @default(false)
+
   // Permissions
-  canSpeak    Boolean  @default(true)
-  canShare    Boolean  @default(false)
-  isCoHost    Boolean  @default(false)
-  
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
+  canSpeak Boolean @default(true)
+  canShare Boolean @default(false)
+  isCoHost Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@unique([meetingId, userId])
   @@map("meeting_participants")
   @@schema("teachers")
 }
 
 model MeetingChatMessage {
-  id          String   @id @default(cuid())
-  meetingId   String
-  meeting     TeacherMeeting @relation(fields: [meetingId], references: [id], onDelete: Cascade)
-  
-  content     String
-  authorId    String
-  authorName  String
+  id        String         @id @default(cuid())
+  meetingId String
+  meeting   TeacherMeeting @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+
+  content      String
+  authorId     String
+  authorName   String
   authorAvatar String?
-  
-  createdAt   DateTime @default(now())
-  
+
+  createdAt DateTime @default(now())
+
   @@index([meetingId])
   @@map("meeting_chat_messages")
   @@schema("teachers")
@@ -1036,54 +1036,54 @@ model MeetingChatMessage {
 // ==========================================
 
 model TeachingSession {
-  id          String   @id @default(cuid())
-  
+  id String @id @default(cuid())
+
   title       String
   description String?
   type        MeetingType @default(VIDEO) // VIDEO or VOICE
-  
+
   // Session timing
   status      MeetingStatus @default(SCHEDULED)
   scheduledAt DateTime?
   startedAt   DateTime?
   endedAt     DateTime?
-  duration    Int?     // Duration in minutes
-  
+  duration    Int? // Duration in minutes
+
   // Teacher (host) info
-  teacherId   String
-  teacherName String
+  teacherId     String
+  teacherName   String
   teacherAvatar String?
-  
+
   // Course/Subject association (optional)
-  courseId    String?
-  courseName  String?
-  
+  courseId   String?
+  courseName String?
+
   // Session settings
-  isRecorded  Boolean @default(false)
+  isRecorded   Boolean @default(false)
   recordingUrl String?
-  maxStudents Int @default(30)
-  
+  maxStudents  Int     @default(30)
+
   // Privacy & Access Control
-  privacy     MeetingPrivacy @default(PRIVATE) // Default PRIVATE for lessons
-  requireApproval Boolean @default(false)
-  allowChat   Boolean @default(true)
-  allowScreenShare Boolean @default(true)
-  allowHandRaise Boolean @default(true)
-  allowStudentMic Boolean @default(false) // Can students unmute?
-  allowStudentCamera Boolean @default(false) // Can students turn on camera?
-  
+  privacy            MeetingPrivacy @default(PRIVATE) // Default PRIVATE for lessons
+  requireApproval    Boolean        @default(false)
+  allowChat          Boolean        @default(true)
+  allowScreenShare   Boolean        @default(true)
+  allowHandRaise     Boolean        @default(true)
+  allowStudentMic    Boolean        @default(false) // Can students unmute?
+  allowStudentCamera Boolean        @default(false) // Can students turn on camera?
+
   // Notification settings
-  notifyOnCreate Boolean @default(true)
+  notifyOnCreate    Boolean @default(true)
   notifyBeforeStart Int? // Minutes before start
-  
+
   // Relations
   participants SessionParticipant[]
   invitations  SessionInvitation[]
   chatMessages SessionChatMessage[]
-  
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@index([teacherId])
   @@index([status])
   @@index([scheduledAt])
@@ -1093,29 +1093,29 @@ model TeachingSession {
 }
 
 model SessionParticipant {
-  id          String   @id @default(cuid())
-  sessionId   String
-  session     TeachingSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
-  
-  userId      String
-  userName    String
-  userAvatar  String?
-  userRole    Role     // STUDENT, INSTRUCTOR, ADMIN
-  
+  id        String          @id @default(cuid())
+  sessionId String
+  session   TeachingSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  userId     String
+  userName   String
+  userAvatar String?
+  userRole   Role // STUDENT, INSTRUCTOR, ADMIN
+
   // Status
-  isActive    Boolean @default(false)
-  joinedAt    DateTime?
-  leftAt      DateTime?
-  
+  isActive Boolean   @default(false)
+  joinedAt DateTime?
+  leftAt   DateTime?
+
   // Permissions (can be overridden by teacher)
-  isMuted     Boolean @default(true)
-  isCameraOff Boolean @default(true)
+  isMuted      Boolean @default(true)
+  isCameraOff  Boolean @default(true)
   isHandRaised Boolean @default(false)
-  canSpeak    Boolean @default(false)
-  canShare    Boolean @default(false)
-  
-  createdAt   DateTime @default(now())
-  
+  canSpeak     Boolean @default(false)
+  canShare     Boolean @default(false)
+
+  createdAt DateTime @default(now())
+
   @@unique([sessionId, userId])
   @@index([userId])
   @@map("session_participants")
@@ -1123,26 +1123,26 @@ model SessionParticipant {
 }
 
 model SessionInvitation {
-  id          String   @id @default(cuid())
-  sessionId   String
-  session     TeachingSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
-  
-  userId      String
-  userName    String
-  userEmail   String
-  userRole    Role
-  
+  id        String          @id @default(cuid())
+  sessionId String
+  session   TeachingSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  userId    String
+  userName  String
+  userEmail String
+  userRole  Role
+
   // Invitation status
   status      InvitationStatus @default(PENDING)
   respondedAt DateTime?
-  
+
   // Notification tracking
-  emailSent   Boolean @default(false)
-  emailSentAt DateTime?
-  notificationSent Boolean @default(false)
-  
-  createdAt   DateTime @default(now())
-  
+  emailSent        Boolean   @default(false)
+  emailSentAt      DateTime?
+  notificationSent Boolean   @default(false)
+
+  createdAt DateTime @default(now())
+
   @@unique([sessionId, userId])
   @@index([userId])
   @@index([status])
@@ -1151,18 +1151,18 @@ model SessionInvitation {
 }
 
 model SessionChatMessage {
-  id          String   @id @default(cuid())
-  sessionId   String
-  session     TeachingSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
-  
-  content     String
-  authorId    String
-  authorName  String
+  id        String          @id @default(cuid())
+  sessionId String
+  session   TeachingSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  content      String
+  authorId     String
+  authorName   String
   authorAvatar String?
-  authorRole  Role
-  
-  createdAt   DateTime @default(now())
-  
+  authorRole   Role
+
+  createdAt DateTime @default(now())
+
   @@index([sessionId])
   @@map("session_chat_messages")
   @@schema("teachers")
@@ -1173,14 +1173,14 @@ enum MessageType {
   VOICE
   FILE
   SYSTEM
-  
+
   @@schema("public")
 }
 
 enum MeetingType {
   VIDEO
   VOICE
-  
+
   @@schema("public")
 }
 
@@ -1189,7 +1189,7 @@ enum MeetingStatus {
   LIVE
   ENDED
   CANCELLED
-  
+
   @@schema("public")
 }
 
@@ -1198,26 +1198,26 @@ enum MeetingStatus {
 // ==========================================
 
 model AgentSession {
-  id          String   @id @default(cuid())
-  userId      String?
-  userRole    Role?
-  locale      String   @default("ar")
-  
+  id       String  @id @default(cuid())
+  userId   String?
+  userRole Role?
+  locale   String  @default("ar")
+
   // Session data
-  context     Json?    // Current context (courseId, lessonId, etc.)
-  preferences Json?    // User preferences for this session
-  
+  context     Json? // Current context (courseId, lessonId, etc.)
+  preferences Json? // User preferences for this session
+
   // Conversation
-  messageCount Int     @default(0)
-  
+  messageCount Int @default(0)
+
   // Timestamps
-  startedAt   DateTime @default(now())
+  startedAt    DateTime @default(now())
   lastActiveAt DateTime @default(now())
-  expiresAt   DateTime
-  
+  expiresAt    DateTime
+
   // Relations
-  messages    AgentMessage[]
-  
+  messages AgentMessage[]
+
   @@index([userId])
   @@index([expiresAt])
   @@map("agent_sessions")
@@ -1225,46 +1225,46 @@ model AgentSession {
 }
 
 model AgentMessage {
-  id          String   @id @default(cuid())
-  sessionId   String
-  session     AgentSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
-  
-  role        AgentMessageRole
-  content     String   @db.Text
-  
+  id        String       @id @default(cuid())
+  sessionId String
+  session   AgentSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  role    AgentMessageRole
+  content String           @db.Text
+
   // For tool calls
-  toolName    String?
-  toolInput   Json?
-  toolOutput  Json?
-  
+  toolName   String?
+  toolInput  Json?
+  toolOutput Json?
+
   // Metadata
-  tokenCount  Int?
-  durationMs  Int?
-  cached      Boolean  @default(false)
-  
-  createdAt   DateTime @default(now())
-  
+  tokenCount Int?
+  durationMs Int?
+  cached     Boolean @default(false)
+
+  createdAt DateTime @default(now())
+
   @@index([sessionId])
   @@map("agent_messages")
   @@schema("ai")
 }
 
 model AgentPromptTemplate {
-  id          String   @id @default(cuid())
-  name        String
-  templateId  String   // Logical ID (e.g., "system_prompt")
-  version     Int      @default(1)
-  locale      String   @default("ar")
-  
-  template    String   @db.Text
-  variables   String[] @default([])
-  
-  isActive    Boolean  @default(true)
-  
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  createdBy   String?
-  
+  id         String @id @default(cuid())
+  name       String
+  templateId String // Logical ID (e.g., "system_prompt")
+  version    Int    @default(1)
+  locale     String @default("ar")
+
+  template  String   @db.Text
+  variables String[] @default([])
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  createdBy String?
+
   @@unique([templateId, version, locale])
   @@index([templateId, isActive])
   @@map("agent_prompt_templates")
@@ -1276,7 +1276,46 @@ enum AgentMessageRole {
   USER
   ASSISTANT
   TOOL
-  
+
   @@schema("ai")
 }
 
+// ===========================================
+// Zyphon AI External Integration Models
+// ===========================================
+
+model ZyphonApiKey {
+  id          String    @id @default(cuid())
+  name        String // Human-readable name for the key
+  keyHash     String    @unique // SHA-256 hash of the raw key (with pepper)
+  prefix      String    @unique // First 8 chars of raw key for identification
+  scopes      String[] // e.g. ["chat:write","chat:read","knowledge:read"]
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  lastUsedAt  DateTime?
+  createdById String? // Admin who created this key
+  revokedAt   DateTime?
+
+  @@index([prefix])
+  @@index([isActive])
+  @@index([createdById])
+  @@map("zyphon_api_keys")
+  @@schema("ai")
+}
+
+// NOTE: Zyphon audit logging uses the existing AuditLog model in "admins" schema.
+// Actions: "zyphon.key.created", "zyphon.key.revoked", "zyphon.key.rotated", "zyphon.ext.request", "zyphon.ext.denied"
+// Meta JSON includes: keyPrefix, scopes, ip, userAgent
+
+model ZyphonSettings {
+  id                      String   @id @default(cuid())
+  defaultLanguageMode     String   @default("auto") // "auto" | "locked_ar" | "locked_en"
+  strictNoThirdLanguage   Boolean  @default(true)
+  defaultMaxTokens        Int      @default(2048)
+  externalEndpointEnabled Boolean  @default(true)
+  updatedAt               DateTime @updatedAt
+  updatedById             String?
+
+  @@map("zyphon_settings")
+  @@schema("ai")
+}

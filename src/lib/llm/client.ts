@@ -1,15 +1,13 @@
 /**
  * LLM Client
  * ==========
- * Unified client that auto-selects between local, Zyphon, and mock providers.
- * Provides graceful fallback when the preferred LLM is unavailable.
+ * Unified client that auto-selects between local and mock providers.
+ * Provides graceful fallback when local LLM is unavailable.
  */
 
 import { getLLMConfig, type LLMProvider as ConfigProvider } from "./config";
-import { checkLLMHealth, isLLMAvailable } from "./health";
 import { localProvider } from "./providers/local";
 import { mockProvider } from "./providers/mock";
-import { zyphonProvider } from "./providers/zyphon";
 import type { LLMMessage, LLMCompletionResult, LLMProvider, LLMProviderName } from "./types";
 
 // ============================================
@@ -21,9 +19,8 @@ import type { LLMMessage, LLMCompletionResult, LLMProvider, LLMProviderName } fr
  * 
  * Logic:
  * - If LLM_PROVIDER=local: use local only (error if unavailable)
- * - If LLM_PROVIDER=zyphon: use Zyphon only (error if misconfigured)
  * - If LLM_PROVIDER=mock: use mock only
- * - If LLM_PROVIDER=auto (default): try local, fallback to Zyphon, else mock
+ * - If LLM_PROVIDER=auto (default): try local, fallback to mock
  */
 async function resolveProvider(forcedProvider?: ConfigProvider): Promise<{
   provider: LLMProvider;
@@ -41,7 +38,7 @@ async function resolveProvider(forcedProvider?: ConfigProvider): Promise<{
 
   // Explicit local mode (no fallback)
   if (effectiveProvider === "local") {
-    const available = await isLLMAvailable();
+    const available = await localProvider.checkAvailability();
     if (!available) {
       console.error("[LLM Client] Local provider forced but unavailable");
       return {
@@ -53,42 +50,19 @@ async function resolveProvider(forcedProvider?: ConfigProvider): Promise<{
     return { provider: localProvider, fallbackUsed: false };
   }
 
-  // Explicit Zyphon mode (no fallback)
-  if (effectiveProvider === "zyphon") {
-    if (!zyphonProvider.isAvailable) {
-      console.error("[LLM Client] Zyphon provider forced but API key missing");
-      return {
-        provider: zyphonProvider,
-        fallbackUsed: false,
-        reason: "Zyphon API key missing",
-      };
-    }
-    console.log("[LLM Client] Using Zyphon provider (explicitly configured)");
-    return { provider: zyphonProvider, fallbackUsed: false };
-  }
+  // Auto mode: try local, then mock
+  const available = await localProvider.checkAvailability();
 
-  // Auto mode: try local, then Zyphon, then mock
-  const health = await checkLLMHealth();
-
-  if (health.available) {
+  if (available) {
     console.log("[LLM Client] Using local provider (auto-detected as available)");
     return { provider: localProvider, fallbackUsed: false };
   }
 
-  if (zyphonProvider.isAvailable) {
-    console.warn(`[LLM Client] Local unavailable (${health.errorCode}), falling back to Zyphon`);
-    return {
-      provider: zyphonProvider,
-      fallbackUsed: true,
-      reason: health.error || "Local LLM unavailable",
-    };
-  }
-
-  console.warn(`[LLM Client] Local unavailable (${health.errorCode}), falling back to mock`);
+  console.warn("[LLM Client] Local LLM unavailable, falling back to mock");
   return {
     provider: mockProvider,
     fallbackUsed: true,
-    reason: health.error || "Local LLM unavailable",
+    reason: "Local LLM unavailable",
   };
 }
 
@@ -139,25 +113,62 @@ class LLMClient {
   }
 
   /**
+   * Stream completion with automatic provider selection
+   * Only local provider supports streaming (mock falls back to instant response)
+   */
+  async *streamCompletion(
+    messages: LLMMessage[],
+    options?: {
+      temperature?: number;
+      maxTokens?: number;
+      signal?: AbortSignal;
+      forceProvider?: ConfigProvider;
+    }
+  ): AsyncGenerator<{ ok: boolean; delta?: string; error?: string; done?: boolean }> {
+    const { provider, fallbackUsed, reason } = await resolveProvider(options?.forceProvider);
+    
+    this.lastProvider = provider.name;
+    this.lastFallbackReason = reason || null;
+
+    if (provider.name === "local" && "streamCompletion" in provider) {
+      const localProvider = provider as typeof import("./providers/local").localProvider;
+      yield* localProvider.streamCompletion(messages, {
+        temperature: options?.temperature,
+        maxTokens: options?.maxTokens,
+        signal: options?.signal,
+      });
+    } else {
+      // Mock or streaming not available - simulate with instant response
+      const result = await provider.chatCompletion(messages, {
+        temperature: options?.temperature,
+        maxTokens: options?.maxTokens,
+      });
+
+      if (result.ok && result.content) {
+        yield { ok: true, delta: result.content };
+        yield { ok: true, done: true };
+      } else {
+        yield { ok: false, error: result.error || "Failed to complete" };
+      }
+    }
+  }
+
+  /**
    * Quick check of current provider status
    */
   async getStatus(): Promise<{
     configuredProvider: ConfigProvider;
     effectiveProvider: LLMProviderName;
     localAvailable: boolean;
-    zyphonAvailable: boolean;
-    localHealth: Awaited<ReturnType<typeof checkLLMHealth>>;
   }> {
     const config = getLLMConfig();
-    const health = await checkLLMHealth(true);
+    const available = await localProvider.checkAvailability();
     const { provider } = await resolveProvider();
 
     return {
       configuredProvider: config.provider,
       effectiveProvider: provider.name,
-      localAvailable: health.available,
-      zyphonAvailable: zyphonProvider.isAvailable,
-      localHealth: health,
+      localAvailable: available,
     };
   }
 }
@@ -184,6 +195,21 @@ export async function chatCompletion(
   }
 ): Promise<LLMCompletionResult & { fallbackUsed: boolean }> {
   return llmClient.chatCompletion(messages, options);
+}
+
+/**
+ * Stream completion with automatic provider selection
+ */
+export async function* chatCompletionStream(
+  messages: LLMMessage[],
+  options?: {
+    temperature?: number;
+    maxTokens?: number;
+    signal?: AbortSignal;
+    forceProvider?: ConfigProvider;
+  }
+): AsyncGenerator<{ ok: boolean; delta?: string; error?: string; done?: boolean }> {
+  yield* llmClient.streamCompletion(messages, options);
 }
 
 /**

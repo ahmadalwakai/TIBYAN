@@ -9,7 +9,7 @@
 // Types
 // ============================================
 
-export type LLMProvider = "local" | "mock" | "zyphon" | "auto";
+export type LLMProvider = "local" | "mock" | "ollama" | "auto";
 
 export interface LLMConfig {
   /** Active provider: local, mock, or auto (auto-detect) */
@@ -32,14 +32,6 @@ export interface LLMConfig {
   healthRetries: number;
   /** Delay between health retries (ms) */
   healthRetryDelayMs: number;
-  /** Remote Zyphon base URL */
-  zyphonBaseUrl: string;
-  /** Remote Zyphon default model id */
-  zyphonModel: string;
-  /** Zyphon request timeout */
-  zyphonTimeoutMs: number;
-  /** Optional Zyphon organization id */
-  zyphonOrganization: string | null;
 }
 
 // ============================================
@@ -48,7 +40,7 @@ export interface LLMConfig {
 
 function getEnvProvider(): LLMProvider {
   const provider = process.env.LLM_PROVIDER?.toLowerCase();
-  if (provider === "local" || provider === "mock" || provider === "zyphon") {
+  if (provider === "local" || provider === "mock" || provider === "ollama") {
     return provider;
   }
   return "auto"; // Default: auto-detect
@@ -80,19 +72,15 @@ function getEnvString(key: string, defaultValue: string): string {
 
 export const DEFAULT_LLM_CONFIG: LLMConfig = {
   provider: getEnvProvider(),
-  baseUrl: process.env.LLAMA_SERVER_URL || "http://127.0.0.1:8080", // Dev note: If using port 3001, kill duplicate Next.js process on 3000
-  timeoutMs: getEnvNumber("LLM_TIMEOUT_MS", 60000),
+  baseUrl: process.env.LLAMA_SERVER_URL || "http://127.0.0.1:8080",
+  timeoutMs: getEnvNumber("LLM_TIMEOUT_MS", 120000),
   healthTimeoutMs: getEnvNumber("LLM_HEALTH_TIMEOUT_MS", 1500),
-  contextSize: getEnvNumber("LLM_CONTEXT_SIZE", 2048),
+  contextSize: getEnvNumber("LLM_CONTEXT_SIZE", 4096),
   nGpuLayers: getEnvNumber("LLM_N_GPU_LAYERS", 0),
   modelPath: process.env.LLM_MODEL_PATH || null,
   autoStart: getEnvBoolean("AUTO_START_LLM", false),
   healthRetries: getEnvNumber("LLM_HEALTH_RETRIES", 3),
   healthRetryDelayMs: getEnvNumber("LLM_HEALTH_RETRY_DELAY_MS", 1000),
-  zyphonBaseUrl: getEnvString("ZYPHON_API_BASE_URL", "https://api.zyphon.ai/v1"),
-  zyphonModel: getEnvString("ZYPHON_MODEL_ID", "zyphon-educator"),
-  zyphonTimeoutMs: getEnvNumber("ZYPHON_TIMEOUT_MS", 60000),
-  zyphonOrganization: process.env.ZYPHON_ORG_ID?.trim() ?? null,
 };
 
 // ============================================
@@ -141,27 +129,5 @@ export function logLLMConfig(): void {
     contextSize: currentConfig.contextSize,
     nGpuLayers: currentConfig.nGpuLayers,
     autoStart: currentConfig.autoStart,
-    zyphonBaseUrl: currentConfig.zyphonBaseUrl,
-    zyphonModel: currentConfig.zyphonModel,
-    zyphonConfigured: Boolean(process.env.ZYPHON_API_KEY),
   });
-}
-
-export interface ZyphonConfig {
-  baseUrl: string;
-  model: string;
-  timeoutMs: number;
-  organizationId: string | null;
-  apiKey: string | null;
-}
-
-export function getZyphonConfig(): ZyphonConfig {
-  const config = getLLMConfig();
-  return {
-    baseUrl: config.zyphonBaseUrl,
-    model: config.zyphonModel,
-    timeoutMs: config.zyphonTimeoutMs,
-    organizationId: config.zyphonOrganization,
-    apiKey: process.env.ZYPHON_API_KEY?.trim() ?? null,
-  };
 }
