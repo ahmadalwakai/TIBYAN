@@ -386,12 +386,12 @@ export default function Home() {
           position="absolute"
           inset={0}
           zIndex={2}
-          bg="linear-gradient(180deg, rgba(10, 22, 40, 0.5) 0%, rgba(11, 31, 59, 0.6) 40%, rgba(10, 22, 40, 0.65) 70%, rgba(10, 22, 40, 0.8) 100%)"
+          bg="linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.6) 40%, rgba(0, 0, 0, 0.65) 70%, rgba(0, 0, 0, 0.8) 100%)"
           backdropFilter="blur(1px)"
           pointerEvents="none"
         />
 
-        {/* Gradient Overlay for Smooth Transition */}
+        {/* Gradient Overlay for Smooth Transition - To Black */}
         <Box
           position="absolute"
           bottom={0}
@@ -399,7 +399,7 @@ export default function Home() {
           right={0}
           h="50%"
           zIndex={3}
-          bg="linear-gradient(to top, var(--chakra-colors-background) 0%, var(--chakra-colors-background) 5%, rgba(245, 243, 240, 0.95) 15%, rgba(245, 243, 240, 0.7) 30%, rgba(10, 22, 40, 0.4) 60%, transparent 100%)"
+          bg="linear-gradient(to top, #000000 0%, #000000 5%, rgba(0, 0, 0, 0.95) 15%, rgba(0, 0, 0, 0.7) 30%, rgba(0, 0, 0, 0.4) 60%, transparent 100%)"
           pointerEvents="none"
         />
 
@@ -551,19 +551,19 @@ export default function Home() {
                 <Button
                   asChild
                   position="relative"
-                  bg="linear-gradient(135deg, #00FF2A 0%, #00CC22 100%)"
-                  color="primary"
+                  bg="linear-gradient(135deg, #00FF2A 0%, #00DD24 100%)"
+                  color="#000000"
                   size="lg"
                   px={{ base: 8, md: 12 }}
                   h={{ base: "56px", md: "64px" }}
                   fontSize={{ base: "md", md: "lg" }}
                   fontWeight="800"
                   borderRadius="xl"
-                  boxShadow="0 8px 30px rgba(200, 162, 74, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3)"
+                  boxShadow="0 8px 30px rgba(0, 255, 42, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3)"
                   _hover={{ 
                     bg: "linear-gradient(135deg, #4DFF6A 0%, #00FF2A 100%)",
                     transform: "translateY(-4px) scale(1.02)",
-                    boxShadow: "0 16px 50px rgba(200, 162, 74, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4)",
+                    boxShadow: "0 16px 50px rgba(0, 255, 42, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4)",
                   }}
                   _active={{
                     transform: "translateY(-2px) scale(1.01)",
@@ -580,7 +580,7 @@ export default function Home() {
                 asChild
                 variant="outline"
                 borderWidth="2px"
-                borderColor="rgba(200, 162, 74, 0.5)"
+                borderColor="rgba(0, 255, 42, 0.5)"
                 color="white"
                 size="lg"
                 px={{ base: 8, md: 12 }}
@@ -588,13 +588,13 @@ export default function Home() {
                 fontSize={{ base: "md", md: "lg" }}
                 fontWeight="700"
                 borderRadius="xl"
-                bg="rgba(255, 255, 255, 0.05)"
+                bg="rgba(0, 0, 0, 0.5)"
                 backdropFilter="blur(10px)"
                 _hover={{ 
-                  bg: "rgba(200, 162, 74, 0.15)",
+                  bg: "rgba(0, 255, 42, 0.15)",
                   borderColor: "#00FF2A",
                   transform: "translateY(-4px)",
-                  boxShadow: "0 8px 30px rgba(200, 162, 74, 0.2)",
+                  boxShadow: "0 8px 30px rgba(0, 255, 42, 0.2)",
                 }}
                 _active={{
                   transform: "translateY(-2px)",

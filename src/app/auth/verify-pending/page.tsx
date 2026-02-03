@@ -82,16 +82,53 @@ function VerifyPendingContent() {
   return (
     <Box
       minH="100vh"
-      bg="linear-gradient(135deg, #0B1F3A 0%, #1a365d 50%, #0B1F3A 100%)"
+      bg="#000000"
       py={{ base: 10, md: 16 }}
       display="flex"
       alignItems="center"
+      position="relative"
+      overflow="hidden"
     >
-      <Container maxW="md">
+      {/* Neon glow orbs */}
+      <Box
+        position="absolute"
+        top="-20%"
+        right="-10%"
+        w="500px"
+        h="500px"
+        bg="radial-gradient(circle, rgba(0, 255, 42, 0.15) 0%, transparent 70%)"
+        pointerEvents="none"
+      />
+      <Box
+        position="absolute"
+        bottom="-30%"
+        left="-15%"
+        w="600px"
+        h="600px"
+        bg="radial-gradient(circle, rgba(0, 255, 42, 0.1) 0%, transparent 70%)"
+        pointerEvents="none"
+      />
+
+      <Container maxW="md" position="relative" zIndex={1}>
         <Stack gap={8} align="center">
           {/* Header */}
           <Stack gap={3} textAlign="center">
-            <Box fontSize="4xl">✉️</Box>
+            <Box
+              fontSize="4xl"
+              w="80px"
+              h="80px"
+              mx="auto"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              borderRadius="full"
+              bg="#050505"
+              border="2px solid"
+              borderColor="rgba(0, 255, 42, 0.5)"
+              boxShadow="0 0 30px rgba(0, 255, 42, 0.3)"
+            >
+              ✉️
+            </Box>
             <Heading
               as="h1"
               size={{ base: "xl", md: "2xl" }}
@@ -100,41 +137,41 @@ function VerifyPendingContent() {
             >
               تحقق من بريدك الإلكتروني
             </Heading>
-            <Text color="gray.300" fontSize="md">
+            <Text color="gray.400" fontSize="md">
               لقد أرسلنا لك رابط تحقق على بريدك الإلكتروني
             </Text>
           </Stack>
 
           {/* Info Card */}
           <Box
-            bg="surface"
+            bg="#050505"
             p={{ base: 6, md: 8 }}
             borderRadius="2xl"
             border="1px solid"
-            borderColor="border"
+            borderColor="rgba(0, 255, 42, 0.3)"
             w="100%"
-            boxShadow="0 8px 40px rgba(0, 0, 0, 0.1)"
+            boxShadow="0 0 40px rgba(0, 255, 42, 0.15)"
           >
             <Stack gap={6}>
               {/* Email Display */}
               <Box
-                bg="brand.50"
+                bg="#0A0A0A"
                 p={4}
                 borderRadius="lg"
-                borderLeft="4px solid"
-                borderLeftColor="brand.500"
+                borderRight="4px solid"
+                borderRightColor="#00FF2A"
               >
-                <Text fontSize="sm" color="gray.600" mb={1}>
+                <Text fontSize="sm" color="gray.500" mb={1}>
                   تم الإرسال إلى:
                 </Text>
-                <Text fontWeight="600" color="brand.900">
+                <Text fontWeight="600" color="#00FF2A">
                   {email || "بريدك الإلكتروني"}
                 </Text>
               </Box>
 
               {/* Instructions */}
-              <Stack gap={3} fontSize="sm" color="gray.600">
-                <Text>👉 اتبع هذه الخطوات:</Text>
+              <Stack gap={3} fontSize="sm" color="gray.400">
+                <Text color="#00FF2A">👉 اتبع هذه الخطوات:</Text>
                 <Box as="ol" pl={6} gap={2} display="flex" flexDir="column">
                   <Text as="li">افتح بريدك الإلكتروني</Text>
                   <Text as="li">ابحث عن رسالة من تبيان</Text>
@@ -144,9 +181,9 @@ function VerifyPendingContent() {
               </Stack>
 
               {/* Resend Section */}
-              <Box borderTop="1px solid" borderTopColor="border" pt={4}>
+              <Box borderTop="1px solid" borderTopColor="rgba(0, 255, 42, 0.2)" pt={4}>
                 <Stack gap={3}>
-                  <Text fontSize="sm" color="gray.600" fontWeight="600">
+                  <Text fontSize="sm" color="gray.400" fontWeight="600">
                     لم تستقبل البريد؟
                   </Text>
 
@@ -165,13 +202,20 @@ function VerifyPendingContent() {
                         placeholder="أدخل بريدك الإلكتروني"
                         size="sm"
                         disabled={resendLoading}
+                        bg="#0A0A0A"
+                        border="1px solid"
+                        borderColor="rgba(0, 255, 42, 0.3)"
+                        color="white"
+                        _placeholder={{ color: "gray.500" }}
+                        _focus={{ borderColor: "#00FF2A", boxShadow: "0 0 0 1px #00FF2A" }}
                       />
                       <Button
                         type="submit"
                         size="sm"
-                        bg="brand.500"
-                        color="white"
-                        _hover={{ bg: "brand.600" }}
+                        bg="#00FF2A"
+                        color="black"
+                        fontWeight="700"
+                        _hover={{ bg: "#4DFF6A", boxShadow: "0 0 20px rgba(0, 255, 42, 0.5)" }}
                         disabled={resendLoading}
                         loading={resendLoading}
                         loadingText="جاري الإرسال..."
@@ -182,14 +226,14 @@ function VerifyPendingContent() {
                     </Box>
                   ) : (
                     <Box
-                      bg="green.50"
+                      bg="rgba(0, 255, 42, 0.1)"
                       p={3}
                       borderRadius="md"
                       border="1px solid"
-                      borderColor="green.200"
+                      borderColor="rgba(0, 255, 42, 0.3)"
                       textAlign="center"
                     >
-                      <Text color="green.700" fontSize="sm" fontWeight="500">
+                      <Text color="#00FF2A" fontSize="sm" fontWeight="500">
                         ✓ تم إرسال البريد بنجاح!
                       </Text>
                     </Box>
@@ -210,15 +254,15 @@ function VerifyPendingContent() {
               as={Link}
               href="/auth/login"
               display="block"
-              color="gray.300"
+              color="gray.400"
               fontSize="sm"
-              _hover={{ color: "white", textDecoration: "underline" }}
+              _hover={{ color: "#00FF2A", textDecoration: "underline" }}
             >
               العودة لتسجيل الدخول
             </ChakraLink>
             <Text fontSize="xs" color="gray.500">
               هل تحتاج لمساعدة؟{" "}
-              <ChakraLink as={Link} href="/help" color="link" _hover={{ textDecoration: "underline" }}>
+              <ChakraLink as={Link} href="/help" color="#00FF2A" _hover={{ textDecoration: "underline" }}>
                 اتصل بنا
               </ChakraLink>
             </Text>
