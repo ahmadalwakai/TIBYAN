@@ -6,3 +6,4 @@
 
 export { MockLLMProvider, mockProvider } from "./mock";
 export { LocalLLMProvider, localProvider } from "./local";
+export { RemoteLLMProvider, remoteProvider } from "./remote";

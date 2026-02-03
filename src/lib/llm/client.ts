@@ -1,13 +1,19 @@
 /**
  * LLM Client
  * ==========
- * Unified client that auto-selects between local and mock providers.
- * Provides graceful fallback when local LLM is unavailable.
+ * Unified client that auto-selects between local, remote, and mock providers.
+ * Provides graceful fallback when LLM servers are unavailable.
+ * 
+ * Provider Priority (auto mode):
+ * 1. remote (if configured) - for production on Vercel
+ * 2. local (if available) - for local development
+ * 3. mock - fallback with safe canned responses
  */
 
 import { getLLMConfig, type LLMProvider as ConfigProvider } from "./config";
 import { localProvider } from "./providers/local";
 import { mockProvider } from "./providers/mock";
+import { remoteProvider } from "./providers/remote";
 import type { LLMMessage, LLMCompletionResult, LLMProvider, LLMProviderName } from "./types";
 
 // ============================================
@@ -18,9 +24,10 @@ import type { LLMMessage, LLMCompletionResult, LLMProvider, LLMProviderName } fr
  * Resolve which provider to use based on config and availability.
  * 
  * Logic:
+ * - If LLM_PROVIDER=remote: use remote only (error if unavailable)
  * - If LLM_PROVIDER=local: use local only (error if unavailable)
  * - If LLM_PROVIDER=mock: use mock only
- * - If LLM_PROVIDER=auto (default): try local, fallback to mock
+ * - If LLM_PROVIDER=auto (default): try remote → local → mock
  */
 async function resolveProvider(forcedProvider?: ConfigProvider): Promise<{
   provider: LLMProvider;
@@ -36,6 +43,21 @@ async function resolveProvider(forcedProvider?: ConfigProvider): Promise<{
     return { provider: mockProvider, fallbackUsed: false };
   }
 
+  // Explicit remote mode (no fallback)
+  if (effectiveProvider === "remote") {
+    const available = await remoteProvider.checkAvailability();
+    if (!available) {
+      console.error("[LLM Client] Remote provider forced but not configured");
+      return {
+        provider: remoteProvider,
+        fallbackUsed: false,
+        reason: "Remote LLM forced but not configured (check REMOTE_LLM_BASE_URL and REMOTE_LLM_API_KEY)",
+      };
+    }
+    console.log("[LLM Client] Using remote provider (explicitly configured)");
+    return { provider: remoteProvider, fallbackUsed: false };
+  }
+
   // Explicit local mode (no fallback)
   if (effectiveProvider === "local") {
     const available = await localProvider.checkAvailability();
@@ -44,25 +66,33 @@ async function resolveProvider(forcedProvider?: ConfigProvider): Promise<{
       return {
         provider: localProvider,
         fallbackUsed: false,
-        reason: "Local LLM forced but unavailable",
+        reason: "Local LLM forced but unavailable (start llama-server on " + config.baseUrl + ")",
       };
     }
     return { provider: localProvider, fallbackUsed: false };
   }
 
-  // Auto mode: try local, then mock
-  const available = await localProvider.checkAvailability();
+  // Auto mode: try remote → local → mock
+  // Step 1: Try remote (production priority)
+  const remoteAvailable = await remoteProvider.checkAvailability();
+  if (remoteAvailable) {
+    console.log("[LLM Client] Using remote provider (auto-detected as available)");
+    return { provider: remoteProvider, fallbackUsed: false };
+  }
 
-  if (available) {
+  // Step 2: Try local (development)
+  const localAvailable = await localProvider.checkAvailability();
+  if (localAvailable) {
     console.log("[LLM Client] Using local provider (auto-detected as available)");
     return { provider: localProvider, fallbackUsed: false };
   }
 
-  console.warn("[LLM Client] Local LLM unavailable, falling back to mock");
+  // Step 3: Fallback to mock
+  console.warn("[LLM Client] No LLM available, falling back to mock");
   return {
     provider: mockProvider,
     fallbackUsed: true,
-    reason: "Local LLM unavailable",
+    reason: "No LLM configured (remote not set, local unavailable)",
   };
 }
 
@@ -114,7 +144,7 @@ class LLMClient {
 
   /**
    * Stream completion with automatic provider selection
-   * Only local provider supports streaming (mock falls back to instant response)
+   * Local and remote providers support streaming; mock falls back to instant response
    */
   async *streamCompletion(
     messages: LLMMessage[],
@@ -130,26 +160,39 @@ class LLMClient {
     this.lastProvider = provider.name;
     this.lastFallbackReason = reason || null;
 
+    // Local provider streaming
     if (provider.name === "local" && "streamCompletion" in provider) {
-      const localProvider = provider as typeof import("./providers/local").localProvider;
-      yield* localProvider.streamCompletion(messages, {
+      const localProv = provider as typeof import("./providers/local").localProvider;
+      yield* localProv.streamCompletion(messages, {
         temperature: options?.temperature,
         maxTokens: options?.maxTokens,
         signal: options?.signal,
       });
-    } else {
-      // Mock or streaming not available - simulate with instant response
-      const result = await provider.chatCompletion(messages, {
+      return;
+    }
+
+    // Remote provider streaming
+    if (provider.name === ("remote" as LLMProviderName) && "streamCompletion" in provider) {
+      const remoteProv = provider as typeof import("./providers/remote").remoteProvider;
+      yield* remoteProv.streamCompletion(messages, {
         temperature: options?.temperature,
         maxTokens: options?.maxTokens,
+        signal: options?.signal,
       });
+      return;
+    }
 
-      if (result.ok && result.content) {
-        yield { ok: true, delta: result.content };
-        yield { ok: true, done: true };
-      } else {
-        yield { ok: false, error: result.error || "Failed to complete" };
-      }
+    // Mock or streaming not available - simulate with instant response
+    const result = await provider.chatCompletion(messages, {
+      temperature: options?.temperature,
+      maxTokens: options?.maxTokens,
+    });
+
+    if (result.ok && result.content) {
+      yield { ok: true, delta: result.content };
+      yield { ok: true, done: true };
+    } else {
+      yield { ok: false, error: result.error || "Failed to complete" };
     }
   }
 
@@ -160,15 +203,18 @@ class LLMClient {
     configuredProvider: ConfigProvider;
     effectiveProvider: LLMProviderName;
     localAvailable: boolean;
+    remoteAvailable: boolean;
   }> {
     const config = getLLMConfig();
-    const available = await localProvider.checkAvailability();
+    const localAvail = await localProvider.checkAvailability();
+    const remoteAvail = await remoteProvider.checkAvailability();
     const { provider } = await resolveProvider();
 
     return {
       configuredProvider: config.provider,
       effectiveProvider: provider.name,
-      localAvailable: available,
+      localAvailable: localAvail,
+      remoteAvailable: remoteAvail,
     };
   }
 }

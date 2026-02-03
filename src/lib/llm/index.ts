@@ -44,6 +44,7 @@ export {
 // Providers
 export { mockProvider, MockLLMProvider } from "./providers/mock";
 export { localProvider, LocalLLMProvider } from "./providers/local";
+export { remoteProvider, RemoteLLMProvider } from "./providers/remote";
 
 // Client
 export {

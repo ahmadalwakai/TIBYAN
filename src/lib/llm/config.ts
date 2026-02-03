@@ -9,7 +9,7 @@
 // Types
 // ============================================
 
-export type LLMProvider = "local" | "mock" | "ollama" | "auto";
+export type LLMProvider = "local" | "mock" | "ollama" | "remote" | "auto";
 
 export interface LLMConfig {
   /** Active provider: local, mock, or auto (auto-detect) */
@@ -40,7 +40,7 @@ export interface LLMConfig {
 
 function getEnvProvider(): LLMProvider {
   const provider = process.env.LLM_PROVIDER?.toLowerCase();
-  if (provider === "local" || provider === "mock" || provider === "ollama") {
+  if (provider === "local" || provider === "mock" || provider === "ollama" || provider === "remote") {
     return provider;
   }
   return "auto"; // Default: auto-detect

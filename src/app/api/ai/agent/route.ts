@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { cookies } from "next/headers";
 import { getLLMStatus, chatCompletion, chatCompletionStream } from "@/lib/llm/client";
+
+// Force Node.js runtime (uses cookies, streaming)
+export const runtime = "nodejs";
 import type { LLMMessage } from "@/lib/llm/types";
 import { searchKnowledgeBase, buildSystemPrompt } from "@/lib/ai/kb";
 import {

@@ -9,7 +9,7 @@
 // Core Types
 // ============================================
 
-export type LLMProviderName = "local" | "mock" | "ollama";
+export type LLMProviderName = "local" | "mock" | "ollama" | "remote";
 
 /**
  * A message in a chat completion request
