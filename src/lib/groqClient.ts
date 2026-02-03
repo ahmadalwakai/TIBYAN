@@ -43,7 +43,7 @@ interface GroqResponse {
 // ============================================
 
 const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
-const DEFAULT_MODEL = "llama3-70b-8192";
+const DEFAULT_MODEL = "llama-3.3-70b-versatile";
 const DEFAULT_MAX_TOKENS = 2048;
 const DEFAULT_TEMPERATURE = 0.7;
 
