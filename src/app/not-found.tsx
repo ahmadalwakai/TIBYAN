@@ -49,7 +49,7 @@ export default function NotFound() {
             fontWeight="900"
             color="text"
             css={{
-              background: "linear-gradient(135deg, #c8a24a 0%, #0b1f3b 100%)",
+              background: "linear-gradient(135deg, #00FF2A 0%, #0b1f3b 100%)",
               backgroundClip: "text",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",

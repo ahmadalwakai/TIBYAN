@@ -237,7 +237,7 @@ export default function AdminIntegrationsPage() {
         <Text color="muted" lineHeight="1.8">
           لتفعيل أي تكامل، يجب إضافة متغيرات البيئة المناسبة في ملف <code>.env</code>:
         </Text>
-        <Stack gap={2} mt={4} fontFamily="mono" fontSize="sm" bg="gray.50" p={4} borderRadius="md">
+        <Stack gap={2} mt={4} fontFamily="mono" fontSize="sm" bg="#0A0A0A" p={4} borderRadius="md">
           <Text># البريد الإلكتروني</Text>
           <Text>RESEND_API_KEY=re_xxxxx</Text>
           <Text mt={2}># المدفوعات</Text>

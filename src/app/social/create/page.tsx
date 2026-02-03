@@ -309,11 +309,11 @@ export default function CreatePostPage() {
           </Box>
           <Button
             asChild
-            bg="white"
-            color="purple.700"
+            bg="#000000"
+            color="#00FF2A"
             fontWeight="700"
             borderRadius="full"
-            _hover={{ bg: "whiteAlpha.900", transform: "translateY(-2px)" }}
+            _hover={{ bg: "#0A0A0A", transform: "translateY(-2px)" }}
             transition="all 0.2s"
           >
             <Link href="/social/create/edit">فتح المحرر</Link>
@@ -324,17 +324,17 @@ export default function CreatePostPage() {
         <Box
           as="form"
           onSubmit={handleSubmit}
-          bg="white"
+          bg="#0A0A0A"
           p={{ base: 6, md: 8 }}
           borderRadius="2xl"
-          boxShadow="0 4px 20px rgba(0, 0, 0, 0.08)"
+          boxShadow="0 4px 20px rgba(0, 255, 42, 0.1)"
           border="1px solid"
-          borderColor="gray.100"
+          borderColor="rgba(0, 255, 42, 0.2)"
         >
           <Stack gap={6}>
             {/* Author info */}
             <Box
-              bg="gray.50"
+              bg="#050505"
               p={4}
               borderRadius="xl"
               display="flex"
@@ -345,21 +345,21 @@ export default function CreatePostPage() {
                 w="48px"
                 h="48px"
                 borderRadius="full"
-                bg="linear-gradient(135deg, #c8a24a, #ffd700)"
+                bg="linear-gradient(135deg, #00FF2A, #4DFF6A)"
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
-                color="primary"
+                color="#000000"
                 fontSize="lg"
                 fontWeight="800"
               >
                 {user.name.charAt(0)}
               </Box>
               <Box>
-                <Text fontWeight="700" color="gray.800">{user.name}</Text>
+                <Text fontWeight="700" color="white">{user.name}</Text>
                 <Badge
-                  bg={user.role === "ADMIN" ? "red.100" : user.role === "INSTRUCTOR" ? "blue.100" : "green.100"}
-                  color={user.role === "ADMIN" ? "red.700" : user.role === "INSTRUCTOR" ? "blue.700" : "green.700"}
+                  bg={user.role === "ADMIN" ? "red.900" : user.role === "INSTRUCTOR" ? "blue.900" : "green.900"}
+                  color={user.role === "ADMIN" ? "red.300" : user.role === "INSTRUCTOR" ? "blue.300" : "green.300"}
                   fontSize="xs"
                 >
                   {user.role === "ADMIN" ? "مسؤول" : user.role === "INSTRUCTOR" ? "معلم" : "عضو"}
@@ -431,19 +431,19 @@ export default function CreatePostPage() {
                   p={6}
                   borderRadius="xl"
                   border="2px dashed"
-                  borderColor="gray.200"
-                  bg="gray.50"
+                  borderColor="rgba(0, 255, 42, 0.3)"
+                  bg="#050505"
                   textAlign="center"
                   cursor="pointer"
                   transition="all 0.2s"
-                  _hover={{ borderColor: "brand.300", bg: "brand.50" }}
+                  _hover={{ borderColor: "#00FF2A", bg: "rgba(0, 255, 42, 0.05)" }}
                   onClick={() => fileInputRef.current?.click()}
                 >
                   <Text fontSize="3xl" mb={2}>📷</Text>
-                  <Text fontWeight="600" mb={1} color="gray.700">
+                  <Text fontWeight="600" mb={1} color="white">
                     اضغط لرفع صور أو فيديوهات
                   </Text>
-                  <Text fontSize="sm" color="gray.500">
+                  <Text fontSize="sm" color="rgba(255,255,255,0.6)">
                     أو أضف رابط مباشر أدناه
                   </Text>
                   <Input
@@ -501,7 +501,7 @@ export default function CreatePostPage() {
                         overflow="hidden"
                         border="1px solid"
                         borderColor={item.uploading ? "brand.300" : item.uploaded ? "green.300" : "red.300"}
-                        bg="gray.50"
+                        bg="#050505"
                       >
                         {item.type === "IMAGE" ? (
                           <Image
@@ -573,13 +573,13 @@ export default function CreatePostPage() {
                 type="submit"
                 size="lg"
                 flex={1}
-                bg="linear-gradient(135deg, #c8a24a 0%, #b8943a 100%)"
-                color="white"
+                bg="linear-gradient(135deg, #00FF2A 0%, #00CC22 100%)"
+                color="#000000"
                 fontWeight="700"
                 loading={submitting}
                 loadingText="جاري النشر..."
                 _hover={{
-                  bg: "linear-gradient(135deg, #d4b05a 0%, #c8a24a 100%)",
+                  bg: "linear-gradient(135deg, #4DFF6A 0%, #00FF2A 100%)",
                   transform: "translateY(-2px)",
                 }}
                 transition="all 0.3s ease"

@@ -111,7 +111,7 @@ export default function StudentCourseDetailPage({ params }: PageProps) {
             >
               {course.status === "COMPLETED" ? "مكتمل ✓" : "قيد الدراسة"}
             </Badge>
-            <Badge bg="white" color="primary" px={3} py={1} borderRadius="full">
+            <Badge bg="#00FF2A" color="#000000" px={3} py={1} borderRadius="full">
               {course.level === "BEGINNER"
                 ? "مبتدئ"
                 : course.level === "INTERMEDIATE"
@@ -229,7 +229,7 @@ export default function StudentCourseDetailPage({ params }: PageProps) {
                       </HStack>
                       <HStack gap={2}>
                         {lesson.duration && (
-                          <Badge bg="gray.100" color="gray.600" fontSize="xs">
+                          <Badge bg="#1A1A1A" color="rgba(255,255,255,0.6)" fontSize="xs">
                             {lesson.duration} دقيقة
                           </Badge>
                         )}

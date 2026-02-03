@@ -36,8 +36,8 @@ const plans: PricingPlan[] = [
     ],
     highlighted: true,
     icon: "⭐",
-    gradient: "linear-gradient(135deg, #c8a24a 0%, #ffd700 100%)",
-    accentColor: "#c8a24a",
+    gradient: "linear-gradient(135deg, #00FF2A 0%, #4DFF6A 100%)",
+    accentColor: "#00FF2A",
     track: "academic",
   },
   {
@@ -126,14 +126,14 @@ export default function PricingPage() {
   return (
     <Box
       as="main"
-      bg="primary"
+      bg="#000000"
       minH="100vh"
       position="relative"
       dir="rtl"
       lang="ar"
       overflow="hidden"
     >
-      {/* Background decorations */}
+      {/* Background decorations - Neon Green Orbs */}
       <Box
         position="absolute"
         top="10%"
@@ -141,7 +141,7 @@ export default function PricingPage() {
         width="300px"
         height="300px"
         borderRadius="full"
-        background="radial-gradient(circle, rgba(200, 162, 74, 0.15) 0%, transparent 70%)"
+        background="radial-gradient(circle, rgba(0, 255, 42, 0.15) 0%, transparent 70%)"
         filter="blur(40px)"
         pointerEvents="none"
         css={{
@@ -159,7 +159,7 @@ export default function PricingPage() {
         width="400px"
         height="400px"
         borderRadius="full"
-        background="radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%)"
+        background="radial-gradient(circle, rgba(0, 255, 42, 0.1) 0%, transparent 70%)"
         filter="blur(50px)"
         pointerEvents="none"
         css={{ animation: "floatOrb 10s ease-in-out infinite 2s" }}
@@ -176,29 +176,22 @@ export default function PricingPage() {
               px={5}
               py={2}
               borderRadius="full"
-              bg="whiteAlpha.100"
+              bg="rgba(0, 255, 42, 0.1)"
               backdropFilter="blur(10px)"
-              borderWidth="1px"
-              borderColor="whiteAlpha.200"
+              border="1px solid"
+              borderColor="rgba(0, 255, 42, 0.3)"
             >
               <Text fontSize="xl">💳</Text>
-              <Text color="white" fontWeight="600" fontSize="sm">
+              <Text color="#00FF2A" fontWeight="600" fontSize="sm">
                 خطط الاشتراك
               </Text>
             </Box>
 
             <Heading size={{ base: "xl", md: "2xl" }} color="white" fontWeight="900">
-              <Text
-                as="span"
-                background="linear-gradient(135deg, #ffffff 0%, #c8a24a 50%, #ffffff 100%)"
-                backgroundClip="text"
-                css={{ WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
-              >
-                البرامج التعليمية
-              </Text>
+              البرامج التعليمية
             </Heading>
 
-            <Text color="whiteAlpha.800" fontSize="lg" maxW="700px" lineHeight="1.8">
+            <Text color="gray.400" fontSize="lg" maxW="700px" lineHeight="1.8">
               اختر المسار التعليمي المناسب لمستواك وأهدافك العلمية. نقدم مسارين متكاملين: أكاديمي طويل المدى أو دبلومات مهنية قصيرة.
             </Text>
           </Stack>

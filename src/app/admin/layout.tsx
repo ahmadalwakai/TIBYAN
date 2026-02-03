@@ -40,7 +40,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
   }
 
   return (
-    <Box as="section" bg="background" minH="100vh">
+    <Box as="section" bg="#000000" minH="100vh">
       <Container maxW="6xl" py={{ base: 8, md: 12 }} px={{ base: 6, md: 8 }}>
         <Flex direction={{ base: "column", lg: "row" }} gap={6} align="start">
           <AdminSidebar />

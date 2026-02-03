@@ -229,22 +229,22 @@ function TemplateCard({ template, locale, index, onClick }: TemplateCardProps) {
         as="button"
         w="100%"
         p={4}
-        bg="whiteAlpha.50"
+        bg="#050505"
         borderRadius="xl"
         border="1px solid"
-        borderColor="whiteAlpha.100"
+        borderColor="rgba(0, 255, 42, 0.2)"
         cursor="pointer"
         transition="all 0.2s ease"
         _hover={{
-          bg: "whiteAlpha.100",
-          borderColor: template.color,
-          boxShadow: `0 0 20px ${template.color}20`,
+          bg: "#0A0A0A",
+          borderColor: "#00FF2A",
+          boxShadow: "0 0 20px rgba(0, 255, 42, 0.3)",
         }}
         onClick={onClick}
         textAlign={locale === "ar" ? "right" : "left"}
       >
         <VStack align={locale === "ar" ? "flex-end" : "flex-start"} gap={2}>
-          <Box color={template.color}>{template.icon}</Box>
+          <Box color="#00FF2A">{template.icon}</Box>
           <Text fontSize="sm" fontWeight={600} color={TEXT_PRIMARY}>
             {label}
           </Text>
@@ -290,8 +290,7 @@ export default function ChatTemplates({ locale, onSelectTemplate }: ChatTemplate
             as="h1"
             size="xl"
             fontWeight={700}
-            bgGradient="linear(to-r, yellow.400, orange.400)"
-            bgClip="text"
+            color="#00FF2A"
           >
             {t.title}
           </Heading>

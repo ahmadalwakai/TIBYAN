@@ -33,7 +33,7 @@ export default function CheckoutConfirmationPage() {
             </Stack>
 
             {paymentId && (
-              <PremiumCard p={4} bg="gray.50" w="100%">
+              <PremiumCard p={4} bg="#0A0A0A" w="100%">
                 <Text fontSize="sm" color="muted">
                   رقم الطلب: <Text as="span" fontWeight="700" color="text" dir="ltr">{paymentId}</Text>
                 </Text>

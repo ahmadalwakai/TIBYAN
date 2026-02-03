@@ -394,7 +394,7 @@ export default function ZyphonAIPage() {
                       <Text fontSize="xl">✅</Text>
                       <Text fontWeight="700" fontSize="lg" color="green.700">تم إنشاء المفتاح بنجاح!</Text>
                     </HStack>
-                    <Box bg="white" p={4} borderRadius="md" border="1px solid" borderColor="green.300">
+                    <Box bg="#0A0A0A" p={4} borderRadius="md" border="1px solid" borderColor="#00FF2A">
                       <Text fontWeight="600" mb={2} color="red.600">⚠️ احفظ هذا المفتاح الآن! لن يظهر مرة أخرى.</Text>
                       <Textarea
                         value={createdRawKey}
@@ -402,7 +402,7 @@ export default function ZyphonAIPage() {
                         fontFamily="mono"
                         fontSize="sm"
                         rows={2}
-                        bg="gray.50"
+                        bg="#0A0A0A"
                       />
                     </Box>
                     <HStack gap={3}>

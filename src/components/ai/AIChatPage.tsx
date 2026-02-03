@@ -459,7 +459,7 @@ export default function AIChatPage({ locale }: AIChatPageProps) {
   return (
     <Flex
       h="100vh"
-      bg="gray.900"
+      bg="#000000"
       color="whiteAlpha.900"
       dir={isRTL ? "rtl" : "ltr"}
       flexDirection={isRTL ? "row-reverse" : "row"}
@@ -500,8 +500,8 @@ export default function AIChatPage({ locale }: AIChatPageProps) {
         borderRadius="lg"
         m={2}
         border="1px solid"
-        borderColor="yellow.500"
-        boxShadow="0 0 15px rgba(236, 201, 75, 0.3), 0 0 30px rgba(236, 201, 75, 0.15), inset 0 0 10px rgba(236, 201, 75, 0.05)"
+        borderColor="rgba(0, 255, 42, 0.4)"
+        boxShadow="0 0 30px rgba(0, 255, 42, 0.2), 0 0 60px rgba(0, 255, 42, 0.1), inset 0 0 20px rgba(0, 255, 42, 0.03)"
       >
         {/* Header */}
         <Flex
@@ -509,9 +509,9 @@ export default function AIChatPage({ locale }: AIChatPageProps) {
           justify="space-between"
           px={6}
           py={4}
-          bg="gray.800"
+          bg="#050505"
           borderBottom="1px solid"
-          borderColor="gray.700"
+          borderColor="rgba(0, 255, 42, 0.2)"
         >
           <HStack gap={3}>
             {/* Mobile menu button */}
@@ -529,42 +529,12 @@ export default function AIChatPage({ locale }: AIChatPageProps) {
             <Heading 
               size="md" 
               fontWeight={600} 
-              color="gray.900"
-              bg="linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%)"
+              color="#000000"
+              bg="#00FF2A"
               px={3}
               py={1}
               borderRadius="md"
-              boxShadow="0 2px 8px rgba(255, 215, 0, 0.4)"
-              position="relative"
-              overflow="hidden"
-              _before={{
-                content: '""',
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                background: `
-                  radial-gradient(ellipse 80% 50% at 50% 120%, rgba(255,255,255,0.4) 0%, transparent 50%),
-                  radial-gradient(ellipse 60% 40% at 30% 110%, rgba(255,255,255,0.3) 0%, transparent 50%),
-                  radial-gradient(ellipse 70% 45% at 70% 115%, rgba(255,255,255,0.35) 0%, transparent 50%)
-                `,
-                pointerEvents: "none",
-              }}
-              _after={{
-                content: '""',
-                position: "absolute",
-                top: "50%",
-                left: 0,
-                right: 0,
-                height: "100%",
-                background: `
-                  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20'%3E%3Cpath fill='rgba(255,255,255,0.2)' d='M0 10 Q25 0 50 10 T100 10 V20 H0Z'/%3E%3C/svg%3E")
-                `,
-                backgroundRepeat: "repeat-x",
-                backgroundSize: "100px 20px",
-                pointerEvents: "none",
-              }}
+              boxShadow="0 0 20px rgba(0, 255, 42, 0.5)"
             >
               {activeSession?.title || (isRTL ? "Zyphon مساعد تبيان" : "Zyphon Tibyan AI")}
             </Heading>
@@ -587,7 +557,7 @@ export default function AIChatPage({ locale }: AIChatPageProps) {
             css={{
               "&::-webkit-scrollbar": { width: "6px" },
               "&::-webkit-scrollbar-track": { background: "transparent" },
-              "&::-webkit-scrollbar-thumb": { background: "#4A5568", borderRadius: "4px" },
+              "&::-webkit-scrollbar-thumb": { background: "rgba(0, 255, 42, 0.3)", borderRadius: "4px" },
             }}
           >
             {messages.map((msg) => (
@@ -598,15 +568,17 @@ export default function AIChatPage({ locale }: AIChatPageProps) {
               >
                 <Box
                   maxW="70%"
-                  bg={msg.role === "user" ? "yellow.600" : "gray.700"}
+                  bg={msg.role === "user" ? "#00FF2A" : "#0A0A0A"}
                   px={4}
                   py={3}
                   borderRadius="lg"
+                  border="1px solid"
+                  borderColor={msg.role === "user" ? "transparent" : "rgba(0, 255, 42, 0.3)"}
                 >
                   <Text
                     fontSize="sm"
                     whiteSpace="pre-wrap"
-                    color="white"
+                    color={msg.role === "user" ? "#000000" : "white"}
                   >
                     {msg.content}
                   </Text>
@@ -632,9 +604,9 @@ export default function AIChatPage({ locale }: AIChatPageProps) {
         <Flex
           gap={3}
           p={4}
-          bg="gray.800"
+          bg="#050505"
           borderTop="1px solid"
-          borderColor="gray.700"
+          borderColor="rgba(0, 255, 42, 0.2)"
           align="flex-end"
           w="100%"
           flexShrink={0}
@@ -661,8 +633,8 @@ export default function AIChatPage({ locale }: AIChatPageProps) {
               maxHeight: "100px",
               padding: "10px 12px",
               borderRadius: "8px",
-              border: "none",
-              background: "rgb(55, 65, 81)",
+              border: "1px solid rgba(0, 255, 42, 0.3)",
+              background: "#0A0A0A",
               color: "rgba(255, 255, 255, 0.92)",
               fontFamily: "inherit",
               fontSize: "14px",
@@ -681,8 +653,8 @@ export default function AIChatPage({ locale }: AIChatPageProps) {
           <Button
             variant="ghost"
             size="sm"
-            color={isStreaming ? "red.400" : "white"}
-            _hover={{ bg: isStreaming ? "red.900/20" : "whiteAlpha.200" }}
+            color={isStreaming ? "red.400" : "#00FF2A"}
+            _hover={{ bg: isStreaming ? "red.900/20" : "rgba(0, 255, 42, 0.1)" }}
             onClick={() => (isStreaming ? stopGeneration() : sendMessage(input))}
             p={2}
           >

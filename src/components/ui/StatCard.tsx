@@ -57,19 +57,19 @@ export default function StatCard({
   
   return (
     <Box
-      bg="cardBg"
+      bg="#050505"
       border="1px solid"
-      borderColor="cardBorder"
+      borderColor="rgba(0, 255, 42, 0.2)"
       borderRadius="xl"
-      boxShadow="sm"
+      boxShadow="0 0 15px rgba(0, 255, 42, 0.05)"
       position="relative"
       overflow="hidden"
       p={5}
       transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
       _hover={{
-        boxShadow: "md",
+        boxShadow: "0 0 30px rgba(0, 255, 42, 0.15)",
         transform: "translateY(-2px)",
-        borderColor: "cardHoverBorder",
+        borderColor: "rgba(0, 255, 42, 0.4)",
       }}
       _before={{
         content: '""',
@@ -78,7 +78,8 @@ export default function StatCard({
         top: 0,
         bottom: 0,
         width: "4px",
-        bg: accent,
+        bg: "#00FF2A",
+        boxShadow: "0 0 10px rgba(0, 255, 42, 0.5)",
         transition: "width 0.3s ease",
       }}
       _after={{
@@ -88,7 +89,7 @@ export default function StatCard({
         right: 0,
         width: "60px",
         height: "60px",
-        bg: accent,
+        bg: "#00FF2A",
         opacity: 0.05,
         borderRadius: "0 0 0 100%",
       }}

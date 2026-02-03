@@ -38,13 +38,13 @@ export default function PricingComparisonTable({
   return (
     <Box
       borderRadius="2xl"
-      bg="linear-gradient(135deg, rgba(11, 31, 59, 0.4), rgba(26, 54, 93, 0.3))"
-      backdropFilter="blur(20px)"
+      bg="#050505"
       border="1px solid"
-      borderColor="rgba(200, 162, 74, 0.2)"
+      borderColor="rgba(0, 255, 42, 0.3)"
       p={{ base: 6, md: 10 }}
       position="relative"
       overflow="hidden"
+      boxShadow="0 0 30px rgba(0, 255, 42, 0.1)"
     >
       {/* Background decoration */}
       <Box
@@ -54,7 +54,7 @@ export default function PricingComparisonTable({
         w="400px"
         h="400px"
         borderRadius="full"
-        bg="radial-gradient(circle, rgba(200, 162, 74, 0.08) 0%, transparent 70%)"
+        bg="radial-gradient(circle, rgba(0, 255, 42, 0.08) 0%, transparent 70%)"
         filter="blur(60px)"
         pointerEvents="none"
       />
@@ -64,15 +64,15 @@ export default function PricingComparisonTable({
         <Stack gap={3} textAlign="center">
           <Badge
             alignSelf="center"
-            bg="rgba(200, 162, 74, 0.15)"
-            color="#c8a24a"
+            bg="rgba(0, 255, 42, 0.1)"
+            color="#00FF2A"
             px={4}
             py={2}
             borderRadius="full"
             fontSize="sm"
             fontWeight="700"
             border="1px solid"
-            borderColor="rgba(200, 162, 74, 0.3)"
+            borderColor="rgba(0, 255, 42, 0.3)"
           >
             {track === "academic" ? "🎓 المسار الأكاديمي" : "💼 الدبلومات المهنية"}
           </Badge>
@@ -94,15 +94,15 @@ export default function PricingComparisonTable({
               bg="rgba(255, 255, 255, 0.03)"
               backdropFilter="blur(10px)"
               border="2px solid"
-              borderColor={plan.highlighted ? "#c8a24a" : "rgba(255, 255, 255, 0.1)"}
+              borderColor={plan.highlighted ? "#00FF2A" : "rgba(255, 255, 255, 0.1)"}
               p={6}
               transition="all 0.3s ease"
               _hover={{
                 transform: "translateY(-8px)",
-                borderColor: plan.highlighted ? "#ffd700" : "rgba(200, 162, 74, 0.5)",
+                borderColor: plan.highlighted ? "#4DFF6A" : "rgba(0, 255, 42, 0.5)",
                 boxShadow: plan.highlighted
-                  ? "0 20px 40px rgba(200, 162, 74, 0.3)"
-                  : "0 10px 30px rgba(0, 0, 0, 0.3)",
+                  ? "0 20px 40px rgba(0, 255, 42, 0.3)"
+                  : "0 10px 30px rgba(0, 255, 42, 0.2)",
               }}
             >
               {/* Best Value Badge */}
@@ -111,14 +111,14 @@ export default function PricingComparisonTable({
                   position="absolute"
                   top="-12px"
                   right="20px"
-                  bg="linear-gradient(135deg, #c8a24a, #ffd700)"
+                  bg="linear-gradient(135deg, #00FF2A, #4DFF6A)"
                   color="primary"
                   px={4}
                   py={1}
                   borderRadius="full"
                   fontSize="xs"
                   fontWeight="800"
-                  boxShadow="0 4px 12px rgba(200, 162, 74, 0.4)"
+                  boxShadow="0 4px 12px rgba(0, 255, 42, 0.4)"
                 >
                   ⭐ الأفضل قيمة
                 </Box>
@@ -143,7 +143,7 @@ export default function PricingComparisonTable({
                 {/* Price */}
                 <Box>
                   <Flex align="baseline" gap={1}>
-                    <Text fontSize="4xl" fontWeight="900" color="#c8a24a">
+                    <Text fontSize="4xl" fontWeight="900" color="#00FF2A">
                       €{plan.price}
                     </Text>
                     {plan.priceUnit && (
@@ -173,7 +173,7 @@ export default function PricingComparisonTable({
                 <Stack gap={2} pt={2}>
                   {plan.features.map((feature, idx) => (
                     <Flex key={idx} align="start" gap={2}>
-                      <Text color="#c8a24a">✓</Text>
+                      <Text color="#00FF2A">✓</Text>
                       <Text fontSize="sm" color="gray.200" flex={1}>
                         {feature}
                       </Text>
@@ -185,18 +185,19 @@ export default function PricingComparisonTable({
                 <Button
                   asChild
                   mt={2}
-                  bg={plan.highlighted ? "linear-gradient(135deg, #c8a24a, #d4b05a)" : "rgba(200, 162, 74, 0.15)"}
-                  color={plan.highlighted ? "brand.900" : "white"}
+                  bg={plan.highlighted ? "#00FF2A" : "rgba(0, 255, 42, 0.15)"}
+                  color={plan.highlighted ? "#000000" : "white"}
                   size="lg"
                   fontWeight="800"
                   borderRadius="xl"
                   border={plan.highlighted ? "none" : "1px solid"}
-                  borderColor="rgba(200, 162, 74, 0.4)"
+                  borderColor="rgba(0, 255, 42, 0.4)"
                   _hover={{
                     bg: plan.highlighted
-                      ? "linear-gradient(135deg, #d4b05a, #c8a24a)"
-                      : "rgba(200, 162, 74, 0.25)",
+                      ? "#4DFF6A"
+                      : "rgba(0, 255, 42, 0.25)",
                     transform: "translateY(-2px)",
+                    boxShadow: "0 0 20px rgba(0, 255, 42, 0.4)",
                   }}
                   transition="all 0.2s ease"
                 >
@@ -212,8 +213,8 @@ export default function PricingComparisonTable({
                   size="sm"
                   color="gray.300"
                   _hover={{
-                    color: "#c8a24a",
-                    bg: "rgba(200, 162, 74, 0.1)",
+                    color: "#00FF2A",
+                    bg: "rgba(0, 255, 42, 0.1)",
                   }}
                 >
                   <Link href={`/courses/${plan.slug}`}>

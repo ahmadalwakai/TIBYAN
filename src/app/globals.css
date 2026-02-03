@@ -1,122 +1,121 @@
 :root {
-	color-scheme: light;
+	color-scheme: dark;
 	
-	/* Semantic color tokens - Light mode */
-	--color-bg: #F2F4F7;
-	--color-bg-alt: #EEF2F6;
-	--color-surface: #FFFFFF;
-	--color-surface-hover: #F8FAFC;
+	/* Cyber Neon Theme - Global Dark Mode */
+	/* Primary: Pure Black | Accent: Neon Green #00FF2A */
 	
-	--color-text: #0B1F3A;
-	--color-text-body: #344054;
-	--color-text-muted: #667085;
+	--color-bg: #000000;
+	--color-bg-alt: #050505;
+	--color-surface: #050505;
+	--color-surface-hover: #0A0A0A;
 	
-	--color-border: #D0D5DD;
-	--color-border-accent: #1F4B7A;
+	--color-text: #FFFFFF;
+	--color-text-body: #FFFFFF;
+	--color-text-muted: rgba(255, 255, 255, 0.7);
 	
-	/* Brand colors - adaptive for modes */
-	--color-primary: #0B1F3A;
-	--color-primary-hover: #12335A;
-	--color-primary-text: #FFFFFF;
+	--color-border: rgba(0, 255, 42, 0.2);
+	--color-border-accent: rgba(0, 255, 42, 0.5);
 	
-	--color-secondary: #1F4B7A;
-	--color-secondary-hover: #2A5C8F;
-	--color-secondary-text: #FFFFFF;
+	/* Neon Green as primary accent */
+	--color-primary: #00FF2A;
+	--color-primary-hover: #4DFF6A;
+	--color-primary-text: #000000;
+	
+	--color-secondary: #00DD24;
+	--color-secondary-hover: #00FF2A;
+	--color-secondary-text: #000000;
 	
 	/* Accent color for highlights */
-	--color-accent: #1F4B7A;
-	--color-accent-subtle: #E8F0F8;
+	--color-accent: #00FF2A;
+	--color-accent-subtle: rgba(0, 255, 42, 0.1);
 	
 	/* Interactive states */
-	--color-outline-border: #1F4B7A;
-	--color-outline-text: #0B1F3A;
-	--color-outline-hover-bg: #E8F0F8;
+	--color-outline-border: #00FF2A;
+	--color-outline-text: #FFFFFF;
+	--color-outline-hover-bg: rgba(0, 255, 42, 0.1);
 	
-	--color-ghost-text: #0B1F3A;
-	--color-ghost-hover-bg: #EEF2F6;
+	--color-ghost-text: #FFFFFF;
+	--color-ghost-hover-bg: rgba(0, 255, 42, 0.1);
 	
 	/* Badge/Chip colors */
-	--color-badge-bg: linear-gradient(135deg, #1F4B7A 0%, #2A5C8F 100%);
-	--color-badge-text: #FFFFFF;
+	--color-badge-bg: linear-gradient(135deg, #00FF2A 0%, #4DFF6A 100%);
+	--color-badge-text: #000000;
 	
 	/* Card colors */
-	--color-card-bg: #FFFFFF;
-	--color-card-border: #D0D5DD;
-	--color-card-hover-border: #1F4B7A;
+	--color-card-bg: #050505;
+	--color-card-border: rgba(0, 255, 42, 0.2);
+	--color-card-hover-border: rgba(0, 255, 42, 0.5);
 	
 	/* Status colors */
-	--color-success: #12B76A;
-	--color-warning: #F79009;
+	--color-success: #00FF2A;
+	--color-warning: #FFB800;
 	--color-danger: #F04438;
 	
 	/* Link colors */
-	--color-link: #1F4B7A;
-	--color-link-hover: #12335A;
+	--color-link: #00FF2A;
+	--color-link-hover: #4DFF6A;
 	
 	/* Spinner/Loading */
-	--color-spinner: #1F4B7A;
+	--color-spinner: #00FF2A;
 	
-	/* Avatar fallback */
-	--color-avatar-bg: #1F4B7A;
-	--color-avatar-text: #FFFFFF;
+	/* Avatar fallback - dark bg with neon accent */
+	--color-avatar-bg: #0A0A0A;
+	--color-avatar-text: #00FF2A;
+	
+	/* Neon glow effect */
+	--neon-glow: 0 0 10px rgba(0, 255, 42, 0.5), 0 0 20px rgba(0, 255, 42, 0.3), 0 0 30px rgba(0, 255, 42, 0.1);
+	--neon-glow-strong: 0 0 15px rgba(0, 255, 42, 0.7), 0 0 30px rgba(0, 255, 42, 0.5), 0 0 45px rgba(0, 255, 42, 0.3);
 }
 
+/* Dark class mirrors root - always dark */
 .dark {
 	color-scheme: dark;
 	
-	/* Semantic color tokens - Dark mode */
-	--color-bg: #0A1628;
-	--color-bg-alt: #1A2B45;
-	--color-surface: #0F1D32;
-	--color-surface-hover: #1A2B45;
+	--color-bg: #000000;
+	--color-bg-alt: #050505;
+	--color-surface: #050505;
+	--color-surface-hover: #0A0A0A;
 	
-	--color-text: #F8F9FA;
-	--color-text-body: #E2E8F0;
-	--color-text-muted: #A0AEC0;
+	--color-text: #FFFFFF;
+	--color-text-body: #FFFFFF;
+	--color-text-muted: rgba(255, 255, 255, 0.7);
 	
-	--color-border: #2D3748;
-	--color-border-accent: #4A7DB5;
+	--color-border: rgba(0, 255, 42, 0.2);
+	--color-border-accent: rgba(0, 255, 42, 0.5);
 	
-	/* Brand colors - adaptive for dark mode */
-	--color-primary: #4A7DB5;
-	--color-primary-hover: #7BA3D0;
-	--color-primary-text: #0A1628;
+	--color-primary: #00FF2A;
+	--color-primary-hover: #4DFF6A;
+	--color-primary-text: #000000;
 	
-	--color-secondary: #7BA3D0;
-	--color-secondary-hover: #B8D0EA;
-	--color-secondary-text: #0A1628;
+	--color-secondary: #00DD24;
+	--color-secondary-hover: #00FF2A;
+	--color-secondary-text: #000000;
 	
-	/* Accent color for highlights */
-	--color-accent: #7BA3D0;
-	--color-accent-subtle: #1A2B45;
+	--color-accent: #00FF2A;
+	--color-accent-subtle: rgba(0, 255, 42, 0.1);
 	
-	/* Interactive states */
-	--color-outline-border: #4A7DB5;
-	--color-outline-text: #E8F0F8;
-	--color-outline-hover-bg: #1A2B45;
+	--color-outline-border: #00FF2A;
+	--color-outline-text: #FFFFFF;
+	--color-outline-hover-bg: rgba(0, 255, 42, 0.1);
 	
-	--color-ghost-text: #E8F0F8;
-	--color-ghost-hover-bg: #1A2B45;
+	--color-ghost-text: #FFFFFF;
+	--color-ghost-hover-bg: rgba(0, 255, 42, 0.1);
 	
-	/* Badge/Chip colors */
-	--color-badge-bg: linear-gradient(135deg, #4A7DB5 0%, #7BA3D0 100%);
-	--color-badge-text: #0A1628;
+	--color-badge-bg: linear-gradient(135deg, #00FF2A 0%, #4DFF6A 100%);
+	--color-badge-text: #000000;
 	
-	/* Card colors */
-	--color-card-bg: #0F1D32;
-	--color-card-border: #2D3748;
-	--color-card-hover-border: #4A7DB5;
+	--color-card-bg: #050505;
+	--color-card-border: rgba(0, 255, 42, 0.2);
+	--color-card-hover-border: rgba(0, 255, 42, 0.5);
 	
-	/* Link colors */
-	--color-link: #7BA3D0;
-	--color-link-hover: #B8D0EA;
+	--color-link: #00FF2A;
+	--color-link-hover: #4DFF6A;
 	
-	/* Spinner/Loading */
-	--color-spinner: #7BA3D0;
+	--color-spinner: #00FF2A;
 	
-	/* Avatar fallback */
-	--color-avatar-bg: #4A7DB5;
-	--color-avatar-text: #0A1628;
+	/* Avatar fallback - dark bg with neon accent */
+	--color-avatar-bg: #0A0A0A;
+	--color-avatar-text: #00FF2A;
 }
 
 * {
@@ -128,11 +127,12 @@ body {
 	padding: 0;
 	margin: 0;
 	min-height: 100%;
+	background: #000000;
 }
 
 body {
-	background: var(--color-bg);
-	color: var(--color-text-body);
+	background: #000000;
+	color: #FFFFFF;
 }
 
 /* Wave animation for platform name */
@@ -145,37 +145,38 @@ body {
 	}
 }
 
-/* Global text selection */
+/* Global text selection - Neon green */
 ::selection {
-	background: var(--color-primary);
-	color: var(--color-primary-text);
+	background: #00FF2A;
+	color: #000000;
 }
 
-/* Focus ring for accessibility */
+/* Focus ring for accessibility - Neon green */
 :focus-visible {
-	outline: 2px solid var(--color-outline-border);
+	outline: 2px solid #00FF2A;
 	outline-offset: 2px;
 }
 
-/* Scrollbar styling for dark mode */
-.dark {
-	scrollbar-color: var(--color-border) var(--color-bg);
-}
-
-.dark::-webkit-scrollbar {
+/* Scrollbar styling - Always dark with neon accent */
+::-webkit-scrollbar {
 	width: 8px;
 	height: 8px;
 }
 
-.dark::-webkit-scrollbar-track {
-	background: var(--color-bg);
+::-webkit-scrollbar-track {
+	background: #000000;
 }
 
-.dark::-webkit-scrollbar-thumb {
-	background: var(--color-border);
+::-webkit-scrollbar-thumb {
+	background: rgba(0, 255, 42, 0.3);
 	border-radius: 4px;
 }
 
-.dark::-webkit-scrollbar-thumb:hover {
-	background: var(--color-border-accent);
+::-webkit-scrollbar-thumb:hover {
+	background: rgba(0, 255, 42, 0.5);
+}
+
+/* Firefox scrollbar */
+* {
+	scrollbar-color: rgba(0, 255, 42, 0.3) #000000;
 }

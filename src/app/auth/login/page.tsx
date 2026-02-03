@@ -194,24 +194,24 @@ function LoginForm() {
       as="form"
       onSubmit={handleSubmit}
       dir="rtl"
-      bg="surface"
+      bg="#050505"
       p={{ base: 6, md: 10 }}
       borderRadius="2xl"
-      boxShadow="0 8px 40px rgba(0, 0, 0, 0.1)"
+      boxShadow="0 0 30px rgba(0, 255, 42, 0.2), inset 0 0 30px rgba(0, 255, 42, 0.05)"
       border="1px solid"
-      borderColor="border"
+      borderColor="rgba(0, 255, 42, 0.3)"
     >
       <Stack gap={5}>
         {successMessage && (
           <Box
-            bg="green.50"
+            bg="rgba(0, 255, 42, 0.1)"
             border="1px solid"
-            borderColor="green.200"
+            borderColor="rgba(0, 255, 42, 0.4)"
             borderRadius="md"
             p={3}
             textAlign="center"
           >
-            <Text color="green.700" fontSize="sm" fontWeight="600">
+            <Text color="#00FF2A" fontSize="sm" fontWeight="600">
               {successMessage}
             </Text>
             {portalUrl && (
@@ -223,11 +223,11 @@ function LoginForm() {
                 px={4}
                 py={2}
                 borderRadius="md"
-                bg="green.600"
-                color="white"
+                bg="#00FF2A"
+                color="black"
                 fontSize="sm"
                 fontWeight="600"
-                _hover={{ bg: "green.700" }}
+                _hover={{ bg: "#4DFF6A" }}
               >
                 عرض بوابتي
               </ChakraLink>
@@ -236,13 +236,13 @@ function LoginForm() {
         )}
         {formError && (
           <Box
-            bg="red.50"
+            bg="rgba(255, 50, 50, 0.1)"
             border="1px solid"
-            borderColor="red.200"
+            borderColor="rgba(255, 50, 50, 0.4)"
             borderRadius="md"
             p={3}
           >
-            <Text color="red.700" fontSize="sm">
+            <Text color="#ff5050" fontSize="sm">
               {formError}
             </Text>
           </Box>
@@ -285,7 +285,7 @@ function LoginForm() {
 
         <Box textAlign="right">
           <Link href="/auth/forgot-password">
-            <Text as="span" color="link" fontSize="sm" _hover={{ textDecoration: "underline" }}>
+            <Text as="span" color="#00FF2A" fontSize="sm" _hover={{ textDecoration: "underline" }}>
               نسيت كلمة المرور؟
             </Text>
           </Link>
@@ -294,24 +294,26 @@ function LoginForm() {
         <LoginButton
           type="submit"
           size="lg"
-          bg="linear-gradient(135deg, #c8a24a 0%, #b8943a 100%)"
-          color="white"
+          bg="#00FF2A"
+          color="black"
           fontWeight="700"
           isLoading={loading}
           isDisabled={loading}
           loadingText="جاري تسجيل الدخول..."
+          boxShadow="0 0 20px rgba(0, 255, 42, 0.4)"
           _hover={{
-            bg: "linear-gradient(135deg, #d4b05a 0%, #c8a24a 100%)",
+            bg: "#4DFF6A",
             transform: "translateY(-2px)",
+            boxShadow: "0 0 30px rgba(0, 255, 42, 0.6)",
           }}
           _focus={{
             outline: "2px solid",
-            outlineColor: "gold",
+            outlineColor: "#00FF2A",
             outlineOffset: "2px",
           }}
           _focusVisible={{
             outline: "2px solid",
-            outlineColor: "gold",
+            outlineColor: "#00FF2A",
             outlineOffset: "2px",
           }}
           transition="all 0.3s ease"
@@ -320,10 +322,10 @@ function LoginForm() {
           تسجيل الدخول
         </LoginButton>
 
-        <Text textAlign="center" color="gray.600" fontSize="sm">
+        <Text textAlign="center" color="gray.400" fontSize="sm">
           ليس لديك حساب؟{" "}
           <Link href={`/auth/member-signup?redirect=${encodeURIComponent(isSafeRedirect(redirectTo) ? redirectTo : "/member")}`}>
-            <Text as="span" color="link" fontWeight="600" _hover={{ textDecoration: "underline" }}>
+            <Text as="span" color="#00FF2A" fontWeight="600" _hover={{ textDecoration: "underline" }}>
               إنشاء حساب جديد
             </Text>
           </Link>
@@ -332,7 +334,7 @@ function LoginForm() {
         <Text textAlign="center" color="gray.500" fontSize="xs">
           هل أنت مسؤول؟{" "}
           <Link href="/auth/admin-login">
-            <Text as="span" color="link" _hover={{ textDecoration: "underline" }}>
+            <Text as="span" color="#00FF2A" _hover={{ textDecoration: "underline" }}>
               دخول المسؤول
             </Text>
           </Link>
@@ -346,12 +348,38 @@ export default function LoginPage() {
   return (
     <Box
       minH="100vh"
-      bg="linear-gradient(135deg, #0B1F3A 0%, #1a365d 50%, #0B1F3A 100%)"
+      bg="#000000"
       py={{ base: 10, md: 16 }}
       display="flex"
       alignItems="center"
+      position="relative"
+      overflow="hidden"
     >
-      <Container maxW="md">
+      {/* Background glow effects */}
+      <Box
+        position="absolute"
+        top="20%"
+        left="10%"
+        w="300px"
+        h="300px"
+        borderRadius="full"
+        bg="radial-gradient(circle, rgba(0, 255, 42, 0.1) 0%, transparent 70%)"
+        filter="blur(60px)"
+        pointerEvents="none"
+      />
+      <Box
+        position="absolute"
+        bottom="20%"
+        right="10%"
+        w="250px"
+        h="250px"
+        borderRadius="full"
+        bg="radial-gradient(circle, rgba(0, 255, 42, 0.08) 0%, transparent 70%)"
+        filter="blur(60px)"
+        pointerEvents="none"
+      />
+      
+      <Container maxW="md" position="relative" zIndex={1}>
         <Stack gap={8} align="center">
           {/* Header */}
           <Stack gap={3} textAlign="center">
@@ -363,7 +391,7 @@ export default function LoginPage() {
             >
               مرحباً بعودتك
             </Heading>
-            <Text color="gray.300" fontSize="lg">
+            <Text color="gray.400" fontSize="lg">
               سجّل دخولك للوصول إلى حسابك
             </Text>
           </Stack>
@@ -372,13 +400,15 @@ export default function LoginPage() {
           <Suspense
             fallback={
               <Box
-                bg="white"
+                bg="#050505"
                 p={10}
                 borderRadius="2xl"
                 w="full"
                 textAlign="center"
+                border="1px solid"
+                borderColor="rgba(0, 255, 42, 0.3)"
               >
-                <Text color="gray.500">جاري التحميل...</Text>
+                <Text color="gray.400">جاري التحميل...</Text>
               </Box>
             }
           >
@@ -387,7 +417,7 @@ export default function LoginPage() {
 
           {/* Back link */}
           <Link href="/">
-            <Text color="gray.400" fontSize="sm" _hover={{ color: "white" }}>
+            <Text color="gray.500" fontSize="sm" _hover={{ color: "#00FF2A" }}>
               ← العودة للرئيسية
             </Text>
           </Link>

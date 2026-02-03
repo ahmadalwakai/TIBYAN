@@ -102,10 +102,10 @@ export default function StudentCertificatesPage() {
                   <Text dir="ltr">رقم الشهادة: {cert.certificateNumber}</Text>
                 </VStack>
                 <HStack justify="center" gap={2}>
-                  <Button size="sm" bg="white" color="primary">
+                  <Button size="sm" bg="#00FF2A" color="#000000">
                     📥 تحميل
                   </Button>
-                  <Button size="sm" variant="outline" borderColor="white" color="white">
+                  <Button size="sm" variant="outline" borderColor="#00FF2A" color="#00FF2A">
                     🔗 مشاركة
                   </Button>
                 </HStack>

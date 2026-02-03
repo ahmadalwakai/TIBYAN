@@ -3,7 +3,6 @@
 import { Badge, Box, Button, Stack, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import { useLogout } from "@/lib/auth-client";
-import PremiumCard from "@/components/ui/PremiumCard";
 
 const adminLinks = [
   { label: "نظرة عامة", href: "/admin" },
@@ -30,22 +29,28 @@ export default function AdminSidebar() {
   const handleLogout = useLogout();
 
   return (
-    <PremiumCard
-      variant="bordered"
+    <Box
       p={4}
       w={{ base: "100%", lg: "260px" }}
       position={{ base: "static", lg: "sticky" }}
       top={{ lg: 6 }}
       h="fit-content"
+      bg="#050505"
+      border="1px solid"
+      borderColor="rgba(0, 255, 42, 0.3)"
+      borderRadius="xl"
+      boxShadow="0 0 30px rgba(0, 255, 42, 0.1)"
     >
       <Stack gap={4}>
         <Box>
-          <Text fontWeight="700" mb={2}>
+          <Text fontWeight="700" mb={2} color="white">
             إدارة تبيان
           </Text>
           <Badge
-            bg="primary"
-            color="primaryText"
+            bg="rgba(0, 255, 42, 0.1)"
+            color="#00FF2A"
+            border="1px solid"
+            borderColor="rgba(0, 255, 42, 0.3)"
             px={2}
             py={1}
             borderRadius="full"
@@ -60,13 +65,13 @@ export default function AdminSidebar() {
               <Box
                 px={3}
                 py={2}
-                borderRadius="button"
-                color="muted"
+                borderRadius="lg"
+                color="gray.400"
                 fontWeight="600"
                 transition="all 0.2s"
                 _hover={{
-                  bg: "surfaceHover",
-                  color: "accent",
+                  bg: "rgba(0, 255, 42, 0.1)",
+                  color: "#00FF2A",
                   transform: "translateX(-2px)"
                 }}
                 position="relative"
@@ -78,9 +83,10 @@ export default function AdminSidebar() {
                   transform: "translateY(-50%)",
                   width: "3px",
                   height: 0,
-                  bg: "accent",
+                  bg: "#00FF2A",
                   borderRadius: "full",
-                  transition: "height 0.2s"
+                  transition: "height 0.2s",
+                  boxShadow: "0 0 10px rgba(0, 255, 42, 0.5)"
                 }}
               >
                 {link.label}
@@ -89,16 +95,16 @@ export default function AdminSidebar() {
           ))}
         </Stack>
         
-        <Box pt={4} borderTop="1px solid" borderColor="border">
+        <Box pt={4} borderTop="1px solid" borderColor="rgba(0, 255, 42, 0.2)">
           <Button
             onClick={handleLogout}
             w="100%"
             variant="outline"
-            borderColor="error"
-            color="error"
+            borderColor="red.500"
+            color="red.400"
             _hover={{
               bg: "rgba(220, 38, 38, 0.1)",
-              borderColor: "error"
+              borderColor: "red.400"
             }}
             size="sm"
           >
@@ -106,6 +112,6 @@ export default function AdminSidebar() {
           </Button>
         </Box>
       </Stack>
-    </PremiumCard>
+    </Box>
   );
 }

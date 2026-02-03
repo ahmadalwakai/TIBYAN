@@ -1,21 +1,25 @@
 import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react";
-import { BRAND } from "@/theme/brand";
+import { BRAND, NEON_GREEN } from "@/theme/brand";
 
 const customConfig = defineConfig({
   theme: {
     tokens: {
       colors: {
         brand: {
-          900: { value: BRAND.navy[900] },
-          800: { value: "#0E2847" },
-          700: { value: BRAND.navy[700] },
-          600: { value: "#16406A" },
-          500: { value: BRAND.navy[500] },
-          400: { value: BRAND.navy[400] },
-          300: { value: BRAND.navy[300] },
-          200: { value: BRAND.navy[200] },
-          100: { value: BRAND.navy[100] },
-          50: { value: BRAND.navy[50] },
+          900: { value: "#000000" },
+          800: { value: "#050505" },
+          700: { value: "#0A0A0A" },
+          600: { value: "#0F0F0F" },
+          500: { value: NEON_GREEN },
+          400: { value: "#4DFF6A" },
+          300: { value: "#66FF80" },
+          200: { value: "#99FFB3" },
+          100: { value: "#CCFFE6" },
+          50: { value: "rgba(0, 255, 42, 0.1)" },
+        },
+        neon: {
+          green: { value: NEON_GREEN },
+          glow: { value: "rgba(0, 255, 42, 0.5)" },
         },
       },
       radii: {
@@ -24,14 +28,15 @@ const customConfig = defineConfig({
         badge: { value: "9999px" },
       },
       shadows: {
-        card: { value: "0 1px 3px 0 rgba(11, 31, 58, 0.08), 0 1px 2px 0 rgba(11, 31, 58, 0.04)" },
-        cardHover: { value: "0 10px 15px -3px rgba(11, 31, 58, 0.08), 0 4px 6px -2px rgba(11, 31, 58, 0.04)" },
-        cardLarge: { value: "0 20px 25px -5px rgba(11, 31, 58, 0.1), 0 10px 10px -5px rgba(11, 31, 58, 0.04)" },
-        cardDark: { value: "0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2)" },
-        cardDarkHover: { value: "0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.2)" },
-        subtle: { value: "0 1px 2px 0 rgba(11, 31, 58, 0.05)" },
-        glow: { value: "0 0 0 3px rgba(31, 75, 122, 0.1)" },
-        inner: { value: "inset 0 2px 4px 0 rgba(11, 31, 58, 0.06)" },
+        card: { value: "0 1px 3px 0 rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 255, 42, 0.05)" },
+        cardHover: { value: `0 10px 30px -5px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 255, 42, 0.2)` },
+        cardLarge: { value: `0 20px 40px -10px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 255, 42, 0.15)` },
+        cardDark: { value: "0 1px 3px 0 rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 255, 42, 0.05)" },
+        cardDarkHover: { value: `0 10px 30px -5px rgba(0, 0, 0, 0.5), 0 0 25px rgba(0, 255, 42, 0.25)` },
+        subtle: { value: "0 1px 2px 0 rgba(0, 0, 0, 0.3)" },
+        glow: { value: `0 0 15px rgba(0, 255, 42, 0.4), 0 0 30px rgba(0, 255, 42, 0.2)` },
+        neonGlow: { value: `0 0 10px rgba(0, 255, 42, 0.5), 0 0 20px rgba(0, 255, 42, 0.3), 0 0 30px rgba(0, 255, 42, 0.1)` },
+        inner: { value: "inset 0 2px 4px 0 rgba(0, 0, 0, 0.3)" },
       },
       fonts: {
         heading: {
@@ -73,11 +78,12 @@ const customConfig = defineConfig({
         sectionGap: { value: "4rem" }, // Gap between sections
       },
       gradients: {
-        brand: { value: `linear-gradient(135deg, ${BRAND.navy[900]} 0%, ${BRAND.navy[700]} 100%)` },
-        brandSubtle: { value: `linear-gradient(135deg, ${BRAND.background.subtle} 0%, ${BRAND.background.surface} 100%)` },
-        primary: { value: `linear-gradient(135deg, ${BRAND.navy[900]} 0%, ${BRAND.navy[500]} 100%)` },
-        surface: { value: `linear-gradient(145deg, ${BRAND.background.surface} 0%, ${BRAND.background.subtle} 100%)` },
-        shimmer: { value: "linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)" },
+        brand: { value: `linear-gradient(135deg, #000000 0%, ${NEON_GREEN} 100%)` },
+        brandSubtle: { value: `linear-gradient(135deg, #050505 0%, #0A0A0A 100%)` },
+        primary: { value: `linear-gradient(135deg, ${NEON_GREEN} 0%, #4DFF6A 100%)` },
+        surface: { value: `linear-gradient(145deg, #050505 0%, #0A0A0A 100%)` },
+        shimmer: { value: `linear-gradient(90deg, transparent, rgba(0, 255, 42, 0.3), transparent)` },
+        neon: { value: `linear-gradient(135deg, ${NEON_GREEN} 0%, #4DFF6A 50%, ${NEON_GREEN} 100%)` },
       },
     },
     semanticTokens: {
@@ -133,19 +139,19 @@ const customConfig = defineConfig({
         avatarBg: { value: "var(--color-avatar-bg)" },
         avatarText: { value: "var(--color-avatar-text)" },
         
-        highlight: { value: { base: "#FEF3C7", _dark: "#78350F" } },
+        highlight: { value: { base: "rgba(0, 255, 42, 0.15)", _dark: "rgba(0, 255, 42, 0.15)" } },
       },
     },
   },
   globalCss: {
     body: {
-      bg: "background",
-      color: "textBody",
+      bg: "#000000",
+      color: "#FFFFFF",
       lineHeight: "normal",
       fontSize: "md",
     },
     "h1, h2, h3, h4, h5, h6": {
-      color: "text",
+      color: "#FFFFFF",
       fontWeight: "700",
       lineHeight: "tight",
       letterSpacing: "-0.01em",
@@ -167,11 +173,11 @@ const customConfig = defineConfig({
       marginBottom: "textGap",
     },
     a: {
-      color: "link",
+      color: NEON_GREEN,
       textDecoration: "none",
       transition: "color 0.2s",
       _hover: {
-        color: "linkHover",
+        color: "#4DFF6A",
       },
     },
   },

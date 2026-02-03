@@ -207,8 +207,8 @@ export function TextPanel() {
                 onValueChange={(d) => handleUpdateText({ fontSize: d.value[0] })}
               >
                 <Slider.Control>
-                  <Slider.Track bg="gray.200" h="6px" borderRadius="full">
-                    <Slider.Range bg="brand.500" />
+                  <Slider.Track bg="#1A1A1A" h="6px" borderRadius="full">
+                    <Slider.Range bg="#00FF2A" />
                   </Slider.Track>
                   <Slider.Thumb index={0} bg="brand.500" boxSize="18px" borderRadius="full" />
                 </Slider.Control>
@@ -239,7 +239,7 @@ export function TextPanel() {
 
             {/* Text Alignment */}
             <Box>
-              <Text fontSize="sm" fontWeight="600" mb={2} color="gray.700">
+              <Text fontSize="sm" fontWeight="600" mb={2} color="rgba(255,255,255,0.8)">
                 المحاذاة
               </Text>
               <HStack gap={2}>
@@ -275,7 +275,7 @@ export function TextPanel() {
 
             {/* Text Color */}
             <Box>
-              <Text fontSize="sm" fontWeight="600" mb={2} color="gray.700">
+              <Text fontSize="sm" fontWeight="600" mb={2} color="rgba(255,255,255,0.8)">
                 لون النص
               </Text>
               <HStack gap={2} flexWrap="wrap">
@@ -311,7 +311,7 @@ export function TextPanel() {
             {/* Background Color */}
             <Box>
               <HStack justify="space-between" mb={2}>
-                <Text fontSize="sm" fontWeight="600" color="gray.700">
+                <Text fontSize="sm" fontWeight="600" color="rgba(255,255,255,0.8)">
                   خلفية النص
                 </Text>
                 <Button
@@ -346,10 +346,10 @@ export function TextPanel() {
             {/* Opacity */}
             <Box>
               <HStack justify="space-between" mb={2}>
-                <Text fontSize="sm" fontWeight="600" color="gray.700">
+                <Text fontSize="sm" fontWeight="600" color="rgba(255,255,255,0.8)">
                   الشفافية
                 </Text>
-                <Text fontSize="sm" color="brand.600" fontWeight="600">
+                <Text fontSize="sm" color="#00FF2A" fontWeight="600">
                   {Math.round(activeTextLayer.opacity * 100)}%
                 </Text>
               </HStack>
@@ -361,10 +361,10 @@ export function TextPanel() {
                 onValueChange={(d) => handleUpdateText({ opacity: d.value[0] })}
               >
                 <Slider.Control>
-                  <Slider.Track bg="gray.200" h="6px" borderRadius="full">
-                    <Slider.Range bg="brand.500" />
+                  <Slider.Track bg="#1A1A1A" h="6px" borderRadius="full">
+                    <Slider.Range bg="#00FF2A" />
                   </Slider.Track>
-                  <Slider.Thumb index={0} bg="brand.500" boxSize="18px" borderRadius="full" />
+                  <Slider.Thumb index={0} bg="#00FF2A" boxSize="18px" borderRadius="full" />
                 </Slider.Control>
               </Slider.Root>
             </Box>
@@ -376,12 +376,12 @@ export function TextPanel() {
           <Box
             p={6}
             textAlign="center"
-            bg="gray.50"
+            bg="#0A0A0A"
             borderRadius="xl"
             border="2px dashed"
-            borderColor="gray.200"
+            borderColor="rgba(0, 255, 42, 0.3)"
           >
-            <Text color="gray.500" fontSize="sm">
+            <Text color="rgba(255,255,255,0.7)" fontSize="sm">
               لم يتم إضافة نصوص بعد
             </Text>
             <Text color="gray.400" fontSize="xs" mt={1}>

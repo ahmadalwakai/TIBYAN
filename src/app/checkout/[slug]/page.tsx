@@ -181,7 +181,7 @@ export default function CheckoutPage() {
                           value={formData.customerName}
                           onChange={(e) => setFormData({ ...formData, customerName: e.target.value })}
                           placeholder="أدخل اسمك الكامل"
-                          bg="white"
+                          bg="#0A0A0A"
                           size="lg"
                         />
                       </Box>
@@ -195,7 +195,7 @@ export default function CheckoutPage() {
                           value={formData.customerEmail}
                           onChange={(e) => setFormData({ ...formData, customerEmail: e.target.value })}
                           placeholder="example@email.com"
-                          bg="white"
+                          bg="#0A0A0A"
                           size="lg"
                           dir="ltr"
                         />
@@ -210,7 +210,7 @@ export default function CheckoutPage() {
                           value={formData.customerPhone}
                           onChange={(e) => setFormData({ ...formData, customerPhone: e.target.value })}
                           placeholder="+966 5XX XXX XXXX"
-                          bg="white"
+                          bg="#0A0A0A"
                           size="lg"
                           dir="ltr"
                         />
@@ -221,7 +221,7 @@ export default function CheckoutPage() {
 
                 <PremiumCard p={{ base: 6, md: 8 }}>
                   <Stack gap={5}>
-                    <Heading size="md" color="text">طريقة الدفع �</Heading>
+                    <Heading size="md" color="text">طريقة الدفع 💰</Heading>
                     
                     <Box
                       p={4}
@@ -249,7 +249,7 @@ export default function CheckoutPage() {
                         value={formData.couponCode}
                         onChange={(e) => setFormData({ ...formData, couponCode: e.target.value })}
                         placeholder="أدخل كود الخصم"
-                        bg="white"
+                        bg="#0A0A0A"
                         flex={1}
                       />
                       <Button variant="outline" colorPalette="brand">

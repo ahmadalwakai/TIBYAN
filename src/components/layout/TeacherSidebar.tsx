@@ -41,7 +41,7 @@ export default function TeacherSidebar({ userName }: TeacherSidebarProps) {
         {/* User Info */}
         <VStack gap={3} pb={4} borderBottom="1px solid" borderColor="border">
           <Avatar.Root size="lg">
-            <Avatar.Fallback bg="avatarBg" color="avatarText">
+            <Avatar.Fallback bg="#0A0A0A" color="#00FF2A" border="2px solid" borderColor="#00FF2A">
               {userName.charAt(0)}
             </Avatar.Fallback>
           </Avatar.Root>
@@ -50,8 +50,10 @@ export default function TeacherSidebar({ userName }: TeacherSidebarProps) {
               {userName}
             </Text>
             <Badge
-              bg="primary"
-              color="primaryText"
+              bg="#0A0A0A"
+              color="#00FF2A"
+              border="1px solid"
+              borderColor="#00FF2A"
               px={2}
               py={1}
               borderRadius="full"

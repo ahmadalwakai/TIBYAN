@@ -338,14 +338,14 @@ function MemberSignupForm() {
         <Button
           type="submit"
           size="lg"
-          bg="linear-gradient(135deg, #c8a24a 0%, #b8943a 100%)"
+          bg="linear-gradient(135deg, #00FF2A 0%, #00CC22 100%)"
           color="white"
           fontWeight="700"
           disabled={loading || isSubmittingRef.current}
           loading={loading}
           loadingText="جاري التسجيل..."
           _hover={{
-            bg: "linear-gradient(135deg, #d4b05a 0%, #c8a24a 100%)",
+            bg: "linear-gradient(135deg, #4DFF6A 0%, #00FF2A 100%)",
             transform: "translateY(-2px)",
           }}
           transition="all 0.3s ease"

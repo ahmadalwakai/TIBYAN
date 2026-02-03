@@ -10,9 +10,9 @@ export function ColorModeProvider(props: ThemeProviderProps) {
     <ThemeProvider 
       attribute="class" 
       enableSystem={false}
-      defaultTheme="light"
+      defaultTheme="dark"
       storageKey="theme"
-      forcedTheme={undefined}
+      forcedTheme="dark"
       disableTransitionOnChange={true}
       {...props} 
     />
@@ -20,35 +20,37 @@ export function ColorModeProvider(props: ThemeProviderProps) {
 }
 
 export function useColorMode() {
-  const { resolvedTheme, setTheme } = useTheme();
+  const { setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   
   useEffect(() => {
     // Needed for SSR hydration - legitimate setState in effect
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
-  }, []);
+    // Force dark mode
+    setTheme("dark");
+  }, [setTheme]);
   
   const toggleColorMode = () => {
-    setTheme(resolvedTheme === "light" ? "dark" : "light");
+    // No-op - always dark mode
   };
   
-  // Return default "light" on server/before mount to prevent hydration mismatch
+  // Always return dark mode
   return {
-    colorMode: mounted ? resolvedTheme : "light",
+    colorMode: "dark" as const,
     setColorMode: setTheme,
     toggleColorMode,
   };
 }
 
 export function useColorModeValue<T>(light: T, dark: T) {
-  const { colorMode } = useColorMode();
-  return colorMode === "light" ? light : dark;
+  // Always return dark value
+  return dark;
 }
 
 export function ColorModeIcon() {
-  const { colorMode } = useColorMode();
-  return colorMode === "light" ? "🌙" : "☀️";
+  // Always show moon icon (dark mode)
+  return "🌙";
 }
 
 interface ColorModeButtonProps {
@@ -56,14 +58,14 @@ interface ColorModeButtonProps {
 }
 
 export const ColorModeButton = ({ size = "sm" }: ColorModeButtonProps) => {
-  const { toggleColorMode } = useColorMode();
+  // Hidden - no color mode toggle in cyber neon theme
   return (
     <ClientOnly fallback={<Skeleton boxSize="8" />}>
       <IconButton
-        onClick={toggleColorMode}
         variant="ghost"
-        aria-label="Toggle color mode"
+        aria-label="Dark mode active"
         size={size}
+        display="none"
       >
         <ColorModeIcon />
       </IconButton>

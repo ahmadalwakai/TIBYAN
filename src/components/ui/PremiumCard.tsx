@@ -17,38 +17,38 @@ export default function PremiumCard({
 }: PremiumCardProps) {
   const variantStyles = {
     default: {
-      bg: "cardBg",
+      bg: "#050505",
       border: "1px solid",
-      borderColor: "cardBorder",
-      borderRadius: "card",
-      boxShadow: "card",
+      borderColor: "rgba(0, 255, 42, 0.2)",
+      borderRadius: "xl",
+      boxShadow: "0 0 20px rgba(0, 255, 42, 0.05)",
       transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
       _hover: hoverEffect
         ? {
-            boxShadow: "cardHover",
+            boxShadow: "0 0 30px rgba(0, 255, 42, 0.15)",
             transform: "translateY(-4px)",
-            borderColor: "cardHoverBorder",
+            borderColor: "rgba(0, 255, 42, 0.4)",
           }
         : {},
     },
     elevated: {
-      bg: "cardBg",
-      borderRadius: "card",
-      boxShadow: "cardLarge",
+      bg: "#050505",
+      borderRadius: "xl",
+      boxShadow: "0 10px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 255, 42, 0.1)",
       transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
       _hover: hoverEffect
         ? {
             transform: "translateY(-6px)",
-            boxShadow: "0 30px 60px -15px rgba(0, 0, 0, 0.2)",
+            boxShadow: "0 20px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 255, 42, 0.2)",
           }
         : {},
     },
     gradient: {
-      bg: "cardBg",
-      border: "2px solid",
-      borderColor: "primary",
-      borderRadius: "card",
-      boxShadow: "card",
+      bg: "#050505",
+      border: "1px solid",
+      borderColor: "#00FF2A",
+      borderRadius: "xl",
+      boxShadow: "0 0 30px rgba(0, 255, 42, 0.2)",
       position: "relative",
       overflow: "hidden",
       transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
@@ -59,43 +59,44 @@ export default function PremiumCard({
         left: 0,
         right: 0,
         height: "4px",
-        bg: "primary",
+        bg: "#00FF2A",
+        boxShadow: "0 0 20px rgba(0, 255, 42, 0.5)",
       },
       _hover: hoverEffect
         ? {
             transform: "translateY(-4px)",
-            boxShadow: "0 20px 40px -10px rgba(200, 162, 74, 0.3)",
+            boxShadow: "0 0 40px rgba(0, 255, 42, 0.3)",
           }
         : {},
     },
     bordered: {
-      bg: "cardBg",
-      border: "2px solid",
-      borderColor: "cardBorder",
-      borderRadius: "card",
-      boxShadow: "subtle",
+      bg: "#050505",
+      border: "1px solid",
+      borderColor: "rgba(0, 255, 42, 0.3)",
+      borderRadius: "xl",
+      boxShadow: "0 0 15px rgba(0, 255, 42, 0.05)",
       transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
       _hover: hoverEffect
         ? {
-            borderColor: "cardHoverBorder",
-            boxShadow: "cardHover",
-            bg: "surfaceHover",
+            borderColor: "#00FF2A",
+            boxShadow: "0 0 30px rgba(0, 255, 42, 0.2)",
+            bg: "#0A0A0A",
           }
         : {},
     },
     glass: {
-      bg: "surface",
+      bg: "rgba(5, 5, 5, 0.9)",
       backdropFilter: "blur(12px)",
       border: "1px solid",
-      borderColor: "border",
-      borderRadius: "card",
-      boxShadow: "card",
+      borderColor: "rgba(0, 255, 42, 0.2)",
+      borderRadius: "xl",
+      boxShadow: "0 0 20px rgba(0, 255, 42, 0.05)",
       transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
       opacity: 0.95,
       _hover: hoverEffect
         ? {
             opacity: 1,
-            boxShadow: "cardHover",
+            boxShadow: "0 0 30px rgba(0, 255, 42, 0.15)",
           }
         : {},
     },

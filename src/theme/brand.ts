@@ -1,107 +1,113 @@
 /**
- * Brand Color Palette - Premium Academy Design
+ * Brand Color Palette - Dark Cyber Neon Design
  * Single source of truth for all brand colors
- * Elevated visual identity with gold accents for authority
+ * Pure black background with neon green (#00FF2A) accents
  */
+
+// Primary neon color
+export const NEON_GREEN = "#00FF2A";
+export const NEON_GREEN_RGB = "0, 255, 42";
 
 export const BRAND = {
   background: {
-    base: "#F2F4F7",
-    surface: "#FFFFFF",
-    subtle: "#EEF2F6",
+    base: "#000000",       // Pure black
+    surface: "#050505",    // Near-black for cards
+    subtle: "#0A0A0A",     // Slightly lighter black
   },
   car: {
-    name: "Pearl White",
-    hex: "#F8F8F6",
-    trim: "#0B1F3A",
+    name: "Cyber Black",
+    hex: "#000000",
+    trim: NEON_GREEN,
   },
+  // Neon scale - replacing navy
   navy: {
-    900: "#0B1F3A",
-    700: "#12335A",
-    500: "#1F4B7A",
-    400: "#2A5C8F",
-    300: "#4A7DB5",
-    200: "#7BA3D0",
-    100: "#B8D0EA",
-    50: "#E8F0F8",
+    900: "#000000",        // Pure black
+    700: "#050505",        // Near-black
+    500: "#0A0A0A",        // Dark surface
+    400: "#0F0F0F",        // Lighter surface
+    300: "#1A1A1A",        // Muted surface
+    200: "#252525",        // Light surface
+    100: "#333333",        // Border-like
+    50: "#404040",         // Lightest
   },
-  // Premium accent colors for authority and prestige
+  // Neon green accent palette
   gold: {
-    50: "#FEF9E7",
-    100: "#FCF3CF",
-    200: "#F9E79F",
-    300: "#F7DC6F",
-    400: "#F4D03F",
-    500: "#D4AF37", // Primary gold - prestige
-    600: "#C8A24A", // Existing accent
-    700: "#B8860B", // Dark gold
-    800: "#9A7209",
-    900: "#7C5B07",
+    50: "rgba(0, 255, 42, 0.05)",
+    100: "rgba(0, 255, 42, 0.1)",
+    200: "rgba(0, 255, 42, 0.2)",
+    300: "rgba(0, 255, 42, 0.35)",
+    400: "#00DD24",        // Slightly darker neon
+    500: NEON_GREEN,       // Primary neon green
+    600: "#00FF2A",        // Same as primary
+    700: "#00CC22",        // Darker neon
+    800: "#009919",        // Even darker
+    900: "#006611",        // Darkest
   },
+  // Keep burgundy for errors only
   burgundy: {
-    50: "#FDF2F2",
-    100: "#FAE5E5",
-    200: "#F5CCCC",
-    300: "#EFA3A3",
-    400: "#E67373",
-    500: "#800020", // Primary burgundy - authority
-    600: "#6B001A",
-    700: "#560014",
-    800: "#40000F",
-    900: "#2B000A",
+    50: "rgba(240, 68, 56, 0.05)",
+    100: "rgba(240, 68, 56, 0.1)",
+    200: "rgba(240, 68, 56, 0.2)",
+    300: "rgba(240, 68, 56, 0.3)",
+    400: "#F04438",
+    500: "#F04438",
+    600: "#D93A30",
+    700: "#C03028",
+    800: "#A02620",
+    900: "#801C18",
   },
   text: {
-    title: "#0B1F3A",
-    body: "#344054",
-    muted: "#667085",
+    title: "#FFFFFF",
+    body: "#FFFFFF",
+    muted: "rgba(255, 255, 255, 0.7)",
     onNavy: "#FFFFFF",
-    gold: "#D4AF37",
+    gold: NEON_GREEN,
   },
   border: {
-    base: "#D0D5DD",
-    gold: "#D4AF37",
+    base: "rgba(0, 255, 42, 0.2)",
+    gold: "rgba(0, 255, 42, 0.35)",
   },
   state: {
-    success: "#12B76A",
-    warning: "#F79009",
-    danger: "#F04438",
+    success: "#00FF2A",    // Neon green for success
+    warning: "#FFB800",    // Amber warning
+    danger: "#F04438",     // Red stays red
   },
-  link: "#0B1F3A",
-  // Gradient definitions for premium effects
+  link: NEON_GREEN,
+  // Gradient definitions for neon effects
   gradients: {
-    goldShimmer: "linear-gradient(135deg, #D4AF37 0%, #F7DC6F 50%, #D4AF37 100%)",
-    navyGold: "linear-gradient(135deg, #0B1F3A 0%, #D4AF37 100%)",
-    premiumCard: "linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(11, 31, 58, 0.05) 100%)",
-    authorityBadge: "linear-gradient(135deg, #0B1F3A 0%, #1F4B7A 50%, #D4AF37 100%)",
+    goldShimmer: `linear-gradient(135deg, ${NEON_GREEN} 0%, #4DFF6A 50%, ${NEON_GREEN} 100%)`,
+    navyGold: `linear-gradient(135deg, #000000 0%, ${NEON_GREEN} 100%)`,
+    premiumCard: `linear-gradient(135deg, rgba(0, 255, 42, 0.05) 0%, rgba(0, 0, 0, 0.8) 100%)`,
+    authorityBadge: `linear-gradient(135deg, #000000 0%, #0A0A0A 50%, ${NEON_GREEN} 100%)`,
+    neonGlow: `linear-gradient(135deg, ${NEON_GREEN}, #4DFF6A, ${NEON_GREEN})`,
   },
 } as const;
 
-// Dark mode variants with WCAG AA compliant contrast ratios (>= 4.5:1)
+// Dark mode variants - same as light mode (always dark)
 export const BRAND_DARK = {
   background: {
-    base: "#0A1628",
-    surface: "#0F1D32",
-    subtle: "#1A2B45",
+    base: "#000000",
+    surface: "#050505",
+    subtle: "#0A0A0A",
   },
   navy: {
-    // Inverted scale for dark mode - lighter values for visibility
-    900: "#E8F0F8",
-    700: "#B8D0EA",
-    500: "#7BA3D0",
-    400: "#4A7DB5",
-    300: "#2A5C8F",
-    200: "#1F4B7A",
-    100: "#12335A",
-    50: "#0F1D32",
+    900: "#000000",
+    700: "#050505",
+    500: "#0A0A0A",
+    400: "#0F0F0F",
+    300: "#1A1A1A",
+    200: "#252525",
+    100: "#333333",
+    50: "#404040",
   },
   text: {
-    title: "#F8F9FA",      // High contrast white
-    body: "#E2E8F0",       // Readable light gray
-    muted: "#A0AEC0",      // Visible muted
+    title: "#FFFFFF",
+    body: "#FFFFFF",
+    muted: "rgba(255, 255, 255, 0.7)",
     onNavy: "#FFFFFF",
   },
   border: {
-    base: "#2D3748",       // Visible border in dark mode
-    accent: "#4A7DB5",     // Accent border for dark mode
+    base: "rgba(0, 255, 42, 0.2)",
+    accent: "rgba(0, 255, 42, 0.5)",
   },
 } as const;

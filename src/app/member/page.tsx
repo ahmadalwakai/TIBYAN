@@ -240,7 +240,7 @@ export default function MemberPortalPage() {
               w={{ base: "80px", md: "100px" }}
               h={{ base: "80px", md: "100px" }}
               borderRadius="full"
-              bg="linear-gradient(135deg, #c8a24a, #ffd700)"
+              bg="linear-gradient(135deg, #00FF2A, #4DFF6A)"
               display="flex"
               alignItems="center"
               justifyContent="center"
@@ -285,7 +285,7 @@ export default function MemberPortalPage() {
 
             <Button
               asChild
-              bg="linear-gradient(135deg, #c8a24a, #ffd700)"
+              bg="linear-gradient(135deg, #00FF2A, #4DFF6A)"
               color="primary"
               fontWeight="700"
               px={6}
@@ -470,7 +470,7 @@ export default function MemberPortalPage() {
                 
                 <Box
                   p={4}
-                  bg="gray.50"
+                  bg="#0A0A0A"
                   borderRadius="lg"
                   border="1px solid"
                   borderColor="gray.200"

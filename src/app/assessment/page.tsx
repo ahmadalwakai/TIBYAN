@@ -126,7 +126,7 @@ export default function AssessmentPage() {
         match: 95,
         reasonKey: "preparatory",
         icon: "🎓",
-        gradient: "linear-gradient(135deg, #D4AF37, #F7DC6F)",
+        gradient: "linear-gradient(135deg, #00FF2A, #F7DC6F)",
       });
       recommendations.push({
         program: t("programs.arabicReading.title"),
@@ -148,7 +148,7 @@ export default function AssessmentPage() {
         match: 70,
         reasonKey: "preparatory",
         icon: "🎓",
-        gradient: "linear-gradient(135deg, #D4AF37, #F7DC6F)",
+        gradient: "linear-gradient(135deg, #00FF2A, #F7DC6F)",
       });
     } else {
       recommendations.push({
@@ -198,7 +198,7 @@ export default function AssessmentPage() {
                 🎉
               </Box>
               <Badge
-                bg="linear-gradient(135deg, #D4AF37, #F7DC6F)"
+                bg="linear-gradient(135deg, #00FF2A, #F7DC6F)"
                 color="#0b1f3b"
                 px={6}
                 py={2}
@@ -211,7 +211,7 @@ export default function AssessmentPage() {
               <Heading
                 size={{ base: "lg", md: "xl" }}
                 css={{
-                  background: "linear-gradient(135deg, #0b1f3b 0%, #D4AF37 50%, #0b1f3b 100%)",
+                  background: "linear-gradient(135deg, #0b1f3b 0%, #00FF2A 50%, #0b1f3b 100%)",
                   backgroundSize: "200% auto",
                   backgroundClip: "text",
                   WebkitBackgroundClip: "text",
@@ -358,7 +358,7 @@ export default function AssessmentPage() {
               </Button>
               <Button
                 asChild
-                bg="linear-gradient(135deg, #D4AF37, #F7DC6F)"
+                bg="linear-gradient(135deg, #00FF2A, #F7DC6F)"
                 color="#0b1f3b"
                 size="lg"
                 fontWeight="800"
@@ -396,7 +396,7 @@ export default function AssessmentPage() {
           {/* Header */}
           <Stack gap={4} align="center" textAlign="center">
             <Badge
-              bg="linear-gradient(135deg, #D4AF37, #F7DC6F)"
+              bg="linear-gradient(135deg, #00FF2A, #F7DC6F)"
               color="#0b1f3b"
               px={6}
               py={2}
@@ -409,7 +409,7 @@ export default function AssessmentPage() {
             <Heading
               size={{ base: "md", md: "lg" }}
               css={{
-                background: "linear-gradient(135deg, #0b1f3b 0%, #D4AF37 100%)",
+                background: "linear-gradient(135deg, #0b1f3b 0%, #00FF2A 100%)",
                 backgroundClip: "text",
                 WebkitBackgroundClip: "text",
                 color: "transparent",
@@ -436,7 +436,7 @@ export default function AssessmentPage() {
               <Progress.Track bg="backgroundAlt" borderRadius="full">
                 <Progress.Range
                   css={{
-                    background: "linear-gradient(135deg, #D4AF37, #F7DC6F)",
+                    background: "linear-gradient(135deg, #00FF2A, #F7DC6F)",
                     borderRadius: "full",
                     transition: "width 0.4s ease",
                   }}
@@ -516,7 +516,7 @@ export default function AssessmentPage() {
                             w="8px"
                             h="8px"
                             borderRadius="full"
-                            bg="white"
+                            bg="#0A0A0A"
                           />
                         )}
                       </Box>

@@ -420,7 +420,7 @@ export function PostEditor({ onExport, onCancel, initialMedia }: PostEditorProps
             <Box
               position="sticky"
               top={0}
-              bg="white"
+              bg="#0A0A0A"
               pt={2}
               pb={1}
               borderTopRadius="2xl"
@@ -429,7 +429,7 @@ export function PostEditor({ onExport, onCancel, initialMedia }: PostEditorProps
               <Box
                 w="40px"
                 h="4px"
-                bg="gray.300"
+                bg="rgba(0, 255, 42, 0.3)"
                 borderRadius="full"
                 mx="auto"
                 cursor="pointer"

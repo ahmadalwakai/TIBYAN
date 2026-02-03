@@ -86,33 +86,210 @@ export default function Home() {
           "0%, 100%": { opacity: 1, transform: "scale(1)" },
           "50%": { opacity: 0.5, transform: "scale(1.2)" },
         },
+        "@keyframes meshGradient": {
+          "0%": { backgroundPosition: "0% 0%" },
+          "25%": { backgroundPosition: "100% 0%" },
+          "50%": { backgroundPosition: "100% 100%" },
+          "75%": { backgroundPosition: "0% 100%" },
+          "100%": { backgroundPosition: "0% 0%" },
+        },
+        "@keyframes aurora": {
+          "0%": { transform: "rotate(0deg) scale(1)" },
+          "33%": { transform: "rotate(120deg) scale(1.1)" },
+          "66%": { transform: "rotate(240deg) scale(0.9)" },
+          "100%": { transform: "rotate(360deg) scale(1)" },
+        },
+        "@keyframes pulse": {
+          "0%, 100%": { opacity: 0.4, transform: "scale(1)" },
+          "50%": { opacity: 0.8, transform: "scale(1.05)" },
+        },
+        "@keyframes moveRight": {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(100vw)" },
+        },
+        "@keyframes moveUp": {
+          "0%": { transform: "translateY(100%)" },
+          "100%": { transform: "translateY(-100vh)" },
+        },
+        "@keyframes twinkle": {
+          "0%, 100%": { opacity: 0.2, transform: "scale(0.8)" },
+          "50%": { opacity: 1, transform: "scale(1.2)" },
+        },
+        "@keyframes waveMove": {
+          "0%": { transform: "translateX(0) translateY(0)" },
+          "50%": { transform: "translateX(-25px) translateY(-15px)" },
+          "100%": { transform: "translateX(0) translateY(0)" },
+        },
       }}
     >
-      {/* Hero Background Decorations */}
+      {/* === ANIMATED MESH GRADIENT BACKGROUND === */}
       <Box
-        position="absolute"
-        top="5%"
-        right="10%"
-        w="300px"
-        h="300px"
-        borderRadius="full"
-        bg="radial-gradient(circle, rgba(200, 162, 74, 0.08) 0%, transparent 70%)"
-        filter="blur(40px)"
+        position="fixed"
+        inset={0}
+        zIndex={0}
+        overflow="hidden"
         pointerEvents="none"
-        css={{ animation: "heroFloat 8s ease-in-out infinite" }}
-      />
-      <Box
-        position="absolute"
-        top="20%"
-        left="5%"
-        w="200px"
-        h="200px"
-        borderRadius="full"
-        bg="radial-gradient(circle, rgba(0, 212, 255, 0.06) 0%, transparent 70%)"
-        filter="blur(30px)"
-        pointerEvents="none"
-        css={{ animation: "heroFloat 10s ease-in-out infinite reverse" }}
-      />
+      >
+        {/* Base animated gradient */}
+        <Box
+          position="absolute"
+          inset={0}
+          bg="linear-gradient(125deg, #000000 0%, #000000 15%, #050505 30%, #030303 45%, #000000 60%, #050505 75%, #000000 100%)"
+          backgroundSize="400% 400%"
+          css={{ animation: "meshGradient 25s ease infinite" }}
+        />
+        
+        {/* Aurora effect layer 1 - Gold */}
+        <Box
+          position="absolute"
+          top="-50%"
+          left="-50%"
+          w="200%"
+          h="200%"
+          bg="conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(200, 162, 74, 0.08) 60deg, transparent 120deg, rgba(200, 162, 74, 0.05) 180deg, transparent 240deg, rgba(200, 162, 74, 0.08) 300deg, transparent 360deg)"
+          css={{ animation: "aurora 30s linear infinite" }}
+        />
+        
+        {/* Aurora effect layer 2 - Cyan */}
+        <Box
+          position="absolute"
+          top="-50%"
+          left="-50%"
+          w="200%"
+          h="200%"
+          bg="conic-gradient(from 180deg at 50% 50%, transparent 0deg, rgba(0, 212, 255, 0.06) 45deg, transparent 90deg, rgba(0, 153, 255, 0.04) 135deg, transparent 180deg, rgba(0, 212, 255, 0.06) 225deg, transparent 270deg, rgba(0, 153, 255, 0.04) 315deg, transparent 360deg)"
+          css={{ animation: "aurora 40s linear infinite reverse" }}
+        />
+        
+        {/* Aurora effect layer 3 - Purple accent */}
+        <Box
+          position="absolute"
+          top="-50%"
+          left="-50%"
+          w="200%"
+          h="200%"
+          bg="conic-gradient(from 90deg at 50% 50%, transparent 0deg, rgba(139, 92, 246, 0.04) 30deg, transparent 60deg, rgba(168, 85, 247, 0.03) 150deg, transparent 180deg, rgba(139, 92, 246, 0.04) 210deg, transparent 240deg, rgba(168, 85, 247, 0.03) 330deg, transparent 360deg)"
+          css={{ animation: "aurora 35s linear infinite" }}
+        />
+
+        {/* Floating gradient orbs */}
+        <Box
+          position="absolute"
+          top="10%"
+          right="10%"
+          w={{ base: "300px", md: "500px" }}
+          h={{ base: "300px", md: "500px" }}
+          borderRadius="full"
+          bg="radial-gradient(circle, rgba(200, 162, 74, 0.15) 0%, rgba(200, 162, 74, 0.05) 40%, transparent 70%)"
+          filter="blur(60px)"
+          css={{ animation: "heroFloat 15s ease-in-out infinite, pulse 8s ease-in-out infinite" }}
+        />
+        <Box
+          position="absolute"
+          top="50%"
+          left="5%"
+          w={{ base: "250px", md: "400px" }}
+          h={{ base: "250px", md: "400px" }}
+          borderRadius="full"
+          bg="radial-gradient(circle, rgba(0, 212, 255, 0.12) 0%, rgba(0, 153, 255, 0.05) 40%, transparent 70%)"
+          filter="blur(50px)"
+          css={{ animation: "heroFloat 18s ease-in-out infinite reverse, pulse 10s ease-in-out infinite 2s" }}
+        />
+        <Box
+          position="absolute"
+          bottom="20%"
+          right="30%"
+          w={{ base: "200px", md: "350px" }}
+          h={{ base: "200px", md: "350px" }}
+          borderRadius="full"
+          bg="radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, rgba(168, 85, 247, 0.04) 40%, transparent 70%)"
+          filter="blur(45px)"
+          css={{ animation: "heroFloat 20s ease-in-out infinite 3s, pulse 12s ease-in-out infinite" }}
+        />
+        <Box
+          position="absolute"
+          top="30%"
+          left="40%"
+          w={{ base: "180px", md: "300px" }}
+          h={{ base: "180px", md: "300px" }}
+          borderRadius="full"
+          bg="radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, rgba(5, 150, 105, 0.03) 40%, transparent 70%)"
+          filter="blur(40px)"
+          css={{ animation: "heroFloat 22s ease-in-out infinite reverse 1s, pulse 9s ease-in-out infinite 4s" }}
+        />
+
+        {/* Animated wave lines */}
+        <Box position="absolute" inset={0} overflow="hidden" opacity={0.3}>
+          {[...Array(5)].map((_, i) => (
+            <Box
+              key={i}
+              position="absolute"
+              left={0}
+              right={0}
+              h="2px"
+              top={`${20 + i * 15}%`}
+              bg={`linear-gradient(90deg, transparent, ${i % 2 === 0 ? 'rgba(200, 162, 74, 0.3)' : 'rgba(0, 212, 255, 0.3)'}, transparent)`}
+              css={{ 
+                animation: `waveMove ${6 + i * 2}s ease-in-out infinite`,
+                animationDelay: `${i * 0.5}s`,
+              }}
+            />
+          ))}
+        </Box>
+
+        {/* Particle stars */}
+        <Box position="absolute" inset={0} overflow="hidden">
+          {[...Array(20)].map((_, i) => (
+            <Box
+              key={i}
+              position="absolute"
+              w={`${2 + (i % 3)}px`}
+              h={`${2 + (i % 3)}px`}
+              borderRadius="full"
+              bg={i % 3 === 0 ? "rgba(200, 162, 74, 0.8)" : i % 3 === 1 ? "rgba(0, 212, 255, 0.8)" : "rgba(255, 255, 255, 0.6)"}
+              top={`${(i * 17) % 100}%`}
+              left={`${(i * 23) % 100}%`}
+              boxShadow={`0 0 ${4 + (i % 3) * 2}px ${i % 3 === 0 ? 'rgba(200, 162, 74, 0.5)' : i % 3 === 1 ? 'rgba(0, 212, 255, 0.5)' : 'rgba(255, 255, 255, 0.3)'}`}
+              css={{
+                animation: `twinkle ${3 + (i % 4)}s ease-in-out infinite`,
+                animationDelay: `${(i * 0.3) % 5}s`,
+              }}
+            />
+          ))}
+        </Box>
+
+        {/* Moving light streaks */}
+        <Box
+          position="absolute"
+          top="20%"
+          left={0}
+          w="150px"
+          h="2px"
+          bg="linear-gradient(90deg, transparent, rgba(200, 162, 74, 0.6), rgba(255, 215, 0, 0.8), rgba(200, 162, 74, 0.6), transparent)"
+          filter="blur(1px)"
+          css={{ animation: "moveRight 8s linear infinite" }}
+        />
+        <Box
+          position="absolute"
+          top="60%"
+          left={0}
+          w="100px"
+          h="1px"
+          bg="linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.5), rgba(0, 153, 255, 0.7), rgba(0, 212, 255, 0.5), transparent)"
+          filter="blur(1px)"
+          css={{ animation: "moveRight 12s linear infinite 3s" }}
+        />
+        <Box
+          position="absolute"
+          top="80%"
+          left={0}
+          w="120px"
+          h="1px"
+          bg="linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.5), rgba(168, 85, 247, 0.7), rgba(139, 92, 246, 0.5), transparent)"
+          filter="blur(1px)"
+          css={{ animation: "moveRight 10s linear infinite 6s" }}
+        />
+      </Box>
 
       {/* Hero Section with Video Background */}
       <Box 
@@ -141,6 +318,7 @@ export default function Home() {
             objectFit: "cover",
             zIndex: 0,
             pointerEvents: "none",
+            opacity: 0.4,
           }}
         >
           <source src="/videos/hero.mp4" type="video/mp4" />
@@ -148,19 +326,7 @@ export default function Home() {
           <track kind="captions" src="/videos/hero-captions.vtt" srcLang="ar" label="Arabic" default />
         </video>
 
-        {/* Fallback Background (shows if video fails) */}
-        <Box
-          position="absolute"
-          inset={0}
-          zIndex={-1}
-          bg="linear-gradient(135deg, #0a1628 0%, #0b1f3b 25%, #1a365d 50%, #0b1f3b 75%, #0a1628 100%)"
-          backgroundSize="400% 400%"
-          css={{
-            animation: "gradientShift 20s ease infinite",
-          }}
-        />
-
-        {/* Animated Particles/Stars Background */}
+        {/* Enhanced animated overlay */}
         <Box
           position="absolute"
           inset={0}
@@ -168,39 +334,50 @@ export default function Home() {
           overflow="hidden"
           pointerEvents="none"
         >
-          {/* Floating orbs */}
+          {/* Floating orbs with more vibrant colors */}
           <Box
             position="absolute"
             top="10%"
             right="15%"
-            w={{ base: "150px", md: "250px" }}
-            h={{ base: "150px", md: "250px" }}
+            w={{ base: "150px", md: "300px" }}
+            h={{ base: "150px", md: "300px" }}
             borderRadius="full"
-            bg="radial-gradient(circle, rgba(200, 162, 74, 0.15) 0%, transparent 70%)"
+            bg="radial-gradient(circle, rgba(200, 162, 74, 0.25) 0%, rgba(255, 215, 0, 0.1) 40%, transparent 70%)"
             filter="blur(40px)"
-            css={{ animation: "heroFloat 8s ease-in-out infinite" }}
+            css={{ animation: "heroFloat 8s ease-in-out infinite, pulse 6s ease-in-out infinite" }}
           />
           <Box
             position="absolute"
             top="60%"
             left="10%"
-            w={{ base: "100px", md: "200px" }}
-            h={{ base: "100px", md: "200px" }}
+            w={{ base: "100px", md: "250px" }}
+            h={{ base: "100px", md: "250px" }}
             borderRadius="full"
-            bg="radial-gradient(circle, rgba(0, 212, 255, 0.12) 0%, transparent 70%)"
+            bg="radial-gradient(circle, rgba(0, 212, 255, 0.2) 0%, rgba(0, 153, 255, 0.08) 40%, transparent 70%)"
             filter="blur(35px)"
-            css={{ animation: "heroFloat 12s ease-in-out infinite reverse" }}
+            css={{ animation: "heroFloat 12s ease-in-out infinite reverse, pulse 8s ease-in-out infinite 2s" }}
           />
           <Box
             position="absolute"
             bottom="20%"
             right="25%"
-            w={{ base: "80px", md: "150px" }}
-            h={{ base: "80px", md: "150px" }}
+            w={{ base: "80px", md: "200px" }}
+            h={{ base: "80px", md: "200px" }}
             borderRadius="full"
-            bg="radial-gradient(circle, rgba(200, 162, 74, 0.1) 0%, transparent 70%)"
+            bg="radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, rgba(168, 85, 247, 0.06) 40%, transparent 70%)"
             filter="blur(30px)"
-            css={{ animation: "heroFloat 10s ease-in-out infinite 2s" }}
+            css={{ animation: "heroFloat 10s ease-in-out infinite 2s, pulse 7s ease-in-out infinite 1s" }}
+          />
+          <Box
+            position="absolute"
+            top="40%"
+            left="50%"
+            w={{ base: "120px", md: "220px" }}
+            h={{ base: "120px", md: "220px" }}
+            borderRadius="full"
+            bg="radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(5, 150, 105, 0.05) 40%, transparent 70%)"
+            filter="blur(35px)"
+            css={{ animation: "heroFloat 14s ease-in-out infinite 4s, pulse 9s ease-in-out infinite 3s" }}
           />
         </Box>
 
@@ -209,7 +386,7 @@ export default function Home() {
           position="absolute"
           inset={0}
           zIndex={2}
-          bg="linear-gradient(180deg, rgba(10, 22, 40, 0.65) 0%, rgba(11, 31, 59, 0.7) 40%, rgba(10, 22, 40, 0.75) 70%, rgba(10, 22, 40, 0.85) 100%)"
+          bg="linear-gradient(180deg, rgba(10, 22, 40, 0.5) 0%, rgba(11, 31, 59, 0.6) 40%, rgba(10, 22, 40, 0.65) 70%, rgba(10, 22, 40, 0.8) 100%)"
           backdropFilter="blur(1px)"
           pointerEvents="none"
         />
@@ -260,7 +437,7 @@ export default function Home() {
                   inset: 0,
                   borderRadius: "full",
                   padding: "2px",
-                  background: "linear-gradient(135deg, #c8a24a, #ffd700, #c8a24a, #00d4ff, #c8a24a)",
+                  background: "linear-gradient(135deg, #00FF2A, #4DFF6A, #00FF2A, #00FF2A, #00FF2A)",
                   backgroundSize: "300% 300%",
                   mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
                   maskComposite: "exclude",
@@ -283,7 +460,7 @@ export default function Home() {
                   lineHeight="1"
                   fontFamily="var(--font-ibm-plex)"
                   css={{
-                    background: "linear-gradient(180deg, #ffffff 0%, #f0f0f0 40%, #c8a24a 100%)",
+                    background: "linear-gradient(180deg, #ffffff 0%, #f0f0f0 40%, #00FF2A 100%)",
                     backgroundClip: "text",
                     WebkitBackgroundClip: "text",
                     color: "transparent",
@@ -302,7 +479,7 @@ export default function Home() {
                   w={{ base: "60%", md: "50%" }}
                   h={{ base: "3px", md: "4px" }}
                   borderRadius="full"
-                  background="linear-gradient(90deg, transparent, #c8a24a, #ffd700, #c8a24a, transparent)"
+                  background="linear-gradient(90deg, transparent, #00FF2A, #4DFF6A, #00FF2A, transparent)"
                   css={{
                     animation: "sparkle 3s ease-in-out infinite",
                   }}
@@ -325,7 +502,7 @@ export default function Home() {
                   fontSize={{ base: "lg", md: "2xl", lg: "3xl" }}
                   fontWeight="600"
                   css={{
-                    background: "linear-gradient(135deg, #c8a24a 0%, #ffd700 50%, #c8a24a 100%)",
+                    background: "linear-gradient(135deg, #00FF2A 0%, #4DFF6A 50%, #00FF2A 100%)",
                     backgroundClip: "text",
                     WebkitBackgroundClip: "text",
                     color: "transparent",
@@ -346,7 +523,7 @@ export default function Home() {
               dangerouslySetInnerHTML={{ __html: t.raw("heroDescription") }}
               css={{
                 "& strong": {
-                  color: "#c8a24a",
+                  color: "#00FF2A",
                   fontWeight: 700,
                 },
               }}
@@ -365,7 +542,7 @@ export default function Home() {
                   position="absolute"
                   inset="-6px"
                   borderRadius="2xl"
-                  background="linear-gradient(135deg, #c8a24a, #ffd700, #c8a24a)"
+                  background="linear-gradient(135deg, #00FF2A, #4DFF6A, #00FF2A)"
                   filter="blur(20px)"
                   opacity={0.5}
                   pointerEvents="none"
@@ -374,7 +551,7 @@ export default function Home() {
                 <Button
                   asChild
                   position="relative"
-                  bg="linear-gradient(135deg, #c8a24a 0%, #b8943a 100%)"
+                  bg="linear-gradient(135deg, #00FF2A 0%, #00CC22 100%)"
                   color="primary"
                   size="lg"
                   px={{ base: 8, md: 12 }}
@@ -384,7 +561,7 @@ export default function Home() {
                   borderRadius="xl"
                   boxShadow="0 8px 30px rgba(200, 162, 74, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3)"
                   _hover={{ 
-                    bg: "linear-gradient(135deg, #d4b05a 0%, #c8a24a 100%)",
+                    bg: "linear-gradient(135deg, #4DFF6A 0%, #00FF2A 100%)",
                     transform: "translateY(-4px) scale(1.02)",
                     boxShadow: "0 16px 50px rgba(200, 162, 74, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4)",
                   }}
@@ -415,7 +592,7 @@ export default function Home() {
                 backdropFilter="blur(10px)"
                 _hover={{ 
                   bg: "rgba(200, 162, 74, 0.15)",
-                  borderColor: "#c8a24a",
+                  borderColor: "#00FF2A",
                   transform: "translateY(-4px)",
                   boxShadow: "0 8px 30px rgba(200, 162, 74, 0.2)",
                 }}
@@ -429,71 +606,73 @@ export default function Home() {
               </Button>
             </Stack>
             
-            {/* Stats Grid */}
+            {/* Stats Grid - Enhanced like AlMaghrib/SeekersGuidance */}
             <SimpleGrid
-              columns={3}
-              gap={{ base: 3, md: 6 }}
+              columns={{ base: 2, md: 4 }}
+              gap={{ base: 4, md: 6 }}
               pt={{ base: 8, md: 12 }}
               w="100%"
-              maxW="700px"
+              maxW="900px"
             >
-              <Box
-                bg="rgba(255, 255, 255, 0.05)"
-                backdropFilter="blur(10px)"
-                borderRadius="2xl"
-                p={{ base: 4, md: 6 }}
-                border="1px solid"
-                borderColor="rgba(200, 162, 74, 0.2)"
-                transition="all 0.3s ease"
-                _hover={{
-                  bg: "rgba(255, 255, 255, 0.08)",
-                  borderColor: "rgba(200, 162, 74, 0.4)",
-                  transform: "translateY(-4px)",
-                }}
-              >
-                <Stack gap={1} align="center">
-                  <Text fontSize={{ base: "2xl", md: "4xl" }} fontWeight="900" color="white">+5</Text>
-                  <Text fontSize={{ base: "xs", md: "sm" }} color="gray.400" fontWeight="600">{t("stats.programs")}</Text>
-                </Stack>
-              </Box>
-              <Box
-                bg="rgba(255, 255, 255, 0.05)"
-                backdropFilter="blur(10px)"
-                borderRadius="2xl"
-                p={{ base: 4, md: 6 }}
-                border="1px solid"
-                borderColor="rgba(200, 162, 74, 0.2)"
-                transition="all 0.3s ease"
-                _hover={{
-                  bg: "rgba(255, 255, 255, 0.08)",
-                  borderColor: "rgba(200, 162, 74, 0.4)",
-                  transform: "translateY(-4px)",
-                }}
-              >
-                <Stack gap={1} align="center">
-                  <Text fontSize={{ base: "2xl", md: "4xl" }} fontWeight="900" color="white">معتمد</Text>
-                  <Text fontSize={{ base: "xs", md: "sm" }} color="gray.400" fontWeight="600">{t("stats.certified")}</Text>
-                </Stack>
-              </Box>
-              <Box
-                bg="rgba(255, 255, 255, 0.05)"
-                backdropFilter="blur(10px)"
-                borderRadius="2xl"
-                p={{ base: 4, md: 6 }}
-                border="1px solid"
-                borderColor="rgba(200, 162, 74, 0.2)"
-                transition="all 0.3s ease"
-                _hover={{
-                  bg: "rgba(255, 255, 255, 0.08)",
-                  borderColor: "rgba(200, 162, 74, 0.4)",
-                  transform: "translateY(-4px)",
-                }}
-              >
-                <Stack gap={1} align="center">
-                  <Text fontSize={{ base: "2xl", md: "4xl" }} fontWeight="900" color="#c8a24a">مختصون</Text>
-                  <Text fontSize={{ base: "xs", md: "sm" }} color="gray.400" fontWeight="600">{t("stats.expertInstructors")}</Text>
-                </Stack>
-              </Box>
+              {[
+                { value: "500+", label: t("stats.students"), icon: "👥" },
+                { value: "20+", label: t("stats.courses"), icon: "📚" },
+                { value: "10+", label: t("stats.instructors"), icon: "👨‍🏫" },
+                { value: "5+", label: t("stats.programs"), icon: "🎓" },
+              ].map((stat, index) => (
+                <Box
+                  key={stat.label}
+                  bg="#050505"
+                  backdropFilter="blur(10px)"
+                  borderRadius="2xl"
+                  p={{ base: 4, md: 6 }}
+                  border="1px solid"
+                  borderColor="rgba(0, 255, 42, 0.3)"
+                  boxShadow="0 0 20px rgba(0, 255, 42, 0.15)"
+                  transition="all 0.4s cubic-bezier(0.4, 0, 0.2, 1)"
+                  _hover={{
+                    bg: "#0A0A0A",
+                    borderColor: "rgba(0, 255, 42, 0.6)",
+                    transform: "translateY(-6px) scale(1.02)",
+                    boxShadow: "0 0 30px rgba(0, 255, 42, 0.4), 0 0 60px rgba(0, 255, 42, 0.2)",
+                  }}
+                  css={{
+                    animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`,
+                    "@keyframes fadeInUp": {
+                      "0%": { opacity: 0, transform: "translateY(20px)" },
+                      "100%": { opacity: 1, transform: "translateY(0)" },
+                    },
+                  }}
+                >
+                  <Stack gap={2} align="center">
+                    <Box
+                      w="40px"
+                      h="40px"
+                      borderRadius="lg"
+                      bg="#0A0A0A"
+                      border="1px solid"
+                      borderColor="rgba(0, 255, 42, 0.3)"
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                      fontSize="lg"
+                      boxShadow="0 0 10px rgba(0, 255, 42, 0.2)"
+                    >
+                      {stat.icon}
+                    </Box>
+                    <Text 
+                      fontSize={{ base: "2xl", md: "4xl" }} 
+                      fontWeight="900" 
+                      color="#00FF2A"
+                    >
+                      {stat.value}
+                    </Text>
+                    <Text fontSize={{ base: "xs", md: "sm" }} color="rgba(255, 255, 255, 0.7)" fontWeight="600" textAlign="center">
+                      {stat.label}
+                    </Text>
+                  </Stack>
+                </Box>
+              ))}
             </SimpleGrid>
 
             {/* Scroll indicator - Premium Design */}
@@ -514,19 +693,20 @@ export default function Home() {
                 alignItems="center"
                 gap={3}
                 cursor="pointer"
-                bg="rgba(255, 255, 255, 0.05)"
+                bg="#050505"
                 backdropFilter="blur(10px)"
                 px={6}
                 py={4}
                 borderRadius="2xl"
                 border="1px solid"
-                borderColor="rgba(200, 162, 74, 0.2)"
+                borderColor="rgba(0, 255, 42, 0.3)"
+                boxShadow="0 0 15px rgba(0, 255, 42, 0.15)"
                 transition="all 0.4s cubic-bezier(0.4, 0, 0.2, 1)"
                 _hover={{
-                  bg: "rgba(200, 162, 74, 0.1)",
-                  borderColor: "rgba(200, 162, 74, 0.5)",
+                  bg: "#0A0A0A",
+                  borderColor: "rgba(0, 255, 42, 0.6)",
                   transform: "translateY(-4px)",
-                  boxShadow: "0 20px 40px rgba(200, 162, 74, 0.2)",
+                  boxShadow: "0 0 30px rgba(0, 255, 42, 0.4), 0 0 60px rgba(0, 255, 42, 0.2)",
                 }}
                 css={{
                   animation: "floatButton 3s ease-in-out infinite",
@@ -592,7 +772,7 @@ export default function Home() {
                       >
                         <path 
                           d="M1 1L8 8L15 1" 
-                          stroke="#c8a24a" 
+                          stroke="#00FF2A" 
                           strokeWidth="2" 
                           strokeLinecap="round" 
                           strokeLinejoin="round"
@@ -654,76 +834,494 @@ export default function Home() {
       <Container maxW="7xl" py={{ base: 12, md: 20 }} px={{ base: 6, md: 8 }} position="relative">
         <Stack gap={{ base: 16, md: 20 }}>
           
-          {/* Community Posts Section - First thing after hero */}
+          {/* Community Posts Section - Premium Design */}
           <Box
             position="relative"
-            py={{ base: 8, md: 12 }}
-            bg="background"
+            py={{ base: 10, md: 16 }}
             borderRadius="3xl"
-            boxShadow="0 -20px 60px rgba(0, 0, 0, 0.03)"
-            mx={{ base: -4, md: -6 }}
-            px={{ base: 4, md: 6 }}
+            overflow="hidden"
+            css={{
+              "@keyframes socialFloat": {
+                "0%, 100%": { transform: "translateY(0) rotate(0deg)" },
+                "50%": { transform: "translateY(-10px) rotate(2deg)" },
+              },
+              "@keyframes socialGlow": {
+                "0%, 100%": { opacity: 0.5, transform: "scale(1)" },
+                "50%": { opacity: 0.8, transform: "scale(1.05)" },
+              },
+            }}
           >
-            <Stack gap={8}>
-              {/* Section Header */}
-              <Stack gap={4} textAlign="center" align="center">
+            {/* Black card with neon glow */}
+            <Box
+              position="relative"
+              bg="#050505"
+              backdropFilter="blur(20px)"
+              borderRadius="3xl"
+              px={{ base: 6, md: 10 }}
+              py={{ base: 10, md: 14 }}
+              overflow="hidden"
+              border="1px solid"
+              borderColor="rgba(0, 255, 42, 0.3)"
+              boxShadow="0 0 30px rgba(0, 255, 42, 0.4), 0 0 60px rgba(0, 255, 42, 0.2), inset 0 0 30px rgba(0, 255, 42, 0.05)"
+            >
+              {/* Decorative floating orbs */}
+              <Box
+                position="absolute"
+                top="-20%"
+                right="-10%"
+                w={{ base: "200px", md: "350px" }}
+                h={{ base: "200px", md: "350px" }}
+                borderRadius="full"
+                bg="radial-gradient(circle, rgba(0, 255, 42, 0.15) 0%, transparent 70%)"
+                filter="blur(40px)"
+                css={{ animation: "socialFloat 12s ease-in-out infinite" }}
+                pointerEvents="none"
+              />
+              <Box
+                position="absolute"
+                bottom="-15%"
+                left="-5%"
+                w={{ base: "150px", md: "280px" }}
+                h={{ base: "150px", md: "280px" }}
+                borderRadius="full"
+                bg="radial-gradient(circle, rgba(0, 255, 42, 0.12) 0%, transparent 70%)"
+                filter="blur(35px)"
+                css={{ animation: "socialFloat 15s ease-in-out infinite reverse" }}
+                pointerEvents="none"
+              />
+              <Box
+                position="absolute"
+                top="50%"
+                left="50%"
+                transform="translate(-50%, -50%)"
+                w={{ base: "180px", md: "300px" }}
+                h={{ base: "180px", md: "300px" }}
+                borderRadius="full"
+                bg="radial-gradient(circle, rgba(0, 255, 42, 0.08) 0%, transparent 70%)"
+                filter="blur(50px)"
+                css={{ animation: "socialGlow 8s ease-in-out infinite" }}
+                pointerEvents="none"
+              />
+
+              <Stack gap={10} position="relative" zIndex={2}>
+                {/* Section Header - Enhanced */}
+                <Stack gap={5} textAlign="center" align="center">
+                  {/* Animated icon */}
+                  <Box
+                    position="relative"
+                    css={{ animation: "socialFloat 6s ease-in-out infinite" }}
+                  >
+                    <Box
+                      position="absolute"
+                      inset="-8px"
+                      borderRadius="full"
+                      bg="linear-gradient(135deg, rgba(0, 255, 42, 0.4), rgba(77, 255, 106, 0.4))"
+                      filter="blur(15px)"
+                      css={{ animation: "socialGlow 4s ease-in-out infinite" }}
+                    />
+                    <Box
+                      position="relative"
+                      w="80px"
+                      h="80px"
+                      borderRadius="full"
+                      bg="#0A0A0A"
+                      border="2px solid"
+                      borderColor="rgba(0, 255, 42, 0.5)"
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                      fontSize="2xl"
+                      boxShadow="0 0 30px rgba(0, 255, 42, 0.4)"
+                    >
+                      💬
+                    </Box>
+                  </Box>
+
+                  <Badge
+                    position="relative"
+                    overflow="hidden"
+                    bg="#0A0A0A"
+                    color="#00FF2A"
+                    px={6}
+                    py={2.5}
+                    borderRadius="full"
+                    fontSize="sm"
+                    fontWeight="700"
+                    border="1px solid"
+                    borderColor="rgba(0, 255, 42, 0.3)"
+                    boxShadow="0 0 15px rgba(0, 255, 42, 0.2)"
+                    css={{
+                      "&::before": {
+                        content: '""',
+                        position: "absolute",
+                        inset: 0,
+                        borderRadius: "full",
+                        padding: "1.5px",
+                        background: "linear-gradient(135deg, #00FF2A, #00FF2A, #00FF2A)",
+                        mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                        maskComposite: "exclude",
+                      },
+                    }}
+                  >
+                    {t("socialBadge")}
+                  </Badge>
+                  
+                  <Heading
+                    size={{ base: "xl", md: "2xl" }}
+                    fontWeight="800"
+                    letterSpacing="-0.02em"
+                    css={{
+                      background: "linear-gradient(135deg, #ffffff 0%, #00FF2A 50%, #00FF2A 100%)",
+                      backgroundSize: "200% auto",
+                      backgroundClip: "text",
+                      WebkitBackgroundClip: "text",
+                      color: "transparent",
+                      animation: "borderShine 4s linear infinite",
+                    }}
+                  >
+                    {t("socialTitle")}
+                  </Heading>
+                  
+                  <Text 
+                    color="whiteAlpha.800" 
+                    fontSize={{ base: "md", md: "lg" }} 
+                    maxW="600px"
+                    lineHeight="1.8"
+                  >
+                    {t("socialDescription")}
+                  </Text>
+
+                  {/* Decorative line */}
+                  <Box
+                    w="80px"
+                    h="4px"
+                    borderRadius="full"
+                    bg="linear-gradient(90deg, #00FF2A, #4DFF6A)"
+                    boxShadow="0 0 20px rgba(0, 255, 42, 0.5)"
+                  />
+                </Stack>
+
+                {/* Social Feed Component */}
+                <Box 
+                  maxW="4xl" 
+                  mx="auto" 
+                  w="100%"
+                  bg="#0A0A0A"
+                  borderRadius="2xl"
+                  p={{ base: 4, md: 6 }}
+                  border="1px solid"
+                  borderColor="rgba(0, 255, 42, 0.3)"
+                  boxShadow="0 0 20px rgba(0, 255, 42, 0.15)"
+                >
+                  <SocialFeed showTitle={false} maxPosts={3} />
+                </Box>
+
+                {/* View All Button - Enhanced */}
+                <Flex justify="center" pt={2}>
+                  <Box position="relative">
+                    <Box
+                      position="absolute"
+                      inset="-4px"
+                      borderRadius="xl"
+                      bg="linear-gradient(135deg, #00FF2A, #4DFF6A)"
+                      filter="blur(12px)"
+                      opacity={0.5}
+                      css={{ animation: "socialGlow 3s ease-in-out infinite" }}
+                    />
+                    <Button
+                      asChild
+                      position="relative"
+                      size="lg"
+                      bg="#0A0A0A"
+                      color="#00FF2A"
+                      px={10}
+                      h="56px"
+                      fontWeight="800"
+                      borderRadius="xl"
+                      fontSize="md"
+                      border="2px solid"
+                      borderColor="rgba(0, 255, 42, 0.5)"
+                      boxShadow="0 0 20px rgba(0, 255, 42, 0.3)"
+                      _hover={{
+                        bg: "#0A0A0A",
+                        borderColor: "#00FF2A",
+                        transform: "translateY(-4px) scale(1.02)",
+                        boxShadow: "0 0 40px rgba(0, 255, 42, 0.5), 0 16px 50px rgba(0, 255, 42, 0.3)",
+                      }}
+                      _active={{
+                        transform: "translateY(-2px) scale(1.01)",
+                      }}
+                      transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+                    >
+                      <Link href="/social">
+                        <Flex align="center" gap={2}>
+                          <Text>{t("viewAllPosts")}</Text>
+                          <Text fontSize="lg">→</Text>
+                        </Flex>
+                      </Link>
+                    </Button>
+                  </Box>
+                </Flex>
+              </Stack>
+            </Box>
+          </Box>
+
+          {/* Quranic Verse Section - Premium Islamic Design */}
+          <Box
+            position="relative"
+            py={{ base: 6, md: 10 }}
+            borderRadius="3xl"
+            overflow="hidden"
+            css={{
+              "@keyframes verseGlow": {
+                "0%, 100%": { opacity: 0.3, transform: "scale(1)" },
+                "50%": { opacity: 0.6, transform: "scale(1.02)" },
+              },
+              "@keyframes starTwinkle": {
+                "0%, 100%": { opacity: 0.4, transform: "scale(0.8)" },
+                "50%": { opacity: 1, transform: "scale(1.2)" },
+              },
+              "@keyframes floatVerse": {
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-8px)" },
+              },
+            }}
+          >
+            {/* Main card background with neon glow */}
+            <Box
+              position="relative"
+              bg="#050505"
+              borderRadius="3xl"
+              px={{ base: 6, md: 12 }}
+              py={{ base: 10, md: 16 }}
+              overflow="hidden"
+              border="1px solid"
+              borderColor="rgba(0, 255, 42, 0.3)"
+              boxShadow="0 0 30px rgba(0, 255, 42, 0.4), 0 0 60px rgba(0, 255, 42, 0.2), inset 0 0 30px rgba(0, 255, 42, 0.05)"
+            >
+              {/* Islamic geometric pattern overlay */}
+              <Box
+                position="absolute"
+                inset={0}
+                opacity={0.05}
+                bg="repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(200, 162, 74, 0.03) 10px, rgba(200, 162, 74, 0.03) 20px)"
+                pointerEvents="none"
+              />
+
+              {/* Decorative corner ornaments */}
+              <Box
+                position="absolute"
+                top={4}
+                left={4}
+                w="60px"
+                h="60px"
+                borderTop="3px solid"
+                borderLeft="3px solid"
+                borderColor="rgba(0, 255, 42, 0.4)"
+                borderTopLeftRadius="xl"
+              />
+              <Box
+                position="absolute"
+                top={4}
+                right={4}
+                w="60px"
+                h="60px"
+                borderTop="3px solid"
+                borderRight="3px solid"
+                borderColor="rgba(0, 255, 42, 0.4)"
+                borderTopRightRadius="xl"
+              />
+              <Box
+                position="absolute"
+                bottom={4}
+                left={4}
+                w="60px"
+                h="60px"
+                borderBottom="3px solid"
+                borderLeft="3px solid"
+                borderColor="rgba(0, 255, 42, 0.4)"
+                borderBottomLeftRadius="xl"
+              />
+              <Box
+                position="absolute"
+                bottom={4}
+                right={4}
+                w="60px"
+                h="60px"
+                borderBottom="3px solid"
+                borderRight="3px solid"
+                borderColor="rgba(0, 255, 42, 0.4)"
+                borderBottomRightRadius="xl"
+              />
+
+              {/* Glowing orbs */}
+              <Box
+                position="absolute"
+                top="-10%"
+                left="20%"
+                w={{ base: "150px", md: "250px" }}
+                h={{ base: "150px", md: "250px" }}
+                borderRadius="full"
+                bg="radial-gradient(circle, rgba(0, 255, 42, 0.15) 0%, transparent 70%)"
+                filter="blur(40px)"
+                css={{ animation: "verseGlow 6s ease-in-out infinite" }}
+                pointerEvents="none"
+              />
+              <Box
+                position="absolute"
+                bottom="-10%"
+                right="20%"
+                w={{ base: "120px", md: "200px" }}
+                h={{ base: "120px", md: "200px" }}
+                borderRadius="full"
+                bg="radial-gradient(circle, rgba(0, 255, 42, 0.12) 0%, transparent 70%)"
+                filter="blur(35px)"
+                css={{ animation: "verseGlow 8s ease-in-out infinite reverse" }}
+                pointerEvents="none"
+              />
+
+              {/* Twinkling stars */}
+              {[...Array(8)].map((_, i) => (
+                <Box
+                  key={i}
+                  position="absolute"
+                  w="4px"
+                  h="4px"
+                  borderRadius="full"
+                  bg="#00FF2A"
+                  boxShadow="0 0 8px rgba(0, 255, 42, 0.8)"
+                  top={`${15 + (i * 10) % 70}%`}
+                  left={`${10 + (i * 13) % 80}%`}
+                  css={{
+                    animation: `starTwinkle ${2 + (i % 3)}s ease-in-out infinite`,
+                    animationDelay: `${i * 0.3}s`,
+                  }}
+                />
+              ))}
+
+              <Stack gap={8} align="center" position="relative" zIndex={2}>
+                {/* Quran icon */}
+                <Box
+                  position="relative"
+                  css={{ animation: "floatVerse 5s ease-in-out infinite" }}
+                >
+                  <Box
+                    position="absolute"
+                    inset="-10px"
+                    borderRadius="full"
+                    bg="radial-gradient(circle, rgba(0, 255, 42, 0.4) 0%, transparent 70%)"
+                    filter="blur(15px)"
+                    css={{ animation: "verseGlow 4s ease-in-out infinite" }}
+                  />
+                  <Box
+                    position="relative"
+                    w="70px"
+                    h="70px"
+                    borderRadius="full"
+                    bg="#0A0A0A"
+                    border="2px solid"
+                    borderColor="rgba(0, 255, 42, 0.5)"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    fontSize="2xl"
+                    boxShadow="0 0 30px rgba(0, 255, 42, 0.4)"
+                  >
+                    📖
+                  </Box>
+                </Box>
+
+                {/* Arabic Verse */}
+                <Box
+                  position="relative"
+                  textAlign="center"
+                  css={{ animation: "floatVerse 7s ease-in-out infinite 1s" }}
+                >
+                  <Text
+                    fontSize={{ base: "2xl", md: "4xl", lg: "5xl" }}
+                    fontWeight="700"
+                    lineHeight="2.2"
+                    fontFamily="var(--font-ibm-plex)"
+                    css={{
+                      background: "linear-gradient(135deg, #4DFF6A 0%, #00FF2A 25%, #ffffff 50%, #00FF2A 75%, #4DFF6A 100%)",
+                      backgroundSize: "200% auto",
+                      backgroundClip: "text",
+                      WebkitBackgroundClip: "text",
+                      color: "transparent",
+                      animation: "borderGold 6s ease infinite",
+                      textShadow: "0 0 60px rgba(200, 162, 74, 0.3)",
+                    }}
+                  >
+                    وَلَقَدْ يَسَّرْنَا الْقُرْآنَ لِلذِّكْرِ فَهَلْ مِن مُّدَّكِرٍ
+                  </Text>
+                </Box>
+
+                {/* Decorative separator */}
+                <Flex align="center" gap={4} w="100%" maxW="400px">
+                  <Box flex={1} h="1px" bg="linear-gradient(90deg, transparent, #00FF2A)" />
+                  <Box
+                    w="12px"
+                    h="12px"
+                    borderRadius="sm"
+                    transform="rotate(45deg)"
+                    bg="linear-gradient(135deg, #00FF2A, #4DFF6A)"
+                    boxShadow="0 0 15px rgba(200, 162, 74, 0.5)"
+                  />
+                  <Box flex={1} h="1px" bg="linear-gradient(90deg, #00FF2A, transparent)" />
+                </Flex>
+                
+                {/* Translation */}
+                <Text
+                  fontSize={{ base: "md", md: "lg", lg: "xl" }}
+                  color="whiteAlpha.800"
+                  fontStyle="italic"
+                  maxW="700px"
+                  lineHeight="1.9"
+                  textAlign="center"
+                  px={4}
+                >
+                  {t("quranicVerse.translation")}
+                </Text>
+                
+                {/* Reference Badge */}
                 <Badge
-                  bg="linear-gradient(135deg, rgba(200, 162, 74, 0.2), rgba(0, 212, 255, 0.2))"
-                  color="accent"
+                  position="relative"
+                  overflow="hidden"
+                  bg="transparent"
+                  color="white"
                   px={6}
-                  py={2}
+                  py={2.5}
                   borderRadius="full"
                   fontSize="sm"
                   fontWeight="700"
-                  border="1px solid"
-                  borderColor="rgba(200, 162, 74, 0.3)"
-                >
-                  {t("socialBadge")}
-                </Badge>
-                <Heading
-                  size={{ base: "lg", md: "xl" }}
                   css={{
-                    background: "linear-gradient(135deg, #0b1f3b 0%, #c8a24a 100%)",
-                    backgroundClip: "text",
-                    WebkitBackgroundClip: "text",
-                    color: "transparent",
+                    background: "linear-gradient(135deg, rgba(200, 162, 74, 0.2), rgba(212, 175, 55, 0.3))",
+                    backdropFilter: "blur(10px)",
+                    boxShadow: "0 4px 20px rgba(200, 162, 74, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
+                    "&::before": {
+                      content: '""',
+                      position: "absolute",
+                      inset: 0,
+                      borderRadius: "full",
+                      padding: "1.5px",
+                      background: "linear-gradient(135deg, #00FF2A, #4DFF6A, #00FF2A)",
+                      mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                      maskComposite: "exclude",
+                    },
                   }}
                 >
-                  {t("socialTitle")}
-                </Heading>
-                <Text color="muted" fontSize={{ base: "md", md: "lg" }} maxW="600px">
-                  {t("socialDescription")}
-                </Text>
+                  ✨ {t("quranicVerse.reference")}
+                </Badge>
               </Stack>
-
-              {/* Social Feed Component */}
-              <Box maxW="4xl" mx="auto" w="100%">
-                <SocialFeed showTitle={false} maxPosts={3} />
-              </Box>
-
-              {/* View All Button */}
-              <Flex justify="center" pt={4}>
-                <Button
-                  asChild
-                  size="lg"
-                  bg="linear-gradient(135deg, #c8a24a 0%, #b8943a 100%)"
-                  color="primary"
-                  px={8}
-                  fontWeight="700"
-                  borderRadius="xl"
-                  boxShadow="0 4px 20px rgba(200, 162, 74, 0.3)"
-                  _hover={{
-                    bg: "linear-gradient(135deg, #d4b05a 0%, #c8a24a 100%)",
-                    transform: "translateY(-2px)",
-                    boxShadow: "0 8px 30px rgba(200, 162, 74, 0.4)",
-                  }}
-                  transition="all 0.3s ease"
-                >
-                  <Link href="/social">{t("viewAllPosts")} →</Link>
-                </Button>
-              </Flex>
-            </Stack>
+            </Box>
           </Box>
+
+          {/* Elegant Divider */}
+          <Box 
+            h="1px" 
+            bg="linear-gradient(90deg, transparent, #00FF2A, transparent)"
+            borderRadius="full"
+          />
 
           {/* Features Highlight Section */}
           <Box
@@ -736,8 +1334,8 @@ export default function Home() {
                 "50%": { transform: "translateY(-8px)" },
               },
               "@keyframes glowPulse": {
-                "0%, 100%": { boxShadow: "0 0 20px rgba(200, 162, 74, 0.3)" },
-                "50%": { boxShadow: "0 0 40px rgba(200, 162, 74, 0.5)" },
+                "0%, 100%": { boxShadow: "0 0 20px rgba(0, 255, 42, 0.3)" },
+                "50%": { boxShadow: "0 0 40px rgba(0, 255, 42, 0.5)" },
               },
               "@keyframes iconBounce": {
                 "0%, 100%": { transform: "scale(1)" },
@@ -745,29 +1343,15 @@ export default function Home() {
               },
             }}
           >
-            {/* Animated border */}
-            <Box
-              position="absolute"
-              inset="-2px"
-              borderRadius="2xl"
-              background="linear-gradient(135deg, #c8a24a, #0b1f3b, #00d4ff, #0b1f3b, #c8a24a)"
-              backgroundSize="400% 400%"
-              css={{
-                animation: "gradient 8s ease infinite",
-                "@keyframes gradient": {
-                  "0%": { backgroundPosition: "0% 50%" },
-                  "50%": { backgroundPosition: "100% 50%" },
-                  "100%": { backgroundPosition: "0% 50%" },
-                },
-              }}
-            />
-            
+            {/* Main card with neon glow */}
             <Box
               position="relative"
-              bg="linear-gradient(135deg, rgba(11, 31, 59, 0.97), rgba(11, 31, 59, 0.92))"
+              bg="#050505"
               borderRadius="xl"
-              m="2px"
               p={{ base: 8, md: 12 }}
+              border="1px solid"
+              borderColor="rgba(0, 255, 42, 0.3)"
+              boxShadow="0 0 30px rgba(0, 255, 42, 0.4), 0 0 60px rgba(0, 255, 42, 0.2), inset 0 0 30px rgba(0, 255, 42, 0.05)"
             >
               {/* Background decorations */}
               <Box
@@ -777,7 +1361,8 @@ export default function Home() {
                 w="200px"
                 h="200px"
                 borderRadius="full"
-                bg="radial-gradient(circle, rgba(200, 162, 74, 0.1) 0%, transparent 70%)"
+                bg="radial-gradient(circle, rgba(0, 255, 42, 0.1) 0%, transparent 70%)"
+                filter="blur(40px)"
                 pointerEvents="none"
               />
               <Box
@@ -787,21 +1372,27 @@ export default function Home() {
                 w="150px"
                 h="150px"
                 borderRadius="full"
-                bg="radial-gradient(circle, rgba(0, 212, 255, 0.08) 0%, transparent 70%)"
+                bg="radial-gradient(circle, rgba(0, 255, 42, 0.08) 0%, transparent 70%)"
+                filter="blur(30px)"
                 pointerEvents="none"
               />
 
               <Stack gap={10} position="relative" zIndex={1}>
                 {/* Section Header */}
                 <Stack gap={3} textAlign="center">
-                  <Text color="accent" fontWeight="700" fontSize="sm" letterSpacing="wider">
+                  <Text 
+                    color="#00FF2A" 
+                    fontWeight="700" 
+                    fontSize="sm" 
+                    letterSpacing="wider"
+                  >
                     {t("whyTibyan")}
                   </Text>
                   <Heading 
                     size={{ base: "lg", md: "xl" }} 
                     color="white"
                     css={{
-                      background: "linear-gradient(135deg, #ffffff 0%, #c8a24a 100%)",
+                      background: "linear-gradient(135deg, #ffffff 0%, #00FF2A 100%)",
                       backgroundClip: "text",
                       WebkitBackgroundClip: "text",
                       color: "transparent",
@@ -817,14 +1408,14 @@ export default function Home() {
                       title: t("features.academicCommitment.title"),
                       text: t("features.academicCommitment.description"),
                       icon: "📚",
-                      gradient: "linear-gradient(135deg, #c8a24a, #ffd700)",
+                      gradient: "linear-gradient(135deg, #00FF2A, #4DFF6A)",
                       delay: "0s",
                     },
                     {
                       title: t("features.questionBank.title"),
                       text: t("features.questionBank.description"),
                       icon: "🎯",
-                      gradient: "linear-gradient(135deg, #00d4ff, #0099ff)",
+                      gradient: "linear-gradient(135deg, #00FF2A, #00CC22)",
                       delay: "0.2s",
                     },
                     {
@@ -838,11 +1429,12 @@ export default function Home() {
                     <Box
                       key={card.title}
                       position="relative"
-                      bg="rgba(255, 255, 255, 0.03)"
+                      bg="#0A0A0A"
                       backdropFilter="blur(10px)"
                       borderRadius="xl"
-                      borderWidth="1px"
-                      borderColor="rgba(255, 255, 255, 0.1)"
+                      border="1px solid"
+                      borderColor="rgba(0, 255, 42, 0.3)"
+                      boxShadow="0 0 20px rgba(0, 255, 42, 0.15)"
                       p={6}
                       transition="all 0.4s ease"
                       css={{
@@ -850,10 +1442,10 @@ export default function Home() {
                         animationDelay: card.delay,
                       }}
                       _hover={{
-                        bg: "rgba(255, 255, 255, 0.08)",
-                        borderColor: "rgba(200, 162, 74, 0.4)",
+                        bg: "#0A0A0A",
+                        borderColor: "rgba(0, 255, 42, 0.6)",
                         transform: "translateY(-12px) scale(1.02)",
-                        boxShadow: "0 20px 40px rgba(0, 0, 0, 0.3)",
+                        boxShadow: "0 0 30px rgba(0, 255, 42, 0.4), 0 0 60px rgba(0, 255, 42, 0.2)",
                       }}
                     >
                       {/* Glow effect on hover */}
@@ -885,7 +1477,9 @@ export default function Home() {
                           />
                           <Box
                             position="relative"
-                            bg={card.gradient}
+                            bg="#0A0A0A"
+                            border="2px solid"
+                            borderColor="rgba(0, 255, 42, 0.5)"
                             w="72px"
                             h="72px"
                             borderRadius="full"
@@ -893,9 +1487,9 @@ export default function Home() {
                             alignItems="center"
                             justifyContent="center"
                             fontSize="2xl"
-                            boxShadow="0 8px 24px rgba(0, 0, 0, 0.3)"
+                            boxShadow="0 0 20px rgba(0, 255, 42, 0.3)"
                             transition="transform 0.3s ease"
-                            _hover={{ transform: "scale(1.1)" }}
+                            _hover={{ transform: "scale(1.1)", borderColor: "#00FF2A" }}
                           >
                             {card.icon}
                           </Box>
@@ -922,8 +1516,9 @@ export default function Home() {
                           w="40px"
                           h="3px"
                           borderRadius="full"
-                          background={card.gradient}
-                          opacity={0.6}
+                          bg="#00FF2A"
+                          boxShadow="0 0 10px rgba(0, 255, 42, 0.5)"
+                          opacity={0.8}
                           transition="width 0.3s ease"
                           _groupHover={{ w: "60px" }}
                         />
@@ -944,55 +1539,54 @@ export default function Home() {
                 "0%, 100%": { transform: "translateY(0)" },
                 "50%": { transform: "translateY(-8px)" },
               },
-              "@keyframes goldGlow": {
-                "0%, 100%": { boxShadow: "0 0 20px rgba(212, 175, 55, 0.3)" },
-                "50%": { boxShadow: "0 0 40px rgba(212, 175, 55, 0.5)" },
+              "@keyframes neonGlow": {
+                "0%, 100%": { boxShadow: "0 0 20px rgba(0, 255, 42, 0.3)" },
+                "50%": { boxShadow: "0 0 40px rgba(0, 255, 42, 0.5)" },
               },
             }}
           >
             <Stack gap={10} textAlign="center">
               <Stack gap={5} align="center" maxW="800px" mx="auto">
                 <Badge
-                  bg="linear-gradient(135deg, #D4AF37, #F7DC6F)"
-                  color="#0B1F3A"
+                  bg="#0A0A0A"
+                  color="#00FF2A"
                   px={6}
                   py={2.5}
                   borderRadius="full"
                   fontSize="sm"
                   fontWeight="800"
-                  boxShadow="0 4px 15px rgba(212, 175, 55, 0.4)"
+                  border="1px solid"
+                  borderColor="rgba(0, 255, 42, 0.5)"
+                  boxShadow="0 0 15px rgba(0, 255, 42, 0.3)"
                 >
                   {t("advisoryBadge")}
                 </Badge>
                 <Heading
                   size={{ base: "lg", md: "xl" }}
-                  css={{
-                    background: "linear-gradient(135deg, #0b1f3b 0%, #D4AF37 50%, #0b1f3b 100%)",
-                    backgroundSize: "200% auto",
-                    backgroundClip: "text",
-                    WebkitBackgroundClip: "text",
-                    color: "transparent",
-                  }}
+                  color="white"
                 >
                   {t("advisoryTitle")}
                 </Heading>
-                <Text color="muted" fontSize={{ base: "md", md: "lg" }} lineHeight="1.9">
+                <Text color="gray.400" fontSize={{ base: "md", md: "lg" }} lineHeight="1.9">
                   {t("advisorySubtitle")}
                 </Text>
               </Stack>
 
               <SimpleGrid columns={{ base: 1, md: 3 }} gap={8}>
                 {[
-                  { key: "scholar1", icon: "👨‍🎓", gradient: "linear-gradient(135deg, #D4AF37, #F7DC6F)" },
-                  { key: "scholar2", icon: "📖", gradient: "linear-gradient(135deg, #0b1f3b, #1a365d)" },
-                  { key: "scholar3", icon: "✨", gradient: "linear-gradient(135deg, #800020, #B85450)" },
+                  { key: "scholar1", icon: "👨‍🎓" },
+                  { key: "scholar2", icon: "📖" },
+                  { key: "scholar3", icon: "✨" },
                 ].map((advisor, index) => (
                   <Box
                     key={advisor.key}
                     position="relative"
-                    bg="surface"
+                    bg="#050505"
                     borderRadius="2xl"
                     overflow="hidden"
+                    border="1px solid"
+                    borderColor="rgba(0, 255, 42, 0.3)"
+                    boxShadow="0 0 20px rgba(0, 255, 42, 0.15)"
                     transition="all 0.4s ease"
                     css={{
                       animation: `advisorFloat 5s ease-in-out infinite`,
@@ -1000,53 +1594,56 @@ export default function Home() {
                     }}
                     _hover={{
                       transform: "translateY(-12px) scale(1.02)",
-                      boxShadow: "0 25px 50px -12px rgba(212, 175, 55, 0.25)",
+                      borderColor: "rgba(0, 255, 42, 0.6)",
+                      boxShadow: "0 0 30px rgba(0, 255, 42, 0.4), 0 0 60px rgba(0, 255, 42, 0.2)",
                     }}
                   >
-                    {/* Gold border accent */}
+                    {/* Neon border accent */}
                     <Box
                       position="absolute"
                       top={0}
                       left={0}
                       right={0}
                       h="4px"
-                      background={advisor.gradient}
+                      bg="#00FF2A"
+                      boxShadow="0 0 15px rgba(0, 255, 42, 0.5)"
                     />
                     <Stack p={8} gap={4} align="center">
-                      {/* Avatar placeholder with glow */}
+                      {/* Avatar placeholder with neon glow */}
                       <Box position="relative">
                         <Box
                           position="absolute"
                           inset="-8px"
                           borderRadius="full"
-                          background={advisor.gradient}
+                          bg="radial-gradient(circle, rgba(0, 255, 42, 0.3) 0%, transparent 70%)"
                           filter="blur(15px)"
-                          opacity={0.4}
-                          css={{ animation: "goldGlow 3s ease-in-out infinite" }}
+                          css={{ animation: "neonGlow 3s ease-in-out infinite" }}
                         />
                         <Box
                           position="relative"
                           w="100px"
                           h="100px"
                           borderRadius="full"
-                          background={advisor.gradient}
+                          bg="#0A0A0A"
+                          border="2px solid"
+                          borderColor="rgba(0, 255, 42, 0.5)"
                           display="flex"
                           alignItems="center"
                           justifyContent="center"
                           fontSize="3xl"
-                          boxShadow="0 8px 24px rgba(0, 0, 0, 0.2)"
+                          boxShadow="0 0 20px rgba(0, 255, 42, 0.3)"
                         >
                           {advisor.icon}
                         </Box>
                       </Box>
                       <Stack gap={1} align="center">
-                        <Heading size="md" color="text">
+                        <Heading size="md" color="white">
                           {t(`advisors.${advisor.key}.name`)}
                         </Heading>
-                        <Text fontSize="sm" fontWeight="700" color="accent">
+                        <Text fontSize="sm" fontWeight="700" color="#00FF2A">
                           {t(`advisors.${advisor.key}.title`)}
                         </Text>
-                        <Text fontSize="sm" color="muted" textAlign="center">
+                        <Text fontSize="sm" color="gray.400" textAlign="center">
                           {t(`advisors.${advisor.key}.bio`)}
                         </Text>
                       </Stack>
@@ -1060,7 +1657,7 @@ export default function Home() {
           {/* Elegant Divider */}
           <Box 
             h="1px" 
-            bg="linear-gradient(90deg, transparent, #D4AF37, transparent)"
+            bg="linear-gradient(90deg, transparent, #00FF2A, transparent)"
             borderRadius="full"
           />
 
@@ -1082,44 +1679,26 @@ export default function Home() {
             <Stack gap={12} textAlign="center">
               <Stack gap={5} align="center" maxW="800px" mx="auto">
                 <Badge
-                  bg="linear-gradient(135deg, #0b1f3b, #1a365d)"
-                  color="white"
+                  bg="#0A0A0A"
+                  color="#00FF2A"
                   px={6}
                   py={2.5}
                   borderRadius="full"
                   fontSize="sm"
                   fontWeight="800"
-                  boxShadow="0 4px 15px rgba(11, 31, 59, 0.4)"
-                  css={{
-                    "&::before": {
-                      content: '""',
-                      position: "absolute",
-                      inset: 0,
-                      borderRadius: "full",
-                      padding: "2px",
-                      background: "linear-gradient(135deg, #D4AF37, #F7DC6F)",
-                      mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                      maskComposite: "exclude",
-                    },
-                  }}
-                  position="relative"
-                  overflow="hidden"
+                  border="1px solid"
+                  borderColor="rgba(0, 255, 42, 0.5)"
+                  boxShadow="0 0 15px rgba(0, 255, 42, 0.3)"
                 >
                   {t("methodologyBadge")}
                 </Badge>
                 <Heading
                   size={{ base: "lg", md: "xl" }}
-                  css={{
-                    background: "linear-gradient(135deg, #D4AF37 0%, #0b1f3b 50%, #D4AF37 100%)",
-                    backgroundSize: "200% auto",
-                    backgroundClip: "text",
-                    WebkitBackgroundClip: "text",
-                    color: "transparent",
-                  }}
+                  color="white"
                 >
                   {t("methodologyTitle")}
                 </Heading>
-                <Text color="muted" fontSize={{ base: "md", md: "lg" }} lineHeight="1.9">
+                <Text color="gray.400" fontSize={{ base: "md", md: "lg" }} lineHeight="1.9">
                   {t("methodologySubtitle")}
                 </Text>
               </Stack>
@@ -1134,18 +1713,19 @@ export default function Home() {
                   left="10%"
                   right="10%"
                   h="4px"
-                  bg="linear-gradient(90deg, #D4AF37, #0b1f3b, #00d4ff, #0b1f3b, #D4AF37)"
+                  bg="#00FF2A"
+                  boxShadow="0 0 15px rgba(0, 255, 42, 0.5)"
                   borderRadius="full"
                   zIndex={0}
                 />
 
                 <SimpleGrid columns={{ base: 1, md: 5 }} gap={{ base: 6, md: 4 }}>
                   {[
-                    { step: "step1", icon: "🏗️", color: "#D4AF37" },
-                    { step: "step2", icon: "💡", color: "#00d4ff" },
-                    { step: "step3", icon: "⚡", color: "#10b981" },
-                    { step: "step4", icon: "📊", color: "#f59e0b" },
-                    { step: "step5", icon: "🏆", color: "#D4AF37" },
+                    { step: "step1", icon: "🏗️" },
+                    { step: "step2", icon: "💡" },
+                    { step: "step3", icon: "⚡" },
+                    { step: "step4", icon: "📊" },
+                    { step: "step5", icon: "🏆" },
                   ].map((item, index) => (
                     <Stack
                       key={item.step}
@@ -1160,25 +1740,24 @@ export default function Home() {
                           position="absolute"
                           inset="-6px"
                           borderRadius="full"
-                          bg={item.color}
+                          bg="radial-gradient(circle, rgba(0, 255, 42, 0.4) 0%, transparent 70%)"
                           filter="blur(12px)"
-                          opacity={0.4}
                         />
                         <Box
                           position="relative"
                           w="80px"
                           h="80px"
                           borderRadius="full"
-                          bg="surface"
-                          borderWidth="4px"
-                          borderColor={item.color}
+                          bg="#0A0A0A"
+                          border="3px solid"
+                          borderColor="#00FF2A"
                           display="flex"
                           alignItems="center"
                           justifyContent="center"
                           fontSize="2xl"
-                          boxShadow={`0 8px 24px ${item.color}40`}
+                          boxShadow="0 0 20px rgba(0, 255, 42, 0.4)"
                           transition="all 0.3s ease"
-                          _hover={{ transform: "scale(1.1)" }}
+                          _hover={{ transform: "scale(1.1)", boxShadow: "0 0 30px rgba(0, 255, 42, 0.6)" }}
                         >
                           {item.icon}
                         </Box>
@@ -1190,23 +1769,23 @@ export default function Home() {
                           w="28px"
                           h="28px"
                           borderRadius="full"
-                          bg={item.color}
-                          color="white"
+                          bg="#00FF2A"
+                          color="black"
                           fontSize="sm"
                           fontWeight="900"
                           display="flex"
                           alignItems="center"
                           justifyContent="center"
-                          boxShadow="0 4px 12px rgba(0,0,0,0.2)"
+                          boxShadow="0 0 15px rgba(0, 255, 42, 0.5)"
                         >
                           {index + 1}
                         </Box>
                       </Box>
                       <Stack gap={1} align="center">
-                        <Text fontWeight="800" color="text" fontSize="md">
+                        <Text fontWeight="800" color="white" fontSize="md">
                           {t(`methodologySteps.${item.step}.title`)}
                         </Text>
-                        <Text fontSize="xs" color="muted" textAlign="center" maxW="160px">
+                        <Text fontSize="xs" color="gray.400" textAlign="center" maxW="160px">
                           {t(`methodologySteps.${item.step}.description`)}
                         </Text>
                       </Stack>
@@ -1220,7 +1799,7 @@ export default function Home() {
           {/* Elegant Divider */}
           <Box 
             h="1px" 
-            bg="linear-gradient(90deg, transparent, #D4AF37, transparent)"
+            bg="linear-gradient(90deg, transparent, #00FF2A, transparent)"
             borderRadius="full"
           />
 
@@ -1229,21 +1808,9 @@ export default function Home() {
             position="relative"
             py={4}
             css={{
-              "@keyframes slideIn": {
-                "0%": { opacity: 0, transform: "translateY(30px)" },
-                "100%": { opacity: 1, transform: "translateY(0)" },
-              },
               "@keyframes cardFloat": {
-                "0%, 100%": { transform: "translateY(0) rotate(0deg)" },
-                "50%": { transform: "translateY(-10px) rotate(1deg)" },
-              },
-              "@keyframes shimmerText": {
-                "0%": { backgroundPosition: "200% center" },
-                "100%": { backgroundPosition: "-200% center" },
-              },
-              "@keyframes borderGlow": {
-                "0%, 100%": { opacity: 0.5 },
-                "50%": { opacity: 1 },
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-8px)" },
               },
             }}
           >
@@ -1251,48 +1818,27 @@ export default function Home() {
               {/* Section Header */}
               <Stack gap={5} align={{ base: "center", md: "flex-start" }} maxW="750px">
                 <Badge
-                  position="relative"
-                  overflow="hidden"
-                  bg="transparent"
-                  color="white"
+                  bg="#0A0A0A"
+                  color="#00FF2A"
                   px={5}
                   py={2.5}
                   borderRadius="full"
                   fontSize="sm"
                   fontWeight="700"
-                  css={{
-                    background: "linear-gradient(135deg, #0b1f3b, #1a365d)",
-                    boxShadow: "0 4px 15px rgba(11, 31, 59, 0.3)",
-                    "&::before": {
-                      content: '""',
-                      position: "absolute",
-                      inset: 0,
-                      borderRadius: "full",
-                      padding: "2px",
-                      background: "linear-gradient(135deg, #c8a24a, #00d4ff, #c8a24a)",
-                      mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                      maskComposite: "exclude",
-                      animation: "borderGlow 3s ease-in-out infinite",
-                    },
-                  }}
+                  border="1px solid"
+                  borderColor="rgba(0, 255, 42, 0.5)"
+                  boxShadow="0 0 15px rgba(0, 255, 42, 0.3)"
                 >
                   {t("programsBadge")}
                 </Badge>
                 <Heading 
                   size={{ base: "lg", md: "xl" }} 
                   lineHeight="1.3"
-                  css={{
-                    background: "linear-gradient(90deg, #0b1f3b, #c8a24a, #0b1f3b, #c8a24a)",
-                    backgroundSize: "200% auto",
-                    backgroundClip: "text",
-                    WebkitBackgroundClip: "text",
-                    color: "transparent",
-                    animation: "shimmerText 6s linear infinite",
-                  }}
+                  color="white"
                 >
                   {t("programsTitle")}
                 </Heading>
-                <Text color="muted" fontSize={{ base: "md", md: "lg" }} lineHeight="1.9">
+                <Text color="gray.400" fontSize={{ base: "md", md: "lg" }} lineHeight="1.9">
                   {t("programsDescription")}
                 </Text>
               </Stack>
@@ -1303,8 +1849,6 @@ export default function Home() {
                     title: t("programsList.preparatory.title"), 
                     desc: t("programsList.preparatory.description"),
                     icon: "🎓", 
-                    gradient: "linear-gradient(135deg, #0b1f3b, #1a365d)",
-                    accentGradient: "linear-gradient(135deg, #c8a24a, #ffd700)",
                     sessions: t("programsList.preparatory.sessions"),
                     delay: "0s",
                     slug: "preparatory-year",
@@ -1313,8 +1857,6 @@ export default function Home() {
                     title: t("programsList.shariah.title"), 
                     desc: t("programsList.shariah.description"),
                     icon: "📖", 
-                    gradient: "linear-gradient(135deg, #065f46, #047857)",
-                    accentGradient: "linear-gradient(135deg, #00ff88, #10b981)",
                     sessions: t("programsList.shariah.sessions"),
                     delay: "0.15s",
                     slug: "shariah-track",
@@ -1323,8 +1865,6 @@ export default function Home() {
                     title: t("programsList.arabicReading.title"), 
                     desc: t("programsList.arabicReading.description"),
                     icon: "✍️", 
-                    gradient: "linear-gradient(135deg, #92400e, #b45309)",
-                    accentGradient: "linear-gradient(135deg, #fbbf24, #f59e0b)",
                     sessions: t("programsList.arabicReading.sessions"),
                     delay: "0.3s",
                     slug: "arabic-reading",
@@ -1333,37 +1873,23 @@ export default function Home() {
                   <Link key={item.title} href={`/programs#${item.slug}`} style={{ textDecoration: "none" }}>
                     <Box
                       position="relative"
+                      bg="#050505"
                       borderRadius="2xl"
                       overflow="hidden"
                       cursor="pointer"
+                      border="1px solid"
+                      borderColor="rgba(0, 255, 42, 0.3)"
+                      boxShadow="0 0 20px rgba(0, 255, 42, 0.15)"
+                      p={8}
+                      transition="all 0.4s ease"
                       css={{
                         animation: `cardFloat 5s ease-in-out infinite`,
                         animationDelay: item.delay,
                       }}
-                    >
-                    {/* Animated border */}
-                    <Box
-                      position="absolute"
-                      inset="-2px"
-                      borderRadius="2xl"
-                      background={item.accentGradient}
-                      opacity={0.6}
-                      transition="opacity 0.4s ease"
-                      css={{
-                        animation: "borderGlow 3s ease-in-out infinite",
-                      }}
-                    />
-                    
-                    <Box
-                      position="relative"
-                      bg="surface"
-                      borderRadius="xl"
-                      m="2px"
-                      p={8}
-                      transition="all 0.4s ease"
                       _hover={{
                         transform: "translateY(-12px) scale(1.02)",
-                        boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+                        borderColor: "rgba(0, 255, 42, 0.6)",
+                        boxShadow: "0 0 30px rgba(0, 255, 42, 0.4), 0 0 60px rgba(0, 255, 42, 0.2)",
                       }}
                     >
                       <Stack gap={5}>
@@ -1375,13 +1901,14 @@ export default function Home() {
                               position="absolute"
                               inset="-6px"
                               borderRadius="xl"
-                              background={item.accentGradient}
+                              bg="radial-gradient(circle, rgba(0, 255, 42, 0.3) 0%, transparent 70%)"
                               filter="blur(12px)"
-                              opacity={0.4}
                             />
                             <Box
                               position="relative"
-                              background={item.gradient}
+                              bg="#0A0A0A"
+                              border="2px solid"
+                              borderColor="rgba(0, 255, 42, 0.5)"
                               color="white"
                               w="64px"
                               h="64px"
@@ -1390,7 +1917,7 @@ export default function Home() {
                               alignItems="center"
                               justifyContent="center"
                               fontSize="2xl"
-                              boxShadow="0 8px 20px rgba(0, 0, 0, 0.2)"
+                              boxShadow="0 0 15px rgba(0, 255, 42, 0.3)"
                               transition="transform 0.3s ease"
                               _hover={{ transform: "scale(1.1) rotate(5deg)" }}
                             >
@@ -1398,14 +1925,16 @@ export default function Home() {
                             </Box>
                           </Box>
                           <Badge
-                            background={item.accentGradient}
-                            color="white"
+                            bg="#0A0A0A"
+                            color="#00FF2A"
                             px={4}
                             py={2}
                             borderRadius="full"
                             fontSize="xs"
                             fontWeight="800"
-                            boxShadow="0 4px 12px rgba(0, 0, 0, 0.15)"
+                            border="1px solid"
+                            borderColor="rgba(0, 255, 42, 0.4)"
+                            boxShadow="0 0 10px rgba(0, 255, 42, 0.2)"
                           >
                             {item.sessions}
                           </Badge>
@@ -1416,16 +1945,11 @@ export default function Home() {
                           <Heading 
                             size="md" 
                             mb={3}
-                            css={{
-                              background: item.gradient,
-                              backgroundClip: "text",
-                              WebkitBackgroundClip: "text",
-                              color: "transparent",
-                            }}
+                            color="white"
                           >
                             {item.title}
                           </Heading>
-                          <Text color="muted" fontSize="sm" lineHeight="1.8">
+                          <Text color="gray.400" fontSize="sm" lineHeight="1.8">
                             {item.desc}
                           </Text>
                         </Box>
@@ -1433,7 +1957,8 @@ export default function Home() {
                         {/* Bottom accent */}
                         <Box
                           h="4px"
-                          background={item.accentGradient}
+                          bg="#00FF2A"
+                          boxShadow="0 0 10px rgba(0, 255, 42, 0.5)"
                           borderRadius="full"
                           w="50px"
                           transition="width 0.4s ease"
@@ -1444,13 +1969,13 @@ export default function Home() {
                         <Flex 
                           align="center" 
                           gap={2}
-                          color="muted"
+                          color="gray.500"
                           fontSize="sm"
                           fontWeight="600"
                           aria-hidden="true"
                           transition="all 0.3s ease"
                           _groupHover={{ 
-                            color: "brand.500",
+                            color: "#00FF2A",
                             gap: 3,
                           }}
                         >
@@ -1459,7 +1984,6 @@ export default function Home() {
                         </Flex>
                       </Stack>
                     </Box>
-                  </Box>
                   </Link>
                 ))}
               </SimpleGrid>
@@ -1469,7 +1993,7 @@ export default function Home() {
           {/* Elegant Divider */}
           <Box 
             h="1px" 
-            bg="border"
+            bg="linear-gradient(90deg, transparent, #00FF2A, transparent)"
             borderRadius="full"
           />
 
@@ -1480,15 +2004,6 @@ export default function Home() {
               "@keyframes featureSlide": {
                 "0%": { opacity: 0, transform: "translateX(20px)" },
                 "100%": { opacity: 1, transform: "translateX(0)" },
-              },
-              "@keyframes iconSpin": {
-                "0%": { transform: "rotate(0deg)" },
-                "100%": { transform: "rotate(360deg)" },
-              },
-              "@keyframes gradientFlow": {
-                "0%": { backgroundPosition: "0% 50%" },
-                "50%": { backgroundPosition: "100% 50%" },
-                "100%": { backgroundPosition: "0% 50%" },
               },
             }}
           >
@@ -1501,49 +2016,29 @@ export default function Home() {
               <Stack flex="1" gap={8}>
                 <Stack gap={4}>
                   <Badge
-                    position="relative"
-                    overflow="hidden"
-                    bg="transparent"
-                    color="white"
+                    bg="#0A0A0A"
+                    color="#00FF2A"
                     px={5}
                     py={2.5}
                     borderRadius="full"
                     fontSize="sm"
                     fontWeight="700"
                     w="fit-content"
-                    css={{
-                      background: "linear-gradient(135deg, #0b1f3b, #1a365d)",
-                      boxShadow: "0 4px 15px rgba(11, 31, 59, 0.3)",
-                      "&::before": {
-                        content: '""',
-                        position: "absolute",
-                        inset: 0,
-                        borderRadius: "full",
-                        padding: "2px",
-                        background: "linear-gradient(135deg, #c8a24a, #00d4ff)",
-                        mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                        maskComposite: "exclude",
-                      },
-                    }}
+                    border="1px solid"
+                    borderColor="rgba(0, 255, 42, 0.5)"
+                    boxShadow="0 0 15px rgba(0, 255, 42, 0.3)"
                   >
                     {t("teachersBadge")}
                   </Badge>
                   <Heading 
                     size={{ base: "lg", md: "xl" }} 
                     lineHeight="1.3"
-                    css={{
-                      background: "linear-gradient(135deg, #0b1f3b 0%, #c8a24a 50%, #0b1f3b 100%)",
-                      backgroundSize: "200% auto",
-                      backgroundClip: "text",
-                      WebkitBackgroundClip: "text",
-                      color: "transparent",
-                      animation: "gradientFlow 4s ease infinite",
-                    }}
+                    color="white"
                   >
                     {t("teachersTitle")}<br />{t("teachersSubtitle")}
                   </Heading>
                 </Stack>
-                <Text color="muted" fontSize={{ base: "md", md: "lg" }} lineHeight="1.9" maxW="500px">
+                <Text color="gray.400" fontSize={{ base: "md", md: "lg" }} lineHeight="1.9" maxW="500px">
                   {t("teachersDescription")}
                 </Text>
                 <Flex gap={4} pt={2}>
@@ -1552,22 +2047,21 @@ export default function Home() {
                       position="absolute"
                       inset="-3px"
                       borderRadius="xl"
-                      background="linear-gradient(135deg, #c8a24a, #00d4ff)"
+                      bg="radial-gradient(circle, rgba(0, 255, 42, 0.4) 0%, transparent 70%)"
                       filter="blur(10px)"
-                      opacity={0.4}
                     />
                     <Button
                       position="relative"
-                      bg="primary"
-                      color="primaryText"
+                      bg="#00FF2A"
+                      color="black"
                       size="lg"
                       px={10}
                       fontWeight="700"
-                      boxShadow="0 8px 25px rgba(11, 31, 59, 0.3)"
+                      boxShadow="0 0 20px rgba(0, 255, 42, 0.4)"
                       _hover={{ 
-                        bg: "primaryHover",
+                        bg: "#4DFF6A",
                         transform: "translateY(-4px) scale(1.02)",
-                        boxShadow: "0 12px 35px rgba(11, 31, 59, 0.4)"
+                        boxShadow: "0 0 30px rgba(0, 255, 42, 0.6)"
                       }}
                       transition="all 0.3s ease"
                     >
@@ -1583,71 +2077,54 @@ export default function Home() {
                 flex="1"
                 w="100%"
                 maxW={{ base: "100%", md: "520px" }}
+                bg="#050505"
                 borderRadius="2xl"
-                overflow="hidden"
+                border="1px solid"
+                borderColor="rgba(0, 255, 42, 0.3)"
+                boxShadow="0 0 30px rgba(0, 255, 42, 0.2), inset 0 0 30px rgba(0, 255, 42, 0.05)"
+                p={8}
               >
-                {/* Animated border */}
-                <Box
-                  position="absolute"
-                  inset="-2px"
-                  borderRadius="2xl"
-                  background="linear-gradient(135deg, #c8a24a, #0b1f3b, #00d4ff, #0b1f3b, #c8a24a)"
-                  backgroundSize="300% 300%"
-                  css={{ animation: "gradientFlow 6s ease infinite" }}
-                />
-                
-                <Box
-                  position="relative"
-                  bg="surface"
-                  borderRadius="xl"
-                  m="2px"
-                  p={8}
-                >
                   <SimpleGrid columns={2} gap={4}>
                     {[
                       { 
                         text: t("teacherFeatures.dragDrop"), 
                         icon: "🎨",
-                        gradient: "linear-gradient(135deg, #c8a24a, #ffd700)",
                         delay: "0s",
                       },
                       { 
                         text: t("teacherFeatures.qualityReview"), 
                         icon: "✅",
-                        gradient: "linear-gradient(135deg, #10b981, #34d399)",
                         delay: "0.1s",
                       },
                       { 
                         text: t("teacherFeatures.analytics"), 
                         icon: "📊",
-                        gradient: "linear-gradient(135deg, #f59e0b, #fbbf24)",
                         delay: "0.2s",
                       },
                       { 
                         text: t("teacherFeatures.smartAssessment"), 
                         icon: "🎯",
-                        gradient: "linear-gradient(135deg, #00d4ff, #0099ff)",
                         delay: "0.3s",
                       },
                     ].map((item, _index) => (
                       <Box
                         key={item.text}
                         position="relative"
-                        bg="backgroundAlt"
+                        bg="#0A0A0A"
                         borderRadius="xl"
                         p={5}
                         transition="all 0.4s ease"
-                        borderWidth="2px"
-                        borderColor="transparent"
+                        border="1px solid"
+                        borderColor="rgba(0, 255, 42, 0.2)"
                         css={{
                           animation: `featureSlide 0.6s ease forwards`,
                           animationDelay: item.delay,
                         }}
                         _hover={{
-                          bg: "surfaceHover",
-                          borderColor: "brand.500",
+                          bg: "#0A0A0A",
+                          borderColor: "rgba(0, 255, 42, 0.6)",
                           transform: "translateY(-8px) scale(1.03)",
-                          boxShadow: "0 15px 30px rgba(0, 0, 0, 0.1)",
+                          boxShadow: "0 0 20px rgba(0, 255, 42, 0.3)",
                         }}
                       >
                         <Stack gap={4} align="center" textAlign="center">
@@ -1657,13 +2134,14 @@ export default function Home() {
                               position="absolute"
                               inset="-6px"
                               borderRadius="xl"
-                              background={item.gradient}
+                              bg="radial-gradient(circle, rgba(0, 255, 42, 0.3) 0%, transparent 70%)"
                               filter="blur(10px)"
-                              opacity={0.3}
                             />
                             <Box
                               position="relative"
-                              background={item.gradient}
+                              bg="#0A0A0A"
+                              border="2px solid"
+                              borderColor="rgba(0, 255, 42, 0.5)"
                               w="56px"
                               h="56px"
                               borderRadius="xl"
@@ -1671,7 +2149,7 @@ export default function Home() {
                               alignItems="center"
                               justifyContent="center"
                               fontSize="xl"
-                              boxShadow="0 6px 15px rgba(0, 0, 0, 0.15)"
+                              boxShadow="0 0 15px rgba(0, 255, 42, 0.3)"
                               transition="transform 0.3s ease"
                               _hover={{ transform: "rotate(10deg) scale(1.1)" }}
                             >
@@ -1682,7 +2160,7 @@ export default function Home() {
                             fontWeight="700" 
                             fontSize="sm"
                             lineHeight="1.5"
-                            color="text"
+                            color="white"
                           >
                             {item.text}
                           </Text>
@@ -1690,7 +2168,6 @@ export default function Home() {
                       </Box>
                     ))}
                   </SimpleGrid>
-                </Box>
               </Box>
             </Flex>
           </Box>
@@ -1709,55 +2186,50 @@ export default function Home() {
                 "0%, 100%": { transform: "translateY(0)" },
                 "50%": { transform: "translateY(-6px)" },
               },
-              "@keyframes quoteGlow": {
-                "0%, 100%": { opacity: 0.6 },
-                "50%": { opacity: 1 },
-              },
             }}
           >
             <Stack gap={10} textAlign="center">
               <Stack gap={5} align="center" maxW="800px" mx="auto">
                 <Badge
-                  bg="linear-gradient(135deg, #10b981, #34d399)"
-                  color="white"
+                  bg="#0A0A0A"
+                  color="#00FF2A"
                   px={6}
                   py={2.5}
                   borderRadius="full"
                   fontSize="sm"
                   fontWeight="800"
-                  boxShadow="0 4px 15px rgba(16, 185, 129, 0.4)"
+                  border="1px solid"
+                  borderColor="rgba(0, 255, 42, 0.5)"
+                  boxShadow="0 0 15px rgba(0, 255, 42, 0.3)"
                 >
                   {t("testimonialsBadge")}
                 </Badge>
                 <Heading
                   size={{ base: "lg", md: "xl" }}
-                  css={{
-                    background: "linear-gradient(135deg, #0b1f3b 0%, #10b981 50%, #0b1f3b 100%)",
-                    backgroundSize: "200% auto",
-                    backgroundClip: "text",
-                    WebkitBackgroundClip: "text",
-                    color: "transparent",
-                  }}
+                  color="white"
                 >
                   {t("testimonialsTitle")}
                 </Heading>
-                <Text color="muted" fontSize={{ base: "md", md: "lg" }} lineHeight="1.9">
+                <Text color="gray.400" fontSize={{ base: "md", md: "lg" }} lineHeight="1.9">
                   {t("testimonialsSubtitle")}
                 </Text>
               </Stack>
 
               <SimpleGrid columns={{ base: 1, md: 3 }} gap={8}>
                 {[
-                  { key: "student1", gradient: "linear-gradient(135deg, #D4AF37, #F7DC6F)" },
-                  { key: "student2", gradient: "linear-gradient(135deg, #00d4ff, #0099ff)" },
-                  { key: "student3", gradient: "linear-gradient(135deg, #10b981, #34d399)" },
+                  { key: "student1" },
+                  { key: "student2" },
+                  { key: "student3" },
                 ].map((student, index) => (
                   <Box
                     key={student.key}
                     position="relative"
-                    bg="surface"
+                    bg="#050505"
                     borderRadius="2xl"
                     overflow="hidden"
+                    border="1px solid"
+                    borderColor="rgba(0, 255, 42, 0.3)"
+                    boxShadow="0 0 20px rgba(0, 255, 42, 0.15)"
                     transition="all 0.4s ease"
                     css={{
                       animation: `testimonialFloat 5s ease-in-out infinite`,
@@ -1765,7 +2237,8 @@ export default function Home() {
                     }}
                     _hover={{
                       transform: "translateY(-12px) scale(1.02)",
-                      boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)",
+                      borderColor: "rgba(0, 255, 42, 0.6)",
+                      boxShadow: "0 0 30px rgba(0, 255, 42, 0.3)",
                     }}
                   >
                     {/* Quote icon accent */}
@@ -1774,9 +2247,7 @@ export default function Home() {
                       top={4}
                       right={4}
                       fontSize="4xl"
-                      color="backgroundAlt"
-                      opacity={0.5}
-                      css={{ animation: "quoteGlow 3s ease-in-out infinite" }}
+                      color="rgba(0, 255, 42, 0.2)"
                     >
                       ❝
                     </Box>
@@ -1785,7 +2256,7 @@ export default function Home() {
                       {/* Quote */}
                       <Text
                         fontSize="sm"
-                        color="muted"
+                        color="gray.400"
                         lineHeight="1.9"
                         fontStyle="italic"
                         position="relative"
@@ -1798,7 +2269,8 @@ export default function Home() {
                       <Box
                         h="2px"
                         w="60px"
-                        background={student.gradient}
+                        bg="#00FF2A"
+                        boxShadow="0 0 10px rgba(0, 255, 42, 0.5)"
                         borderRadius="full"
                       />
 
@@ -1809,32 +2281,36 @@ export default function Home() {
                           w="50px"
                           h="50px"
                           borderRadius="full"
-                          background={student.gradient}
+                          bg="#0A0A0A"
+                          border="2px solid"
+                          borderColor="rgba(0, 255, 42, 0.5)"
                           display="flex"
                           alignItems="center"
                           justifyContent="center"
                           fontSize="xl"
-                          color="white"
+                          color="#00FF2A"
                           fontWeight="800"
-                          boxShadow="0 4px 12px rgba(0,0,0,0.15)"
+                          boxShadow="0 0 15px rgba(0, 255, 42, 0.3)"
                         >
                           {t(`testimonials.${student.key}.name`).charAt(0)}
                         </Box>
                         <Stack gap={0}>
-                          <Text fontWeight="800" fontSize="sm" color="text">
+                          <Text fontWeight="800" fontSize="sm" color="white">
                             {t(`testimonials.${student.key}.name`)}
                           </Text>
-                          <Text fontSize="xs" color="muted">
+                          <Text fontSize="xs" color="gray.500">
                             {t(`testimonials.${student.key}.location`)}
                           </Text>
                           <Badge
-                            bg="backgroundAlt"
-                            color="accent"
+                            bg="#0A0A0A"
+                            color="#00FF2A"
                             fontSize="xs"
                             px={2}
                             py={0.5}
                             borderRadius="md"
                             mt={1}
+                            border="1px solid"
+                            borderColor="rgba(0, 255, 42, 0.3)"
                           >
                             {t(`testimonials.${student.key}.program`)}
                           </Badge>
@@ -1852,17 +2328,19 @@ export default function Home() {
             <Stack gap={8} align="center">
               <Stack gap={2} align="center">
                 <Badge
-                  bg="backgroundAlt"
-                  color="muted"
+                  bg="#0A0A0A"
+                  color="#00FF2A"
                   px={4}
                   py={2}
                   borderRadius="full"
                   fontSize="sm"
                   fontWeight="700"
+                  border="1px solid"
+                  borderColor="rgba(0, 255, 42, 0.4)"
                 >
                   {t("partnersBadge")}
                 </Badge>
-                <Text fontSize="lg" fontWeight="700" color="text">
+                <Text fontSize="lg" fontWeight="700" color="white">
                   {t("partnersTitle")}
                 </Text>
               </Stack>
@@ -1873,26 +2351,29 @@ export default function Home() {
                 wrap="wrap"
                 justify="center"
                 align="center"
-                opacity={0.6}
-                filter="grayscale(100%)"
+                opacity={0.7}
                 transition="all 0.3s ease"
-                _hover={{ opacity: 1, filter: "grayscale(0%)" }}
+                _hover={{ opacity: 1 }}
               >
                 {["🏛️ Al-Azhar", "📚 Islamic University", "🎓 Dar Al-Uloom", "🌍 ISNA", "📖 Quran Academy"].map((partner) => (
                   <Box
                     key={partner}
-                    bg="backgroundAlt"
+                    bg="#0A0A0A"
                     px={6}
                     py={3}
                     borderRadius="lg"
                     fontSize="sm"
                     fontWeight="600"
-                    color="muted"
+                    color="gray.400"
+                    border="1px solid"
+                    borderColor="rgba(0, 255, 42, 0.2)"
                     transition="all 0.3s ease"
                     _hover={{
-                      bg: "surface",
-                      color: "text",
+                      bg: "#050505",
+                      color: "#00FF2A",
+                      borderColor: "rgba(0, 255, 42, 0.5)",
                       transform: "scale(1.05)",
+                      boxShadow: "0 0 15px rgba(0, 255, 42, 0.2)",
                     }}
                   >
                     {partner}
@@ -1905,35 +2386,13 @@ export default function Home() {
           {/* Free Assessment Lead Magnet Section */}
           <Box
             position="relative"
+            bg="#050505"
             borderRadius="2xl"
-            overflow="hidden"
-            css={{
-              "@keyframes assessmentPulse": {
-                "0%, 100%": { boxShadow: "0 0 30px rgba(212, 175, 55, 0.3)" },
-                "50%": { boxShadow: "0 0 60px rgba(212, 175, 55, 0.5)" },
-              },
-            }}
+            border="1px solid"
+            borderColor="rgba(0, 255, 42, 0.3)"
+            boxShadow="0 0 30px rgba(0, 255, 42, 0.2), inset 0 0 30px rgba(0, 255, 42, 0.05)"
+            p={{ base: 8, md: 12 }}
           >
-            {/* Gold gradient border */}
-            <Box
-              position="absolute"
-              inset="-2px"
-              borderRadius="2xl"
-              background="linear-gradient(135deg, #D4AF37, #F7DC6F, #D4AF37)"
-              backgroundSize="200% 200%"
-              css={{
-                animation: "gradientShift 4s ease infinite",
-              }}
-            />
-            
-            <Box
-              position="relative"
-              bg="linear-gradient(135deg, #0b1f3b 0%, #1a365d 100%)"
-              borderRadius="xl"
-              m="2px"
-              p={{ base: 8, md: 12 }}
-              color="white"
-            >
               <Flex
                 direction={{ base: "column", md: "row" }}
                 align="center"
@@ -1943,8 +2402,8 @@ export default function Home() {
                 {/* Content */}
                 <Stack gap={4} flex="1" textAlign={{ base: "center", md: "start" }}>
                   <Badge
-                    bg="linear-gradient(135deg, #D4AF37, #F7DC6F)"
-                    color="#0b1f3b"
+                    bg="#0A0A0A"
+                    color="#00FF2A"
                     px={4}
                     py={2}
                     borderRadius="full"
@@ -1952,13 +2411,16 @@ export default function Home() {
                     fontWeight="800"
                     w="fit-content"
                     mx={{ base: "auto", md: 0 }}
+                    border="1px solid"
+                    borderColor="rgba(0, 255, 42, 0.5)"
+                    boxShadow="0 0 15px rgba(0, 255, 42, 0.3)"
                   >
                     {t("assessmentBadge")}
                   </Badge>
                   <Heading size={{ base: "md", md: "lg" }} color="white">
                     {t("assessmentTitle")}
                   </Heading>
-                  <Text color="whiteAlpha.800" fontSize={{ base: "sm", md: "md" }} lineHeight="1.8">
+                  <Text color="gray.400" fontSize={{ base: "sm", md: "md" }} lineHeight="1.8">
                     {t("assessmentSubtitle")}
                   </Text>
                   
@@ -1973,12 +2435,15 @@ export default function Home() {
                         key={feature.key}
                         align="center"
                         gap={2}
-                        bg="whiteAlpha.100"
+                        bg="#0A0A0A"
+                        border="1px solid"
+                        borderColor="rgba(0, 255, 42, 0.3)"
                         px={3}
                         py={1.5}
                         borderRadius="full"
                         fontSize="xs"
                         fontWeight="600"
+                        color="gray.300"
                       >
                         <Text>{feature.icon}</Text>
                         <Text>{t(`assessmentFeatures.${feature.key}`)}</Text>
@@ -1993,25 +2458,24 @@ export default function Home() {
                     position="absolute"
                     inset="-4px"
                     borderRadius="xl"
-                    bg="linear-gradient(135deg, #D4AF37, #F7DC6F)"
+                    bg="radial-gradient(circle, rgba(0, 255, 42, 0.4) 0%, transparent 70%)"
                     filter="blur(15px)"
-                    opacity={0.5}
-                    css={{ animation: "assessmentPulse 3s ease-in-out infinite" }}
                   />
                   <Button
                     asChild
                     position="relative"
-                    bg="linear-gradient(135deg, #D4AF37, #F7DC6F)"
-                    color="#0b1f3b"
+                    bg="#00FF2A"
+                    color="black"
                     size="lg"
                     px={10}
                     h="60px"
                     fontSize="lg"
                     fontWeight="800"
-                    boxShadow="0 8px 30px rgba(212, 175, 55, 0.4)"
+                    boxShadow="0 0 20px rgba(0, 255, 42, 0.4)"
                     _hover={{
+                      bg: "#4DFF6A",
                       transform: "translateY(-4px) scale(1.02)",
-                      boxShadow: "0 12px 40px rgba(212, 175, 55, 0.5)",
+                      boxShadow: "0 0 30px rgba(0, 255, 42, 0.6)",
                     }}
                     transition="all 0.3s ease"
                   >
@@ -2019,69 +2483,125 @@ export default function Home() {
                   </Button>
                 </Box>
               </Flex>
-            </Box>
+          </Box>
+
+          {/* Newsletter Signup Section - Like SeekersGuidance */}
+          <Box
+            position="relative"
+            py={{ base: 10, md: 14 }}
+            bg="#050505"
+            borderRadius="2xl"
+            border="1px solid"
+            borderColor="rgba(0, 255, 42, 0.3)"
+            boxShadow="0 0 20px rgba(0, 255, 42, 0.15)"
+            overflow="hidden"
+          >
+            {/* Decorative background */}
+            <Box
+              position="absolute"
+              top="-50%"
+              right="-10%"
+              w="400px"
+              h="400px"
+              borderRadius="full"
+              bg="radial-gradient(circle, rgba(0, 255, 42, 0.08) 0%, transparent 70%)"
+              pointerEvents="none"
+            />
+            
+            <Container maxW="3xl">
+              <Stack gap={6} align="center" textAlign="center">
+                <Box
+                  w="70px"
+                  h="70px"
+                  borderRadius="full"
+                  bg="#0A0A0A"
+                  border="2px solid"
+                  borderColor="rgba(0, 255, 42, 0.5)"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  fontSize="2xl"
+                  boxShadow="0 0 20px rgba(0, 255, 42, 0.3)"
+                >
+                  📬
+                </Box>
+                
+                <Stack gap={2}>
+                  <Heading size={{ base: "md", md: "lg" }} color="white">
+                    {t("newsletter.title")}
+                  </Heading>
+                  <Text color="gray.400" fontSize={{ base: "sm", md: "md" }} maxW="500px">
+                    {t("newsletter.description")}
+                  </Text>
+                </Stack>
+                
+                <Flex
+                  direction={{ base: "column", sm: "row" }}
+                  gap={3}
+                  w="100%"
+                  maxW="500px"
+                >
+                  <input
+                    type="email"
+                    placeholder={t("newsletter.placeholder")}
+                    style={{
+                      flex: 1,
+                      padding: "16px 20px",
+                      borderRadius: "12px",
+                      border: "1px solid rgba(0, 255, 42, 0.3)",
+                      backgroundColor: "#0A0A0A",
+                      color: "white",
+                      fontSize: "16px",
+                      outline: "none",
+                      transition: "all 0.3s ease",
+                    }}
+                    onFocus={(e) => {
+                      e.target.style.borderColor = "#00FF2A";
+                      e.target.style.boxShadow = "0 0 15px rgba(0, 255, 42, 0.3)";
+                    }}
+                    onBlur={(e) => {
+                      e.target.style.borderColor = "rgba(0, 255, 42, 0.3)";
+                      e.target.style.boxShadow = "none";
+                    }}
+                  />
+                  <Button
+                    bg="#00FF2A"
+                    color="black"
+                    px={8}
+                    h="auto"
+                    py={4}
+                    fontWeight="700"
+                    borderRadius="xl"
+                    boxShadow="0 0 15px rgba(0, 255, 42, 0.3)"
+                    _hover={{
+                      bg: "#4DFF6A",
+                      transform: "translateY(-2px)",
+                      boxShadow: "0 0 25px rgba(0, 255, 42, 0.5)",
+                    }}
+                    transition="all 0.3s ease"
+                  >
+                    {t("newsletter.button")}
+                  </Button>
+                </Flex>
+                
+                <Text fontSize="xs" color="gray.500">
+                  {t("newsletter.privacy")}
+                </Text>
+              </Stack>
+            </Container>
           </Box>
 
           {/* Enhanced CTA Section with Neon Effect */}
           <Box
             position="relative"
+            bg="#050505"
             borderRadius="2xl"
+            border="1px solid"
+            borderColor="rgba(0, 255, 42, 0.4)"
+            boxShadow="0 0 40px rgba(0, 255, 42, 0.3), inset 0 0 40px rgba(0, 255, 42, 0.05)"
+            p={{ base: 10, md: 16 }}
             overflow="hidden"
-            css={{
-              "@keyframes borderRotate": {
-                "0%": { transform: "rotate(0deg)" },
-                "100%": { transform: "rotate(360deg)" },
-              },
-              "@keyframes shimmer": {
-                "0%": { backgroundPosition: "200% 0" },
-                "100%": { backgroundPosition: "-200% 0" },
-              },
-              "@keyframes float": {
-                "0%, 100%": { transform: "translateY(0px)" },
-                "50%": { transform: "translateY(-10px)" },
-              },
-              "@keyframes pulse": {
-                "0%, 100%": { opacity: 0.6 },
-                "50%": { opacity: 1 },
-              },
-            }}
           >
-            {/* Animated neon border */}
-            <Box
-              position="absolute"
-              inset="-3px"
-              borderRadius="2xl"
-              background="conic-gradient(from 0deg, #00d4ff, #0099ff, #c8a24a, #ffd700, #00d4ff)"
-              css={{
-                animation: "borderRotate 6s linear infinite",
-              }}
-              zIndex={0}
-            />
-            
-            {/* Glow effect */}
-            <Box
-              position="absolute"
-              inset="-8px"
-              borderRadius="2xl"
-              background="conic-gradient(from 0deg, rgba(0, 212, 255, 0.5), rgba(0, 153, 255, 0.3), rgba(200, 162, 74, 0.3), rgba(255, 215, 0, 0.5), rgba(0, 212, 255, 0.5))"
-              filter="blur(20px)"
-              css={{
-                animation: "borderRotate 6s linear infinite, pulse 3s ease-in-out infinite",
-              }}
-              zIndex={0}
-            />
-
-            {/* Main content */}
-            <Box
-              position="relative"
-              zIndex={1}
-              bg="primary"
-              color="primaryText"
-              borderRadius="xl"
-              m="3px"
-              p={{ base: 10, md: 16 }}
-              overflow="hidden"
-            >
               {/* Animated background particles */}
               <Box
                 position="absolute"
@@ -2090,9 +2610,8 @@ export default function Home() {
                 width="120px"
                 height="120px"
                 borderRadius="full"
-                bg="linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(255, 215, 0, 0.1))"
+                bg="radial-gradient(circle, rgba(0, 255, 42, 0.15) 0%, transparent 70%)"
                 filter="blur(40px)"
-                css={{ animation: "float 6s ease-in-out infinite" }}
                 pointerEvents="none"
               />
               <Box
@@ -2102,30 +2621,8 @@ export default function Home() {
                 width="100px"
                 height="100px"
                 borderRadius="full"
-                bg="linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(0, 212, 255, 0.1))"
+                bg="radial-gradient(circle, rgba(0, 255, 42, 0.1) 0%, transparent 70%)"
                 filter="blur(40px)"
-                css={{ animation: "float 8s ease-in-out infinite reverse" }}
-                pointerEvents="none"
-              />
-              <Box
-                position="absolute"
-                top="50%"
-                left="50%"
-                transform="translate(-50%, -50%)"
-                width="400px"
-                height="400px"
-                borderRadius="full"
-                bg="radial-gradient(circle, rgba(200, 162, 74, 0.08) 0%, transparent 70%)"
-                pointerEvents="none"
-              />
-              
-              {/* Shimmer overlay */}
-              <Box
-                position="absolute"
-                inset={0}
-                background="linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent)"
-                backgroundSize="200% 100%"
-                css={{ animation: "shimmer 8s ease-in-out infinite" }}
                 pointerEvents="none"
               />
               
@@ -2139,24 +2636,19 @@ export default function Home() {
                 mx="auto"
               >
                 {/* Icon with glow */}
-                <Box
-                  position="relative"
-                  css={{ animation: "float 4s ease-in-out infinite" }}
-                >
+                <Box position="relative">
                   <Box
                     position="absolute"
                     inset="-10px"
                     borderRadius="full"
-                    bg="linear-gradient(135deg, rgba(0, 212, 255, 0.4), rgba(255, 215, 0, 0.4))"
+                    bg="radial-gradient(circle, rgba(0, 255, 42, 0.4) 0%, transparent 70%)"
                     filter="blur(20px)"
-                    css={{ animation: "pulse 2s ease-in-out infinite" }}
                   />
                   <Box
                     position="relative"
-                    bg="linear-gradient(135deg, rgba(0, 212, 255, 0.3), rgba(255, 215, 0, 0.3))"
-                    backdropFilter="blur(10px)"
-                    borderWidth="2px"
-                    borderColor="whiteAlpha.300"
+                    bg="#0A0A0A"
+                    border="2px solid"
+                    borderColor="rgba(0, 255, 42, 0.5)"
                     color="white"
                     w="90px"
                     h="90px"
@@ -2165,7 +2657,7 @@ export default function Home() {
                     alignItems="center"
                     justifyContent="center"
                     fontSize="4xl"
-                    boxShadow="0 8px 32px rgba(0, 212, 255, 0.3)"
+                    boxShadow="0 0 30px rgba(0, 255, 42, 0.4)"
                   >
                     🚀
                   </Box>
@@ -2175,18 +2667,11 @@ export default function Home() {
                   <Heading 
                     size={{ base: "lg", md: "2xl" }} 
                     letterSpacing="tight"
-                    css={{
-                      background: "linear-gradient(135deg, #ffffff 0%, #00d4ff 50%, #ffd700 100%)",
-                      backgroundClip: "text",
-                      WebkitBackgroundClip: "text",
-                      color: "transparent",
-                      backgroundSize: "200% auto",
-                      animation: "shimmer 4s linear infinite",
-                    }}
+                    color="white"
                   >
                     {t("ctaTitle")}
                   </Heading>
-                  <Text color="whiteAlpha.900" fontSize={{ base: "md", md: "xl" }} lineHeight="1.8" maxW="600px">
+                  <Text color="gray.400" fontSize={{ base: "md", md: "xl" }} lineHeight="1.8" maxW="600px">
                     {t("ctaDescription")}
                   </Text>
                 </Stack>
@@ -2201,24 +2686,23 @@ export default function Home() {
                       position="absolute"
                       inset="-2px"
                       borderRadius="lg"
-                      bg="linear-gradient(135deg, #00d4ff, #ffd700)"
+                      bg="radial-gradient(circle, rgba(0, 255, 42, 0.5) 0%, transparent 70%)"
                       filter="blur(8px)"
-                      opacity={0.5}
-                      css={{ animation: "pulse 2s ease-in-out infinite" }}
                     />
                     <Button 
                       position="relative"
-                      bg="white" 
-                      color="primary"
+                      bg="#00FF2A" 
+                      color="black"
                       size="lg"
                       px={10}
                       h="56px"
                       fontSize="lg"
                       fontWeight="700"
-                      boxShadow="0 8px 24px rgba(0, 0, 0, 0.15)"
+                      boxShadow="0 0 20px rgba(0, 255, 42, 0.4)"
                       _hover={{ 
+                        bg: "#4DFF6A",
                         transform: "translateY(-4px) scale(1.02)",
-                        boxShadow: "0 12px 32px rgba(0, 212, 255, 0.3)"
+                        boxShadow: "0 0 30px rgba(0, 255, 42, 0.6)"
                       }}
                       transition="all 0.3s ease"
                       w={{ base: "100%", sm: "auto" }}
@@ -2228,21 +2712,20 @@ export default function Home() {
                   </Box>
                   <Button
                     variant="outline"
-                    borderColor="whiteAlpha.400"
+                    borderColor="rgba(0, 255, 42, 0.4)"
                     borderWidth="2px"
-                    color="white"
+                    color="#00FF2A"
                     size="lg"
                     px={10}
                     h="56px"
                     fontSize="lg"
                     fontWeight="700"
-                    bg="whiteAlpha.100"
-                    backdropFilter="blur(10px)"
+                    bg="transparent"
                     _hover={{ 
-                      bg: "whiteAlpha.200",
+                      bg: "rgba(0, 255, 42, 0.1)",
                       transform: "translateY(-4px)",
-                      borderColor: "cyan.300",
-                      boxShadow: "0 8px 24px rgba(0, 212, 255, 0.2)"
+                      borderColor: "#00FF2A",
+                      boxShadow: "0 0 20px rgba(0, 255, 42, 0.3)"
                     }}
                     transition="all 0.3s ease"
                     w={{ base: "100%", sm: "auto" }}
@@ -2260,29 +2743,27 @@ export default function Home() {
                   fontSize="sm"
                 >
                   {[
-                    { icon: "✓", text: t("trustIndicators.trustedContent"), color: "cyan.300" },
-                    { icon: "✓", text: t("trustIndicators.certifiedCertificates"), color: "yellow.300" },
-                    { icon: "✓", text: t("trustIndicators.continuousSupport"), color: "green.300" },
+                    { icon: "✓", text: t("trustIndicators.trustedContent") },
+                    { icon: "✓", text: t("trustIndicators.certifiedCertificates") },
+                    { icon: "✓", text: t("trustIndicators.continuousSupport") },
                   ].map((item, i) => (
                     <Flex 
                       key={i}
                       align="center" 
                       gap={2}
-                      bg="whiteAlpha.100"
+                      bg="#0A0A0A"
                       px={4}
                       py={2}
                       borderRadius="full"
-                      borderWidth="1px"
-                      borderColor="whiteAlpha.200"
-                      backdropFilter="blur(10px)"
+                      border="1px solid"
+                      borderColor="rgba(0, 255, 42, 0.3)"
                     >
-                      <Text fontSize="lg" color={item.color}>✓</Text>
-                      <Text fontWeight="600" color="whiteAlpha.900">{item.text}</Text>
+                      <Text fontSize="lg" color="#00FF2A">✓</Text>
+                      <Text fontWeight="600" color="gray.300">{item.text}</Text>
                     </Flex>
                   ))}
                 </Flex>
               </Stack>
-            </Box>
           </Box>
         </Stack>
       </Container>

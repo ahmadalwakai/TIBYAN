@@ -38,6 +38,9 @@ const LANGUAGE_NAMES: Record<Locale, { native: string; flag: string }> = {
 // SUB-COMPONENTS
 // ============================================================================
 
+// Neon green accent
+const NEON_GREEN = "#00FF2A";
+
 interface NavLinkProps {
   href: string;
   isActive: boolean;
@@ -57,13 +60,13 @@ function NavLink({ href, isActive, children }: NavLinkProps) {
         borderRadius={`${INTERACTIVE_RADIUS}px`}
         fontSize="sm"
         fontWeight={isActive ? "700" : "500"}
-        color={isActive ? BRAND.gold[500] : "white"}
-        bg={isActive ? "whiteAlpha.200" : "transparent"}
+        color={isActive ? NEON_GREEN : "white"}
+        bg={isActive ? "rgba(0, 255, 42, 0.15)" : "transparent"}
         transition={TRANSITION}
         whiteSpace="nowrap"
         _hover={{
-          bg: "whiteAlpha.150",
-          color: BRAND.gold[400],
+          bg: "rgba(0, 255, 42, 0.1)",
+          color: NEON_GREEN,
         }}
       >
         {children}
@@ -106,18 +109,18 @@ function LanguageSelector({ currentLocale, isRtl, onLocaleChange }: LanguageSele
         display="flex"
         alignItems="center"
         gap={2}
-        bg="whiteAlpha.100"
+        bg="rgba(0, 255, 42, 0.1)"
         borderRadius={`${INTERACTIVE_RADIUS}px`}
         border="1px solid"
-        borderColor="whiteAlpha.200"
+        borderColor="rgba(0, 255, 42, 0.2)"
         color="white"
         fontSize="sm"
         fontWeight="500"
         cursor="pointer"
         transition={TRANSITION}
         _hover={{
-          bg: "whiteAlpha.200",
-          borderColor: "whiteAlpha.300",
+          bg: "rgba(0, 255, 42, 0.2)",
+          borderColor: "rgba(0, 255, 42, 0.4)",
         }}
       >
         <Text fontSize="lg" lineHeight="1">{current.flag}</Text>
@@ -134,12 +137,12 @@ function LanguageSelector({ currentLocale, isRtl, onLocaleChange }: LanguageSele
           top={`calc(100% + 8px)`}
           {...(isRtl ? { right: 0 } : { left: 0 })}
           minW="180px"
-          bg="rgba(11, 31, 58, 0.98)"
+          bg="rgba(0, 0, 0, 0.98)"
           backdropFilter="blur(20px)"
           borderRadius={`${DROPDOWN_RADIUS}px`}
           border="1px solid"
-          borderColor="whiteAlpha.200"
-          boxShadow="0 20px 40px rgba(0, 0, 0, 0.4)"
+          borderColor="rgba(0, 255, 42, 0.3)"
+          boxShadow="0 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 255, 42, 0.1)"
           overflow="hidden"
           zIndex={100}
           py={2}
@@ -161,14 +164,14 @@ function LanguageSelector({ currentLocale, isRtl, onLocaleChange }: LanguageSele
                 display="flex"
                 alignItems="center"
                 gap={3}
-                bg={isActive ? "whiteAlpha.200" : "transparent"}
-                color={isActive ? BRAND.gold[400] : "white"}
+                bg={isActive ? "rgba(0, 255, 42, 0.15)" : "transparent"}
+                color={isActive ? NEON_GREEN : "white"}
                 fontSize="sm"
                 fontWeight={isActive ? "600" : "400"}
                 cursor="pointer"
                 transition={TRANSITION}
                 _hover={{
-                  bg: "whiteAlpha.150",
+                  bg: "rgba(0, 255, 42, 0.1)",
                 }}
               >
                 <Text fontSize="lg">{lang.flag}</Text>
@@ -198,15 +201,15 @@ function ThemeToggle({ isDark, onToggle }: ThemeToggleProps) {
       height={`${ICON_BUTTON_SIZE}px`}
       minW={`${ICON_BUTTON_SIZE}px`}
       borderRadius={`${INTERACTIVE_RADIUS}px`}
-      bg="whiteAlpha.100"
+      bg="rgba(0, 255, 42, 0.1)"
       color="white"
       border="1px solid"
-      borderColor="whiteAlpha.200"
+      borderColor="rgba(0, 255, 42, 0.2)"
       fontSize="lg"
       transition={TRANSITION}
       _hover={{
-        bg: "whiteAlpha.200",
-        borderColor: "whiteAlpha.300",
+        bg: "rgba(0, 255, 42, 0.2)",
+        borderColor: "rgba(0, 255, 42, 0.4)",
         transform: "scale(1.05)",
       }}
     >
@@ -224,24 +227,24 @@ interface ActionButtonProps {
 function ActionButton({ href, variant, children }: ActionButtonProps) {
   const styles = {
     primary: {
-      bg: `linear-gradient(135deg, ${BRAND.gold[500]} 0%, ${BRAND.gold[600]} 100%)`,
-      color: BRAND.navy[900],
+      bg: `linear-gradient(135deg, ${NEON_GREEN} 0%, #00DD24 100%)`,
+      color: "#000000",
       border: "none",
       fontWeight: "700",
       _hover: {
         transform: "translateY(-2px)",
-        boxShadow: `0 8px 20px ${BRAND.gold[500]}40`,
+        boxShadow: `0 8px 20px rgba(0, 255, 42, 0.4)`,
       },
     },
     secondary: {
-      bg: "whiteAlpha.100",
+      bg: "rgba(0, 255, 42, 0.1)",
       color: "white",
       border: "1px solid",
-      borderColor: "whiteAlpha.300",
+      borderColor: "rgba(0, 255, 42, 0.3)",
       fontWeight: "600",
       _hover: {
-        bg: "whiteAlpha.200",
-        borderColor: "whiteAlpha.400",
+        bg: "rgba(0, 255, 42, 0.2)",
+        borderColor: "rgba(0, 255, 42, 0.5)",
       },
     },
     ghost: {
@@ -250,7 +253,7 @@ function ActionButton({ href, variant, children }: ActionButtonProps) {
       border: "1px solid transparent",
       fontWeight: "500",
       _hover: {
-        bg: "whiteAlpha.100",
+        bg: "rgba(0, 255, 42, 0.1)",
       },
     },
   };
@@ -329,15 +332,15 @@ function UserMenu({ user, isRtl, onLogout, t }: UserMenuProps) {
         alignItems="center"
         gap={2}
         px={2}
-        bg="whiteAlpha.100"
+        bg="rgba(0, 255, 42, 0.1)"
         borderRadius={`${INTERACTIVE_RADIUS}px`}
         border="1px solid"
-        borderColor="whiteAlpha.200"
+        borderColor="rgba(0, 255, 42, 0.2)"
         cursor="pointer"
         transition={TRANSITION}
         _hover={{
-          bg: "whiteAlpha.200",
-          borderColor: "whiteAlpha.300",
+          bg: "rgba(0, 255, 42, 0.2)",
+          borderColor: "rgba(0, 255, 42, 0.4)",
         }}
       >
         {/* Avatar */}
@@ -345,8 +348,8 @@ function UserMenu({ user, isRtl, onLogout, t }: UserMenuProps) {
           width="32px"
           height="32px"
           borderRadius="full"
-          bg={`linear-gradient(135deg, ${BRAND.gold[500]} 0%, ${BRAND.gold[600]} 100%)`}
-          color={BRAND.navy[900]}
+          bg={`linear-gradient(135deg, ${NEON_GREEN} 0%, #00DD24 100%)`}
+          color="#000000"
           display="flex"
           alignItems="center"
           justifyContent="center"
@@ -360,11 +363,11 @@ function UserMenu({ user, isRtl, onLogout, t }: UserMenuProps) {
           <Text color="white" fontSize="sm" fontWeight="600" lineHeight="1.2">
             {user.name || user.email.split("@")[0]}
           </Text>
-          <Text color="whiteAlpha.700" fontSize="xs" lineHeight="1.2">
+          <Text color="rgba(255, 255, 255, 0.7)" fontSize="xs" lineHeight="1.2">
             {roleName}
           </Text>
         </Box>
-        <Text fontSize="xs" color="whiteAlpha.600" display={{ base: "none", lg: "block" }}>▼</Text>
+        <Text fontSize="xs" color="rgba(255, 255, 255, 0.6)" display={{ base: "none", lg: "block" }}>▼</Text>
       </Box>
 
       {/* Dropdown Menu */}
@@ -374,22 +377,22 @@ function UserMenu({ user, isRtl, onLogout, t }: UserMenuProps) {
           top={`calc(100% + 8px)`}
           {...(isRtl ? { right: 0 } : { left: 0 })}
           minW="220px"
-          bg="rgba(11, 31, 58, 0.98)"
+          bg="rgba(0, 0, 0, 0.98)"
           backdropFilter="blur(20px)"
           borderRadius={`${DROPDOWN_RADIUS}px`}
           border="1px solid"
-          borderColor="whiteAlpha.200"
-          boxShadow="0 20px 40px rgba(0, 0, 0, 0.4)"
+          borderColor="rgba(0, 255, 42, 0.3)"
+          boxShadow="0 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 255, 42, 0.1)"
           overflow="hidden"
           zIndex={100}
           py={2}
         >
           {/* User Info Header */}
-          <Box px={4} py={3} borderBottom="1px solid" borderColor="whiteAlpha.100">
+          <Box px={4} py={3} borderBottom="1px solid" borderColor="rgba(0, 255, 42, 0.2)">
             <Text color="white" fontSize="sm" fontWeight="600">
               {user.name || user.email.split("@")[0]}
             </Text>
-            <Text color="whiteAlpha.600" fontSize="xs">
+            <Text color="rgba(255, 255, 255, 0.6)" fontSize="xs">
               {user.email}
             </Text>
           </Box>
@@ -535,10 +538,10 @@ function MobileMenu({
         height="100vh"
         width="300px"
         maxW="85vw"
-        bg={BRAND.navy[900]}
+        bg="#000000"
         zIndex={999}
         overflowY="auto"
-        boxShadow="0 0 40px rgba(0, 0, 0, 0.5)"
+        boxShadow="0 0 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 255, 42, 0.1)"
       >
         {/* Header */}
         <Flex
@@ -547,7 +550,7 @@ function MobileMenu({
           align="center"
           justify="space-between"
           borderBottom="1px solid"
-          borderColor="whiteAlpha.100"
+          borderColor="rgba(0, 255, 42, 0.2)"
         >
           <Link href="/" onClick={onClose}>
             <Logo size={40} showText={false} />
@@ -558,7 +561,7 @@ function MobileMenu({
             variant="ghost"
             color="white"
             fontSize="xl"
-            _hover={{ bg: "whiteAlpha.100" }}
+            _hover={{ bg: "rgba(0, 255, 42, 0.1)" }}
           >
             ✕
           </IconButton>
@@ -576,10 +579,10 @@ function MobileMenu({
                 borderRadius={`${INTERACTIVE_RADIUS}px`}
                 fontSize="md"
                 fontWeight={pathname === link.href ? "700" : "500"}
-                color={pathname === link.href ? BRAND.gold[400] : "white"}
-                bg={pathname === link.href ? "whiteAlpha.100" : "transparent"}
+                color={pathname === link.href ? NEON_GREEN : "white"}
+                bg={pathname === link.href ? "rgba(0, 255, 42, 0.15)" : "transparent"}
                 transition={TRANSITION}
-                _hover={{ bg: "whiteAlpha.100" }}
+                _hover={{ bg: "rgba(0, 255, 42, 0.1)" }}
               >
                 {link.label}
               </Box>
@@ -588,8 +591,8 @@ function MobileMenu({
         </Stack>
 
         {/* Language Selection */}
-        <Box px={4} py={4} borderTop="1px solid" borderColor="whiteAlpha.100">
-          <Text color="whiteAlpha.600" fontSize="xs" fontWeight="600" mb={3} textTransform="uppercase">
+        <Box px={4} py={4} borderTop="1px solid" borderColor="rgba(0, 255, 42, 0.2)">
+          <Text color="rgba(255, 255, 255, 0.6)" fontSize="xs" fontWeight="600" mb={3} textTransform="uppercase">
             {t("nav.language")}
           </Text>
           <Stack gap={1}>
@@ -610,12 +613,12 @@ function MobileMenu({
                   alignItems="center"
                   gap={3}
                   borderRadius={`${INTERACTIVE_RADIUS}px`}
-                  bg={isActive ? "whiteAlpha.200" : "transparent"}
-                  color={isActive ? BRAND.gold[400] : "white"}
+                  bg={isActive ? "rgba(0, 255, 42, 0.15)" : "transparent"}
+                  color={isActive ? NEON_GREEN : "white"}
                   fontSize="sm"
                   fontWeight={isActive ? "600" : "400"}
                   transition={TRANSITION}
-                  _hover={{ bg: "whiteAlpha.100" }}
+                  _hover={{ bg: "rgba(0, 255, 42, 0.1)" }}
                 >
                   <Text fontSize="lg">{lang.flag}</Text>
                   <Text>{lang.native}</Text>
@@ -627,7 +630,7 @@ function MobileMenu({
         </Box>
 
         {/* User Actions */}
-        <Box px={4} py={4} borderTop="1px solid" borderColor="whiteAlpha.100">
+        <Box px={4} py={4} borderTop="1px solid" borderColor="rgba(0, 255, 42, 0.2)">
           {user ? (
             <Stack gap={2}>
               {/* User Info */}
@@ -636,8 +639,8 @@ function MobileMenu({
                   width="40px"
                   height="40px"
                   borderRadius="full"
-                  bg={`linear-gradient(135deg, ${BRAND.gold[500]} 0%, ${BRAND.gold[600]} 100%)`}
-                  color={BRAND.navy[900]}
+                  bg={`linear-gradient(135deg, ${NEON_GREEN} 0%, #00DD24 100%)`}
+                  color="#000000"
                   display="flex"
                   alignItems="center"
                   justifyContent="center"
@@ -650,7 +653,7 @@ function MobileMenu({
                   <Text color="white" fontSize="sm" fontWeight="600">
                     {user.name || user.email.split("@")[0]}
                   </Text>
-                  <Text color="whiteAlpha.600" fontSize="xs">
+                  <Text color="rgba(255, 255, 255, 0.6)" fontSize="xs">
                     {user.email}
                   </Text>
                 </Box>
@@ -664,11 +667,11 @@ function MobileMenu({
                   alignItems="center"
                   gap={3}
                   borderRadius={`${INTERACTIVE_RADIUS}px`}
-                  bg="whiteAlpha.100"
+                  bg="rgba(0, 255, 42, 0.1)"
                   color="white"
                   fontSize="sm"
                   transition={TRANSITION}
-                  _hover={{ bg: "whiteAlpha.200" }}
+                  _hover={{ bg: "rgba(0, 255, 42, 0.2)" }}
                 >
                   <Text>📊</Text>
                   <Text>{t("nav.dashboard")}</Text>
@@ -707,12 +710,12 @@ function MobileMenu({
                   alignItems="center"
                   justifyContent="center"
                   borderRadius={`${INTERACTIVE_RADIUS}px`}
-                  bg="whiteAlpha.100"
+                  bg="rgba(0, 255, 42, 0.1)"
                   color="white"
                   fontSize="sm"
                   fontWeight="600"
                   transition={TRANSITION}
-                  _hover={{ bg: "whiteAlpha.200" }}
+                  _hover={{ bg: "rgba(0, 255, 42, 0.2)" }}
                 >
                   {t("auth.login")}
                 </Box>
@@ -724,8 +727,8 @@ function MobileMenu({
                   alignItems="center"
                   justifyContent="center"
                   borderRadius={`${INTERACTIVE_RADIUS}px`}
-                  bg={`linear-gradient(135deg, ${BRAND.gold[500]} 0%, ${BRAND.gold[600]} 100%)`}
-                  color={BRAND.navy[900]}
+                  bg={`linear-gradient(135deg, ${NEON_GREEN} 0%, #00DD24 100%)`}
+                  color="#000000"
                   fontSize="sm"
                   fontWeight="700"
                   transition={TRANSITION}
@@ -821,10 +824,10 @@ export default function Header() {
         right={0}
         zIndex={100}
         height={`${HEADER_HEIGHT}px`}
-        bg={isScrolled ? "rgba(11, 31, 58, 0.95)" : BRAND.navy[900]}
+        bg={isScrolled ? "rgba(0, 0, 0, 0.95)" : "#000000"}
         backdropFilter={isScrolled ? "blur(12px)" : "none"}
         borderBottom="1px solid"
-        borderColor={isScrolled ? "whiteAlpha.100" : "transparent"}
+        borderColor={isScrolled ? "rgba(0, 255, 42, 0.2)" : "transparent"}
         transition="all 0.3s ease"
       >
         <Container maxW="container.xl" height="100%">
@@ -846,10 +849,10 @@ export default function Header() {
                 height={`${ICON_BUTTON_SIZE}px`}
                 minW={`${ICON_BUTTON_SIZE}px`}
                 borderRadius={`${INTERACTIVE_RADIUS}px`}
-                bg="whiteAlpha.100"
+                bg="rgba(0, 255, 42, 0.1)"
                 color="white"
                 fontSize="lg"
-                _hover={{ bg: "whiteAlpha.200" }}
+                _hover={{ bg: "rgba(0, 255, 42, 0.2)" }}
               >
                 ☰
               </IconButton>
@@ -860,7 +863,7 @@ export default function Header() {
                   <Logo size={44} showText={false} />
                   <Box display={{ base: "none", sm: "block" }}>
                     <Text
-                      color={BRAND.gold[500]}
+                      color={NEON_GREEN}
                       fontSize="xl"
                       fontWeight="800"
                       lineHeight="1.2"
@@ -868,7 +871,7 @@ export default function Header() {
                       تبيان
                     </Text>
                     <Text
-                      color="whiteAlpha.700"
+                      color="rgba(255, 255, 255, 0.7)"
                       fontSize="xs"
                       fontWeight="600"
                       letterSpacing="wider"
@@ -886,7 +889,7 @@ export default function Header() {
               display={{ base: "none", lg: "flex" }}
               align="center"
               gap={1}
-              bg="whiteAlpha.50"
+              bg="rgba(0, 255, 42, 0.05)"
               px={2}
               py={1}
               borderRadius={`${INTERACTIVE_RADIUS + 4}px`}

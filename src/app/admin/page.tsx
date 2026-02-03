@@ -29,39 +29,42 @@ export default function AdminDashboardPage() {
       <Flex direction={{ base: "column", md: "row" }} gap={6} justify="space-between">
         <Stack gap={3}>
           <Badge
-            bg="primary"
-            color="primaryText"
+            bg="rgba(0, 255, 42, 0.1)"
+            color="#00FF2A"
             px={3}
             py={1}
-            borderRadius="badge"
+            borderRadius="full"
             fontSize="xs"
             fontWeight="600"
             w="fit-content"
+            border="1px solid"
+            borderColor="rgba(0, 255, 42, 0.3)"
           >
             🏠 لوحة التحكم
           </Badge>
-          <Heading size="2xl" color="text">
+          <Heading size="2xl" color="white">
             لوحة تحكم الإدارة
           </Heading>
-          <Text color="muted" fontSize="lg" lineHeight="1.7">
+          <Text color="gray.400" fontSize="lg" lineHeight="1.7">
             تحكم شامل بالمنصة: المحتوى، المستخدمين، المدفوعات، الجودة، والمجتمع.
           </Text>
         </Stack>
         <Stack direction={{ base: "column", sm: "row" }} gap={3} h="fit-content">
           <Button 
             variant="outline" 
-            borderColor="outlineBorder"
-            borderWidth="2px"
-            color="outlineText"
-            _hover={{ bg: "surfaceHover", borderColor: "borderAccent" }}
+            borderColor="rgba(0, 255, 42, 0.3)"
+            borderWidth="1px"
+            color="gray.300"
+            _hover={{ bg: "rgba(0, 255, 42, 0.1)", borderColor: "#00FF2A", color: "#00FF2A" }}
             transition="all 0.3s ease"
           >
             تصدير التقارير
           </Button>
           <Button 
-            bg="primary"
-            color="primaryText"
-            _hover={{ bg: "primaryHover", transform: "translateY(-2px)", boxShadow: "cardHover" }}
+            bg="#00FF2A"
+            color="#000000"
+            fontWeight="700"
+            _hover={{ bg: "#4DFF6A", transform: "translateY(-2px)", boxShadow: "0 0 20px rgba(0, 255, 42, 0.4)" }}
             transition="all 0.3s ease"
           >
             إنشاء إعلان عام
@@ -71,26 +74,25 @@ export default function AdminDashboardPage() {
 
       <SimpleGrid columns={{ base: 1, md: 4 }} gap={6}>
         {kpis.map((item) => (
-          <StatCard key={item.label} accentColor={item.color} p={6}>
+          <StatCard key={item.label} accentColor="#00FF2A" p={6}>
             <Stack gap={3}>
-              <Text color="muted" fontSize="sm" fontWeight="600">
+              <Text color="gray.400" fontSize="sm" fontWeight="600">
                 {item.label}
               </Text>
               <Flex align="baseline" gap={2}>
                 <Text 
                   fontSize="3xl" 
                   fontWeight="800"
-                  bgGradient={`linear(135deg, ${item.color} 0%, text 100%)`}
-                  bgClip="text"
+                  color="#00FF2A"
                 >
                   {item.value}
                 </Text>
                 <Badge 
-                  bgGradient="linear(135deg, success 0%, success 100%)"
-                  color="white"
+                  bg="rgba(0, 255, 42, 0.15)"
+                  color="#00FF2A"
                   px={2}
                   py={1}
-                  borderRadius="badge"
+                  borderRadius="full"
                   fontSize="xs"
                 >
                   {item.trend}
@@ -106,7 +108,7 @@ export default function AdminDashboardPage() {
           <Stack gap={5}>
             <Flex align="center" gap={3}>
               <Text fontSize="2xl">📋</Text>
-              <Heading size="md">قائمة المهام الإدارية</Heading>
+              <Heading size="md" color="white">قائمة المهام الإدارية</Heading>
             </Flex>
             <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
               {[
@@ -121,20 +123,20 @@ export default function AdminDashboardPage() {
                   key={task.text}
                   align="center"
                   gap={2}
-                  bg="backgroundAlt"
-                  borderRadius="button"
+                  bg="#0A0A0A"
+                  borderRadius="lg"
                   border="1px solid"
-                  borderColor="border"
+                  borderColor="rgba(0, 255, 42, 0.2)"
                   p={3}
                   transition="all 0.3s ease"
                   _hover={{
-                    bg: "surfaceHover",
-                    borderColor: "borderAccent",
+                    bg: "rgba(0, 255, 42, 0.1)",
+                    borderColor: "#00FF2A",
                     transform: "translateX(-4px)",
                   }}
                 >
                   <Text fontSize="lg">{task.icon}</Text>
-                  <Text fontWeight="600" fontSize="sm">{task.text}</Text>
+                  <Text fontWeight="600" fontSize="sm" color="gray.300">{task.text}</Text>
                 </Flex>
               ))}
             </SimpleGrid>
@@ -145,7 +147,7 @@ export default function AdminDashboardPage() {
           <Stack gap={4}>
             <Flex align="center" gap={3}>
               <Text fontSize="2xl">🚨</Text>
-              <Heading size="md">تنبيهات حرجة</Heading>
+              <Heading size="md" color="white">تنبيهات حرجة</Heading>
             </Flex>
             {reports.map((item) => (
               <Flex 
@@ -154,24 +156,24 @@ export default function AdminDashboardPage() {
                 gap={4} 
                 flexWrap="wrap"
                 p={3}
-                bg="surface"
-                borderRadius="button"
+                bg="#0A0A0A"
+                borderRadius="lg"
                 transition="all 0.3s ease"
-                _hover={{ boxShadow: "subtle" }}
+                _hover={{ boxShadow: "0 0 15px rgba(0, 255, 42, 0.1)" }}
               >
                 <Stack gap={1}>
-                  <Text fontWeight="700">{item.title}</Text>
-                  <Text color="muted" fontSize="sm">
+                  <Text fontWeight="700" color="white">{item.title}</Text>
+                  <Text color="gray.400" fontSize="sm">
                     {item.detail}
                   </Text>
                 </Stack>
                 <Badge
-                  bg={item.severity === "مرتفع" ? "error" : item.severity === "متوسط" ? "warning" : "success"}
-                  color="white"
+                  bg={item.severity === "مرتفع" ? "rgba(220, 38, 38, 0.2)" : item.severity === "متوسط" ? "rgba(234, 179, 8, 0.2)" : "rgba(0, 255, 42, 0.2)"}
+                  color={item.severity === "مرتفع" ? "red.400" : item.severity === "متوسط" ? "yellow.400" : "#00FF2A"}
                   alignSelf="center"
                   px={3}
                   py={1}
-                  borderRadius="badge"
+                  borderRadius="full"
                   fontWeight="600"
                 >
                   {item.severity}
@@ -180,10 +182,10 @@ export default function AdminDashboardPage() {
             ))}
             <Button 
               variant="outline" 
-              borderColor="outlineBorder"
-              borderWidth="2px"
-              color="outlineText"
-              _hover={{ bg: "surfaceHover" }}
+              borderColor="rgba(0, 255, 42, 0.3)"
+              borderWidth="1px"
+              color="gray.300"
+              _hover={{ bg: "rgba(0, 255, 42, 0.1)", borderColor: "#00FF2A", color: "#00FF2A" }}
               transition="all 0.3s ease"
             >
               فتح مركز البلاغات
@@ -197,7 +199,7 @@ export default function AdminDashboardPage() {
           <Stack gap={5}>
             <Flex align="center" gap={3}>
               <Text fontSize="2xl">🔍</Text>
-              <Heading size="md">مراجعات الدورات</Heading>
+              <Heading size="md" color="white">مراجعات الدورات</Heading>
             </Flex>
             {reviewQueue.map((item) => (
               <Flex 
@@ -206,29 +208,29 @@ export default function AdminDashboardPage() {
                 gap={4} 
                 flexWrap="wrap"
                 p={3}
-                bg="backgroundAlt"
-                borderRadius="button"
+                bg="#0A0A0A"
+                borderRadius="lg"
                 border="1px solid"
-                borderColor="border"
+                borderColor="rgba(0, 255, 42, 0.2)"
                 transition="all 0.3s ease"
                 _hover={{
-                  bg: "surfaceHover",
-                  borderColor: "borderAccent",
+                  bg: "rgba(0, 255, 42, 0.05)",
+                  borderColor: "rgba(0, 255, 42, 0.4)",
                 }}
               >
                 <Stack gap={1}>
-                  <Text fontWeight="700">{item.title}</Text>
-                  <Text color="muted" fontSize="sm">
+                  <Text fontWeight="700" color="white">{item.title}</Text>
+                  <Text color="gray.400" fontSize="sm">
                     👤 {item.instructor}
                   </Text>
                 </Stack>
                 <Badge 
-                  bg="primary"
-                  color="primaryText"
+                  bg="rgba(0, 255, 42, 0.15)"
+                  color="#00FF2A"
                   alignSelf="center"
                   px={3}
                   py={1}
-                  borderRadius="badge"
+                  borderRadius="full"
                   fontWeight="600"
                 >
                   {item.status}
@@ -237,10 +239,10 @@ export default function AdminDashboardPage() {
             ))}
             <Button 
               variant="outline" 
-              borderColor="outlineBorder"
-              borderWidth="2px"
-              color="outlineText"
-              _hover={{ bg: "surfaceHover" }}
+              borderColor="rgba(0, 255, 42, 0.3)"
+              borderWidth="1px"
+              color="gray.300"
+              _hover={{ bg: "rgba(0, 255, 42, 0.1)", borderColor: "#00FF2A", color: "#00FF2A" }}
               transition="all 0.3s ease"
             >
               عرض جميع المراجعات
@@ -252,38 +254,37 @@ export default function AdminDashboardPage() {
           <Stack gap={5}>
             <Flex align="center" gap={3}>
               <Text fontSize="2xl">💳</Text>
-              <Heading size="md">ملخص المدفوعات</Heading>
+              <Heading size="md" color="white">ملخص المدفوعات</Heading>
             </Flex>
             <SimpleGrid columns={{ base: 1, md: 3 }} gap={4}>
               {[
-                { label: "الإيراد الشهري", value: "€ 42,300", icon: "💰", color: "success" },
-                { label: "اشتراكات جديدة", value: "312", icon: "✨", color: "brand.500" },
-                { label: "نسبة التحويل", value: "3.8%", icon: "📈", color: "warning" },
+                { label: "الإيراد الشهري", value: "€ 42,300", icon: "💰", color: "#00FF2A" },
+                { label: "اشتراكات جديدة", value: "312", icon: "✨", color: "#00FF2A" },
+                { label: "نسبة التحويل", value: "3.8%", icon: "📈", color: "#00FF2A" },
               ].map((item) => (
                 <Box
                   key={item.label}
-                  bg="backgroundAlt"
-                  borderRadius="button"
+                  bg="#0A0A0A"
+                  borderRadius="lg"
                   border="1px solid"
-                  borderColor="border"
+                  borderColor="rgba(0, 255, 42, 0.2)"
                   p={4}
                   textAlign="center"
                   transition="all 0.3s ease"
                   _hover={{
                     transform: "translateY(-4px)",
-                    boxShadow: "subtle",
-                    borderColor: item.color,
+                    boxShadow: "0 0 20px rgba(0, 255, 42, 0.15)",
+                    borderColor: "rgba(0, 255, 42, 0.4)",
                   }}
                 >
                   <Text fontSize="2xl" mb={2}>{item.icon}</Text>
-                  <Text color="muted" fontSize="xs" fontWeight="600" mb={1}>
+                  <Text color="gray.400" fontSize="xs" fontWeight="600" mb={1}>
                     {item.label}
                   </Text>
                   <Text 
                     fontWeight="800"
                     fontSize="lg"
-                    bgGradient={`linear(135deg, ${item.color} 0%, text 100%)`}
-                    bgClip="text"
+                    color="#00FF2A"
                   >
                     {item.value}
                   </Text>
@@ -292,10 +293,10 @@ export default function AdminDashboardPage() {
             </SimpleGrid>
             <Button 
               variant="outline" 
-              borderColor="outlineBorder"
-              borderWidth="2px"
-              color="outlineText"
-              _hover={{ bg: "surfaceHover" }}
+              borderColor="rgba(0, 255, 42, 0.3)"
+              borderWidth="1px"
+              color="gray.300"
+              _hover={{ bg: "rgba(0, 255, 42, 0.1)", borderColor: "#00FF2A", color: "#00FF2A" }}
               transition="all 0.3s ease"
             >
               إدارة المدفوعات
@@ -308,7 +309,7 @@ export default function AdminDashboardPage() {
         <Stack gap={5}>
           <Flex align="center" gap={3}>
             <Text fontSize="2xl">⚡</Text>
-            <Heading size="md">التحكم السريع</Heading>
+            <Heading size="md" color="white">التحكم السريع</Heading>
           </Flex>
           <SimpleGrid columns={{ base: 1, md: 3 }} gap={4}>
             {[
@@ -324,18 +325,20 @@ export default function AdminDashboardPage() {
                   display="flex"
                   alignItems="center"
                   gap={3}
-                  bg="surface"
-                  borderRadius="button"
+                  bg="#0A0A0A"
+                  borderRadius="lg"
                   border="1px solid"
-                  borderColor="border"
+                  borderColor="rgba(0, 255, 42, 0.2)"
                   p={4}
                   fontWeight="700"
+                  color="gray.300"
                   transition="all 0.3s ease"
                   _hover={{ 
-                    bg: "surfaceHover",
-                    borderColor: "borderAccent",
+                    bg: "rgba(0, 255, 42, 0.1)",
+                    borderColor: "#00FF2A",
                     transform: "translateY(-2px)",
-                    boxShadow: "subtle",
+                    boxShadow: "0 0 20px rgba(0, 255, 42, 0.15)",
+                    color: "#00FF2A",
                   }}
                 >
                   <Text fontSize="xl">{item.icon}</Text>

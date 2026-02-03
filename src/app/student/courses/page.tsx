@@ -163,7 +163,7 @@ export default function StudentCoursesPage() {
                     >
                       {course.status === "COMPLETED" ? "مكتمل ✓" : "قيد الدراسة"}
                     </Badge>
-                    <Badge bg="gray.100" color="gray.700" fontSize="xs">
+                    <Badge bg="#1A1A1A" color="rgba(255,255,255,0.7)" fontSize="xs">
                       {course.level === "BEGINNER"
                         ? "مبتدئ"
                         : course.level === "INTERMEDIATE"

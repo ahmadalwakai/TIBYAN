@@ -59,14 +59,14 @@ export function StickersPanel() {
     >
       <VStack gap={6} align="stretch">
         {/* Header */}
-        <Text fontSize="lg" fontWeight="700" color="gray.800">
+        <Text fontSize="lg" fontWeight="700" color="white">
           الملصقات
         </Text>
 
         {/* Category Tabs */}
         <Tabs.Root value={activeCategory} onValueChange={(e) => setActiveCategory(e.value)}>
           <Tabs.List
-            bg="gray.100"
+            bg="#0A0A0A"
             borderRadius="xl"
             p={1}
             overflowX="auto"
@@ -82,8 +82,8 @@ export function StickersPanel() {
                 fontSize="sm"
                 fontWeight="600"
                 _selected={{
-                  bg: "white",
-                  color: "brand.600",
+                  bg: "#00FF2A",
+                  color: "#000000",
                   boxShadow: "sm",
                 }}
               >
@@ -102,13 +102,13 @@ export function StickersPanel() {
                     <Box
                       key={sticker.id}
                       p={2}
-                      bg="gray.50"
+                      bg="#0A0A0A"
                       borderRadius="xl"
                       cursor="pointer"
                       onClick={() => handleStickerSelect(sticker.id, sticker.url)}
                       transition="all 0.2s"
                       _hover={{
-                        bg: "brand.50",
+                        bg: "rgba(0, 255, 42, 0.2)",
                         transform: "scale(1.1)",
                       }}
                       _active={{ transform: "scale(0.95)" }}

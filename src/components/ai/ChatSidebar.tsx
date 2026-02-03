@@ -224,8 +224,9 @@ function SessionItem({
             {...(isRTL ? { right: 0 } : { left: 0 })}
             w="3px"
             h="60%"
-            bg="yellow.400"
+            bg="#00FF2A"
             borderRadius="full"
+            boxShadow="0 0 10px rgba(0, 255, 42, 0.5)"
           />
         )}
 
@@ -236,7 +237,7 @@ function SessionItem({
             top={1}
             {...(isRTL ? { left: 1 } : { right: 1 })}
           >
-            <LuPin size={10} color="var(--chakra-colors-yellow-400)" />
+            <LuPin size={10} color="#00FF2A" />
           </Box>
         )}
 
@@ -249,12 +250,12 @@ function SessionItem({
               onBlur={handleRename}
               onKeyDown={handleKeyDown}
               autoFocus
-              bg="whiteAlpha.100"
+              bg="#0A0A0A"
               border="1px solid"
-              borderColor="whiteAlpha.300"
+              borderColor="rgba(0, 255, 42, 0.3)"
               color="white"
               _placeholder={{ color: PLACEHOLDER_COLOR }}
-              _focus={{ borderColor: "yellow.400", boxShadow: "none" }}
+              _focus={{ borderColor: "#00FF2A", boxShadow: "0 0 10px rgba(0, 255, 42, 0.3)" }}
               onClick={(e) => e.stopPropagation()}
             />
           ) : (
@@ -313,8 +314,8 @@ function SessionItem({
                 aria-label={session.pinned ? t.unpin : t.pin}
                 size="xs"
                 variant="ghost"
-                color={session.pinned ? "yellow.400" : ICON_COLOR}
-                _hover={{ bg: "whiteAlpha.200", color: session.pinned ? "yellow.300" : TEXT_PRIMARY }}
+                color={session.pinned ? "#00FF2A" : ICON_COLOR}
+                _hover={{ bg: "rgba(0, 255, 42, 0.1)", color: session.pinned ? "#4DFF6A" : TEXT_PRIMARY }}
                 onClick={(e) => {
                   e.stopPropagation();
                   onPin(!session.pinned);
@@ -374,11 +375,14 @@ function ConfirmModal({ isOpen, locale, onClose, onConfirm }: ConfirmModalProps)
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.9 }}
-        bg="gray.800"
+        bg="#050505"
         p={6}
         borderRadius="xl"
         maxW="400px"
         mx={4}
+        border="1px solid"
+        borderColor="rgba(0, 255, 42, 0.3)"
+        boxShadow="0 0 30px rgba(0, 255, 42, 0.2)"
         onClick={(e) => e.stopPropagation()}
       >
         <Text fontSize="md" fontWeight={600} color={TEXT_PRIMARY} mb={2}>
@@ -472,7 +476,7 @@ export default function ChatSidebar({
         borderColor="whiteAlpha.100"
       >
         <HStack gap={2}>
-          <LuMessageSquare size={20} color="var(--chakra-colors-yellow-400)" />
+          <LuMessageSquare size={20} color="#00FF2A" />
           <Text fontSize="lg" fontWeight={600} color={TEXT_PRIMARY}>
             {t.chats}
           </Text>
@@ -483,7 +487,7 @@ export default function ChatSidebar({
             size="sm"
             variant="ghost"
             color={ICON_COLOR}
-            _hover={{ bg: "whiteAlpha.100", color: "yellow.400" }}
+            _hover={{ bg: "rgba(0, 255, 42, 0.1)", color: "#00FF2A" }}
             onClick={onNewChat}
           >
             <LuPlus size={18} />
@@ -494,7 +498,7 @@ export default function ChatSidebar({
               size="sm"
               variant="ghost"
               color={ICON_COLOR}
-              _hover={{ bg: "whiteAlpha.100", color: "yellow.400" }}
+              _hover={{ bg: "rgba(0, 255, 42, 0.1)", color: "#00FF2A" }}
               onClick={onOpenSettings}
             >
               <LuSettings size={18} />
@@ -530,11 +534,11 @@ export default function ChatSidebar({
           <Input
             placeholder={t.search}
             size="sm"
-            bg="whiteAlpha.50"
+            bg="#0A0A0A"
             border="1px solid"
-            borderColor="whiteAlpha.100"
-            _hover={{ borderColor: "whiteAlpha.200" }}
-            _focus={{ borderColor: "yellow.400", boxShadow: "none" }}
+            borderColor="rgba(0, 255, 42, 0.2)"
+            _hover={{ borderColor: "rgba(0, 255, 42, 0.4)" }}
+            _focus={{ borderColor: "#00FF2A", boxShadow: "0 0 10px rgba(0, 255, 42, 0.3)" }}
             _placeholder={{ color: PLACEHOLDER_COLOR }}
             color={TEXT_PRIMARY}
             value={searchQuery}
@@ -675,9 +679,11 @@ export default function ChatSidebar({
         display={{ base: "flex", lg: "none" }}
         size="sm"
         variant="solid"
-        bg="gray.700"
+        bg="#0A0A0A"
         color={TEXT_PRIMARY}
-        _hover={{ bg: "gray.600" }}
+        border="1px solid"
+        borderColor="rgba(0, 255, 42, 0.3)"
+        _hover={{ bg: "#050505", borderColor: "#00FF2A" }}
         onClick={onToggle}
       >
         <LuMenu size={18} />
@@ -688,9 +694,9 @@ export default function ChatSidebar({
         display={{ base: "none", lg: "block" }}
         w="320px"
         h="100%"
-        bg="gray.850"
-        borderColor="yellow.500"
-        boxShadow="0 0 15px rgba(236, 201, 75, 0.3), 0 0 30px rgba(236, 201, 75, 0.15), inset 0 0 10px rgba(236, 201, 75, 0.05)"
+        bg="#050505"
+        borderColor="rgba(0, 255, 42, 0.3)"
+        boxShadow="0 0 30px rgba(0, 255, 42, 0.1)"
         {...(isRTL
           ? { borderLeft: "1px solid" }
           : { borderRight: "1px solid" })}
@@ -728,12 +734,12 @@ export default function ChatSidebar({
               {...(isRTL ? { right: 0 } : { left: 0 })}
               w="320px"
               maxW="85vw"
-              bg="gray.850"
+              bg="#050505"
               zIndex={201}
               display={{ base: "block", lg: "none" }}
               border="1px solid"
-              borderColor="yellow.500"
-              boxShadow="0 0 20px rgba(236, 201, 75, 0.4), 0 0 40px rgba(236, 201, 75, 0.2)"
+              borderColor="rgba(0, 255, 42, 0.4)"
+              boxShadow="0 0 40px rgba(0, 255, 42, 0.3)"
             >
               {sidebarContent}
             </MotionBox>

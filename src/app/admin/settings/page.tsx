@@ -587,7 +587,7 @@ export default function AdminSettingsPage() {
                               <Input
                                 value={editName}
                                 onChange={(e) => setEditName(e.target.value)}
-                                bg="white"
+                                bg="#0A0A0A"
                               />
                             </Box>
                             <Box flex={1}>
@@ -596,7 +596,7 @@ export default function AdminSettingsPage() {
                                 value={editEmail}
                                 onChange={(e) => setEditEmail(e.target.value)}
                                 dir="ltr"
-                                bg="white"
+                                bg="#0A0A0A"
                               />
                             </Box>
                           </HStack>
@@ -752,7 +752,7 @@ export default function AdminSettingsPage() {
                               value={suspendReason}
                               onChange={(e) => setSuspendReason(e.target.value)}
                               placeholder="أدخل سبب التعليق..."
-                              bg="white"
+                              bg="#0A0A0A"
                             />
                           </Box>
                           <HStack gap={2}>

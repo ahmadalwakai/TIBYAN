@@ -46,8 +46,8 @@ export default function Footer() {
       as="footer"
       position="relative"
       overflow="hidden"
-      bg="primary"
-      color="primaryText"
+      bg="#000000"
+      color="white"
       suppressHydrationWarning
       css={{
         "@keyframes footerGlow": {
@@ -64,7 +64,7 @@ export default function Footer() {
         },
       }}
     >
-      {/* Decorative Background Elements */}
+      {/* Decorative Background Elements - Neon Green */}
       <Box
         position="absolute"
         top="-100px"
@@ -72,7 +72,7 @@ export default function Footer() {
         w="300px"
         h="300px"
         borderRadius="full"
-        bg="radial-gradient(circle, rgba(200, 162, 74, 0.15) 0%, transparent 70%)"
+        bg="radial-gradient(circle, rgba(0, 255, 42, 0.1) 0%, transparent 70%)"
         filter="blur(60px)"
         pointerEvents="none"
         css={{ animation: "floatOrb 10s ease-in-out infinite" }}
@@ -84,20 +84,20 @@ export default function Footer() {
         w="250px"
         h="250px"
         borderRadius="full"
-        bg="radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%)"
+        bg="radial-gradient(circle, rgba(0, 255, 42, 0.08) 0%, transparent 70%)"
         filter="blur(50px)"
         pointerEvents="none"
         css={{ animation: "floatOrb 12s ease-in-out infinite reverse" }}
       />
 
-      {/* Top Gradient Line */}
+      {/* Top Gradient Line - Neon Green */}
       <Box
         position="absolute"
         top={0}
         left={0}
         right={0}
         height="4px"
-        background="linear-gradient(90deg, transparent, #c8a24a, #00d4ff, #c8a24a, transparent)"
+        background="linear-gradient(90deg, transparent, #00FF2A, #4DFF6A, #00FF2A, transparent)"
         backgroundSize="200% 100%"
         css={{ animation: "shimmerLine 6s linear infinite" }}
       />
@@ -116,7 +116,7 @@ export default function Footer() {
               <Flex align="center" gap={3}>
                 <Logo size={50} showText={true} />
               </Flex>
-              <Text color="whiteAlpha.800" lineHeight="1.9" fontSize="md">
+              <Text color="rgba(255, 255, 255, 0.8)" lineHeight="1.9" fontSize="md">
                 {t("footer.description")}
               </Text>
               
@@ -136,16 +136,20 @@ export default function Footer() {
                     w="44px"
                     h="44px"
                     borderRadius="xl"
-                    bg="whiteAlpha.100"
+                    bg="#0A0A0A"
+                    border="1px solid"
+                    borderColor="rgba(0, 255, 42, 0.3)"
+                    boxShadow="0 0 10px rgba(0, 255, 42, 0.15)"
                     display="flex"
                     alignItems="center"
                     justifyContent="center"
                     fontSize="lg"
                     transition="all 0.3s ease"
                     _hover={{
-                      bg: "whiteAlpha.200",
+                      bg: "#0A0A0A",
+                      borderColor: "rgba(0, 255, 42, 0.6)",
                       transform: "translateY(-4px)",
-                      boxShadow: "0 8px 20px rgba(0, 0, 0, 0.3)",
+                      boxShadow: "0 0 20px rgba(0, 255, 42, 0.4), 0 8px 20px rgba(0, 255, 42, 0.2)",
                     }}
                   >
                     {social.icon}
@@ -161,12 +165,12 @@ export default function Footer() {
               overflow="hidden"
               minW={{ base: "100%", md: "320px" }}
             >
-              {/* Animated border */}
+              {/* Animated border - Neon Green */}
               <Box
                 position="absolute"
                 inset="-2px"
                 borderRadius="2xl"
-                background="linear-gradient(135deg, #c8a24a, #00d4ff, #c8a24a)"
+                background="linear-gradient(135deg, #00FF2A, #4DFF6A, #00FF2A)"
                 backgroundSize="200% 200%"
                 css={{ animation: "shimmerLine 4s linear infinite" }}
                 opacity={0.6}
@@ -174,11 +178,12 @@ export default function Footer() {
               
               <Box
                 position="relative"
-                bg="whiteAlpha.100"
+                bg="#050505"
                 backdropFilter="blur(20px)"
                 borderRadius="xl"
                 m="2px"
                 p={6}
+                boxShadow="inset 0 0 20px rgba(0, 255, 42, 0.05)"
               >
                 <Stack gap={4}>
                   <Flex align="center" gap={2}>
@@ -192,15 +197,20 @@ export default function Footer() {
                       gap={3}
                       p={3}
                       borderRadius="lg"
-                      bg="whiteAlpha.50"
+                      bg="#0A0A0A"
+                      border="1px solid"
+                      borderColor="rgba(0, 255, 42, 0.1)"
                       transition="all 0.3s ease"
-                      _hover={{ bg: "whiteAlpha.100", transform: "translateX(-4px)" }}
+                      _hover={{ bg: "#0A0A0A", borderColor: "rgba(0, 255, 42, 0.4)", transform: "translateX(-4px)" }}
                     >
                       <Box
                         w="36px"
                         h="36px"
                         borderRadius="lg"
-                        bg="linear-gradient(135deg, #c8a24a, #ffd700)"
+                        bg="#0A0A0A"
+                        border="1px solid"
+                        borderColor="rgba(0, 255, 42, 0.4)"
+                        boxShadow="0 0 10px rgba(0, 255, 42, 0.2)"
                         display="flex"
                         alignItems="center"
                         justifyContent="center"
@@ -208,7 +218,7 @@ export default function Footer() {
                       >
                         ✉️
                       </Box>
-                      <Text color="whiteAlpha.900" fontSize="sm">support@tibyan.academy</Text>
+                      <Text color="rgba(255, 255, 255, 0.9)" fontSize="sm">support@tibyan.academy</Text>
                     </Flex>
                     
                     <a href={TEL_URL} style={{ textDecoration: "none" }}>
@@ -217,15 +227,20 @@ export default function Footer() {
                         gap={3}
                         p={3}
                         borderRadius="lg"
-                        bg="whiteAlpha.50"
+                        bg="#0A0A0A"
+                        border="1px solid"
+                        borderColor="rgba(0, 255, 42, 0.1)"
                         transition="all 0.3s ease"
-                        _hover={{ bg: "whiteAlpha.100", transform: "translateX(-4px)" }}
+                        _hover={{ bg: "#0A0A0A", borderColor: "rgba(0, 255, 42, 0.4)", transform: "translateX(-4px)" }}
                       >
                         <Box
                           w="36px"
                           h="36px"
                           borderRadius="lg"
-                          bg="linear-gradient(135deg, #00d4ff, #0099ff)"
+                          bg="#0A0A0A"
+                          border="1px solid"
+                          borderColor="rgba(0, 255, 42, 0.4)"
+                          boxShadow="0 0 10px rgba(0, 255, 42, 0.2)"
                           display="flex"
                           alignItems="center"
                           justifyContent="center"
@@ -233,7 +248,7 @@ export default function Footer() {
                         >
                           📱
                         </Box>
-                        <Text color="whiteAlpha.900" fontSize="sm" dir="ltr">{PHONE_NUMBER_DISPLAY}</Text>
+                        <Text color="rgba(255, 255, 255, 0.9)" fontSize="sm" dir="ltr">{PHONE_NUMBER_DISPLAY}</Text>
                       </Flex>
                     </a>
                   </Stack>
@@ -252,7 +267,7 @@ export default function Footer() {
                     fontWeight="800" 
                     fontSize="md"
                     css={{
-                      background: "linear-gradient(135deg, #ffffff, #c8a24a)",
+                      background: "linear-gradient(135deg, #ffffff, #00FF2A)",
                       backgroundClip: "text",
                       WebkitBackgroundClip: "text",
                       color: "transparent",
@@ -265,7 +280,7 @@ export default function Footer() {
                   {section.links.map((link) => (
                     <Link key={link.href} href={link.href} style={{ textDecoration: "none" }}>
                       <Box
-                        color="whiteAlpha.800"
+                        color="rgba(255, 255, 255, 0.8)"
                         fontSize="sm"
                         py={1}
                         transition="all 0.3s ease"
@@ -284,7 +299,7 @@ export default function Footer() {
                             width: "4px",
                             height: "4px",
                             borderRadius: "full",
-                            background: "#c8a24a",
+                            background: "#00FF2A",
                             opacity: 0,
                             transition: "opacity 0.3s ease",
                           },
@@ -305,7 +320,7 @@ export default function Footer() {
           {/* Bottom Section */}
           <Box
             borderTop="1px solid"
-            borderColor="whiteAlpha.200"
+            borderColor="rgba(0, 255, 42, 0.2)"
             pt={8}
           >
             <Flex
@@ -314,7 +329,7 @@ export default function Footer() {
               justify="space-between"
               align="center"
             >
-              <Text color="whiteAlpha.800" fontSize="sm">
+              <Text color="rgba(255, 255, 255, 0.8)" fontSize="sm">
                 {t("footer.rights")}
               </Text>
               

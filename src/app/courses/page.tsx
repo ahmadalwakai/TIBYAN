@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import NeonCard from "@/components/ui/NeonCard";
+import { CourseCard, BaseCard } from "@/components/ui/cards";
 import { allCourses } from "@/content/courses.ar";
 
 // Animated counter hook
@@ -77,10 +77,10 @@ function AnimatedStat({ value, suffix = "", prefix = "", label }: {
   
   return (
     <Stack gap={1}>
-      <Text fontSize="3xl" fontWeight="800" color="accent">
+      <Text fontSize="3xl" fontWeight="800" color="#00FF2A">
         <span ref={ref}>{prefix}{count.toLocaleString()}{suffix}</span>
       </Text>
-      <Text color="muted" fontSize="sm">{label}</Text>
+      <Text color="gray.400" fontSize="sm">{label}</Text>
     </Stack>
   );
 }
@@ -124,13 +124,8 @@ export default function CoursesPage() {
     ? coursesDisplay 
     : coursesDisplay.filter(c => c.department === selectedDept);
 
-  const getNeonColor = (index: number) => {
-    const colors: Array<"blue" | "gold" | "green" | "purple"> = ["blue", "gold", "green", "purple"];
-    return colors[index % colors.length];
-  };
-
   return (
-    <Box as="main" bg="background" minH="100vh" position="relative" dir="rtl" lang="ar">
+    <Box as="main" bg="#000000" minH="100vh" position="relative" dir="rtl" lang="ar">
       {/* Decorative background elements */}
       <Box
         position="absolute"
@@ -138,8 +133,20 @@ export default function CoursesPage() {
         right="0"
         width="500px"
         height="500px"
-        bg="accentSubtle"
-        opacity={0.3}
+        bg="radial-gradient(circle, rgba(0, 255, 42, 0.15) 0%, transparent 70%)"
+        filter="blur(60px)"
+        pointerEvents="none"
+        zIndex={0}
+        borderRadius="full"
+      />
+      <Box
+        position="absolute"
+        bottom="20%"
+        left="5%"
+        width="400px"
+        height="400px"
+        bg="radial-gradient(circle, rgba(0, 255, 42, 0.1) 0%, transparent 70%)"
+        filter="blur(50px)"
         pointerEvents="none"
         zIndex={0}
         borderRadius="full"
@@ -150,27 +157,27 @@ export default function CoursesPage() {
           <Stack gap={4} textAlign={{ base: "center", md: "start" }}>
             <Heading 
               size="2xl"
-              color="text"
+              color="white"
             >
               📚 البرامج التعليمية
             </Heading>
-            <Text color="muted" fontSize="lg">
+            <Text color="gray.400" fontSize="lg">
               برامج معهد تبيان الافتراضي - رحلة علمية متكاملة في العلوم الإسلامية واللغة العربية
             </Text>
           </Stack>
 
           {/* Department Filters */}
           <Box>
-            <Text fontWeight="700" color="text" mb={4}>الأقسام العلمية</Text>
+            <Text fontWeight="700" color="white" mb={4}>الأقسام العلمية</Text>
             <Flex gap={3} flexWrap="wrap">
               {departments.map((dept) => (
                 <Button
                   key={dept.id}
                   onClick={() => setSelectedDept(dept.id)}
-                  bg={selectedDept === dept.id ? "primary" : "surface"}
-                  color={selectedDept === dept.id ? "primaryText" : "text"}
-                  borderWidth="2px"
-                  borderColor={selectedDept === dept.id ? "primary" : "border"}
+                  bg={selectedDept === dept.id ? "#00FF2A" : "#050505"}
+                  color={selectedDept === dept.id ? "#000000" : "white"}
+                  border="1px solid"
+                  borderColor={selectedDept === dept.id ? "#00FF2A" : "rgba(0, 255, 42, 0.3)"}
                   px={5}
                   py={2}
                   borderRadius="full"
@@ -179,8 +186,9 @@ export default function CoursesPage() {
                   transition="all 0.3s ease"
                   _hover={{
                     transform: "translateY(-2px)",
-                    borderColor: "borderAccent",
-                    boxShadow: "md",
+                    borderColor: "#00FF2A",
+                    boxShadow: "0 0 20px rgba(0, 255, 42, 0.3)",
+                    bg: selectedDept === dept.id ? "#4DFF6A" : "rgba(0, 255, 42, 0.1)",
                   }}
                 >
                   {dept.icon} {dept.name}
@@ -192,111 +200,19 @@ export default function CoursesPage() {
           {/* Courses Grid */}
           <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={8}>
             {filteredCourses.map((course, index) => (
-              <NeonCard
+              <CourseCard
                 key={course.id}
-                neonColor={getNeonColor(index)}
-                glowIntensity="medium"
-                animationSpeed="medium"
-              >
-                <Box p={6}>
-                  <Stack gap={4}>
-                    <Flex justify="space-between" align="start">
-                      <Badge 
-                        bg="primary"
-                        color="primaryText" 
-                        px={3} 
-                        py={1}
-                        borderRadius="full"
-                        fontSize="xs"
-                        fontWeight="600"
-                      >
-                        {course.level}
-                      </Badge>
-                    </Flex>
-                    
-                    <Heading size="md" color="text" lineHeight="1.4">
-                      {course.title}
-                    </Heading>
-                    
-                    <Text 
-                      color="muted" 
-                      fontSize="sm" 
-                      lineHeight="1.7"
-                      css={{ 
-                        display: "-webkit-box", 
-                        WebkitLineClamp: 3, 
-                        WebkitBoxOrient: "vertical", 
-                        overflow: "hidden" 
-                      }}
-                    >
-                      {course.description}
-                    </Text>
-                    
-                    <SimpleGrid columns={2} gap={3} fontSize="sm" color="muted">
-                      <Flex align="center" gap={2}>
-                        <Text>⏱️</Text>
-                        <Text>{course.duration}</Text>
-                      </Flex>
-                      <Flex align="center" gap={2}>
-                        <Text>📚</Text>
-                        <Text>{course.sessions} حصة</Text>
-                      </Flex>
-                      <Flex align="center" gap={2}>
-                        <Text>🎓</Text>
-                        <Text>شهادة معتمدة</Text>
-                      </Flex>
-                    </SimpleGrid>
-                    
-                    <Box pt={3} borderTop="1px solid" borderColor="gray.100">
-                      <Flex align="center" justify="space-between" mb={3}>
-                        <Stack gap={0}>
-                          <Flex align="baseline" gap={1}>
-                            <Text fontWeight="800" fontSize="xl" color="accent">
-                              {course.price}
-                            </Text>
-                            <Text fontSize="xs" color="muted">/شهر</Text>
-                          </Flex>
-                          <Text fontSize="xs" color="muted">
-                            المجموع: {course.totalPrice}
-                          </Text>
-                        </Stack>
-                      </Flex>
-                      
-                      <Stack gap={2}>
-                        <Button 
-                          asChild
-                          size="sm" 
-                          w="full"
-                          bg="primary"
-                          color="primaryText" 
-                          _hover={{ 
-                            bg: "primaryHover",
-                            transform: "translateY(-2px)",
-                          }}
-                          transition="all 0.3s ease"
-                        >
-                          <Link href={`/courses/${course.slug}`}>عرض التفاصيل</Link>
-                        </Button>
-                        <Button 
-                          asChild
-                          size="sm" 
-                          w="full"
-                          variant="outline"
-                          borderColor="outlineBorder"
-                          color="outlineText"
-                          _hover={{ 
-                            bg: "surfaceHover",
-                            transform: "translateY(-2px)",
-                          }}
-                          transition="all 0.3s ease"
-                        >
-                          <Link href={`/checkout/${course.slug}`}>سجّل الآن 🚀</Link>
-                        </Button>
-                      </Stack>
-                    </Box>
-                  </Stack>
-                </Box>
-              </NeonCard>
+                title={course.title}
+                description={course.description}
+                level={course.level}
+                duration={course.duration}
+                sessions={course.sessions}
+                price={course.price}
+                totalPrice={course.totalPrice}
+                category={course.category}
+                slug={course.slug}
+                accentColor={["gold", "blue", "green", "purple"][index % 4] as "gold" | "blue" | "green" | "purple"}
+              />
             ))}
           </SimpleGrid>
 
@@ -304,13 +220,16 @@ export default function CoursesPage() {
           {filteredCourses.length === 0 && (
             <Box textAlign="center" py={12}>
               <Text fontSize="4xl" mb={4}>🔍</Text>
-              <Text color="muted" fontSize="lg">
+              <Text color="gray.400" fontSize="lg">
                 لا توجد برامج في هذا القسم حالياً
               </Text>
               <Button 
                 mt={4} 
                 onClick={() => setSelectedDept("all")}
-                colorPalette="brand"
+                bg="#00FF2A"
+                color="#000000"
+                fontWeight="700"
+                _hover={{ bg: "#4DFF6A", boxShadow: "0 0 20px rgba(0, 255, 42, 0.4)" }}
               >
                 عرض جميع البرامج
               </Button>
@@ -318,14 +237,14 @@ export default function CoursesPage() {
           )}
 
           {/* Stats Banner */}
-          <NeonCard neonColor="gold" glowIntensity="low" animationSpeed="slow">
+          <BaseCard variant="elevated" hoverLift={false}>
             <SimpleGrid columns={{ base: 2, md: 4 }} gap={6} p={8} textAlign="center">
               <AnimatedStat value={5000} prefix="+" label="طالب مسجل" />
               <AnimatedStat value={15} suffix="+" label="برنامج تعليمي" />
               <AnimatedStat value={50} suffix="+" label="مدرس متخصص" />
               <AnimatedStat value={98} suffix="%" label="نسبة الرضا" />
             </SimpleGrid>
-          </NeonCard>
+          </BaseCard>
         </Stack>
       </Container>
     </Box>

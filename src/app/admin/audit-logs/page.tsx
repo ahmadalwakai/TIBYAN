@@ -221,7 +221,7 @@ export default function AdminAuditLogsPage() {
         ) : (
           <Table.Root size="lg">
             <Table.Header>
-              <Table.Row bg="gray.50">
+              <Table.Row bg="#0A0A0A">
                 <Table.ColumnHeader fontWeight="700" color="text">الإجراء</Table.ColumnHeader>
                 <Table.ColumnHeader fontWeight="700" color="text">المنفّذ</Table.ColumnHeader>
                 <Table.ColumnHeader fontWeight="700" color="text">النوع</Table.ColumnHeader>

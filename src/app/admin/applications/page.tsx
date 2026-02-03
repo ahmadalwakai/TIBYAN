@@ -133,7 +133,7 @@ export default function AdminApplicationsPage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               maxW="300px"
-              bg="white"
+              bg="#0A0A0A"
             />
             <Flex gap={2} wrap="wrap">
               <Button

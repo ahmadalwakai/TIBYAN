@@ -121,13 +121,13 @@ export async function POST(request: Request) {
               html: `
                 <div dir="rtl" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
                   <div style="background: linear-gradient(135deg, #0B1F3A 0%, #1a365d 100%); padding: 30px; border-radius: 16px 16px 0 0; text-align: center;">
-                    <h1 style="color: #C8A24A; margin: 0; font-size: 28px;">عضو جديد في تبيان</h1>
+                    <h1 style="color: #00FF2A; margin: 0; font-size: 28px;">عضو جديد في تبيان</h1>
                   </div>
                   <div style="background: #ffffff; padding: 30px; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
                     <p style="color: #374151; font-size: 16px; line-height: 1.8;">مرحباً ${escapeHtml(admin.name)}،</p>
                     <p style="color: #374151; font-size: 16px; line-height: 1.8;">انضم عضو جديد إلى منصة تبيان:</p>
                     
-                    <div style="background: #f9fafb; border-radius: 12px; padding: 20px; margin: 20px 0; border-right: 4px solid #C8A24A;">
+                    <div style="background: #f9fafb; border-radius: 12px; padding: 20px; margin: 20px 0; border-right: 4px solid #00FF2A;">
                       <p style="margin: 8px 0; color: #374151;"><strong>الاسم:</strong> ${escapeHtml(name)}</p>
                       <p style="margin: 8px 0; color: #374151;"><strong>البريد:</strong> ${escapeHtml(email)}</p>
                       <p style="margin: 8px 0; color: #374151;"><strong>تاريخ التسجيل:</strong> ${signupDate}</p>
