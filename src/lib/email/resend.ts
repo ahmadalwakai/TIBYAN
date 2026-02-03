@@ -62,7 +62,7 @@ export async function sendEmail(params: SendEmailParams): Promise<EmailResult> {
   
   try {
     const result = await resend.emails.send({
-      from: `تبيان | Tibyan <${fromEmail}>`,
+      from: `Tibyan <${fromEmail}>`,
       to,
       subject,
       html,
