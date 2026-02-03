@@ -1,17 +1,15 @@
 /**
  * LLM Client
  * ==========
- * Unified client that auto-selects between local, remote, and mock providers.
- * Provides graceful fallback when LLM servers are unavailable.
+ * Unified client for Groq API (OpenAI-compatible).
+ * Uses remote (Groq) provider only. Mock fallback for development without API key.
  * 
- * Provider Priority (auto mode):
- * 1. remote (if configured) - for production on Vercel
- * 2. local (if available) - for local development
- * 3. mock - fallback with safe canned responses
+ * Provider Priority:
+ * 1. remote (Groq) - requires GROQ_API_KEY
+ * 2. mock - fallback for dev/testing only
  */
 
 import { getLLMConfig, type LLMProvider as ConfigProvider } from "./config";
-import { localProvider } from "./providers/local";
 import { mockProvider } from "./providers/mock";
 import { remoteProvider } from "./providers/remote";
 import type { LLMMessage, LLMCompletionResult, LLMProvider, LLMProviderName } from "./types";
@@ -20,79 +18,53 @@ import type { LLMMessage, LLMCompletionResult, LLMProvider, LLMProviderName } fr
 // Provider Resolution
 // ============================================
 
+// Track if we've already logged the mock warning (log only once per process)
+let mockWarningLogged = false;
+
 /**
- * Resolve which provider to use based on config and availability.
+ * Resolve which provider to use.
  * 
- * Logic:
- * - If LLM_PROVIDER=remote: use remote only (error if unavailable)
- * - If LLM_PROVIDER=local: use local only (error if unavailable)
- * - If LLM_PROVIDER=mock: use mock only
- * - If LLM_PROVIDER=auto (default): try remote → local → mock
+ * NEW LOGIC (Groq-first):
+ * - If GROQ_API_KEY is set → always use remote (Groq), ignore LLM_PROVIDER
+ * - If GROQ_API_KEY is missing:
+ *   - In production (NODE_ENV=production): throw error immediately
+ *   - In development: allow mock fallback with a single warning
  */
 async function resolveProvider(forcedProvider?: ConfigProvider): Promise<{
   provider: LLMProvider;
   fallbackUsed: boolean;
   reason?: string;
 }> {
-  const config = getLLMConfig();
-  const effectiveProvider = forcedProvider ?? config.provider;
+  const hasGroqKey = !!process.env.GROQ_API_KEY;
+  const isProduction = process.env.NODE_ENV === "production";
 
-  // Explicit mock mode
-  if (effectiveProvider === "mock") {
-    console.log("[LLM Client] Using mock provider (explicitly configured)");
-    return { provider: mockProvider, fallbackUsed: false };
-  }
-
-  // Explicit remote mode (no fallback)
-  if (effectiveProvider === "remote") {
+  // GROQ_API_KEY is set → always use Groq (remote provider)
+  if (hasGroqKey) {
     const available = await remoteProvider.checkAvailability();
     if (!available) {
-      console.error("[LLM Client] Remote provider forced but not configured");
-      return {
-        provider: remoteProvider,
-        fallbackUsed: false,
-        reason: "Remote LLM forced but not configured (check REMOTE_LLM_BASE_URL and REMOTE_LLM_API_KEY)",
-      };
+      // Key set but provider check failed - still try remote
+      console.warn("[LLM Client] GROQ_API_KEY set but availability check failed, using Groq anyway");
     }
-    console.log("[LLM Client] Using remote provider (explicitly configured)");
+    console.log("[LLM Client] Using Groq API (GROQ_API_KEY configured)");
     return { provider: remoteProvider, fallbackUsed: false };
   }
 
-  // Explicit local mode (no fallback)
-  if (effectiveProvider === "local") {
-    const available = await localProvider.checkAvailability();
-    if (!available) {
-      console.error("[LLM Client] Local provider forced but unavailable");
-      return {
-        provider: localProvider,
-        fallbackUsed: false,
-        reason: "Local LLM forced but unavailable (start llama-server on " + config.baseUrl + ")",
-      };
-    }
-    return { provider: localProvider, fallbackUsed: false };
+  // GROQ_API_KEY missing in production → fail loudly
+  if (isProduction) {
+    const errorMsg = "GROQ_API_KEY is required in production. Get your key from https://console.groq.com";
+    console.error(`[LLM Client] FATAL: ${errorMsg}`);
+    throw new Error(errorMsg);
   }
 
-  // Auto mode: try remote → local → mock
-  // Step 1: Try remote (production priority)
-  const remoteAvailable = await remoteProvider.checkAvailability();
-  if (remoteAvailable) {
-    console.log("[LLM Client] Using remote provider (auto-detected as available)");
-    return { provider: remoteProvider, fallbackUsed: false };
+  // Development without GROQ_API_KEY → allow mock with single warning
+  if (!mockWarningLogged) {
+    console.warn("[LLM Client] GROQ_API_KEY not set - using mock provider (dev only)");
+    mockWarningLogged = true;
   }
-
-  // Step 2: Try local (development)
-  const localAvailable = await localProvider.checkAvailability();
-  if (localAvailable) {
-    console.log("[LLM Client] Using local provider (auto-detected as available)");
-    return { provider: localProvider, fallbackUsed: false };
-  }
-
-  // Step 3: Fallback to mock
-  console.warn("[LLM Client] No LLM available, falling back to mock");
   return {
     provider: mockProvider,
     fallbackUsed: true,
-    reason: "No LLM configured (remote not set, local unavailable)",
+    reason: "GROQ_API_KEY not configured - using mock responses (development mode)",
   };
 }
 
@@ -144,7 +116,6 @@ class LLMClient {
 
   /**
    * Stream completion with automatic provider selection
-   * Local and remote providers support streaming; mock falls back to instant response
    */
   async *streamCompletion(
     messages: LLMMessage[],
@@ -160,18 +131,7 @@ class LLMClient {
     this.lastProvider = provider.name;
     this.lastFallbackReason = reason || null;
 
-    // Local provider streaming
-    if (provider.name === "local" && "streamCompletion" in provider) {
-      const localProv = provider as typeof import("./providers/local").localProvider;
-      yield* localProv.streamCompletion(messages, {
-        temperature: options?.temperature,
-        maxTokens: options?.maxTokens,
-        signal: options?.signal,
-      });
-      return;
-    }
-
-    // Remote provider streaming
+    // Remote (Groq) provider streaming
     if (provider.name === ("remote" as LLMProviderName) && "streamCompletion" in provider) {
       const remoteProv = provider as typeof import("./providers/remote").remoteProvider;
       yield* remoteProv.streamCompletion(messages, {
@@ -182,7 +142,7 @@ class LLMClient {
       return;
     }
 
-    // Mock or streaming not available - simulate with instant response
+    // Mock - simulate with instant response
     const result = await provider.chatCompletion(messages, {
       temperature: options?.temperature,
       maxTokens: options?.maxTokens,
@@ -200,21 +160,32 @@ class LLMClient {
    * Quick check of current provider status
    */
   async getStatus(): Promise<{
-    configuredProvider: ConfigProvider;
+    configuredProvider: string;
     effectiveProvider: LLMProviderName;
-    localAvailable: boolean;
-    remoteAvailable: boolean;
+    groqAvailable: boolean;
+    groqKeySet: boolean;
+    isProduction: boolean;
   }> {
-    const config = getLLMConfig();
-    const localAvail = await localProvider.checkAvailability();
-    const remoteAvail = await remoteProvider.checkAvailability();
-    const { provider } = await resolveProvider();
+    const groqKeySet = !!process.env.GROQ_API_KEY;
+    const isProduction = process.env.NODE_ENV === "production";
+    const groqAvail = await remoteProvider.checkAvailability();
+    
+    // Determine effective provider based on new logic
+    let effectiveProvider: LLMProviderName;
+    if (groqKeySet) {
+      effectiveProvider = "remote" as LLMProviderName;
+    } else if (isProduction) {
+      effectiveProvider = "remote" as LLMProviderName; // Will throw when used
+    } else {
+      effectiveProvider = "mock" as LLMProviderName;
+    }
 
     return {
-      configuredProvider: config.provider,
-      effectiveProvider: provider.name,
-      localAvailable: localAvail,
-      remoteAvailable: remoteAvail,
+      configuredProvider: groqKeySet ? "remote (Groq)" : "mock (dev fallback)",
+      effectiveProvider,
+      groqAvailable: groqAvail,
+      groqKeySet,
+      isProduction,
     };
   }
 }

@@ -1,9 +1,8 @@
 /**
  * LLM Providers Index
  * ===================
- * Exports all LLM providers.
+ * Exports Groq (remote) and mock providers only.
  */
 
 export { MockLLMProvider, mockProvider } from "./mock";
-export { LocalLLMProvider, localProvider } from "./local";
 export { RemoteLLMProvider, remoteProvider } from "./remote";

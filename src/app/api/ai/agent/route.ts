@@ -78,7 +78,7 @@ export async function GET(request: NextRequest) {
         const llmStatus = await getLLMStatus();
         const isFallback =
           llmStatus.configuredProvider === "auto" &&
-          llmStatus.effectiveProvider !== "local";
+          llmStatus.effectiveProvider === "mock";
 
         return NextResponse.json({
           ok: true,
@@ -87,12 +87,12 @@ export async function GET(request: NextRequest) {
             debug: {
               provider: llmStatus.effectiveProvider,
               configuredProvider: llmStatus.configuredProvider,
-              localAvailable: llmStatus.localAvailable,
+              groqAvailable: llmStatus.groqAvailable,
               isFallback,
               message: isFallback
-                ? `Local LLM غير متاح - يستخدم المزود البديل ${llmStatus.effectiveProvider}`
-                : !llmStatus.localAvailable && llmStatus.configuredProvider === "local"
-                ? "Local LLM غير متاح - يرجى التحقق من الخادم المحلي"
+                ? "GROQ_API_KEY not set - using mock responses"
+                : !llmStatus.groqAvailable && llmStatus.configuredProvider === "remote"
+                ? "Groq API not configured - set GROQ_API_KEY"
                 : undefined,
             },
           },

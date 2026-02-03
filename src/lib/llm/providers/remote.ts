@@ -19,18 +19,22 @@ interface RemoteConfig {
 }
 
 function getRemoteConfig(): RemoteConfig | null {
-  const baseUrl = process.env.REMOTE_LLM_BASE_URL;
-  const apiKey = process.env.REMOTE_LLM_API_KEY;
+  // GROQ_API_KEY is the primary key
+  const apiKey = process.env.GROQ_API_KEY || process.env.REMOTE_LLM_API_KEY;
   
-  if (!baseUrl || !apiKey) {
+  if (!apiKey) {
     return null;
   }
+
+  // Default to Groq API base URL
+  const baseUrl = process.env.REMOTE_LLM_BASE_URL ?? "https://api.groq.com/openai/v1";
 
   return {
     baseUrl: baseUrl.replace(/\/$/, ""), // Remove trailing slash
     apiKey,
-    model: process.env.REMOTE_LLM_MODEL || "gpt-4o-mini",
-    timeoutMs: parseInt(process.env.LLM_TIMEOUT_MS || "30000", 10),
+    // Default to Groq's llama-3.3-70b-versatile model
+    model: process.env.REMOTE_LLM_MODEL ?? "llama-3.3-70b-versatile",
+    timeoutMs: parseInt(process.env.LLM_TIMEOUT_MS || "120000", 10),
   };
 }
 
@@ -86,7 +90,7 @@ export class RemoteLLMProvider implements LLMProvider {
     this.config = getRemoteConfig();
     
     if (!this.config) {
-      console.warn("[Remote LLM] Not configured: missing REMOTE_LLM_BASE_URL or REMOTE_LLM_API_KEY");
+      console.warn("[Remote LLM] Not configured: set GROQ_API_KEY or (REMOTE_LLM_BASE_URL + REMOTE_LLM_API_KEY)");
       this.cachedAvailability = false;
       return false;
     }
@@ -133,7 +137,7 @@ export class RemoteLLMProvider implements LLMProvider {
       return {
         ok: false,
         provider: "remote" as LLMProviderName,
-        error: "Remote LLM not configured. Set REMOTE_LLM_BASE_URL and REMOTE_LLM_API_KEY.",
+        error: "Remote LLM not configured. Set GROQ_API_KEY or (REMOTE_LLM_BASE_URL + REMOTE_LLM_API_KEY).",
         errorCode: "LLM_NOT_CONFIGURED",
         durationMs: Date.now() - startTime,
       };

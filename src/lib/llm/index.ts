@@ -1,12 +1,12 @@
 /**
  * LLM Module
  * ==========
- * Unified LLM interface with automatic provider selection.
- * Supports local llama-server and mock mode (no external API keys).
+ * Unified LLM interface for Groq API.
+ * Supports remote (Groq) and mock providers only.
  */
 
 // ============================================
-// Types (from dedicated types file to avoid circular deps)
+// Types
 // ============================================
 
 export type {
@@ -25,39 +25,20 @@ export {
   getLLMConfig,
   updateLLMConfig,
   resetLLMConfig,
-  getLLMBaseUrl,
   logLLMConfig,
   DEFAULT_LLM_CONFIG,
   type LLMConfig,
   type LLMProvider as LLMProviderType,
 } from "./config";
 
-// Health
-export {
-  checkLLMHealth,
-  waitForLLMHealth,
-  isLLMAvailable,
-  clearHealthCache,
-  type HealthCheckResult,
-} from "./health";
-
 // Providers
 export { mockProvider, MockLLMProvider } from "./providers/mock";
-export { localProvider, LocalLLMProvider } from "./providers/local";
 export { remoteProvider, RemoteLLMProvider } from "./providers/remote";
 
 // Client
 export {
   llmClient,
   chatCompletion,
+  chatCompletionStream,
   getLLMStatus,
 } from "./client";
-
-// Local Server Manager
-export {
-  startLocalServer,
-  stopServer,
-  isServerRunning,
-  getServerLogs,
-  type ServerStartResult,
-} from "./localServer";
