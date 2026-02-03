@@ -11,6 +11,8 @@ function getResendClient(): Resend | null {
     console.warn("[Email] RESEND_API_KEY not configured");
     return null;
   }
+  // Log first 10 chars of API key for debugging (safe to log prefix)
+  console.log("[Email] Using API key starting with:", resendApiKey.substring(0, 10) + "...");
   if (!resendInstance) {
     resendInstance = new Resend(resendApiKey);
   }
