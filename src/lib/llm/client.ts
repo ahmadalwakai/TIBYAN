@@ -24,11 +24,14 @@ let mockWarningLogged = false;
 /**
  * Resolve which provider to use.
  * 
- * NEW LOGIC (Groq-first):
- * - If GROQ_API_KEY is set → always use remote (Groq), ignore LLM_PROVIDER
- * - If GROQ_API_KEY is missing:
- *   - In production (NODE_ENV=production): throw error immediately
- *   - In development: allow mock fallback with a single warning
+ * Provider Resolution Logic:
+ * 1. If GROQ_API_KEY is set → use remote (Groq)
+ * 2. If GROQ_API_KEY is missing:
+ *    - If LLM_PROVIDER=mock → use mock (even in production)
+ *    - Otherwise → use mock with warning (graceful degradation)
+ * 
+ * This allows deployments without an API key to still function
+ * with mock responses rather than crashing.
  */
 async function resolveProvider(forcedProvider?: ConfigProvider): Promise<{
   provider: LLMProvider;
@@ -37,6 +40,7 @@ async function resolveProvider(forcedProvider?: ConfigProvider): Promise<{
 }> {
   const hasGroqKey = !!process.env.GROQ_API_KEY;
   const isProduction = process.env.NODE_ENV === "production";
+  const explicitMock = process.env.LLM_PROVIDER?.toLowerCase() === "mock";
 
   // GROQ_API_KEY is set → always use Groq (remote provider)
   if (hasGroqKey) {
@@ -49,22 +53,25 @@ async function resolveProvider(forcedProvider?: ConfigProvider): Promise<{
     return { provider: remoteProvider, fallbackUsed: false };
   }
 
-  // GROQ_API_KEY missing in production → fail loudly
-  if (isProduction) {
-    const errorMsg = "GROQ_API_KEY is required in production. Get your key from https://console.groq.com";
-    console.error(`[LLM Client] FATAL: ${errorMsg}`);
-    throw new Error(errorMsg);
-  }
-
-  // Development without GROQ_API_KEY → allow mock with single warning
+  // No GROQ_API_KEY - use mock fallback (graceful degradation)
+  // This prevents crashes and allows the app to function with limited AI features
+  const envInfo = isProduction ? "production" : "development";
+  const reasonPrefix = explicitMock ? "LLM_PROVIDER=mock configured" : "GROQ_API_KEY not configured";
+  
   if (!mockWarningLogged) {
-    console.warn("[LLM Client] GROQ_API_KEY not set - using mock provider (dev only)");
+    if (isProduction && !explicitMock) {
+      console.warn(`[LLM Client] WARNING: ${reasonPrefix} in ${envInfo}. AI features will use mock responses.`);
+      console.warn("[LLM Client] Set GROQ_API_KEY for real AI capabilities: https://console.groq.com");
+    } else {
+      console.warn(`[LLM Client] ${reasonPrefix} - using mock provider (${envInfo})`);
+    }
     mockWarningLogged = true;
   }
+  
   return {
     provider: mockProvider,
     fallbackUsed: true,
-    reason: "GROQ_API_KEY not configured - using mock responses (development mode)",
+    reason: `${reasonPrefix} - using mock responses (${envInfo} mode)`,
   };
 }
 
