@@ -28,15 +28,12 @@ import {
   clearAllSessions,
   deriveTitleFromFirstUserMessage,
   generateMessageId,
-  getWelcomeMessage,
   type ChatSession,
   type ChatMessage,
 } from "./chatStore";
 import {
   loadSettings,
   saveSettings,
-  buildPreferences,
-  getStreamingParams,
   type ChatSettings,
   DEFAULT_SETTINGS,
 } from "./chatSettingsStore";
@@ -55,59 +52,6 @@ interface Message {
 interface AIChatPageProps {
   locale: "ar" | "en";
 }
-
-// ============================================================================
-// THROTTLE UTILITY
-// ============================================================================
-
-function createThrottle<TArgs extends unknown[]>(
-  fn: (...args: TArgs) => void,
-  delay: number
-): { throttled: (...args: TArgs) => void; flush: () => void } {
-  let lastCall = 0;
-  let pendingArgs: TArgs | null = null;
-  let timeoutId: NodeJS.Timeout | null = null;
-
-  const throttled = (...args: TArgs) => {
-    const now = Date.now();
-    pendingArgs = args;
-
-    if (now - lastCall >= delay) {
-      lastCall = now;
-      fn(...args);
-      pendingArgs = null;
-    } else if (!timeoutId) {
-      timeoutId = setTimeout(() => {
-        if (pendingArgs) {
-          lastCall = Date.now();
-          fn(...pendingArgs);
-          pendingArgs = null;
-        }
-        timeoutId = null;
-      }, delay - (now - lastCall));
-    }
-  };
-
-  const flush = () => {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-      timeoutId = null;
-    }
-    if (pendingArgs) {
-      fn(...pendingArgs);
-      pendingArgs = null;
-    }
-  };
-
-  return { throttled, flush };
-}
-
-// ============================================================================
-// STYLE CONSTANTS
-// ============================================================================
-
-const TEXT_PRIMARY = "whiteAlpha.900";
-const TEXT_MUTED = "whiteAlpha.700";
 
 // ============================================================================
 // MAIN COMPONENT
@@ -135,45 +79,13 @@ export default function AIChatPage({ locale }: AIChatPageProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
-  const streamBufferRef = useRef<string>("");
-  const streamTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const batchIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const hasSetTitleRef = useRef(false);
-  const currentSessionIdRef = useRef<string | null>(null); // Track session during streaming to prevent token leakage
+  const currentSessionIdRef = useRef<string | null>(null);
   
-  // Typewriter effect refs
-  const incomingBufferRef = useRef<string>(""); // Collects SSE deltas immediately
-  const renderBufferRef = useRef<string>(""); // What is gradually shown in UI
-  const typewriterTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const uiFlushTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const thinkingDelayRef = useRef<number>(0); // Random delay for this request
-  const firstChunkReceivedRef = useRef<boolean>(false);
-  const thinkingStartTimeRef = useRef<number>(0);
-  
-  // Throttled persist function
-  const throttledPersistRef = useRef<{
-    throttled: (session: ChatSession) => void;
-    flush: () => void;
-  } | null>(null);
-  
-  // Streaming params ref (updated when settings change)
-  const streamingParamsRef = useRef(getStreamingParams(DEFAULT_SETTINGS));
-  
-  // Initialize throttled persist on mount
-  useEffect(() => {
-    throttledPersistRef.current = createThrottle((session: ChatSession) => {
-      // Only persist if saveChats is enabled
-      if (settings.privacy.saveChats) {
-        upsertSession(session);
-      }
-    }, 1500); // Persist at most every 1.5 seconds during streaming
-  }, [settings.privacy.saveChats]);
-
-  // Load settings on mount
+  // Initialize on mount
   useEffect(() => {
     const loaded = loadSettings();
     setSettings(loaded);
-    streamingParamsRef.current = getStreamingParams(loaded);
   }, []);
 
   // Load sessions on mount (respecting saveChats setting)
@@ -233,7 +145,7 @@ export default function AIChatPage({ locale }: AIChatPageProps) {
 
   // Persist session helper
   const persistCurrentSession = useCallback(
-    (updatedMessages: Message[], throttle = false) => {
+    (updatedMessages: Message[]) => {
       if (!activeSessionId) return;
       
       const session = sessions.find((s) => s.id === activeSessionId);
@@ -256,11 +168,7 @@ export default function AIChatPage({ locale }: AIChatPageProps) {
       );
       
       // Persist to storage (only if saveChats is enabled)
-      if (!settings.privacy.saveChats) return;
-      
-      if (throttle && throttledPersistRef.current) {
-        throttledPersistRef.current.throttled(updatedSession);
-      } else {
+      if (settings.privacy.saveChats) {
         upsertSession(updatedSession);
       }
     },
@@ -270,119 +178,8 @@ export default function AIChatPage({ locale }: AIChatPageProps) {
   // Handle settings change
   const handleSettingsChange = useCallback((newSettings: ChatSettings) => {
     setSettings(newSettings);
-    streamingParamsRef.current = getStreamingParams(newSettings);
     saveSettings(newSettings);
   }, []);
-
-  // ============================================================================
-  // TYPEWRITER EFFECT FUNCTIONS
-  // ============================================================================
-  
-  // Flush render buffer to UI (batched for performance)
-  const flushRenderBufferToUI = useCallback(() => {
-    if (renderBufferRef.current) {
-      const textToAdd = renderBufferRef.current;
-      renderBufferRef.current = "";
-      setMessages((prev) => {
-        if (prev.length === 0) return prev;
-        const lastMessage = prev[prev.length - 1];
-        if (lastMessage.role !== "assistant") return prev;
-        
-        return prev.map((m, i) =>
-          i === prev.length - 1
-            ? { ...m, content: m.content + textToAdd }
-            : m
-        );
-      });
-    }
-  }, []);
-  
-  // Move characters from incoming buffer to render buffer (typewriter pacing)
-  const typewriterTick = useCallback(() => {
-    if (!incomingBufferRef.current) return;
-    
-    // Get params from settings (uses ref for real-time access)
-    const params = streamingParamsRef.current;
-    
-    // Calculate slice size based on settings
-    const bufferLen = incomingBufferRef.current.length;
-    let sliceSize = Math.floor(Math.random() * (params.sliceMax - params.sliceMin + 1)) + params.sliceMin;
-    
-    // If buffer is getting large (slow render), increase slice size
-    if (bufferLen > 100) sliceSize = Math.min(bufferLen, 20);
-    else if (bufferLen > 50) sliceSize = Math.min(bufferLen, 12);
-    
-    // Check for punctuation/newline to allow burst
-    const nextChunk = incomingBufferRef.current.slice(0, sliceSize);
-    if (/[.!?،؟\n]/.test(nextChunk)) {
-      sliceSize = Math.min(sliceSize + 3, incomingBufferRef.current.length);
-    }
-    
-    // Move slice from incoming to render buffer
-    const slice = incomingBufferRef.current.slice(0, sliceSize);
-    incomingBufferRef.current = incomingBufferRef.current.slice(sliceSize);
-    renderBufferRef.current += slice;
-  }, []);
-  
-  // Start typewriter animation
-  const startTypewriter = useCallback(() => {
-    // Clear any existing timer
-    if (typewriterTimerRef.current) {
-      clearInterval(typewriterTimerRef.current);
-    }
-    
-    // Get interval from settings
-    const params = streamingParamsRef.current;
-    
-    // Typewriter tick at configured interval
-    typewriterTimerRef.current = setInterval(() => {
-      typewriterTick();
-    }, params.typewriterInterval);
-    
-    // UI flush every 100ms (batched renders)
-    if (uiFlushTimerRef.current) {
-      clearInterval(uiFlushTimerRef.current);
-    }
-    uiFlushTimerRef.current = setInterval(() => {
-      flushRenderBufferToUI();
-    }, 100);
-  }, [typewriterTick, flushRenderBufferToUI]);
-  
-  // Stop typewriter and flush all remaining content immediately
-  const stopTypewriter = useCallback((keepPartial: boolean = true) => {
-    if (typewriterTimerRef.current) {
-      clearInterval(typewriterTimerRef.current);
-      typewriterTimerRef.current = null;
-    }
-    if (uiFlushTimerRef.current) {
-      clearInterval(uiFlushTimerRef.current);
-      uiFlushTimerRef.current = null;
-    }
-    
-    if (keepPartial) {
-      // Move all remaining incoming to render, then flush to UI
-      renderBufferRef.current += incomingBufferRef.current;
-      incomingBufferRef.current = "";
-      flushRenderBufferToUI();
-    } else {
-      incomingBufferRef.current = "";
-      renderBufferRef.current = "";
-    }
-  }, [flushRenderBufferToUI]);
-  
-  // Legacy flush for compatibility with persist logic
-  const flushStreamBuffer = useCallback(() => {
-    // Move all content through the typewriter pipeline
-    renderBufferRef.current += incomingBufferRef.current;
-    incomingBufferRef.current = "";
-    flushRenderBufferToUI();
-  }, [flushRenderBufferToUI]);
-
-  // Schedule flush (legacy compatibility)
-  const scheduleFlush = useCallback(() => {
-    if (streamTimerRef.current) clearTimeout(streamTimerRef.current);
-    streamTimerRef.current = setTimeout(flushStreamBuffer, 80);
-  }, [flushStreamBuffer]);
 
   // Send message handler
   const sendMessage = useCallback(
@@ -442,113 +239,54 @@ export default function AIChatPage({ locale }: AIChatPageProps) {
       const messagesWithAssistant = [...messagesWithUser, assistantMsg];
       setMessages(messagesWithAssistant);
 
-      // Persist at stream start
-      persistCurrentSession(messagesWithAssistant, false);
+      // Persist before sending
+      persistCurrentSession(messagesWithAssistant);
 
-      // Initialize typewriter state
-      incomingBufferRef.current = "";
-      renderBufferRef.current = "";
-      firstChunkReceivedRef.current = false;
-      thinkingDelayRef.current = Math.floor(Math.random() * 450) + 450; // 450-900ms
-      thinkingStartTimeRef.current = Date.now();
-      
       setIsThinking(true);
       setIsStreaming(true);
       abortControllerRef.current = new AbortController();
 
       try {
-        // Build preferences for API
-        const preferences = buildPreferences(settings);
+        // Build system prompt
+        const systemPrompt = locale === "ar" 
+          ? `أنت "زيفون" (Zyphon)، مساعد ذكي من معهد تبيان للتعليم الإسلامي والعربي. أجب بالعربية فقط. كن ودوداً ومفيداً.`
+          : `You are "Zyphon", an AI assistant from Tibyan Institute for Islamic and Arabic education. Respond only in English. Be friendly and helpful.`;
         
-        const response = await fetch("/api/ai/agent", {
+        // Build messages array for API
+        const apiMessages = [
+          { role: "system" as const, content: systemPrompt },
+          ...messages.slice(-10).map((m) => ({
+            role: m.role as "user" | "assistant",
+            content: m.content,
+          })),
+          { role: "user" as const, content: text },
+        ];
+        
+        const response = await fetch("/api/ai", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            message: text,
-            sessionId: streamSessionId,
-            stream: true,
-            history: messages.map((m) => ({
-              role: m.role,
-              content: m.content,
-            })),
-            preferences,
-          }),
+          body: JSON.stringify({ messages: apiMessages }),
           signal: abortControllerRef.current.signal,
           credentials: "include",
         });
 
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
+        const data = await response.json();
+
+        if (!response.ok || !data.ok) {
+          throw new Error(data.error || `HTTP ${response.status}`);
         }
 
-        const reader = response.body?.getReader();
-        if (!reader) throw new Error("No response body");
+        // Update assistant message with reply
+        const replyContent = data.reply || "";
+        setMessages((prev) => {
+          const updated = prev.map((m, i) =>
+            i === prev.length - 1 && m.role === "assistant"
+              ? { ...m, content: replyContent }
+              : m
+          );
+          return updated;
+        });
 
-        const decoder = new TextDecoder();
-        let buffer = "";
-        let lastPersistTime = Date.now();
-
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          
-          // Guard: stop processing if session changed (prevents token leakage)
-          if (currentSessionIdRef.current !== streamSessionId) {
-            break;
-          }
-
-          buffer += decoder.decode(value, { stream: true });
-          const lines = buffer.split("\n");
-          buffer = lines.pop() || "";
-
-          for (const line of lines) {
-            if (!line.startsWith("data: ")) continue;
-            const dataStr = line.slice(6).trim();
-            if (!dataStr || dataStr === "[DONE]") continue;
-
-            try {
-              const msg = JSON.parse(dataStr);
-              // API sends {delta:"..."} not {type:"delta",delta:"..."}
-              if (msg.delta) {
-                // Guard: only buffer if still on same session
-                if (currentSessionIdRef.current === streamSessionId) {
-                  // Add to incoming buffer for typewriter
-                  incomingBufferRef.current += msg.delta;
-                  
-                  // Handle first chunk - start typewriter after thinking delay
-                  if (!firstChunkReceivedRef.current) {
-                    firstChunkReceivedRef.current = true;
-                    const elapsed = Date.now() - thinkingStartTimeRef.current;
-                    const remainingDelay = Math.max(0, thinkingDelayRef.current - elapsed);
-                    
-                    setTimeout(() => {
-                      // Only proceed if still streaming same session
-                      if (currentSessionIdRef.current === streamSessionId) {
-                        setIsThinking(false);
-                        startTypewriter();
-                      }
-                    }, remainingDelay);
-                  }
-                }
-                
-                // Throttled persist during streaming
-                const now = Date.now();
-                if (now - lastPersistTime >= 1500) {
-                  setMessages((currentMessages) => {
-                    persistCurrentSession(currentMessages, true);
-                    return currentMessages;
-                  });
-                  lastPersistTime = now;
-                }
-              } else if (msg.done === true) {
-                // API sends {done:true} not {type:"stop"}
-                stopTypewriter(true);
-              }
-            } catch {
-              // Ignore parse errors
-            }
-          }
-        }
       } catch (err) {
         if (err instanceof Error && err.name !== "AbortError") {
           toaster.create({
@@ -556,32 +294,20 @@ export default function AIChatPage({ locale }: AIChatPageProps) {
             description: err.message,
             type: "error",
           });
+          // Remove the empty assistant message on error
+          setMessages((prev) => prev.slice(0, -1));
         }
       } finally {
-        // Stop typewriter and flush all remaining content
-        stopTypewriter(true);
-        // Clear batch interval
-        if (batchIntervalRef.current) {
-          clearInterval(batchIntervalRef.current);
-          batchIntervalRef.current = null;
-        }
-        // Clear any pending flush timeout
-        if (streamTimerRef.current) {
-          clearTimeout(streamTimerRef.current);
-          streamTimerRef.current = null;
-        }
-        // Flush any pending throttled persist
-        throttledPersistRef.current?.flush();
         // Final persist
         setMessages((finalMessages) => {
-          persistCurrentSession(finalMessages, false);
+          persistCurrentSession(finalMessages);
           return finalMessages;
         });
         setIsThinking(false);
         setIsStreaming(false);
       }
     },
-    [activeSessionId, locale, messages, sessions, isRTL, stopTypewriter, persistCurrentSession, startTypewriter, settings]
+    [activeSessionId, locale, messages, isRTL, persistCurrentSession]
   );
 
   // Stop generation handler
@@ -590,26 +316,13 @@ export default function AIChatPage({ locale }: AIChatPageProps) {
       abortControllerRef.current.abort();
       abortControllerRef.current = null;
     }
-    // Stop typewriter immediately and keep partial text
-    stopTypewriter(true);
-    // Clear batch interval
-    if (batchIntervalRef.current) {
-      clearInterval(batchIntervalRef.current);
-      batchIntervalRef.current = null;
-    }
-    // Clear any pending flush timeout
-    if (streamTimerRef.current) {
-      clearTimeout(streamTimerRef.current);
-      streamTimerRef.current = null;
-    }
-    throttledPersistRef.current?.flush();
     setMessages((finalMessages) => {
-      persistCurrentSession(finalMessages, false);
+      persistCurrentSession(finalMessages);
       return finalMessages;
     });
     setIsThinking(false);
     setIsStreaming(false);
-  }, [stopTypewriter, persistCurrentSession]);
+  }, [persistCurrentSession]);
 
   // Keyboard handler
   const handleKeyDown = useCallback(
@@ -624,29 +337,12 @@ export default function AIChatPage({ locale }: AIChatPageProps) {
 
   // Session management handlers
   const handleNewChat = useCallback(() => {
-    // Stop any current streaming and clear all resources
+    // Stop any current request
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
       abortControllerRef.current = null;
     }
     
-    // Stop typewriter
-    stopTypewriter(false);
-    
-    // Clear all timers
-    if (streamTimerRef.current) {
-      clearTimeout(streamTimerRef.current);
-      streamTimerRef.current = null;
-    }
-    if (batchIntervalRef.current) {
-      clearInterval(batchIntervalRef.current);
-      batchIntervalRef.current = null;
-    }
-    
-    // Reset stream state
-    streamBufferRef.current = "";
-    incomingBufferRef.current = "";
-    renderBufferRef.current = "";
     setIsThinking(false);
     setIsStreaming(false);
     
@@ -666,38 +362,16 @@ export default function AIChatPage({ locale }: AIChatPageProps) {
     setInput("");
     hasSetTitleRef.current = false;
     setSidebarOpen(false); // Close mobile sidebar
-  }, [locale, stopTypewriter]);
+  }, [locale]);
 
   const handleSelectSession = useCallback(
     (sessionId: string) => {
-      // Stop any current streaming and clear all resources
+      // Stop any current request
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
         abortControllerRef.current = null;
       }
       
-      // Stop typewriter
-      stopTypewriter(false);
-      
-      // Clear all timers
-      if (streamTimerRef.current) {
-        clearTimeout(streamTimerRef.current);
-        streamTimerRef.current = null;
-      }
-      if (batchIntervalRef.current) {
-        clearInterval(batchIntervalRef.current);
-        batchIntervalRef.current = null;
-      }
-      
-      // Persist current session if was streaming
-      if (isStreaming) {
-        throttledPersistRef.current?.flush();
-      }
-      
-      // Reset stream state
-      streamBufferRef.current = "";
-      incomingBufferRef.current = "";
-      renderBufferRef.current = "";
       setIsThinking(false);
       setIsStreaming(false);
       
@@ -719,7 +393,7 @@ export default function AIChatPage({ locale }: AIChatPageProps) {
         setSidebarOpen(false); // Close mobile sidebar
       }
     },
-    [isStreaming, sessions, stopTypewriter]
+    [sessions]
   );
 
   const handleRenameSession = useCallback((sessionId: string, newTitle: string) => {
@@ -786,7 +460,7 @@ export default function AIChatPage({ locale }: AIChatPageProps) {
     <Flex
       h="100vh"
       bg="gray.900"
-      color={TEXT_PRIMARY}
+      color="whiteAlpha.900"
       dir={isRTL ? "rtl" : "ltr"}
       flexDirection={isRTL ? "row-reverse" : "row"}
       overflow="hidden"

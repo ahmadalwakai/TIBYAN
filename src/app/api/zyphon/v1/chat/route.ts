@@ -15,9 +15,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { chatCompletion } from "@/lib/llm/client";
-import type { LLMMessage } from "@/lib/llm/types";
-import { searchKnowledgeBase, buildSystemPrompt } from "@/lib/ai/kb";
+import { chatCompletion, type ChatMessage } from "@/lib/groqClient";
 import { db } from "@/lib/db";
 import {
   verifyKey,
@@ -29,23 +27,15 @@ import {
   getDefaultSettings,
 } from "@/lib/zyphon";
 import { checkZyphonRateLimit } from "@/lib/zyphon/rate-limit";
-import {
-  identityGuard,
-  validateInputSize,
-  determineSessionLanguage,
-  sanitizeHistory,
-  generateLanguageGuardMessage,
-  filterStreamChunk,
-  getLanguageFallbackMessage,
-  generateRequestId,
-  type AllowedLanguage,
-} from "@/lib/ai-agent";
 
 // Force Node.js runtime
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-// Request schema for external chat
+// ============================================
+// Schemas & Types
+// ============================================
+
 const ExternalChatSchema = z.object({
   message: z.string().min(1).max(10000),
   sessionId: z.string().optional(),
@@ -62,7 +52,14 @@ const ExternalChatSchema = z.object({
   maxTokens: z.number().min(50).max(4096).optional(),
 });
 
-// Get client IP from request
+// ============================================
+// Helpers
+// ============================================
+
+function generateRequestId(): string {
+  return `zyp_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+}
+
 function getClientIP(request: NextRequest): string {
   const forwarded = request.headers.get("x-forwarded-for");
   if (forwarded) {
@@ -75,7 +72,6 @@ function getClientIP(request: NextRequest): string {
   return "unknown";
 }
 
-// Get Zyphon settings from DB or defaults
 async function getZyphonSettings() {
   try {
     const settings = await db.zyphonSettings.findFirst();
@@ -93,7 +89,6 @@ async function getZyphonSettings() {
   return getDefaultSettings();
 }
 
-// CORS headers for external access
 function getCORSHeaders(): Record<string, string> {
   const allowedOrigins = process.env.ZYPHON_ALLOWED_ORIGINS || "";
   const headers: Record<string, string> = {
@@ -103,15 +98,33 @@ function getCORSHeaders(): Record<string, string> {
   };
 
   if (allowedOrigins) {
-    // If specific origins are configured, use them
     headers["Access-Control-Allow-Origin"] = allowedOrigins.split(",")[0].trim();
   }
-  // If no origins configured, don't set CORS header (server-to-server only)
 
   return headers;
 }
 
-// OPTIONS handler for CORS preflight
+// ============================================
+// System Prompt
+// ============================================
+
+const SYSTEM_PROMPT = `أنت "زيفون" (Zyphon)، مساعد ذكي متخصص من معهد تبيان للتعليم الإسلامي والعربي.
+
+هويتك:
+- اسمك: زيفون (Zyphon)
+- تابع لمعهد تبيان للأطفال العرب في ألمانيا وأوروبا
+- تخصصك: القرآن الكريم، اللغة العربية، العلوم الإسلامية
+
+قواعد صارمة:
+1. أجب بلغة السائل (العربية أو الإنجليزية فقط)
+2. لا تستخدم لغات أخرى (لا صينية، لا يابانية، إلخ)
+3. كن ودوداً ومحترماً
+4. ركز على المحتوى التعليمي`;
+
+// ============================================
+// Handlers
+// ============================================
+
 export async function OPTIONS() {
   return new NextResponse(null, {
     status: 204,
@@ -119,23 +132,15 @@ export async function OPTIONS() {
   });
 }
 
-/**
- * POST /api/zyphon/v1/chat
- * External chat endpoint with API key authentication
- */
 export async function POST(request: NextRequest) {
   const requestId = generateRequestId();
   const startTime = Date.now();
   const ip = getClientIP(request);
   const userAgent = request.headers.get("user-agent") || "unknown";
-
-  // CORS headers
   const corsHeaders = getCORSHeaders();
 
   try {
-    // ================================================================
     // 1. Check if external endpoint is enabled
-    // ================================================================
     const settings = await getZyphonSettings();
     if (!settings.externalEndpointEnabled) {
       await logZyphonAudit({
@@ -150,9 +155,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // ================================================================
-    // 2. Extract and validate API key
-    // ================================================================
+    // 2. Validate API key
     const authHeader = request.headers.get("authorization");
     const rawKey = extractBearerToken(authHeader);
 
@@ -164,12 +167,11 @@ export async function POST(request: NextRequest) {
         meta: { reason: "missing_auth", requestId },
       });
       return NextResponse.json(
-        { ok: false, error: "Missing or invalid Authorization header. Use: Bearer <api_key>" },
+        { ok: false, error: "Missing or invalid Authorization header" },
         { status: 401, headers: corsHeaders }
       );
     }
 
-    // Verify the key (hash comparison)
     const keyInfo = await verifyKey(rawKey);
     if (!keyInfo) {
       await logZyphonAudit({
@@ -184,16 +186,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // ================================================================
-    // 3. Check scope permissions
-    // ================================================================
+    // 3. Check scope
     if (!hasScope(keyInfo.scopes, ZYPHON_SCOPES.CHAT_WRITE)) {
       await logZyphonAudit({
         action: "ext.denied",
         keyPrefix: keyInfo.prefix,
         ip,
         userAgent,
-        meta: { reason: "insufficient_scope", requiredScope: ZYPHON_SCOPES.CHAT_WRITE, requestId },
+        meta: { reason: "insufficient_scope", requestId },
       });
       return NextResponse.json(
         { ok: false, error: "API key does not have chat:write scope" },
@@ -201,9 +201,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // ================================================================
     // 4. Rate limiting
-    // ================================================================
     const rateLimitResult = checkZyphonRateLimit(keyInfo.prefix, ip);
     if (rateLimitResult.limited) {
       await logZyphonAudit({
@@ -214,35 +212,14 @@ export async function POST(request: NextRequest) {
         meta: { reason: "rate_limited", requestId },
       });
       return NextResponse.json(
-        {
-          ok: false,
-          error: "Rate limit exceeded",
-          retryAfter: Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000),
-        },
-        {
-          status: 429,
-          headers: {
-            ...corsHeaders,
-            "X-RateLimit-Remaining": "0",
-            "X-RateLimit-Reset": String(rateLimitResult.resetTime),
-            "Retry-After": String(Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000)),
-          },
-        }
+        { ok: false, error: "Rate limit exceeded" },
+        { status: 429, headers: corsHeaders }
       );
     }
 
-    // ================================================================
-    // 5. Parse and validate request body
-    // ================================================================
+    // 5. Parse request body
     const body = await request.json().catch(() => null);
     if (!body) {
-      await logZyphonAudit({
-        action: "ext.denied",
-        keyPrefix: keyInfo.prefix,
-        ip,
-        userAgent,
-        meta: { reason: "invalid_json", requestId },
-      });
       return NextResponse.json(
         { ok: false, error: "Invalid JSON body" },
         { status: 400, headers: corsHeaders }
@@ -251,169 +228,44 @@ export async function POST(request: NextRequest) {
 
     const parsed = ExternalChatSchema.safeParse(body);
     if (!parsed.success) {
-      await logZyphonAudit({
-        action: "ext.denied",
-        keyPrefix: keyInfo.prefix,
-        ip,
-        userAgent,
-        meta: { reason: "invalid_input", errors: parsed.error.flatten(), requestId },
-      });
       return NextResponse.json(
-        { ok: false, error: "Invalid request format", details: parsed.error.flatten() },
+        { ok: false, error: "Invalid request format" },
         { status: 400, headers: corsHeaders }
       );
     }
 
     const { message, sessionId, locale, history, maxTokens } = parsed.data;
 
-    // ================================================================
-    // 6. Input size validation
-    // ================================================================
-    const sizeCheck = validateInputSize(message);
-    if (!sizeCheck.isValid) {
-      await logZyphonAudit({
-        action: "ext.denied",
-        keyPrefix: keyInfo.prefix,
-        ip,
-        userAgent,
-        meta: { reason: "input_too_large", size: sizeCheck.characterCount, requestId },
-      });
+    // 6. Input size check
+    if (message.length > 10000) {
       return NextResponse.json(
-        { ok: false, error: `Input too large: ${sizeCheck.characterCount}/${sizeCheck.limit} characters` },
+        { ok: false, error: "Input too large" },
         { status: 413, headers: corsHeaders }
       );
     }
 
-    // ================================================================
-    // 7. Identity lock check
-    // ================================================================
-    const identityCheck = identityGuard(message);
-    if (identityCheck.intercepted) {
-      await logZyphonAudit({
-        action: "ext.request",
-        keyPrefix: keyInfo.prefix,
-        ip,
-        userAgent,
-        meta: { requestId, identityBlocked: true },
-      });
-      
-      // Update last used
-      await updateKeyLastUsed(keyInfo.id);
-      
-      return NextResponse.json(
-        {
-          ok: true,
-          data: {
-            reply: identityCheck.response || "Security policy enforced",
-            sessionId: sessionId || `ext_${requestId}`,
-            processingTime: Date.now() - startTime,
-          },
-        },
-        { headers: corsHeaders }
-      );
-    }
+    // 7. Build messages for Groq
+    const sessionLanguage = locale || "ar";
+    const langInstruction = sessionLanguage === "ar"
+      ? "IMPORTANT: Respond ONLY in Arabic."
+      : "IMPORTANT: Respond ONLY in English.";
 
-    // ================================================================
-    // 8. Language handling
-    // ================================================================
-    let sessionLanguage: AllowedLanguage;
-    
-    // If locale is explicitly provided, lock to that language
-    if (locale) {
-      sessionLanguage = locale;
-    } else if (settings.defaultLanguageMode === "locked_ar") {
-      sessionLanguage = "ar";
-    } else if (settings.defaultLanguageMode === "locked_en") {
-      sessionLanguage = "en";
-    } else {
-      // Auto-detect from message
-      sessionLanguage = determineSessionLanguage(sessionId || requestId, message);
-    }
-
-    // Sanitize history (remove CJK content if strictNoThirdLanguage)
-    let sanitizedHistory = history;
-    if (settings.strictNoThirdLanguage) {
-      const sanitizationResult = sanitizeHistory(
-        history.map((h) => ({ role: h.role, content: h.content }))
-      );
-      sanitizedHistory = sanitizationResult.messages as typeof history;
-    }
-
-    // Truncate history to fit budget
-    const MAX_HISTORY_TOKENS = 900;
-    const estimateTokens = (text: string): number => Math.ceil(text.length / 4);
-    
-    let historyTokens = 0;
-    const truncatedHistory: typeof history = [];
-    for (let i = sanitizedHistory.length - 1; i >= 0; i--) {
-      const msgTokens = estimateTokens(sanitizedHistory[i].content);
-      if (historyTokens + msgTokens > MAX_HISTORY_TOKENS) break;
-      truncatedHistory.unshift(sanitizedHistory[i]);
-      historyTokens += msgTokens;
-    }
-
-    // ================================================================
-    // 9. Build messages for LLM
-    // ================================================================
-    const systemPrompt = buildSystemPrompt([], { isAdmin: false });
-    
-    // Build language guard
-    let languageGuardContent = generateLanguageGuardMessage(sessionLanguage).content;
-    if (locale) {
-      const langName = locale === "ar" ? "Arabic" : "English";
-      languageGuardContent += `\n\nCRITICAL: Respond ONLY in ${langName}. Even if the user writes in another language, reply in ${langName}.`;
-    }
-    if (settings.strictNoThirdLanguage) {
-      languageGuardContent += "\n\nNEVER respond in any language other than Arabic or English. No Chinese, Japanese, Korean, or any other language.";
-    }
-
-    const messages: LLMMessage[] = [
-      { role: "system", content: systemPrompt },
-      { role: "system", content: languageGuardContent },
-      ...truncatedHistory.map((h) => ({ role: h.role as "user" | "assistant", content: h.content })),
+    const messages: ChatMessage[] = [
+      { role: "system", content: `${SYSTEM_PROMPT}\n\n${langInstruction}` },
+      ...history.slice(-10).map((h) => ({
+        role: h.role as "user" | "assistant",
+        content: h.content,
+      })),
       { role: "user", content: message },
     ];
 
-    // ================================================================
-    // 10. Call LLM (non-streaming for external API v1)
-    // ================================================================
-    const responseMaxTokens = maxTokens || settings.defaultMaxTokens;
-    
-    const llmResult = await chatCompletion(messages, {
+    // 8. Call Groq
+    const reply = await chatCompletion(messages, {
+      maxTokens: maxTokens || settings.defaultMaxTokens,
       temperature: 0.7,
-      maxTokens: Math.min(responseMaxTokens, 4096),
     });
 
-    if (!llmResult.ok) {
-      await logZyphonAudit({
-        action: "ext.error",
-        keyPrefix: keyInfo.prefix,
-        ip,
-        userAgent,
-        meta: { requestId, error: llmResult.error },
-      });
-      return NextResponse.json(
-        { ok: false, error: "Failed to generate response" },
-        { status: 500, headers: corsHeaders }
-      );
-    }
-
-    let reply = llmResult.content || "";
-
-    // ================================================================
-    // 11. Language guard on response (filter CJK if enabled)
-    // ================================================================
-    if (settings.strictNoThirdLanguage) {
-      const filterResult = filterStreamChunk(reply, sessionLanguage);
-      if (filterResult.cjkDetected) {
-        // Replace with fallback
-        reply = getLanguageFallbackMessage(sessionLanguage);
-      }
-    }
-
-    // ================================================================
-    // 12. Log success and update last used
-    // ================================================================
+    // 9. Log success
     await Promise.all([
       logZyphonAudit({
         action: "ext.request",
@@ -431,9 +283,7 @@ export async function POST(request: NextRequest) {
       updateKeyLastUsed(keyInfo.id),
     ]);
 
-    // ================================================================
-    // 13. Return response
-    // ================================================================
+    // 10. Return response
     return NextResponse.json(
       {
         ok: true,
@@ -444,17 +294,11 @@ export async function POST(request: NextRequest) {
           processingTime: Date.now() - startTime,
         },
       },
-      {
-        headers: {
-          ...corsHeaders,
-          "X-RateLimit-Remaining": String(rateLimitResult.remaining),
-          "X-RateLimit-Reset": String(rateLimitResult.resetTime),
-        },
-      }
+      { headers: corsHeaders }
     );
   } catch (error) {
-    console.error("[Zyphon External] Unexpected error:", error);
-    
+    console.error("[Zyphon External] Error:", error);
+
     await logZyphonAudit({
       action: "ext.error",
       ip,
