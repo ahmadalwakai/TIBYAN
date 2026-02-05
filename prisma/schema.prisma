@@ -1320,3 +1320,19 @@ model ZyphonSettings {
   @@map("zyphon_settings")
   @@schema("ai")
 }
+
+// News Ticker for homepage hero section
+model NewsTicker {
+  id        String   @id @default(cuid())
+  textAr    String   // Arabic text
+  textEn    String   // English text
+  link      String?  // Optional link URL
+  isActive  Boolean  @default(true)
+  priority  Int      @default(0) // Higher priority shows first
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isActive, priority])
+  @@map("news_ticker")
+  @@schema("public")
+}

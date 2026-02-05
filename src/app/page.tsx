@@ -18,6 +18,8 @@ import {
   TeacherDaySection,
   CurrentScheduleSection,
   TrustStatementSection,
+  NewsTicker,
+  HeroTitle,
 } from "@/components/home";
 
 /**
@@ -75,31 +77,10 @@ export default function Home() {
         />
 
         {/* Hero Content */}
-        <Container maxW="4xl" position="relative" zIndex={1} px={{ base: 6, md: 8 }}>
-          <Stack gap={{ base: 6, md: 8 }} textAlign="center" align="center">
-            {/* Academy Name */}
-            <Heading
-              as="h1"
-              fontSize={{ base: "4xl", md: "6xl", lg: "7xl" }}
-              fontWeight="900"
-              fontFamily="var(--font-ibm-plex)"
-              color="white"
-              letterSpacing="-0.02em"
-            >
-              {isArabic ? "أكاديمية تِبيان" : "Tibyan Academy"}
-            </Heading>
-
-            {/* One realistic sentence - NO marketing */}
-            <Text
-              color="gray.300"
-              fontSize={{ base: "lg", md: "xl", lg: "2xl" }}
-              maxW="700px"
-              lineHeight="1.8"
-            >
-              {isArabic
-                ? "حصص قراءة عربية أونلاين مع معلمين حقيقيين وتقدّم ملموس"
-                : "Online Arabic reading classes with real teachers and real progress"}
-            </Text>
+        <Container maxW="5xl" position="relative" zIndex={1} px={{ base: 6, md: 8 }} pt={{ base: 12, md: 20 }}>
+          <Stack gap={{ base: 8, md: 10 }} textAlign="center" align="center">
+            {/* Premium Hero Title */}
+            <HeroTitle />
 
             {/* Single Primary Action */}
             <Button
@@ -107,6 +88,7 @@ export default function Home() {
               size="lg"
               bg="green.500"
               color="white"
+              mt={{ base: 40, md: 60 }}
               px={{ base: 8, md: 12 }}
               h={{ base: "56px", md: "64px" }}
               fontSize={{ base: "md", md: "lg" }}
@@ -124,6 +106,17 @@ export default function Home() {
             </Button>
           </Stack>
         </Container>
+
+        {/* News Ticker - Admin-updatable moving news lane */}
+        <Box
+          position="absolute"
+          bottom={{ base: 20, md: 24 }}
+          left={0}
+          right={0}
+          zIndex={2}
+        >
+          <NewsTicker />
+        </Box>
 
         {/* Scroll hint */}
         <Box

@@ -17,3 +17,9 @@ export { default as RealLessonSection } from "./RealLessonSection";
 export { default as TeacherDaySection } from "./TeacherDaySection";
 export { default as CurrentScheduleSection } from "./CurrentScheduleSection";
 export { default as TrustStatementSection } from "./TrustStatementSection";
+
+// News ticker for hero section
+export { NewsTicker } from "./NewsTicker";
+
+// Premium hero title component
+export { HeroTitle } from "./HeroTitle";

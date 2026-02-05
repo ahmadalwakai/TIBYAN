@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Sans_Arabic, Inter } from "next/font/google";
+import { IBM_Plex_Sans_Arabic, Inter, Amiri, Tajawal } from "next/font/google";
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import AiAgentFab from "@/components/layout/AiAgentFab";
@@ -25,6 +25,22 @@ const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
   variable: "--font-inter",
+  display: "swap",
+});
+
+// Premium Arabic display font for headings
+const amiri = Amiri({
+  subsets: ["arabic"],
+  weight: ["400", "700"],
+  variable: "--font-amiri",
+  display: "swap",
+});
+
+// Modern Arabic font for subtitles
+const tajawal = Tajawal({
+  subsets: ["arabic"],
+  weight: ["400", "500", "700", "800"],
+  variable: "--font-tajawal",
   display: "swap",
 });
 
@@ -95,7 +111,7 @@ export default async function RootLayout({
     <html
       lang={locale}
       dir={isRtl ? "rtl" : "ltr"}
-      className={`${ibmPlexArabic.variable} ${inter.variable}`}
+      className={`${ibmPlexArabic.variable} ${inter.variable} ${amiri.variable} ${tajawal.variable}`}
       suppressHydrationWarning
     >
       <head>
