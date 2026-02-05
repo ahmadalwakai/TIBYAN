@@ -18,6 +18,7 @@ const teacherLinks = [
   { label: "الإحصائيات", href: "/teacher/analytics", icon: "📈" },
   { label: "الإشعارات", href: "/teacher/notifications", icon: "🔔" },
   { label: "الملف الشخصي", href: "/teacher/profile", icon: "👤" },
+  { label: "المناهج السورية 2026", href: "/teachers/resources/syrian-curriculum-2026", icon: "📚" },
 ];
 
 interface TeacherSidebarProps {
