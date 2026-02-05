@@ -6,7 +6,7 @@
 // Static admin emails (always authorized)
 export const ADMIN_EMAILS = [
   "ahmadalwakai76@gmail.com",
-  "kalmoh@gmail.com",
+  "kalmoh548@gmail.com",
 ];
 
 // Runtime cache for dynamic admin emails from database
