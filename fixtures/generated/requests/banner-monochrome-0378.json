@@ -1,0 +1,33 @@
+{
+  "id": "banner-monochrome-0378",
+  "request": {
+    "presetId": "banner",
+    "themeId": "monochrome",
+    "seed": 128470182,
+    "patternIntensity": 0.8271081749476065,
+    "circuitIntensity": 0.8937951330532298,
+    "accentIntensity": 0.7717586759346345
+  },
+  "metadata": {
+    "generatedAt": "2026-02-05T07:21:59.873Z",
+    "seed": 128470182,
+    "variationSeed": 3112005
+  },
+  "layerOverrides": {
+    "mark": {
+      "scale": 1.9374653703707576,
+      "strokeWidth": 23.751457342296586,
+      "glow": 0.24099588405387284
+    },
+    "pattern": {
+      "density": 1.36779971172465,
+      "tileSize": 55.95443846003825,
+      "strokeWidth": 0.5758329034204748
+    },
+    "circuit": {
+      "density": 0.7882828778998382,
+      "nodeRadius": 3.553698540457384,
+      "lineWidth": 0.7435388566197543
+    }
+  }
+}

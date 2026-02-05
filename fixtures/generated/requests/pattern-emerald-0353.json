@@ -1,0 +1,33 @@
+{
+  "id": "pattern-emerald-0353",
+  "request": {
+    "presetId": "pattern",
+    "themeId": "emerald",
+    "seed": 916933208,
+    "patternIntensity": 0.4516305925564983,
+    "circuitIntensity": 0.7624082568857857,
+    "accentIntensity": 0.9955720906125252
+  },
+  "metadata": {
+    "generatedAt": "2026-02-05T07:22:28.788Z",
+    "seed": 916933208,
+    "variationSeed": 2942889
+  },
+  "layerOverrides": {
+    "mark": {
+      "scale": 1.963789463724843,
+      "strokeWidth": 48.156743069718004,
+      "glow": 0.796541595829903
+    },
+    "pattern": {
+      "density": 0.6984249116845545,
+      "tileSize": 107.02162746201346,
+      "strokeWidth": 1.59623193791892
+    },
+    "circuit": {
+      "density": 0.7961140635870929,
+      "nodeRadius": 6.024732591595842,
+      "lineWidth": 1.1020793917598573
+    }
+  }
+}

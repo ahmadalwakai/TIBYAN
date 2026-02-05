@@ -196,6 +196,8 @@ export const ZYPHON_SCOPES = {
   CHAT_READ: "chat:read",
   CHAT_WRITE: "chat:write",
   KNOWLEDGE_READ: "knowledge:read",
+  IMAGE_GENERATE: "image:generate",
+  PDF_GENERATE: "pdf:generate",
 } as const;
 
 /**

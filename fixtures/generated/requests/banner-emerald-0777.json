@@ -1,0 +1,33 @@
+{
+  "id": "banner-emerald-0777",
+  "request": {
+    "presetId": "banner",
+    "themeId": "emerald",
+    "seed": 783308058,
+    "patternIntensity": 0.6126245263091403,
+    "circuitIntensity": 0.9282397036106511,
+    "accentIntensity": 0.4716514351180063
+  },
+  "metadata": {
+    "generatedAt": "2026-02-05T07:22:30.298Z",
+    "seed": 783308058,
+    "variationSeed": 6300545
+  },
+  "layerOverrides": {
+    "mark": {
+      "scale": 1.6047337656397065,
+      "strokeWidth": 19.459955102978252,
+      "glow": 0.7239439967665562
+    },
+    "pattern": {
+      "density": 1.1791813377659681,
+      "tileSize": 36.93502307261109,
+      "strokeWidth": 0.8191647680099889
+    },
+    "circuit": {
+      "density": 0.6605370702969549,
+      "nodeRadius": 3.4767742163859188,
+      "lineWidth": 1.315320969007593
+    }
+  }
+}

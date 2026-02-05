@@ -1,0 +1,33 @@
+{
+  "id": "logo-monochrome-0446",
+  "request": {
+    "presetId": "logo",
+    "themeId": "monochrome",
+    "seed": 812580585,
+    "patternIntensity": 0.8679203991163151,
+    "circuitIntensity": 0.4253506662442119,
+    "accentIntensity": 0.4528279306613039
+  },
+  "metadata": {
+    "generatedAt": "2026-02-05T07:22:00.066Z",
+    "seed": 812580585,
+    "variationSeed": 3650497
+  },
+  "layerOverrides": {
+    "mark": {
+      "scale": 1.4207980637069784,
+      "strokeWidth": 16.81925058915245,
+      "glow": 0.32945289627157753
+    },
+    "pattern": {
+      "density": 1.163699913427094,
+      "tileSize": 84.61205008188824,
+      "strokeWidth": 1.5556805138735474
+    },
+    "circuit": {
+      "density": 0.20260081295976456,
+      "nodeRadius": 4.552355946298855,
+      "lineWidth": 1.865218878428088
+    }
+  }
+}

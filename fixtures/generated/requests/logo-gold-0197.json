@@ -1,0 +1,33 @@
+{
+  "id": "logo-gold-0197",
+  "request": {
+    "presetId": "logo",
+    "themeId": "gold",
+    "seed": 755107700,
+    "patternIntensity": 0.47700262091914314,
+    "circuitIntensity": 0.8441214565393149,
+    "accentIntensity": 0.4889807703387834
+  },
+  "metadata": {
+    "generatedAt": "2026-02-05T07:22:28.226Z",
+    "seed": 755107700,
+    "variationSeed": 1707525
+  },
+  "layerOverrides": {
+    "mark": {
+      "scale": 0.9941408636486814,
+      "strokeWidth": 48.79620315683829,
+      "glow": 0.7854778293452589
+    },
+    "pattern": {
+      "density": 1.032565498693178,
+      "tileSize": 74.43879606408942,
+      "strokeWidth": 1.4259355072518511
+    },
+    "circuit": {
+      "density": 0.14576172830805265,
+      "nodeRadius": 5.445481480772365,
+      "lineWidth": 0.70900130281644
+    }
+  }
+}

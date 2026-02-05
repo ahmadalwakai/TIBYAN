@@ -95,6 +95,26 @@ const INTEGRATIONS: Integration[] = [
     description: "البث المباشر والاجتماعات",
     config: { apiKey: "", apiSecret: "" },
   },
+  {
+    id: "groq",
+    name: "Groq AI",
+    nameAr: "Groq للذكاء الاصطناعي",
+    icon: "🤖",
+    category: "ai",
+    status: "disconnected",
+    description: "معالجة اللغة الطبيعية (Zyphon Chat)",
+    config: {},
+  },
+  {
+    id: "replicate",
+    name: "Replicate",
+    nameAr: "Replicate لتوليد الصور",
+    icon: "🎨",
+    category: "ai",
+    status: "disconnected",
+    description: "توليد الصور بالذكاء الاصطناعي (Zyphon Image)",
+    config: {},
+  },
 ];
 
 // Check integration status based on environment variables
@@ -126,6 +146,12 @@ function checkIntegrationStatus(): Integration[] {
         break;
       case "zoom":
         if (process.env.ZOOM_API_KEY) status = "connected";
+        break;
+      case "groq":
+        if (process.env.GROQ_API_KEY) status = "connected";
+        break;
+      case "replicate":
+        if (process.env.REPLICATE_API_TOKEN) status = "connected";
         break;
     }
     

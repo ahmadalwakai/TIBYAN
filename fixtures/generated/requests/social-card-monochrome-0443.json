@@ -1,0 +1,33 @@
+{
+  "id": "social-card-monochrome-0443",
+  "request": {
+    "presetId": "social-card",
+    "themeId": "monochrome",
+    "seed": 86691737,
+    "patternIntensity": 0.5881380143520134,
+    "circuitIntensity": 0.6992580893911692,
+    "accentIntensity": 0.4734098913489887
+  },
+  "metadata": {
+    "generatedAt": "2026-02-05T07:22:29.114Z",
+    "seed": 86691737,
+    "variationSeed": 3655599
+  },
+  "layerOverrides": {
+    "mark": {
+      "scale": 1.9912098653107928,
+      "strokeWidth": 7.957564593738674,
+      "glow": 0.10210363869653255
+    },
+    "pattern": {
+      "density": 0.6286991359333969,
+      "tileSize": 101.39481965051723,
+      "strokeWidth": 1.9356833703050778
+    },
+    "circuit": {
+      "density": 0.208332419445893,
+      "nodeRadius": 4.8338276757084895,
+      "lineWidth": 0.6303551197659015
+    }
+  }
+}

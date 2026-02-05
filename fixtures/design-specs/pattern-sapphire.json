@@ -1,0 +1,8 @@
+{
+  "presetId": "pattern",
+  "themeId": "sapphire",
+  "seed": 99999,
+  "patternIntensity": 0.8,
+  "circuitIntensity": 0.1,
+  "accentIntensity": 0
+}

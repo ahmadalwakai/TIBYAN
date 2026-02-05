@@ -1,0 +1,512 @@
+{
+  "generatedAt": "2026-02-05T07:22:02.351Z",
+  "config": {
+    "topPercentile": 10,
+    "totalSamples": 560
+  },
+  "presets": {
+    "banner": {
+      "presetId": "banner",
+      "sampleCount": 141,
+      "topSampleCount": 3,
+      "avgScoreAll": 0.6301602836879431,
+      "avgScoreTop": 0.9052666666666668,
+      "parameters": {
+        "patternIntensity": {
+          "min": 0.0975,
+          "max": 0.1596,
+          "mean": 0.12739999999999999,
+          "median": 0.1251,
+          "stdDev": 0.025404330339530694,
+          "p25": 0.0975,
+          "p75": 0.1596,
+          "recommended": 0.12647999999999998
+        },
+        "circuitIntensity": {
+          "min": 0.047,
+          "max": 0.26,
+          "mean": 0.14546666666666666,
+          "median": 0.1294,
+          "stdDev": 0.08769588866582567,
+          "p25": 0.047,
+          "p75": 0.26,
+          "recommended": 0.13904
+        },
+        "accentIntensity": {
+          "min": 0.0126,
+          "max": 0.9792,
+          "mean": 0.4232666666666667,
+          "median": 0.278,
+          "stdDev": 0.40776275237228593,
+          "p25": 0.0126,
+          "p75": 0.9792,
+          "recommended": 0.36516000000000004
+        },
+        "markScale": {
+          "min": 0.8557,
+          "max": 1.9776,
+          "mean": 1.3134333333333332,
+          "median": 1.107,
+          "stdDev": 0.48071193268133283,
+          "p25": 0.8557,
+          "p75": 1.9776,
+          "recommended": 1.23086
+        },
+        "markStrokeWidth": {
+          "min": 19.2804,
+          "max": 43.9474,
+          "mean": 32.27993333333333,
+          "median": 33.612,
+          "stdDev": 10.114215192929647,
+          "p25": 19.2804,
+          "p75": 43.9474,
+          "recommended": 32.812760000000004
+        },
+        "markGlow": {
+          "min": 0.1846,
+          "max": 0.6958,
+          "mean": 0.37303333333333333,
+          "median": 0.2387,
+          "stdDev": 0.22929666858073236,
+          "p25": 0.1846,
+          "p75": 0.6958,
+          "recommended": 0.31930000000000003
+        },
+        "patternDensity": {
+          "min": 0.8366,
+          "max": 1.4755,
+          "mean": 1.1529666666666667,
+          "median": 1.1468,
+          "stdDev": 0.2608662790694795,
+          "p25": 0.8366,
+          "p75": 1.4755,
+          "recommended": 1.1505
+        },
+        "patternTileSize": {
+          "min": 65.0054,
+          "max": 99.3089,
+          "mean": 83.17363333333333,
+          "median": 85.2066,
+          "stdDev": 14.07793174116457,
+          "p25": 65.0054,
+          "p75": 99.3089,
+          "recommended": 83.98682
+        },
+        "circuitDensity": {
+          "min": 0.4011,
+          "max": 0.5295,
+          "mean": 0.4649666666666666,
+          "median": 0.4643,
+          "stdDev": 0.05242120012191843,
+          "p25": 0.4011,
+          "p75": 0.5295,
+          "recommended": 0.4647
+        }
+      },
+      "constraints": {
+        "recommendedMaxElementCount": 965,
+        "recommendedMinDominance": 0.6318
+      }
+    },
+    "logo": {
+      "presetId": "logo",
+      "sampleCount": 141,
+      "topSampleCount": 0,
+      "avgScoreAll": 0.6710893617021276,
+      "avgScoreTop": 0,
+      "parameters": {
+        "patternIntensity": {
+          "min": 0,
+          "max": 0,
+          "mean": 0,
+          "median": 0,
+          "stdDev": 0,
+          "p25": 0,
+          "p75": 0,
+          "recommended": 0
+        },
+        "circuitIntensity": {
+          "min": 0,
+          "max": 0,
+          "mean": 0,
+          "median": 0,
+          "stdDev": 0,
+          "p25": 0,
+          "p75": 0,
+          "recommended": 0
+        },
+        "accentIntensity": {
+          "min": 0,
+          "max": 0,
+          "mean": 0,
+          "median": 0,
+          "stdDev": 0,
+          "p25": 0,
+          "p75": 0,
+          "recommended": 0
+        },
+        "markScale": {
+          "min": 0,
+          "max": 0,
+          "mean": 0,
+          "median": 0,
+          "stdDev": 0,
+          "p25": 0,
+          "p75": 0,
+          "recommended": 0
+        },
+        "markStrokeWidth": {
+          "min": 0,
+          "max": 0,
+          "mean": 0,
+          "median": 0,
+          "stdDev": 0,
+          "p25": 0,
+          "p75": 0,
+          "recommended": 0
+        },
+        "markGlow": {
+          "min": 0,
+          "max": 0,
+          "mean": 0,
+          "median": 0,
+          "stdDev": 0,
+          "p25": 0,
+          "p75": 0,
+          "recommended": 0
+        },
+        "patternDensity": {
+          "min": 0,
+          "max": 0,
+          "mean": 0,
+          "median": 0,
+          "stdDev": 0,
+          "p25": 0,
+          "p75": 0,
+          "recommended": 0
+        },
+        "patternTileSize": {
+          "min": 0,
+          "max": 0,
+          "mean": 0,
+          "median": 0,
+          "stdDev": 0,
+          "p25": 0,
+          "p75": 0,
+          "recommended": 0
+        },
+        "circuitDensity": {
+          "min": 0,
+          "max": 0,
+          "mean": 0,
+          "median": 0,
+          "stdDev": 0,
+          "p25": 0,
+          "p75": 0,
+          "recommended": 0
+        }
+      },
+      "constraints": {
+        "recommendedMaxElementCount": 0,
+        "recommendedMinDominance": 0.2
+      }
+    },
+    "pattern": {
+      "presetId": "pattern",
+      "sampleCount": 138,
+      "topSampleCount": 50,
+      "avgScoreAll": 0.7997086956521741,
+      "avgScoreTop": 0.8955200000000001,
+      "parameters": {
+        "patternIntensity": {
+          "min": 0.0362,
+          "max": 0.9986,
+          "mean": 0.5629560000000001,
+          "median": 0.5307999999999999,
+          "stdDev": 0.29365151738753204,
+          "p25": 0.3297,
+          "p75": 0.856,
+          "recommended": 0.55562
+        },
+        "circuitIntensity": {
+          "min": 0.0032,
+          "max": 0.9687,
+          "mean": 0.38968600000000003,
+          "median": 0.33915,
+          "stdDev": 0.2879258355965994,
+          "p25": 0.1254,
+          "p75": 0.5791,
+          "recommended": 0.34439
+        },
+        "accentIntensity": {
+          "min": 0.0677,
+          "max": 0.9739,
+          "mean": 0.5233979999999999,
+          "median": 0.49185,
+          "stdDev": 0.28257857702946976,
+          "p25": 0.2978,
+          "p75": 0.7587,
+          "recommended": 0.50641
+        },
+        "markScale": {
+          "min": 0.5056,
+          "max": 1.9729,
+          "mean": 1.1806960000000002,
+          "median": 1.12375,
+          "stdDev": 0.41792110018997614,
+          "p25": 0.8546,
+          "p75": 1.5342,
+          "recommended": 1.15201
+        },
+        "markStrokeWidth": {
+          "min": 6.0791,
+          "max": 49.4836,
+          "mean": 24.635575999999997,
+          "median": 23.943849999999998,
+          "stdDev": 13.15953770635671,
+          "p25": 12.4933,
+          "p75": 37.6045,
+          "recommended": 24.385869999999997
+        },
+        "markGlow": {
+          "min": 0.0069,
+          "max": 0.7513,
+          "mean": 0.43184000000000006,
+          "median": 0.49195,
+          "stdDev": 0.23925665466189233,
+          "p25": 0.214,
+          "p75": 0.6557,
+          "recommended": 0.46910999999999997
+        },
+        "patternDensity": {
+          "min": 0.3175,
+          "max": 1.4266,
+          "mean": 0.7762359999999999,
+          "median": 0.7606999999999999,
+          "stdDev": 0.2984840845070303,
+          "p25": 0.5179,
+          "p75": 0.9259,
+          "recommended": 0.74518
+        },
+        "patternTileSize": {
+          "min": 35.3001,
+          "max": 116.3171,
+          "mean": 65.38545200000002,
+          "median": 56.3859,
+          "stdDev": 22.772304078685057,
+          "p25": 48.203,
+          "p75": 79.7107,
+          "recommended": 59.41428
+        },
+        "circuitDensity": {
+          "min": 0.1057,
+          "max": 0.7916,
+          "mean": 0.43609999999999993,
+          "median": 0.39515,
+          "stdDev": 0.20230468803268006,
+          "p25": 0.2903,
+          "p75": 0.6495,
+          "recommended": 0.42505000000000004
+        }
+      },
+      "constraints": {
+        "recommendedMaxElementCount": 598,
+        "recommendedMinDominance": 0.2
+      }
+    },
+    "social-card": {
+      "presetId": "social-card",
+      "sampleCount": 140,
+      "topSampleCount": 3,
+      "avgScoreAll": 0.6704364285714287,
+      "avgScoreTop": 0.8952333333333332,
+      "parameters": {
+        "patternIntensity": {
+          "min": 0.1465,
+          "max": 0.2708,
+          "mean": 0.21223333333333336,
+          "median": 0.2194,
+          "stdDev": 0.050997668792036197,
+          "p25": 0.1465,
+          "p75": 0.2708,
+          "recommended": 0.2151
+        },
+        "circuitIntensity": {
+          "min": 0.0049,
+          "max": 0.0646,
+          "mean": 0.03963333333333333,
+          "median": 0.0494,
+          "stdDev": 0.025331973647722137,
+          "p25": 0.0049,
+          "p75": 0.0646,
+          "recommended": 0.04354
+        },
+        "accentIntensity": {
+          "min": 0.5489,
+          "max": 0.9947,
+          "mean": 0.8344333333333332,
+          "median": 0.9597,
+          "stdDev": 0.20240753170000586,
+          "p25": 0.5489,
+          "p75": 0.9947,
+          "recommended": 0.8845400000000001
+        },
+        "markScale": {
+          "min": 0.8659,
+          "max": 1.531,
+          "mean": 1.1694666666666667,
+          "median": 1.1115,
+          "stdDev": 0.27460226186654435,
+          "p25": 0.8659,
+          "p75": 1.531,
+          "recommended": 1.14628
+        },
+        "markStrokeWidth": {
+          "min": 9.9531,
+          "max": 43.8304,
+          "mean": 29.197166666666664,
+          "median": 33.808,
+          "stdDev": 14.20944995049265,
+          "p25": 9.9531,
+          "p75": 43.8304,
+          "recommended": 31.0415
+        },
+        "markGlow": {
+          "min": 0.5205,
+          "max": 0.6551,
+          "mean": 0.5988333333333333,
+          "median": 0.6209,
+          "stdDev": 0.05712263610474886,
+          "p25": 0.5205,
+          "p75": 0.6551,
+          "recommended": 0.60766
+        },
+        "patternDensity": {
+          "min": 0.5482,
+          "max": 1.0259,
+          "mean": 0.7222666666666667,
+          "median": 0.5927,
+          "stdDev": 0.21546842511658693,
+          "p25": 0.5482,
+          "p75": 1.0259,
+          "recommended": 0.67044
+        },
+        "patternTileSize": {
+          "min": 70.4475,
+          "max": 102.2167,
+          "mean": 88.40743333333334,
+          "median": 92.5581,
+          "stdDev": 13.297657500310176,
+          "p25": 70.4475,
+          "p75": 102.2167,
+          "recommended": 90.0677
+        },
+        "circuitDensity": {
+          "min": 0.2938,
+          "max": 0.3679,
+          "mean": 0.3411666666666666,
+          "median": 0.3618,
+          "stdDev": 0.03358574433032894,
+          "p25": 0.2938,
+          "p75": 0.3679,
+          "recommended": 0.34941999999999995
+        }
+      },
+      "constraints": {
+        "recommendedMaxElementCount": 802,
+        "recommendedMinDominance": 0.6598
+      }
+    }
+  },
+  "themes": {
+    "emerald": {
+      "themeId": "emerald",
+      "sampleCount": 136,
+      "topSampleCount": 16,
+      "avgScoreAll": 0.6861132352941175,
+      "avgScoreTop": 0.898925,
+      "avgContrast": 0.9795624999999997
+    },
+    "gold": {
+      "themeId": "gold",
+      "sampleCount": 143,
+      "topSampleCount": 16,
+      "avgScoreAll": 0.7036013986013988,
+      "avgScoreTop": 0.8951874999999999,
+      "avgContrast": 1
+    },
+    "monochrome": {
+      "themeId": "monochrome",
+      "sampleCount": 143,
+      "topSampleCount": 21,
+      "avgScoreAll": 0.7114251748251746,
+      "avgScoreTop": 0.8962809523809525,
+      "avgContrast": 1
+    },
+    "sapphire": {
+      "themeId": "sapphire",
+      "sampleCount": 138,
+      "topSampleCount": 3,
+      "avgScoreAll": 0.6669340579710145,
+      "avgScoreTop": 0.8832666666666666,
+      "avgContrast": 1
+    }
+  },
+  "globalInsights": {
+    "bestPreset": {
+      "id": "banner",
+      "avgScore": 0.9052666666666668
+    },
+    "bestTheme": {
+      "id": "emerald",
+      "avgScore": 0.898925
+    },
+    "bestCombination": {
+      "presetId": "pattern",
+      "themeId": "emerald",
+      "avgScore": 0.8980533333333334
+    },
+    "parameterCorrelations": [
+      {
+        "parameter": "elementCount",
+        "correlationWithScore": -0.5605210012233479
+      },
+      {
+        "parameter": "patternDensity",
+        "correlationWithScore": 0.28355581234577515
+      },
+      {
+        "parameter": "circuitIntensity",
+        "correlationWithScore": -0.2755358524175288
+      },
+      {
+        "parameter": "patternIntensity",
+        "correlationWithScore": -0.19665863202780723
+      },
+      {
+        "parameter": "patternTileSize",
+        "correlationWithScore": 0.19008561768514504
+      },
+      {
+        "parameter": "markScale",
+        "correlationWithScore": -0.05938609990873961
+      },
+      {
+        "parameter": "markStrokeWidth",
+        "correlationWithScore": 0.05046946123609867
+      },
+      {
+        "parameter": "markGlow",
+        "correlationWithScore": 0.025027953452845506
+      },
+      {
+        "parameter": "accentIntensity",
+        "correlationWithScore": 0.023115488365318654
+      },
+      {
+        "parameter": "circuitDensity",
+        "correlationWithScore": 0.015253911011775638
+      }
+    ]
+  }
+}

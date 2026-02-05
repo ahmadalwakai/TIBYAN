@@ -1,0 +1,33 @@
+{
+  "id": "social-card-gold-0181",
+  "request": {
+    "presetId": "social-card",
+    "themeId": "gold",
+    "seed": 40486454,
+    "patternIntensity": 0.2684370578585365,
+    "circuitIntensity": 0.5319075586888509,
+    "accentIntensity": 0.6705565455698206
+  },
+  "metadata": {
+    "generatedAt": "2026-02-05T07:21:59.232Z",
+    "seed": 40486454,
+    "variationSeed": 1551962
+  },
+  "layerOverrides": {
+    "mark": {
+      "scale": 0.9893972875966678,
+      "strokeWidth": 49.192912599161694,
+      "glow": 0.38077507036774194
+    },
+    "pattern": {
+      "density": 1.0066331866693836,
+      "tileSize": 41.211676602816055,
+      "strokeWidth": 2.096015767006211
+    },
+    "circuit": {
+      "density": 0.6128481032852308,
+      "nodeRadius": 5.2661974445293644,
+      "lineWidth": 1.013282537699343
+    }
+  }
+}

@@ -1,0 +1,122 @@
+/**
+ * Social Card Preset
+ * 
+ * Standard Open Graph / Twitter Card format.
+ * 1200x630, includes grid and frame.
+ */
+
+import type { Preset, Layer } from "../types";
+
+export const socialCardPreset: Preset = {
+  id: "social-card",
+  name: "Social Card",
+  description: "Social media card format (1200x630)",
+  canvas: {
+    width: 1200,
+    height: 630,
+  },
+  layerOrder: ["background", "grid", "pattern", "circuit", "mark", "frame", "accent"],
+  defaultLayers: [
+    {
+      id: "bg",
+      type: "background",
+      enabled: true,
+      opacity: 1,
+      blendMode: "normal",
+      zIndex: 0,
+      color: "#000000",
+    },
+    {
+      id: "grid",
+      type: "grid",
+      enabled: true,
+      opacity: 0.05,
+      blendMode: "normal",
+      zIndex: 1,
+      color: "#FFFFFF",
+      cellSize: 60,
+      lineWidth: 0.5,
+    },
+    {
+      id: "pattern",
+      type: "pattern",
+      enabled: true,
+      opacity: 0.05,
+      blendMode: "normal",
+      zIndex: 2,
+      patternType: "8-point-star",
+      tileSize: 100,
+      strokeWidth: 1,
+      rotation: 0,
+      density: 0.6,
+    },
+    {
+      id: "circuit",
+      type: "circuit",
+      enabled: true,
+      opacity: 0.1,
+      blendMode: "normal",
+      zIndex: 3,
+      density: 0.2,
+      color: "#FFFFFF",
+      nodeRadius: 2,
+      lineWidth: 1,
+      maxSegments: 4,
+    },
+    {
+      id: "mark",
+      type: "mark",
+      enabled: true,
+      opacity: 1,
+      blendMode: "normal",
+      zIndex: 4,
+      renderer: "kufic-block-v2",
+      color: "#FFFFFF",
+      scale: 0.9,
+      strokeWidth: 10,
+      centered: true,
+      glow: 0,
+      blockSpacing: 0.05,
+      cornerRadius: 0.1,
+      shapeCount: 5,
+      shapeType: "squares",
+    },
+    {
+      id: "frame",
+      type: "frame",
+      enabled: true,
+      opacity: 0.2,
+      blendMode: "normal",
+      zIndex: 5,
+      strokeColor: "#FFFFFF",
+      strokeWidth: 2,
+      cornerRadius: 8,
+      padding: 40,
+    },
+    {
+      id: "accent",
+      type: "accent",
+      enabled: true,
+      opacity: 1,
+      blendMode: "normal",
+      zIndex: 6,
+      color: "#00A86B",
+      style: "minimal",
+      lineWeight: 3,
+      glow: 0,
+      margin: 50,
+      cornerSize: 50,
+    },
+  ] as Layer[],
+  constraints: {
+    minMarkDominance: 0.2,
+    maxElementCount: 2500,
+    requireMark: true,
+    allowTextFallback: true,
+    tileable: false,
+    autoAdjust: true,
+  },
+  allowedStyles: ["kufic-block-v2", "geometric-wordmark", "text-fallback"],
+};
+
+export default socialCardPreset;

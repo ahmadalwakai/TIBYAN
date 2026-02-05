@@ -1,0 +1,33 @@
+{
+  "id": "banner-sapphire-0222",
+  "request": {
+    "presetId": "banner",
+    "themeId": "sapphire",
+    "seed": 271747946,
+    "patternIntensity": 0.024157404910846336,
+    "circuitIntensity": 0.5863489176083119,
+    "accentIntensity": 0.16872298725355556
+  },
+  "metadata": {
+    "generatedAt": "2026-02-05T07:22:28.313Z",
+    "seed": 271747946,
+    "variationSeed": 1905500
+  },
+  "layerOverrides": {
+    "mark": {
+      "scale": 1.2943163964870927,
+      "strokeWidth": 19.064270264499015,
+      "glow": 0.2568529130224385
+    },
+    "pattern": {
+      "density": 0.7664053919103022,
+      "tileSize": 36.26669168764106,
+      "strokeWidth": 1.8835269964223387
+    },
+    "circuit": {
+      "density": 0.5788504960382593,
+      "nodeRadius": 6.354037048460002,
+      "lineWidth": 0.5110218524984186
+    }
+  }
+}

@@ -8,9 +8,16 @@ import {
   Button,
   Heading,
   Text,
+  Spinner,
+  Input,
 } from "@chakra-ui/react";
+
+// Mode type for Chat vs Create (local SVG generation)
+type ChatMode = "chat" | "create";
+
 import { useCallback, useEffect, useRef, useState } from "react";
-import { LuSend, LuPaperclip, LuCircleStop, LuMenu } from "react-icons/lu";
+import { LuSend, LuPaperclip, LuCircleStop, LuMenu, LuMessageSquare, LuSparkles, LuDownload } from "react-icons/lu";
+import type { DesignSpec, DesignRequest } from "@/lib/zyphon/svg-gen/types";
 import { toaster } from "@/components/ui/toaster";
 
 // Chat components
@@ -66,6 +73,22 @@ export default function AIChatPage({ locale }: AIChatPageProps) {
   const [isStreaming, setIsStreaming] = useState(false);
   const [isThinking, setIsThinking] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  
+  // Mode state
+  const [mode, setMode] = useState<ChatMode>("chat");
+  
+  // Create Mode State (local SVG generation)
+  const [isCreatingImage, setIsCreatingImage] = useState(false);
+  const [generatedSvg, setGeneratedSvg] = useState<string | null>(null);
+  const [currentDesignSpec, setCurrentDesignSpec] = useState<DesignSpec | null>(null);
+  const [createError, setCreateError] = useState<string | null>(null);
+  const [createSettings, setCreateSettings] = useState<DesignRequest>({
+    brandTextAr: "تِبيان",
+    style: "modern-kufic",
+    mood: "minimal-premium",
+    accent: "emerald",
+    background: "black",
+  });
   
   // Settings State
   const [settings, setSettings] = useState<ChatSettings>(DEFAULT_SETTINGS);
@@ -324,16 +347,152 @@ export default function AIChatPage({ locale }: AIChatPageProps) {
     setIsStreaming(false);
   }, [persistCurrentSession]);
 
+  // Local SVG Logo Mark Generator handler (uses new design engine with symbolic-mark)
+  const generateLocalSvg = useCallback(async () => {
+    setIsCreatingImage(true);
+    setCreateError(null);
+    setGeneratedSvg(null);
+    setCurrentDesignSpec(null);
+
+    try {
+      // Use the new design engine API with symbolic-mark renderer
+      const response = await fetch("/api/ai/design-engine", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          presetId: "logo",
+          themeId: createSettings.accent === "gold" ? "gold" : 
+                   createSettings.accent === "sapphire" ? "sapphire" : "emerald",
+          text: createSettings.brandTextAr, // Semantic input only, NOT rendered as text
+          seed: Math.floor(Math.random() * 1000000),
+          // Pattern and circuit are disabled by default for logo preset
+          patternIntensity: 0,
+          circuitIntensity: 0,
+          accentIntensity: 0.5,
+          // Use symbolic-mark renderer (abstract shapes, NOT text)
+          markRenderer: "symbolic-mark",
+        }),
+        credentials: "include",
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.ok) {
+        throw new Error(data.error || `HTTP ${response.status}`);
+      }
+
+      // The new design engine returns SVG directly
+      const svgString = data.data.svg;
+      setGeneratedSvg(svgString);
+      
+      // Store spec for potential PNG export
+      if (data.data.spec) {
+        setCurrentDesignSpec({
+          canvas: { 
+            w: data.data.spec.canvas?.width ?? 1024, 
+            h: data.data.spec.canvas?.height ?? 1024, 
+            bg: data.data.spec.canvas?.background ?? "#000000" 
+          },
+          text: { 
+            value: createSettings.brandTextAr, 
+            strokeWidth: 10, 
+            geometryStyle: "geometric", 
+            centered: true, 
+            scale: 1 
+          },
+          seed: data.data.spec.seed ?? 0,
+        });
+      }
+
+      toaster.create({
+        title: isRTL ? "تم الإنشاء" : "Created",
+        description: isRTL ? "تم إنشاء الشعار بنجاح" : "Logo mark generated successfully",
+        type: "success",
+      });
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : (isRTL ? "فشل إنشاء الشعار" : "Logo mark creation failed");
+      setCreateError(errorMsg);
+      toaster.create({
+        title: isRTL ? "خطأ" : "Error",
+        description: errorMsg,
+        type: "error",
+      });
+    } finally {
+      setIsCreatingImage(false);
+    }
+  }, [createSettings, isRTL]);
+
+  // Download SVG handler
+  const downloadSvg = useCallback(() => {
+    if (!generatedSvg) return;
+    const blob = new Blob([generatedSvg], { type: "image/svg+xml" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `tibyan-${Date.now()}.svg`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }, [generatedSvg]);
+
+  // Download PNG handler (convert SVG to PNG using canvas)
+  const downloadPng = useCallback(async () => {
+    if (!generatedSvg || !currentDesignSpec) return;
+    
+    const { canvas: canvasSpec } = currentDesignSpec;
+    const canvas = document.createElement("canvas");
+    canvas.width = canvasSpec.w;
+    canvas.height = canvasSpec.h;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const img = new window.Image();
+    const svgBlob = new Blob([generatedSvg], { type: "image/svg+xml;charset=utf-8" });
+    const svgUrl = URL.createObjectURL(svgBlob);
+
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0);
+      URL.revokeObjectURL(svgUrl);
+      
+      canvas.toBlob((blob) => {
+        if (!blob) return;
+        const pngUrl = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = pngUrl;
+        link.download = `tibyan-${Date.now()}.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(pngUrl);
+      }, "image/png");
+    };
+    
+    img.src = svgUrl;
+  }, [generatedSvg, currentDesignSpec]);
+
   // Keyboard handler
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+      // Disable Enter-to-submit in create mode (require button click)
+      if (mode === "create") return;
+      
       if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
         sendMessage(input);
       }
     },
-    [input, sendMessage]
+    [input, sendMessage, mode]
   );
+
+  // Handle submit based on mode
+  const handleSubmit = useCallback(() => {
+    if (mode === "create") {
+      generateLocalSvg();
+    } else {
+      sendMessage(input);
+    }
+  }, [mode, input, generateLocalSvg, sendMessage]);
 
   // Session management handlers
   const handleNewChat = useCallback(() => {
@@ -539,10 +698,332 @@ export default function AIChatPage({ locale }: AIChatPageProps) {
               {activeSession?.title || (isRTL ? "Zyphon مساعد تبيان" : "Zyphon Tibyan AI")}
             </Heading>
           </HStack>
+          
+          {/* Mode Toggle */}
+          <HStack gap={1} bg="#0A0A0A" p={1} borderRadius="md" border="1px solid rgba(0, 255, 42, 0.2)">
+            <Button
+              size="sm"
+              variant={mode === "chat" ? "solid" : "ghost"}
+              bg={mode === "chat" ? "#00FF2A" : "transparent"}
+              color={mode === "chat" ? "#000000" : "whiteAlpha.700"}
+              _hover={{ bg: mode === "chat" ? "#00FF2A" : "whiteAlpha.100" }}
+              onClick={() => setMode("chat")}
+              px={3}
+              py={1}
+            >
+              <LuMessageSquare size={16} />
+              <Text ml={1} fontSize="sm">{isRTL ? "محادثة" : "Chat"}</Text>
+            </Button>
+            <Button
+              size="sm"
+              variant={mode === "create" ? "solid" : "ghost"}
+              bg={mode === "create" ? "#00FF2A" : "transparent"}
+              color={mode === "create" ? "#000000" : "whiteAlpha.700"}
+              _hover={{ bg: mode === "create" ? "#00FF2A" : "whiteAlpha.100" }}
+              onClick={() => setMode("create")}
+              px={3}
+              py={1}
+            >
+              <LuSparkles size={16} />
+              <Text ml={1} fontSize="sm">{isRTL ? "شعار" : "Logo Mark"}</Text>
+            </Button>
+          </HStack>
         </Flex>
 
-        {/* Messages or Templates */}
-        {showTemplates ? (
+        {/* Messages, Templates, Image Mode, or Create Mode */}
+        {mode === "create" ? (
+          /* Create Mode Content - Local SVG Generation */
+          <VStack
+            flex={1}
+            gap={4}
+            p={6}
+            pb={24}
+            overflowY="auto"
+            align="center"
+            justify="flex-start"
+            w="100%"
+            css={{
+              "&::-webkit-scrollbar": { width: "6px" },
+              "&::-webkit-scrollbar-track": { background: "transparent" },
+              "&::-webkit-scrollbar-thumb": { background: "rgba(0, 255, 42, 0.3)", borderRadius: "4px" },
+            }}
+          >
+            {/* Settings Panel */}
+            <Box
+              w="100%"
+              maxW="600px"
+              bg="#0A0A0A"
+              border="1px solid rgba(0, 255, 42, 0.3)"
+              borderRadius="lg"
+              p={4}
+            >
+              <VStack gap={4} align="stretch">
+                <Heading size="sm" color="#00FF2A">
+                  {isRTL ? "إنشاء شعار" : "Generate Logo Mark"}
+                </Heading>
+                <Text color="whiteAlpha.500" fontSize="xs" mt={-2}>
+                  {isRTL ? "رمز علامة تجارية مجرد (ليس نصًا حرفيًا)" : "Abstract brand symbol (not literal text)"}
+                </Text>
+                
+                {/* Brand Name Input - Semantic only, not rendered as text */}
+                <Box>
+                  <Text color="whiteAlpha.700" fontSize="sm" mb={1}>
+                    {isRTL ? "اسم العلامة" : "Brand Name"}
+                  </Text>
+                  <Input
+                    value={createSettings.brandTextAr}
+                    onChange={(e) => setCreateSettings(prev => ({ ...prev, brandTextAr: e.target.value }))}
+                    placeholder={isRTL ? "أدخل النص..." : "Enter text..."}
+                    bg="#050505"
+                    border="1px solid rgba(0, 255, 42, 0.3)"
+                    color="white"
+                    _focus={{ borderColor: "#00FF2A", boxShadow: "0 0 0 1px #00FF2A" }}
+                    dir="rtl"
+                    disabled={isCreatingImage}
+                  />
+                </Box>
+                
+                {/* Style Selector */}
+                <HStack gap={4} flexWrap="wrap">
+                  <Box flex={1} minW="140px">
+                    <Text color="whiteAlpha.700" fontSize="sm" mb={1}>
+                      {isRTL ? "النمط" : "Style"}
+                    </Text>
+                    <HStack gap={1} flexWrap="wrap">
+                      {(["modern-kufic", "classic-kufic", "geometric", "angular"] as const).map((style) => (
+                        <Button
+                          key={style}
+                          size="xs"
+                          variant={createSettings.style === style ? "solid" : "outline"}
+                          bg={createSettings.style === style ? "#00FF2A" : "transparent"}
+                          color={createSettings.style === style ? "#000" : "whiteAlpha.700"}
+                          borderColor="rgba(0, 255, 42, 0.3)"
+                          _hover={{ bg: createSettings.style === style ? "#00FF2A" : "whiteAlpha.100" }}
+                          onClick={() => setCreateSettings(prev => ({ ...prev, style }))}
+                          disabled={isCreatingImage}
+                        >
+                          {style.replace("-", " ")}
+                        </Button>
+                      ))}
+                    </HStack>
+                  </Box>
+                </HStack>
+                
+                {/* Mood Selector */}
+                <Box>
+                  <Text color="whiteAlpha.700" fontSize="sm" mb={1}>
+                    {isRTL ? "المزاج" : "Mood"}
+                  </Text>
+                  <HStack gap={1} flexWrap="wrap">
+                    {(["minimal-premium", "vibrant", "traditional", "tech"] as const).map((mood) => (
+                      <Button
+                        key={mood}
+                        size="xs"
+                        variant={createSettings.mood === mood ? "solid" : "outline"}
+                        bg={createSettings.mood === mood ? "#00FF2A" : "transparent"}
+                        color={createSettings.mood === mood ? "#000" : "whiteAlpha.700"}
+                        borderColor="rgba(0, 255, 42, 0.3)"
+                        _hover={{ bg: createSettings.mood === mood ? "#00FF2A" : "whiteAlpha.100" }}
+                        onClick={() => setCreateSettings(prev => ({ ...prev, mood }))}
+                        disabled={isCreatingImage}
+                      >
+                        {mood.replace("-", " ")}
+                      </Button>
+                    ))}
+                  </HStack>
+                </Box>
+                
+                {/* Accent Color Selector */}
+                <Box>
+                  <Text color="whiteAlpha.700" fontSize="sm" mb={1}>
+                    {isRTL ? "اللون المميز" : "Accent Color"}
+                  </Text>
+                  <HStack gap={2}>
+                    {(["emerald", "gold", "sapphire", "ruby", "purple"] as const).map((color) => {
+                      const colorMap: Record<string, string> = {
+                        emerald: "#00A86B",
+                        gold: "#FFD700",
+                        sapphire: "#0F52BA",
+                        ruby: "#E0115F",
+                        purple: "#9B30FF",
+                      };
+                      return (
+                        <Box
+                          key={color}
+                          w="28px"
+                          h="28px"
+                          borderRadius="md"
+                          bg={colorMap[color]}
+                          border={createSettings.accent === color ? "2px solid white" : "2px solid transparent"}
+                          cursor={isCreatingImage ? "not-allowed" : "pointer"}
+                          onClick={() => !isCreatingImage && setCreateSettings(prev => ({ ...prev, accent: color }))}
+                          _hover={{ transform: isCreatingImage ? "none" : "scale(1.1)" }}
+                          transition="transform 0.1s"
+                        />
+                      );
+                    })}
+                  </HStack>
+                </Box>
+                
+                {/* Background Selector */}
+                <Box>
+                  <Text color="whiteAlpha.700" fontSize="sm" mb={1}>
+                    {isRTL ? "الخلفية" : "Background"}
+                  </Text>
+                  <HStack gap={2}>
+                    {(["black", "dark-gray", "navy", "dark-green"] as const).map((bg) => {
+                      const bgMap: Record<string, string> = {
+                        black: "#000000",
+                        "dark-gray": "#1A1A1A",
+                        navy: "#0A0A2E",
+                        "dark-green": "#0A1F0A",
+                      };
+                      return (
+                        <Box
+                          key={bg}
+                          w="28px"
+                          h="28px"
+                          borderRadius="md"
+                          bg={bgMap[bg]}
+                          border={createSettings.background === bg ? "2px solid #00FF2A" : "2px solid rgba(255,255,255,0.2)"}
+                          cursor={isCreatingImage ? "not-allowed" : "pointer"}
+                          onClick={() => !isCreatingImage && setCreateSettings(prev => ({ ...prev, background: bg }))}
+                          _hover={{ transform: isCreatingImage ? "none" : "scale(1.1)" }}
+                          transition="transform 0.1s"
+                        />
+                      );
+                    })}
+                  </HStack>
+                </Box>
+                
+                {/* Generate Button */}
+                <Button
+                  size="lg"
+                  bg="#00FF2A"
+                  color="#000"
+                  _hover={{ bg: "#00CC22" }}
+                  onClick={generateLocalSvg}
+                  disabled={isCreatingImage || !createSettings.brandTextAr.trim()}
+                  w="100%"
+                >
+                  {isCreatingImage ? (
+                    <HStack gap={2}>
+                      <Spinner size="sm" />
+                      <Text>{isRTL ? "جاري الإنشاء..." : "Generating..."}</Text>
+                    </HStack>
+                  ) : (
+                    <HStack gap={2}>
+                      <LuSparkles size={18} />
+                      <Text>{isRTL ? "إنشاء شعار" : "Generate Logo Mark"}</Text>
+                    </HStack>
+                  )}
+                </Button>
+              </VStack>
+            </Box>
+            
+            {/* Error State */}
+            {createError && !isCreatingImage && (
+              <Box
+                bg="red.900/20"
+                border="1px solid"
+                borderColor="red.500/50"
+                borderRadius="lg"
+                px={4}
+                py={3}
+                maxW="400px"
+              >
+                <Text color="red.300" fontSize="sm">{createError}</Text>
+              </Box>
+            )}
+            
+            {/* Generated SVG Preview */}
+            {generatedSvg && !isCreatingImage && (
+              <VStack gap={4} w="100%" maxW="600px">
+                <Box
+                  w="100%"
+                  borderRadius="lg"
+                  overflow="hidden"
+                  border="1px solid rgba(0, 255, 42, 0.3)"
+                  bg="#0A0A0A"
+                >
+                  <Box
+                    dangerouslySetInnerHTML={{ __html: generatedSvg }}
+                    css={{
+                      "& svg": {
+                        width: "100%",
+                        height: "auto",
+                        display: "block",
+                      },
+                    }}
+                  />
+                </Box>
+                
+                {/* Download Buttons */}
+                <HStack gap={3}>
+                  <Button
+                    size="md"
+                    variant="outline"
+                    borderColor="#00FF2A"
+                    color="#00FF2A"
+                    _hover={{ bg: "rgba(0, 255, 42, 0.1)" }}
+                    onClick={downloadSvg}
+                  >
+                    <LuDownload size={16} />
+                    <Text ml={2}>{isRTL ? "تحميل SVG" : "Download SVG"}</Text>
+                  </Button>
+                  <Button
+                    size="md"
+                    bg="#00FF2A"
+                    color="#000"
+                    _hover={{ bg: "#00CC22" }}
+                    onClick={downloadPng}
+                  >
+                    <LuDownload size={16} />
+                    <Text ml={2}>{isRTL ? "تحميل PNG" : "Download PNG"}</Text>
+                  </Button>
+                </HStack>
+                
+                {/* Design Spec Info */}
+                {currentDesignSpec && (
+                  <Box
+                    w="100%"
+                    bg="#050505"
+                    border="1px solid rgba(0, 255, 42, 0.2)"
+                    borderRadius="md"
+                    p={3}
+                  >
+                    <Text color="whiteAlpha.500" fontSize="xs" fontFamily="mono">
+                      {isRTL ? "معرف البذرة" : "Seed"}: {currentDesignSpec.seed} | 
+                      {isRTL ? " الأبعاد" : " Size"}: {currentDesignSpec.canvas.w}×{currentDesignSpec.canvas.h}
+                    </Text>
+                  </Box>
+                )}
+              </VStack>
+            )}
+            
+            {/* Empty State */}
+            {!generatedSvg && !isCreatingImage && !createError && (
+              <VStack gap={3} py={4} textAlign="center">
+                <Box
+                  p={4}
+                  borderRadius="full"
+                  bg="rgba(0, 255, 42, 0.1)"
+                  border="1px solid rgba(0, 255, 42, 0.3)"
+                >
+                  <LuSparkles size={32} color="#00FF2A" />
+                </Box>
+                <Text color="whiteAlpha.800" fontSize="md" fontWeight={500}>
+                  {isRTL ? "مُنشئ الصور المحلي" : "Local Image Creator"}
+                </Text>
+                <Text color="whiteAlpha.500" fontSize="sm" maxW="300px">
+                  {isRTL 
+                    ? "اضبط الإعدادات أعلاه ثم اضغط على إنشاء صورة" 
+                    : "Adjust settings above and click Generate Image"}
+                </Text>
+              </VStack>
+            )}
+          </VStack>
+        ) : showTemplates ? (
           <ChatTemplates locale={locale} onSelectTemplate={handleTemplateSelect} />
         ) : (
           <VStack
@@ -602,64 +1083,87 @@ export default function AIChatPage({ locale }: AIChatPageProps) {
 
         {/* Composer */}
         <Flex
-          gap={3}
+          direction="column"
+          gap={2}
           p={4}
           bg="#050505"
           borderTop="1px solid"
           borderColor="rgba(0, 255, 42, 0.2)"
-          align="flex-end"
           w="100%"
           flexShrink={0}
         >
-          <Button
-            variant="ghost"
-            size="sm"
-            color="white"
-            _hover={{ bg: "whiteAlpha.100", color: "white" }}
-            disabled={isStreaming}
-            p={2}
-          >
-            <LuPaperclip size={20} />
-          </Button>
+          <Flex gap={3} align="flex-end" w="100%">
+            {mode === "chat" && (
+              <Button
+                variant="ghost"
+                size="sm"
+                color="white"
+                _hover={{ bg: "whiteAlpha.100", color: "white" }}
+                disabled={isStreaming}
+                p={2}
+              >
+                <LuPaperclip size={20} />
+              </Button>
+            )}
 
-          <textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder={isRTL ? "اكتب رسالتك..." : "Type your message..."}
-            style={{
-              flex: 1,
-              minHeight: "40px",
-              maxHeight: "100px",
-              padding: "10px 12px",
-              borderRadius: "8px",
-              border: "1px solid rgba(0, 255, 42, 0.3)",
-              background: "#0A0A0A",
-              color: "rgba(255, 255, 255, 0.92)",
-              fontFamily: "inherit",
-              fontSize: "14px",
-              resize: "none",
-              outline: "none",
-              direction: isRTL ? "rtl" : "ltr",
-            }}
-            disabled={isStreaming}
-          />
-          <style>{`
-            textarea::placeholder {
-              color: rgba(255, 255, 255, 0.6);
-            }
-          `}</style>
+            <Box flex={1} position="relative">
+              <textarea
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder={isRTL ? "اكتب رسالتك..." : "Type your message..."}
+                style={{
+                  width: "100%",
+                  minHeight: "40px",
+                  maxHeight: "100px",
+                  padding: "10px 12px",
+                  borderRadius: "8px",
+                  border: "1px solid rgba(0, 255, 42, 0.3)",
+                  background: "#0A0A0A",
+                  color: "rgba(255, 255, 255, 0.92)",
+                  fontFamily: "inherit",
+                  fontSize: "14px",
+                  resize: "none",
+                  outline: "none",
+                  direction: isRTL ? "rtl" : "ltr",
+                }}
+                disabled={isStreaming}
+              />
+            </Box>
+            <style>{`
+              textarea::placeholder {
+                color: rgba(255, 255, 255, 0.6);
+              }
+            `}</style>
 
-          <Button
-            variant="ghost"
-            size="sm"
-            color={isStreaming ? "red.400" : "#00FF2A"}
-            _hover={{ bg: isStreaming ? "red.900/20" : "rgba(0, 255, 42, 0.1)" }}
-            onClick={() => (isStreaming ? stopGeneration() : sendMessage(input))}
-            p={2}
-          >
-            {isStreaming ? <LuCircleStop size={20} /> : <LuSend size={20} />}
-          </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              bg="transparent"
+              color={isStreaming ? "red.400" : "#00FF2A"}
+              _hover={{ 
+                bg: isStreaming 
+                  ? "red.900/20" 
+                  : "rgba(0, 255, 42, 0.1)" 
+              }}
+              onClick={() => {
+                if (isStreaming) {
+                  stopGeneration();
+                } else {
+                  handleSubmit();
+                }
+              }}
+              disabled={!input.trim()}
+              px={2}
+              py={2}
+            >
+              {isStreaming ? (
+                <LuCircleStop size={20} />
+              ) : (
+                <LuSend size={20} />
+              )}
+            </Button>
+          </Flex>
         </Flex>
       </Flex>
     </Flex>

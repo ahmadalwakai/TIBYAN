@@ -1,0 +1,33 @@
+{
+  "id": "banner-gold-0012",
+  "request": {
+    "presetId": "banner",
+    "themeId": "gold",
+    "seed": 383982956,
+    "patternIntensity": 0.2180090547623155,
+    "circuitIntensity": 0.36623367684252267,
+    "accentIntensity": 0.43993854543191313
+  },
+  "metadata": {
+    "generatedAt": "2026-02-05T07:20:49.831Z",
+    "seed": 383982956,
+    "variationSeed": 144780
+  },
+  "layerOverrides": {
+    "mark": {
+      "scale": 1.2817673686806892,
+      "strokeWidth": 19.42886830048117,
+      "glow": 0.7158042911048068
+    },
+    "pattern": {
+      "density": 0.45412559516454376,
+      "tileSize": 77.21846850925053,
+      "strokeWidth": 2.7568616281528313
+    },
+    "circuit": {
+      "density": 0.481489956556582,
+      "nodeRadius": 3.5303919322464576,
+      "lineWidth": 0.9241979124137191
+    }
+  }
+}

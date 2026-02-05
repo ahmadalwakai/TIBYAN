@@ -1,0 +1,33 @@
+{
+  "id": "social-card-sapphire-0518",
+  "request": {
+    "presetId": "social-card",
+    "themeId": "sapphire",
+    "seed": 411246657,
+    "patternIntensity": 0.8647707704756273,
+    "circuitIntensity": 0.20588147649815375,
+    "accentIntensity": 0.8730324808848242
+  },
+  "metadata": {
+    "generatedAt": "2026-02-05T07:22:29.373Z",
+    "seed": 411246657,
+    "variationSeed": 4249524
+  },
+  "layerOverrides": {
+    "mark": {
+      "scale": 1.381940007620463,
+      "strokeWidth": 38.94225002915703,
+      "glow": 0.3437337876966846
+    },
+    "pattern": {
+      "density": 0.8523854258248513,
+      "tileSize": 77.22719909959808,
+      "strokeWidth": 0.7996915580237711
+    },
+    "circuit": {
+      "density": 0.2184531659439454,
+      "nodeRadius": 6.943946006216084,
+      "lineWidth": 2.425276757183148
+    }
+  }
+}

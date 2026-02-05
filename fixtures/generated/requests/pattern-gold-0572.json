@@ -1,0 +1,33 @@
+{
+  "id": "pattern-gold-0572",
+  "request": {
+    "presetId": "pattern",
+    "themeId": "gold",
+    "seed": 152516484,
+    "patternIntensity": 0.4953352513235692,
+    "circuitIntensity": 0.9669356350633016,
+    "accentIntensity": 0.7292418483315231
+  },
+  "metadata": {
+    "generatedAt": "2026-02-05T07:22:29.568Z",
+    "seed": 152516484,
+    "variationSeed": 4677150
+  },
+  "layerOverrides": {
+    "mark": {
+      "scale": 1.3266317848240172,
+      "strokeWidth": 38.90284301429188,
+      "glow": 0.4034069063157807
+    },
+    "pattern": {
+      "density": 0.9756883624362238,
+      "tileSize": 65.26898862573736,
+      "strokeWidth": 1.2252728942433713
+    },
+    "circuit": {
+      "density": 0.15884346964715212,
+      "nodeRadius": 3.663659275352796,
+      "lineWidth": 1.1608674529292005
+    }
+  }
+}

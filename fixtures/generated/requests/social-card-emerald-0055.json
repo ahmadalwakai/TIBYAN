@@ -1,0 +1,33 @@
+{
+  "id": "social-card-emerald-0055",
+  "request": {
+    "presetId": "social-card",
+    "themeId": "emerald",
+    "seed": 648805647,
+    "patternIntensity": 0.7077211144881888,
+    "circuitIntensity": 0.6824396851856447,
+    "accentIntensity": 0.04468381406957461
+  },
+  "metadata": {
+    "generatedAt": "2026-02-05T07:22:27.688Z",
+    "seed": 648805647,
+    "variationSeed": 583027
+  },
+  "layerOverrides": {
+    "mark": {
+      "scale": 0.5113481134229098,
+      "strokeWidth": 9.750419987715045,
+      "glow": 0.6960969332121765
+    },
+    "pattern": {
+      "density": 1.2595330242810459,
+      "tileSize": 81.15197899339347,
+      "strokeWidth": 1.1901329758996764
+    },
+    "circuit": {
+      "density": 0.6958091977032876,
+      "nodeRadius": 6.8911633514292365,
+      "lineWidth": 2.3580317505905555
+    }
+  }
+}

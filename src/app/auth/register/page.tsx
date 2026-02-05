@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { Box, Button, Container, Heading, Input, Stack, Text, Spinner } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import PremiumCard from "@/components/ui/PremiumCard";
 import { toaster } from "@/components/ui/toaster";
+import GoogleSignInButton from "@/components/auth/GoogleSignInButton";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -122,6 +123,21 @@ export default function RegisterPage() {
               <Text color="muted">
                 أنشئ حسابك للوصول إلى الدورات، البرامج، والمجتمع التعليمي.
               </Text>
+
+              {/* Google Sign-In */}
+              <Suspense fallback={<Box h="44px" />}>
+                <GoogleSignInButton
+                  text="signup_with"
+                  defaultRedirect="/student"
+                />
+              </Suspense>
+
+              {/* Separator */}
+              <Box display="flex" alignItems="center" gap={3}>
+                <Box flex={1} h="1px" bg="border" />
+                <Text color="muted" fontSize="sm">أو</Text>
+                <Box flex={1} h="1px" bg="border" />
+              </Box>
               
               {error && (
                 <Box

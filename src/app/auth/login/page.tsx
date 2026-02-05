@@ -17,6 +17,7 @@ import { Link as ChakraLink } from "@chakra-ui/react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useState, Suspense, useEffect, useRef, type ComponentType } from "react";
+import GoogleSignInButton from "@/components/auth/GoogleSignInButton";
 
 /**
  * Validate redirect URL - prevent open redirects
@@ -202,6 +203,21 @@ function LoginForm() {
       borderColor="rgba(0, 255, 42, 0.3)"
     >
       <Stack gap={5}>
+        {/* Google Sign-In */}
+        <Suspense fallback={<Box h="44px" />}>
+          <GoogleSignInButton
+            text="signin_with"
+            defaultRedirect={isSafeRedirect(redirectTo) ? redirectTo : defaultRedirect}
+          />
+        </Suspense>
+
+        {/* Separator */}
+        <Box display="flex" alignItems="center" gap={3}>
+          <Box flex={1} h="1px" bg="rgba(255, 255, 255, 0.1)" />
+          <Text color="gray.500" fontSize="sm">أو</Text>
+          <Box flex={1} h="1px" bg="rgba(255, 255, 255, 0.1)" />
+        </Box>
+
         {successMessage && (
           <Box
             bg="rgba(0, 255, 42, 0.1)"

@@ -16,6 +16,7 @@ import { toaster } from "@/components/ui/toaster";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useState, Suspense, useRef } from "react";
+import GoogleSignInButton from "@/components/auth/GoogleSignInButton";
 
 /**
  * Validate redirect URL to prevent open redirects
@@ -219,6 +220,21 @@ function MemberSignupForm() {
       borderColor="border"
     >
       <Stack gap={5}>
+        {/* Google Sign-In */}
+        <Suspense fallback={<Box h="44px" />}>
+          <GoogleSignInButton
+            text="signup_with"
+            defaultRedirect={redirectTo}
+          />
+        </Suspense>
+
+        {/* Separator */}
+        <Box display="flex" alignItems="center" gap={3}>
+          <Box flex={1} h="1px" bg="border" />
+          <Text color="muted" fontSize="sm">أو</Text>
+          <Box flex={1} h="1px" bg="border" />
+        </Box>
+
         {formSuccess && (
           <Box
             bg="green.50"

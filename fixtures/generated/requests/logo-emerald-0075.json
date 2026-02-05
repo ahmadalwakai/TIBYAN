@@ -1,0 +1,33 @@
+{
+  "id": "logo-emerald-0075",
+  "request": {
+    "presetId": "logo",
+    "themeId": "emerald",
+    "seed": 488938525,
+    "patternIntensity": 0.5574504139635016,
+    "circuitIntensity": 0.853836656014359,
+    "accentIntensity": 0.21291553984066264
+  },
+  "metadata": {
+    "generatedAt": "2026-02-05T07:21:58.908Z",
+    "seed": 488938525,
+    "variationSeed": 712548
+  },
+  "layerOverrides": {
+    "mark": {
+      "scale": 0.503258213402358,
+      "strokeWidth": 9.778990899109743,
+      "glow": 0.6298375847888354
+    },
+    "pattern": {
+      "density": 0.8472202780410742,
+      "tileSize": 38.2705485859283,
+      "strokeWidth": 0.6343236119180562
+    },
+    "circuit": {
+      "density": 0.3648881138604545,
+      "nodeRadius": 5.670240761558637,
+      "lineWidth": 2.2714648255014165
+    }
+  }
+}

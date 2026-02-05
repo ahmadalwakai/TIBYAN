@@ -1,0 +1,33 @@
+{
+  "id": "logo-sapphire-0433",
+  "request": {
+    "presetId": "logo",
+    "themeId": "sapphire",
+    "seed": 189889311,
+    "patternIntensity": 0.42334356923743316,
+    "circuitIntensity": 0.3086850644595386,
+    "accentIntensity": 0.376291990455376
+  },
+  "metadata": {
+    "generatedAt": "2026-02-05T07:22:29.092Z",
+    "seed": 189889311,
+    "variationSeed": 3576409
+  },
+  "layerOverrides": {
+    "mark": {
+      "scale": 1.7683168655579522,
+      "strokeWidth": 34.4624459880695,
+      "glow": 0.49216594718963186
+    },
+    "pattern": {
+      "density": 1.4110825543809136,
+      "tileSize": 108.1455588704653,
+      "strokeWidth": 2.234659076544763
+    },
+    "circuit": {
+      "density": 0.7869528058389914,
+      "nodeRadius": 6.16447496608108,
+      "lineWidth": 0.6171298027584002
+    }
+  }
+}

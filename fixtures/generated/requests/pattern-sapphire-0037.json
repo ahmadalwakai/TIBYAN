@@ -1,0 +1,33 @@
+{
+  "id": "pattern-sapphire-0037",
+  "request": {
+    "presetId": "pattern",
+    "themeId": "sapphire",
+    "seed": 434561252,
+    "patternIntensity": 0.12377405172389655,
+    "circuitIntensity": 0.9491410557875135,
+    "accentIntensity": 0.22919261466208501
+  },
+  "metadata": {
+    "generatedAt": "2026-02-05T07:22:27.623Z",
+    "seed": 434561252,
+    "variationSeed": 440485
+  },
+  "layerOverrides": {
+    "mark": {
+      "scale": 0.8048797698248549,
+      "strokeWidth": 27.11480529146027,
+      "glow": 0.4083435060495248
+    },
+    "pattern": {
+      "density": 1.3688575749606162,
+      "tileSize": 41.51470184862367,
+      "strokeWidth": 0.935261801087885
+    },
+    "circuit": {
+      "density": 0.1960365355462006,
+      "nodeRadius": 2.02460891009523,
+      "lineWidth": 0.9801032470912222
+    }
+  }
+}

@@ -105,7 +105,7 @@ Open http://localhost:3000 to view the app.
 
 ### One-Click Deploy
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/ahmadalwakai/TIBYAN&env=DATABASE_URL,NEXTAUTH_SECRET&envDescription=Required%20environment%20variables&envLink=https://github.com/ahmadalwakai/TIBYAN%23environment-variables)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/ahmadalwakai/TIBYAN&env=DATABASE_URL,JWT_SECRET&envDescription=Required%20environment%20variables&envLink=https://github.com/ahmadalwakai/TIBYAN%23environment-variables)
 
 ### Manual Deploy
 
@@ -114,8 +114,7 @@ Open http://localhost:3000 to view the app.
 3. Add environment variables:
    - `DATABASE_URL` - PostgreSQL connection string
    - `DIRECT_DATABASE_URL` - Direct database URL (for migrations)
-   - `NEXTAUTH_SECRET` - Auth secret key
-   - `NEXTAUTH_URL` - Your domain URL
+   - `JWT_SECRET` - Custom JWT auth secret (min 32 chars)
 
 ### Environment Variables
 
@@ -123,9 +122,9 @@ Open http://localhost:3000 to view the app.
 |----------|----------|-------------|
 | `DATABASE_URL` | ✅ | PostgreSQL connection string with pooling |
 | `DIRECT_DATABASE_URL` | ✅ | Direct PostgreSQL URL (no pooling) |
-| `NEXTAUTH_SECRET` | ✅ | Secret for NextAuth.js |
-| `NEXTAUTH_URL` | ✅ | Your app URL |
+| `JWT_SECRET` | ✅ | Secret for custom JWT auth (min 32 chars) |
 | `NEXT_PUBLIC_APP_URL` | ❌ | Public app URL |
+| `RESEND_API_KEY` | ❌ | Email service for auth emails |
 
 ### AI Agent Providers
 
@@ -178,9 +177,18 @@ tibyan/
 - **Language:** TypeScript
 - **UI:** Chakra UI v3
 - **Database:** PostgreSQL + Prisma
-- **Auth:** NextAuth.js
+- **Auth:** Custom JWT cookies (jose library)
 - **i18n:** next-intl
 - **Styling:** Emotion
+
+## 🔐 Authentication
+
+> **Important:** This app uses **custom JWT cookie-based authentication**. NextAuth is NOT used.
+
+- JWT tokens signed with `jose` library, stored in `auth-token` httpOnly cookie
+- User metadata in `user-data` cookie (client-readable)
+- CSRF protection via `csrf-token` cookie
+- See `src/lib/jwt.ts`, `src/lib/auth.ts`, `src/lib/api-auth.ts` for implementation
 
 ## 📄 License
 

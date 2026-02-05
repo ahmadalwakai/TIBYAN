@@ -1,0 +1,33 @@
+{
+  "id": "pattern-monochrome-0286",
+  "request": {
+    "presetId": "pattern",
+    "themeId": "monochrome",
+    "seed": 604717015,
+    "patternIntensity": 0.3097903729927681,
+    "circuitIntensity": 0.19257140168574238,
+    "accentIntensity": 0.41228559632426387
+  },
+  "metadata": {
+    "generatedAt": "2026-02-05T07:21:59.562Z",
+    "seed": 604717015,
+    "variationSeed": 2383457
+  },
+  "layerOverrides": {
+    "mark": {
+      "scale": 1.4388319854339735,
+      "strokeWidth": 33.127515925153865,
+      "glow": 0.5854950907572616
+    },
+    "pattern": {
+      "density": 1.2336543564375744,
+      "tileSize": 45.732175119096496,
+      "strokeWidth": 2.8013607423293223
+    },
+    "circuit": {
+      "density": 0.7222582343138094,
+      "nodeRadius": 6.905587198634439,
+      "lineWidth": 1.449725151504262
+    }
+  }
+}
