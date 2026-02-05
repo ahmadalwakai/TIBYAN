@@ -714,5 +714,77 @@
       "title": "Seguridad y métodos de pago",
       "description": "Utilizamos una conexión segura encriptada (HTTPS) para proteger sus datos personales durante la navegación y el registro."
     }
+  },
+  "about": {
+    "title": "Plataforma Tibyan",
+    "description": "Tibyan es una plataforma educativa árabe avanzada que conecta conocimiento, aplicación práctica y medición continua del impacto educativo a través de rutas profesionales.",
+    "contactTeam": "Contacta a Nuestro Equipo",
+    "mission": {
+      "title": "Nuestra Misión",
+      "description": "Empoderar a los estudiantes árabes para acceder a educación de alta calidad a través de tecnologías modernas y experiencias interactivas."
+    },
+    "values": {
+      "trustedKnowledge": {
+        "title": "Conocimiento Confiable",
+        "description": "Contenido educativo basado en estándares académicos y verificación científica."
+      },
+      "arabicFirst": {
+        "title": "Experiencia Árabe Primero",
+        "description": "Interfaz RTL completa que soporta el idioma árabe en todos sus detalles."
+      },
+      "measuredLearning": {
+        "title": "Aprendizaje Medido",
+        "description": "Indicadores de rendimiento claros y análisis avanzados para garantizar resultados reales."
+      }
+    }
+  },
+  "instructorsPage": {
+    "badge": "Profesorado",
+    "title": "Aprende de Instructores de Élite",
+    "description": "Los cursos en Tibyan son impartidos por profesores especializados y expertos en sus campos, dedicados a proporcionar una experiencia de aprendizaje excepcional y seguimiento continuo del progreso estudiantil.",
+    "teachersLabel": "Instructores:",
+    "teacherRole": "Instructor de Tibyan",
+    "stats": {
+      "specializedTeachers": "Profesores Especializados",
+      "programs": "Programas Educativos",
+      "enrolledStudents": "Estudiantes Inscritos",
+      "certified": "Certificado",
+      "qualifiedTeacher": "Profesor Cualificado",
+      "student": "Estudiantes"
+    },
+    "cta": {
+      "title": "¿Eres un profesor especializado?",
+      "description": "Únete al equipo de Tibyan y comparte tu experiencia con miles de estudiantes ansiosos por aprender",
+      "joinButton": "Únete como Instructor"
+    }
+  },
+  "blogPage": {
+    "title": "Blog de Tibyan",
+    "subtitle": "Ideas y perspectivas para el futuro de la educación árabe.",
+    "readMore": "Leer más"
+  },
+  "programsPage": {
+    "badge": "Programas Acreditados",
+    "title": "Programas y Certificados Especializados",
+    "description": "Programas especializados basados en rutas educativas y evaluaciones avanzadas, diseñados bajo la supervisión de distinguidos académicos y especialistas.",
+    "stats": {
+      "duration": "Duración",
+      "enrolled": "Inscritos",
+      "fees": "Tarifas"
+    },
+    "registerNow": "Regístrate Ahora",
+    "cta": {
+      "text": "¿No encontraste el programa adecuado? Contáctanos para ayudarte a elegir el mejor camino",
+      "button": "Reservar Consulta Gratuita"
+    }
+  },
+  "coursesPage": {
+    "title": "Programas Educativos",
+    "subtitle": "Programas del Instituto Virtual Tibyan - Un viaje académico completo en Ciencias Islámicas y Lengua Árabe",
+    "departments": "Departamentos Académicos",
+    "emptyState": {
+      "text": "No hay programas disponibles en este departamento actualmente",
+      "showAll": "Mostrar Todos los Programas"
+    }
   }
 }

@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { CourseCard, BaseCard } from "@/components/ui/cards";
 import { allCourses } from "@/content/courses.ar";
 
@@ -118,6 +119,7 @@ const coursesDisplay = allCourses.map((course) => ({
 }));
 
 export default function CoursesPage() {
+  const t = useTranslations("coursesPage");
   const [selectedDept, setSelectedDept] = useState("all");
 
   const filteredCourses = selectedDept === "all" 
@@ -159,16 +161,16 @@ export default function CoursesPage() {
               size="2xl"
               color="white"
             >
-              📚 البرامج التعليمية
+              📚 {t("title")}
             </Heading>
             <Text color="gray.400" fontSize="lg">
-              برامج معهد تبيان الافتراضي - رحلة علمية متكاملة في العلوم الإسلامية واللغة العربية
+              {t("subtitle")}
             </Text>
           </Stack>
 
           {/* Department Filters */}
           <Box>
-            <Text fontWeight="700" color="white" mb={4}>الأقسام العلمية</Text>
+            <Text fontWeight="700" color="white" mb={4}>{t("departments")}</Text>
             <Flex gap={3} flexWrap="wrap">
               {departments.map((dept) => (
                 <Button
@@ -221,7 +223,7 @@ export default function CoursesPage() {
             <Box textAlign="center" py={12}>
               <Text fontSize="4xl" mb={4}>🔍</Text>
               <Text color="gray.400" fontSize="lg">
-                لا توجد برامج في هذا القسم حالياً
+                {t("emptyState.text")}
               </Text>
               <Button 
                 mt={4} 
@@ -231,7 +233,7 @@ export default function CoursesPage() {
                 fontWeight="700"
                 _hover={{ bg: "#4DFF6A", boxShadow: "0 0 20px rgba(0, 255, 42, 0.4)" }}
               >
-                عرض جميع البرامج
+                {t("emptyState.showAll")}
               </Button>
             </Box>
           )}

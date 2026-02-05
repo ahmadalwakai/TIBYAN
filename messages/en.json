@@ -707,5 +707,77 @@
       "inquiries": "For inquiries:",
       "disclaimer": "* All financial transactions are processed through encrypted channels. We do not store credit card data on our servers."
     }
+  },
+  "about": {
+    "title": "Tibyan Platform",
+    "description": "Tibyan is an advanced Arabic educational platform that connects knowledge, practical application, and continuous measurement of educational impact through professional pathways.",
+    "contactTeam": "Contact Our Team",
+    "mission": {
+      "title": "Our Mission",
+      "description": "Empowering Arab learners to access high-quality education through modern technologies and an interactive experience."
+    },
+    "values": {
+      "trustedKnowledge": {
+        "title": "Trusted Knowledge",
+        "description": "Educational content built on academic standards and scientific verification."
+      },
+      "arabicFirst": {
+        "title": "Arabic-First Experience",
+        "description": "Complete RTL interface supporting Arabic language in all its details."
+      },
+      "measuredLearning": {
+        "title": "Measured Learning",
+        "description": "Clear performance indicators and advanced analytics to ensure real results."
+      }
+    }
+  },
+  "instructorsPage": {
+    "badge": "Faculty",
+    "title": "Learn from Elite Instructors",
+    "description": "Courses at Tibyan are delivered by specialized teachers and experts in their fields, dedicated to providing an exceptional learning experience and continuous student progress monitoring.",
+    "teachersLabel": "Instructors:",
+    "teacherRole": "Tibyan Instructor",
+    "stats": {
+      "specializedTeachers": "Specialized Teachers",
+      "programs": "Educational Programs",
+      "enrolledStudents": "Enrolled Students",
+      "certified": "Certified",
+      "qualifiedTeacher": "Qualified Teacher",
+      "student": "Students"
+    },
+    "cta": {
+      "title": "Are you a specialized teacher?",
+      "description": "Join the Tibyan team and share your expertise with thousands of eager learners",
+      "joinButton": "Join as Instructor"
+    }
+  },
+  "blogPage": {
+    "title": "Tibyan Blog",
+    "subtitle": "Insights and ideas for the future of Arabic education.",
+    "readMore": "Read More"
+  },
+  "programsPage": {
+    "badge": "Accredited Programs",
+    "title": "Specialized Programs & Certificates",
+    "description": "Specialized programs built on educational pathways and advanced assessments, designed under the supervision of distinguished scholars and specialists.",
+    "stats": {
+      "duration": "Duration",
+      "enrolled": "Enrolled",
+      "fees": "Fees"
+    },
+    "registerNow": "Register Now",
+    "cta": {
+      "text": "Didn't find the right program? Contact us to help you choose the best path",
+      "button": "Book Free Consultation"
+    }
+  },
+  "coursesPage": {
+    "title": "Educational Programs",
+    "subtitle": "Tibyan Virtual Institute Programs - A comprehensive academic journey in Islamic Sciences and Arabic Language",
+    "departments": "Academic Departments",
+    "emptyState": {
+      "text": "No programs available in this department currently",
+      "showAll": "Show All Programs"
+    }
   }
 }

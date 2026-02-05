@@ -714,5 +714,77 @@
       "title": "Sicherheit & Zahlungsmethoden",
       "description": "Wir verwenden eine sichere verschlüsselte Verbindung (HTTPS), um Ihre persönlichen Daten beim Surfen und bei der Registrierung zu schützen."
     }
+  },
+  "about": {
+    "title": "Tibyan-Plattform",
+    "description": "Tibyan ist eine fortschrittliche arabische Bildungsplattform, die Wissen, praktische Anwendung und kontinuierliche Messung der Bildungswirkung durch professionelle Lernwege verbindet.",
+    "contactTeam": "Kontaktieren Sie unser Team",
+    "mission": {
+      "title": "Unsere Mission",
+      "description": "Arabische Lernende zu befähigen, durch moderne Technologien und interaktive Erfahrungen Zugang zu hochwertiger Bildung zu erhalten."
+    },
+    "values": {
+      "trustedKnowledge": {
+        "title": "Vertrauenswürdiges Wissen",
+        "description": "Bildungsinhalte basierend auf akademischen Standards und wissenschaftlicher Verifizierung."
+      },
+      "arabicFirst": {
+        "title": "Arabisch-Zuerst-Erlebnis",
+        "description": "Vollständige RTL-Oberfläche, die Arabisch in allen Details unterstützt."
+      },
+      "measuredLearning": {
+        "title": "Messbares Lernen",
+        "description": "Klare Leistungsindikatoren und erweiterte Analysen für echte Ergebnisse."
+      }
+    }
+  },
+  "instructorsPage": {
+    "badge": "Lehrpersonal",
+    "title": "Lernen Sie von Elite-Dozenten",
+    "description": "Die Kurse bei Tibyan werden von spezialisierten Lehrern und Experten in ihren Fachgebieten durchgeführt, die sich einer außergewöhnlichen Lernerfahrung und kontinuierlichen Fortschrittsverfolgung der Studierenden widmen.",
+    "teachersLabel": "Dozenten:",
+    "teacherRole": "Tibyan-Dozent",
+    "stats": {
+      "specializedTeachers": "Spezialisierte Lehrer",
+      "programs": "Bildungsprogramme",
+      "enrolledStudents": "Eingeschriebene Studenten",
+      "certified": "Zertifiziert",
+      "qualifiedTeacher": "Qualifizierter Lehrer",
+      "student": "Studenten"
+    },
+    "cta": {
+      "title": "Sind Sie ein spezialisierter Lehrer?",
+      "description": "Treten Sie dem Tibyan-Team bei und teilen Sie Ihr Fachwissen mit Tausenden von lernbegierigen Studenten",
+      "joinButton": "Als Dozent beitreten"
+    }
+  },
+  "blogPage": {
+    "title": "Tibyan Blog",
+    "subtitle": "Einblicke und Ideen für die Zukunft der arabischen Bildung.",
+    "readMore": "Mehr lesen"
+  },
+  "programsPage": {
+    "badge": "Akkreditierte Programme",
+    "title": "Spezialisierte Programme & Zertifikate",
+    "description": "Spezialisierte Programme basierend auf Bildungswegen und fortgeschrittenen Bewertungen, entworfen unter Aufsicht angesehener Gelehrter und Spezialisten.",
+    "stats": {
+      "duration": "Dauer",
+      "enrolled": "Eingeschrieben",
+      "fees": "Gebühren"
+    },
+    "registerNow": "Jetzt anmelden",
+    "cta": {
+      "text": "Das richtige Programm nicht gefunden? Kontaktieren Sie uns, um den besten Weg zu wählen",
+      "button": "Kostenlose Beratung buchen"
+    }
+  },
+  "coursesPage": {
+    "title": "Bildungsprogramme",
+    "subtitle": "Programme des virtuellen Tibyan-Instituts - Eine umfassende akademische Reise in Islamwissenschaften und Arabisch",
+    "departments": "Akademische Abteilungen",
+    "emptyState": {
+      "text": "Derzeit keine Programme in dieser Abteilung verfügbar",
+      "showAll": "Alle Programme anzeigen"
+    }
   }
 }

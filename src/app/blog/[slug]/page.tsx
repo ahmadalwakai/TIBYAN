@@ -1,7 +1,7 @@
 import { Box, Container, Flex, Heading, Stack, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { posts } from "../page";
+import { posts } from "@/content/blog-posts";
 import type { Metadata } from "next";
 import ThemeButton from "@/components/ui/ThemeButton";
 import ThemeBadge from "@/components/ui/ThemeBadge";

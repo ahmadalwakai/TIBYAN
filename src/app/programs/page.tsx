@@ -1,5 +1,8 @@
+"use client";
+
 import { Badge, Box, Button, Container, Flex, Heading, SimpleGrid, Stack, Text } from "@chakra-ui/react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 const programs = [
   {
@@ -46,6 +49,8 @@ const programs = [
 ];
 
 export default function ProgramsPage() {
+  const t = useTranslations("programsPage");
+
   return (
     <Box 
       as="main" 
@@ -123,7 +128,7 @@ export default function ProgramsPage() {
               borderColor="rgba(0, 255, 42, 0.3)"
               boxShadow="0 0 15px rgba(0, 255, 42, 0.2)"
             >
-              🎓 برامج معتمدة
+              🎓 {t("badge")}
             </Badge>
             <Heading 
               size="2xl"
@@ -135,11 +140,10 @@ export default function ProgramsPage() {
                 color: "transparent",
               }}
             >
-              البرامج والشهادات المتخصصة
+              {t("title")}
             </Heading>
             <Text color="rgba(255, 255, 255, 0.85)" fontSize="lg" lineHeight="1.8">
-              برامج متخصصة مبنية على المسارات التعليمية والاختبارات المتقدمة، 
-              صُممت بإشراف نخبة من العلماء والمتخصصين.
+              {t("description")}
             </Text>
           </Stack>
 
@@ -255,14 +259,14 @@ export default function ProgramsPage() {
                       borderColor="rgba(0, 255, 42, 0.2)"
                     >
                       <Box flex={1} textAlign="center">
-                        <Text fontSize="xs" color="rgba(255, 255, 255, 0.6)" mb={1}>المدة</Text>
+                        <Text fontSize="xs" color="rgba(255, 255, 255, 0.6)" mb={1}>{t("stats.duration")}</Text>
                         <Text fontWeight="700" color="white" fontSize="sm">
                           ⏱️ {program.duration}
                         </Text>
                       </Box>
                       <Box w="1px" bg="rgba(0, 255, 42, 0.3)" />
                       <Box flex={1} textAlign="center">
-                        <Text fontSize="xs" color="rgba(255, 255, 255, 0.6)" mb={1}>المسجلين</Text>
+                        <Text fontSize="xs" color="rgba(255, 255, 255, 0.6)" mb={1}>{t("stats.enrolled")}</Text>
                         <Text fontWeight="700" color="white" fontSize="sm">
                           👥 {program.students}+
                         </Text>
@@ -272,7 +276,7 @@ export default function ProgramsPage() {
                     {/* Price & CTA */}
                     <Flex align="center" justify="space-between" pt={2}>
                       <Box>
-                        <Text fontSize="xs" color="rgba(255, 255, 255, 0.6)">الرسوم</Text>
+                        <Text fontSize="xs" color="rgba(255, 255, 255, 0.6)">{t("stats.fees")}</Text>
                         <Flex align="baseline" gap={1}>
                           <Text 
                             fontSize="2xl" 
@@ -300,7 +304,7 @@ export default function ProgramsPage() {
                         }}
                         transition="all 0.3s ease"
                       >
-                        <Link href={`/checkout/${program.slug}`}>سجّل الآن ←</Link>
+                        <Link href={`/checkout/${program.slug}`}>{t("registerNow")} ←</Link>
                       </Button>
                     </Flex>
                   </Stack>
@@ -320,7 +324,7 @@ export default function ProgramsPage() {
             boxShadow="0 0 30px rgba(0, 255, 42, 0.4), 0 0 60px rgba(0, 255, 42, 0.2)"
           >
             <Text color="rgba(255, 255, 255, 0.8)" mb={4}>
-              لم تجد البرنامج المناسب؟ تواصل معنا لمساعدتك في اختيار المسار الأمثل
+              {t("cta.text")}
             </Text>
             <Button
               size="lg"
@@ -339,7 +343,7 @@ export default function ProgramsPage() {
               }}
               transition="all 0.3s ease"
             >
-              📞 احجز استشارة مجانية
+              📞 {t("cta.button")}
             </Button>
           </Box>
         </Stack>

@@ -1,24 +1,28 @@
-import { Box, Button, Container, Flex, Heading, SimpleGrid, Stack, Text } from "@chakra-ui/react";
+"use client";
 
-const values = [
-  {
-    title: "معرفة موثوقة",
-    description: "محتوى تعليمي مبني على معايير أكاديمية وتحقق علمي.",
-    icon: "📚",
-  },
-  {
-    title: "تجربة عربية أولاً",
-    description: "واجهة RTL متكاملة تدعم اللغة العربية بكل تفاصيلها.",
-    icon: "🌍",
-  },
-  {
-    title: "تعلّم بقياس الأثر",
-    description: "مؤشرات أداء واضحة وتحليلات متقدمة لضمان نتائج حقيقية.",
-    icon: "📈",
-  },
-];
+import { Box, Button, Container, Flex, Heading, SimpleGrid, Stack, Text } from "@chakra-ui/react";
+import { useTranslations } from "next-intl";
 
 export default function AboutPage() {
+  const t = useTranslations("about");
+
+  const values = [
+    {
+      title: t("values.trustedKnowledge.title"),
+      description: t("values.trustedKnowledge.description"),
+      icon: "📚",
+    },
+    {
+      title: t("values.arabicFirst.title"),
+      description: t("values.arabicFirst.description"),
+      icon: "🌍",
+    },
+    {
+      title: t("values.measuredLearning.title"),
+      description: t("values.measuredLearning.description"),
+      icon: "📈",
+    },
+  ];
   return (
     <Box 
       as="main" 
@@ -86,11 +90,10 @@ export default function AboutPage() {
                   color: "transparent",
                 }}
               >
-                ✨ منصة تبيان
+                ✨ {t("title")}
               </Heading>
               <Text color="rgba(255, 255, 255, 0.85)" fontSize="lg" lineHeight="1.8">
-                تبيان منصة تعليمية عربية متقدمة تربط بين المعرفة، التطبيق العملي،
-                والقياس المستمر للأثر التعليمي عبر مسارات احترافية.
+                {t("description")}
               </Text>
               <Button 
                 bg="#0A0A0A"
@@ -110,7 +113,7 @@ export default function AboutPage() {
                 fontWeight="700"
                 borderRadius="full"
               >
-                تواصل مع فريقنا
+                {t("contactTeam")}
               </Button>
             </Stack>
             <Box
@@ -144,11 +147,10 @@ export default function AboutPage() {
                   >
                     🎯
                   </Box>
-                  <Heading size="md" color="white">رسالتنا</Heading>
+                  <Heading size="md" color="white">{t("mission.title")}</Heading>
                 </Flex>
                 <Text color="rgba(255, 255, 255, 0.8)" lineHeight="1.8">
-                  تمكين المتعلمين العرب من الوصول إلى تعليم عالي الجودة من خلال
-                  تقنيات حديثة وتجربة تفاعلية.
+                  {t("mission.description")}
                 </Text>
               </Stack>
             </Box>

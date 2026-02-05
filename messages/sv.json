@@ -714,5 +714,77 @@
       "title": "Säkerhet & betalningsmetoder",
       "description": "Vi använder en säker krypterad anslutning (HTTPS) för att skydda dina personuppgifter under surfning och registrering."
     }
+  },
+  "about": {
+    "title": "Tibyan-plattformen",
+    "description": "Tibyan är en avancerad arabisk utbildningsplattform som förbinder kunskap, praktisk tillämpning och kontinuerlig mätning av utbildningseffekt genom professionella vägar.",
+    "contactTeam": "Kontakta Vårt Team",
+    "mission": {
+      "title": "Vårt Uppdrag",
+      "description": "Att ge arabiska studenter möjlighet att få tillgång till högkvalitativ utbildning genom modern teknik och interaktiva upplevelser."
+    },
+    "values": {
+      "trustedKnowledge": {
+        "title": "Pålitlig Kunskap",
+        "description": "Utbildningsinnehåll byggt på akademiska standarder och vetenskaplig verifiering."
+      },
+      "arabicFirst": {
+        "title": "Arabisk-Först-Upplevelse",
+        "description": "Komplett RTL-gränssnitt som stöder arabiska i alla dess detaljer."
+      },
+      "measuredLearning": {
+        "title": "Mätbart Lärande",
+        "description": "Tydliga prestationsindikatorer och avancerad analys för att säkerställa verkliga resultat."
+      }
+    }
+  },
+  "instructorsPage": {
+    "badge": "Lärarkår",
+    "title": "Lär Dig av Elit-Instruktörer",
+    "description": "Kurser på Tibyan levereras av specialiserade lärare och experter inom sina områden, dedikerade till att ge en exceptionell inlärningsupplevelse och kontinuerlig uppföljning av studenternas framsteg.",
+    "teachersLabel": "Instruktörer:",
+    "teacherRole": "Tibyan-instruktör",
+    "stats": {
+      "specializedTeachers": "Specialiserade Lärare",
+      "programs": "Utbildningsprogram",
+      "enrolledStudents": "Registrerade Studenter",
+      "certified": "Certifierad",
+      "qualifiedTeacher": "Kvalificerad Lärare",
+      "student": "Studenter"
+    },
+    "cta": {
+      "title": "Är du en specialiserad lärare?",
+      "description": "Gå med i Tibyan-teamet och dela din expertis med tusentals ivriga studenter",
+      "joinButton": "Gå Med som Instruktör"
+    }
+  },
+  "blogPage": {
+    "title": "Tibyan Blogg",
+    "subtitle": "Insikter och idéer för framtiden inom arabisk utbildning.",
+    "readMore": "Läs mer"
+  },
+  "programsPage": {
+    "badge": "Ackrediterade Program",
+    "title": "Specialiserade Program & Certifikat",
+    "description": "Specialiserade program baserade på utbildningsvägar och avancerade bedömningar, utformade under överinseende av framstående forskare och specialister.",
+    "stats": {
+      "duration": "Längd",
+      "enrolled": "Registrerade",
+      "fees": "Avgifter"
+    },
+    "registerNow": "Registrera Nu",
+    "cta": {
+      "text": "Hittade du inte rätt program? Kontakta oss för att hjälpa dig välja den bästa vägen",
+      "button": "Boka Gratis Konsultation"
+    }
+  },
+  "coursesPage": {
+    "title": "Utbildningsprogram",
+    "subtitle": "Tibyan Virtuella Institutets Program - En omfattande akademisk resa i Islamiska Vetenskaper och Arabiska",
+    "departments": "Akademiska Avdelningar",
+    "emptyState": {
+      "text": "Inga program tillgängliga i denna avdelning för närvarande",
+      "showAll": "Visa Alla Program"
+    }
   }
 }

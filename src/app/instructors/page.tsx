@@ -12,6 +12,7 @@ import {
 import Link from "next/link";
 import { teachers } from "@/content/courses.ar";
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 
 // Count up animation hook
 function useCountUp(end: number, duration: number = 2000, startOnView: boolean = true) {
@@ -127,6 +128,8 @@ function AnimatedStat({ icon, value, label, suffix = "", color }: {
 }
 
 export default function InstructorsPage() {
+  const t = useTranslations("instructorsPage");
+  
   return (
     <Box 
       as="main" 
@@ -223,7 +226,7 @@ export default function InstructorsPage() {
             >
               <Text fontSize="xl">👨‍🏫</Text>
               <Text color="#00FF2A" fontWeight="600" fontSize="sm">
-                هيئة التدريس
+                {t("badge")}
               </Text>
             </Box>
             
@@ -239,21 +242,20 @@ export default function InstructorsPage() {
                 backgroundClip="text"
                 css={{ WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
               >
-                تعلّم على أيدي نخبة من المعلمين
+                {t("title")}
               </Text>
             </Heading>
             
             <Text color="rgba(255, 255, 255, 0.85)" fontSize={{ base: "md", md: "lg" }} lineHeight="1.9" maxW="650px">
-              يقدم الدروس في منصة تبيان مجموعة من المعلمين المتخصصين والخبراء في مجالاتهم،
-              المكرسين لتقديم تجربة تعليمية متميزة ومتابعة مستمرة لتحصيل الطلاب.
+              {t("description")}
             </Text>
           </Stack>
 
           {/* Stats Section */}
           <SimpleGrid columns={{ base: 2, md: 3 }} gap={5}>
-            <AnimatedStat icon="👥" value={12} suffix="+" label="معلم متخصص" color="#00FF2A" />
-            <AnimatedStat icon="📚" value={5} suffix="" label="برنامج تعليمي" color="#00FF2A" />
-            <AnimatedStat icon="🎓" value={0} suffix="" label="طلاب مسجلون" color="#00FF2A" />
+            <AnimatedStat icon="👥" value={12} suffix="+" label={t("stats.specializedTeachers")} color="#00FF2A" />
+            <AnimatedStat icon="📚" value={5} suffix="" label={t("stats.programs")} color="#00FF2A" />
+            <AnimatedStat icon="🎓" value={0} suffix="" label={t("stats.enrolledStudents")} color="#00FF2A" />
           </SimpleGrid>
 
           {/* Teachers Grid */}
@@ -261,7 +263,7 @@ export default function InstructorsPage() {
             <Flex align="center" justify="center" gap={3}>
               <Box h="2px" flex={1} maxW="100px" background="linear-gradient(90deg, transparent, #00FF2A)" />
               <Heading size="lg" color="white" textAlign="center">
-                المدرسين :
+                {t("teachersLabel")}
               </Heading>
               <Box h="2px" flex={1} maxW="100px" background="linear-gradient(90deg, #00FF2A, transparent)" />
             </Flex>
@@ -368,7 +370,7 @@ export default function InstructorsPage() {
                           borderColor="rgba(0, 255, 42, 0.3)"
                         >
                           <Text fontSize="xs" color="#00FF2A" fontWeight="600">
-                            معلم في تبيان
+                            {t("teacherRole")}
                           </Text>
                         </Box>
 
@@ -395,10 +397,10 @@ export default function InstructorsPage() {
                               fontWeight="800" 
                               color="#00FF2A"
                             >
-                              ✓ معتمد
+                              ✓ {t("stats.certified")}
                             </Text>
                             <Text fontSize="xs" color="whiteAlpha.600">
-                              مدرس مؤهل
+                              {t("stats.qualifiedTeacher")}
                             </Text>
                           </Box>
                           <Box
@@ -418,7 +420,7 @@ export default function InstructorsPage() {
                               👥 500+
                             </Text>
                             <Text fontSize="xs" color="whiteAlpha.600">
-                              طالب
+                              {t("stats.student")}
                             </Text>
                           </Box>
                         </SimpleGrid>
@@ -513,11 +515,11 @@ export default function InstructorsPage() {
                 </Box>
                 
                 <Heading size="lg" color="white" fontWeight="800">
-                  هل أنت معلم متخصص؟
+                  {t("cta.title")}
                 </Heading>
                 
                 <Text color="whiteAlpha.800" fontSize="lg" lineHeight="1.9">
-                  انضم إلى فريق تبيان وشارك خبرتك مع آلاف الطلاب الراغبين في التعلم
+                  {t("cta.description")}
                 </Text>
                 
                 <Link href="/instructors/apply" style={{ textDecoration: "none" }}>
@@ -551,7 +553,7 @@ export default function InstructorsPage() {
                         boxShadow: "0 15px 40px -10px rgba(0, 255, 42, 0.5)",
                       }}
                     >
-                      ✨ انضم كمعلم
+                      ✨ {t("cta.joinButton")}
                     </Box>
                   </Box>
                 </Link>

@@ -714,5 +714,77 @@
       "title": "Güvenlik ve Ödeme Yöntemleri",
       "description": "Gezinme ve kayıt sırasında kişisel verilerinizi korumak için güvenli şifreli bağlantı (HTTPS) kullanıyoruz."
     }
+  },
+  "about": {
+    "title": "Tibyan Platformu",
+    "description": "Tibyan, bilgi, pratik uygulama ve profesyonel yollarla eğitim etkisinin sürekli ölçümünü birleştiren gelişmiş bir Arapça eğitim platformudur.",
+    "contactTeam": "Ekibimizle İletişime Geçin",
+    "mission": {
+      "title": "Misyonumuz",
+      "description": "Arap öğrencilerin modern teknolojiler ve etkileşimli deneyimler aracılığıyla yüksek kaliteli eğitime erişmelerini sağlamak."
+    },
+    "values": {
+      "trustedKnowledge": {
+        "title": "Güvenilir Bilgi",
+        "description": "Akademik standartlar ve bilimsel doğrulama üzerine kurulu eğitim içeriği."
+      },
+      "arabicFirst": {
+        "title": "Önce Arapça Deneyimi",
+        "description": "Arapça dilini tüm ayrıntılarıyla destekleyen tam RTL arayüzü."
+      },
+      "measuredLearning": {
+        "title": "Ölçülebilir Öğrenme",
+        "description": "Gerçek sonuçları garantilemek için net performans göstergeleri ve gelişmiş analizler."
+      }
+    }
+  },
+  "instructorsPage": {
+    "badge": "Öğretim Kadrosu",
+    "title": "Elit Eğitmenlerden Öğrenin",
+    "description": "Tibyan'daki dersler, olağanüstü öğrenme deneyimi sunmaya ve öğrenci ilerlemesini sürekli izlemeye adanmış, alanlarında uzman öğretmenler ve uzmanlar tarafından verilmektedir.",
+    "teachersLabel": "Eğitmenler:",
+    "teacherRole": "Tibyan Eğitmeni",
+    "stats": {
+      "specializedTeachers": "Uzman Öğretmenler",
+      "programs": "Eğitim Programları",
+      "enrolledStudents": "Kayıtlı Öğrenciler",
+      "certified": "Sertifikalı",
+      "qualifiedTeacher": "Nitelikli Öğretmen",
+      "student": "Öğrenciler"
+    },
+    "cta": {
+      "title": "Uzman bir öğretmen misiniz?",
+      "description": "Tibyan ekibine katılın ve uzmanlığınızı öğrenmeye istekli binlerce öğrenciyle paylaşın",
+      "joinButton": "Eğitmen Olarak Katıl"
+    }
+  },
+  "blogPage": {
+    "title": "Tibyan Blog",
+    "subtitle": "Arap eğitiminin geleceği için görüşler ve fikirler.",
+    "readMore": "Devamını Oku"
+  },
+  "programsPage": {
+    "badge": "Akrediteli Programlar",
+    "title": "Uzmanlaşmış Programlar ve Sertifikalar",
+    "description": "Seçkin akademisyenler ve uzmanların gözetiminde tasarlanmış, eğitim yolları ve ileri değerlendirmelere dayalı uzmanlaşmış programlar.",
+    "stats": {
+      "duration": "Süre",
+      "enrolled": "Kayıtlı",
+      "fees": "Ücretler"
+    },
+    "registerNow": "Şimdi Kaydol",
+    "cta": {
+      "text": "Doğru programı bulamadınız mı? En iyi yolu seçmenize yardımcı olmak için bizimle iletişime geçin",
+      "button": "Ücretsiz Danışmanlık Ayırın"
+    }
+  },
+  "coursesPage": {
+    "title": "Eğitim Programları",
+    "subtitle": "Tibyan Sanal Enstitüsü Programları - İslami Bilimler ve Arapça'da kapsamlı bir akademik yolculuk",
+    "departments": "Akademik Bölümler",
+    "emptyState": {
+      "text": "Bu bölümde şu anda program mevcut değil",
+      "showAll": "Tüm Programları Göster"
+    }
   }
 }
