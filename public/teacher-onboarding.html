@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل المعلم العملي للتدريس عبر الإنترنت</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Naskh Arabic', 'Segoe UI', Tahoma, sans-serif;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #1a1a1a;
+            background: #fff;
+            padding: 40px;
+            max-width: 210mm;
+            margin: 0 auto;
+        }
+        
+        @media print {
+            body {
+                padding: 20px;
+                font-size: 12px;
+            }
+            .no-print {
+                display: none;
+            }
+            .page-break {
+                page-break-before: always;
+            }
+            h2 {
+                page-break-after: avoid;
+            }
+            table, ul, ol {
+                page-break-inside: avoid;
+            }
+        }
+        
+        .print-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+            transition: all 0.2s;
+        }
+        
+        .print-button:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+        
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #2563eb;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        
+        h1 {
+            font-size: 28px;
+            color: #1e3a5f;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            color: #64748b;
+        }
+        
+        h2 {
+            font-size: 20px;
+            color: #2563eb;
+            margin: 30px 0 15px 0;
+            padding: 10px 15px;
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-radius: 8px;
+            border-right: 4px solid #2563eb;
+        }
+        
+        h3 {
+            font-size: 16px;
+            color: #1e40af;
+            margin: 20px 0 10px 0;
+        }
+        
+        p {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+        
+        ul, ol {
+            margin: 10px 20px 15px 0;
+        }
+        
+        li {
+            margin-bottom: 8px;
+            padding-right: 5px;
+        }
+        
+        .checklist {
+            list-style: none;
+            margin-right: 0;
+        }
+        
+        .checklist li {
+            position: relative;
+            padding-right: 30px;
+        }
+        
+        .checklist li::before {
+            content: "☐";
+            position: absolute;
+            right: 0;
+            font-size: 16px;
+            color: #2563eb;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 13px;
+        }
+        
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 10px 12px;
+            text-align: right;
+        }
+        
+        th {
+            background: #2563eb;
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:nth-child(even) {
+            background: #f8fafc;
+        }
+        
+        .do-dont-table th:first-child {
+            background: #16a34a;
+        }
+        
+        .do-dont-table th:last-child {
+            background: #dc2626;
+        }
+        
+        .responsible-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 15px 0;
+        }
+        
+        .responsible-box {
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .responsible-yes {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+        }
+        
+        .responsible-no {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+        }
+        
+        .responsible-box h4 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .responsible-yes h4 {
+            color: #16a34a;
+        }
+        
+        .responsible-no h4 {
+            color: #dc2626;
+        }
+        
+        .responsible-box ul {
+            margin: 0;
+            font-size: 12px;
+        }
+        
+        .summary-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 2px solid #f59e0b;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+        
+        .summary-box h3 {
+            color: #92400e;
+            margin-top: 0;
+            font-size: 18px;
+        }
+        
+        .summary-box table {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .golden-rule {
+            background: linear-gradient(135deg, #fef9c3 0%, #fef08a 100%);
+            border: 2px solid #eab308;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .golden-rule strong {
+            color: #854d0e;
+        }
+        
+        .golden-rule p {
+            margin: 0;
+            font-size: 15px;
+        }
+        
+        .tip-box {
+            background: #eff6ff;
+            border-right: 4px solid #2563eb;
+            padding: 12px 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .warning-box {
+            background: #fef2f2;
+            border-right: 4px solid #dc2626;
+            padding: 12px 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .section-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: #2563eb;
+            color: white;
+            border-radius: 50%;
+            margin-left: 10px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #64748b;
+            font-size: 12px;
+        }
+        
+        .icon {
+            font-size: 18px;
+            margin-left: 5px;
+        }
+
+        .qualities-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .quality-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .quality-card h4 {
+            color: #2563eb;
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quality-card p {
+            font-size: 12px;
+            color: #475569;
+            margin: 0;
+        }
+
+        .timeline {
+            position: relative;
+            margin: 20px 0;
+            padding-right: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            right: 10px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: #2563eb;
+            border-radius: 3px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            right: -26px;
+            top: 20px;
+            width: 12px;
+            height: 12px;
+            background: #2563eb;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px #2563eb;
+        }
+
+        .timeline-item h4 {
+            color: #1e40af;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <button class="print-button no-print" onclick="window.print()">
+        🖨️ طباعة / حفظ PDF
+    </button>
+
+    <div class="header">
+        <div class="logo">📚</div>
+        <h1>دليل المعلم العملي للتدريس عبر الإنترنت</h1>
+        <p class="subtitle">أكاديمية تبيان للتعليم العربي</p>
+    </div>
+
+    <!-- Section 1 -->
+    <h2><span class="section-number">1</span> اليوم الأول: كيف يبدأ المعلم</h2>
+    
+    <h3>📋 قبل أول حصة بيوم على الأقل:</h3>
+    <ul class="checklist">
+        <li>تأكد من وصول بيانات الدخول إلى منصة الأكاديمية (البريد الإلكتروني وكلمة المرور)</li>
+        <li>حمّل برنامج Zoom على جهازك وسجّل الدخول</li>
+        <li>اختبر الكاميرا والميكروفون - تأكد أن الصوت واضح والصورة مضاءة</li>
+        <li>راجع جدول حصصك (أوقات الحصص، أسماء الطلاب، مستوياتهم)</li>
+        <li>اطلع على المنهج المخصص للمستوى الذي ستدرّسه</li>
+        <li>جهّز مكاناً هادئاً للتدريس بخلفية مناسبة</li>
+    </ul>
+
+    <h3>🎯 في أول حصة:</h3>
+    <ul>
+        <li>ادخل قبل الموعد بـ 5 دقائق</li>
+        <li>رحّب بالطالب باسمه</li>
+        <li>عرّف نفسك باختصار (اسمك فقط)</li>
+        <li>اشرح للطالب كيف ستسير الحصص (المدة، ماذا سيتعلم)</li>
+        <li>ابدأ بتقييم بسيط لمستوى الطالب إن لم يكن محدداً مسبقاً</li>
+    </ul>
+
+    <!-- Section 2 -->
+    <h2><span class="section-number">2</span> سير العمل اليومي (قبل الحصة)</h2>
+
+    <h3>⏰ قبل كل حصة بـ 15-30 دقيقة:</h3>
+    <table>
+        <tr>
+            <th>المهمة</th>
+            <th>التفاصيل</th>
+        </tr>
+        <tr>
+            <td><strong>مراجعة ملف الطالب</strong></td>
+            <td>أين توقفنا؟ ما الذي يحتاج تركيزاً؟</td>
+        </tr>
+        <tr>
+            <td><strong>تحضير المادة</strong></td>
+            <td>افتح الصفحات المطلوبة، جهّز أي ملفات ستشاركها</td>
+        </tr>
+        <tr>
+            <td><strong>اختبار التقنية</strong></td>
+            <td>تأكد أن الإنترنت يعمل، Zoom جاهز</td>
+        </tr>
+        <tr>
+            <td><strong>تجهيز البيئة</strong></td>
+            <td>مكان هادئ، إضاءة جيدة، لا مشتتات</td>
+        </tr>
+    </table>
+
+    <div class="tip-box">
+        <strong>⏱️ قبل الحصة بـ 5 دقائق:</strong> ادخل رابط Zoom وانتظر الطالب - لا تتأخر أبداً، الطالب ينتظرك!
+    </div>
+
+    <!-- Section 3 -->
+    <div class="page-break"></div>
+    <h2><span class="section-number">3</span> أثناء الحصة المباشرة</h2>
+
+    <div class="timeline">
+        <div class="timeline-item">
+            <h4>🟢 البداية (أول 3 دقائق)</h4>
+            <ul>
+                <li>سلّم على الطالب بحرارة</li>
+                <li>اسأل سؤالاً بسيطاً للتواصل ("كيف حالك اليوم؟")</li>
+                <li>راجع بسرعة ما تعلمناه في الحصة السابقة</li>
+            </ul>
+        </div>
+        
+        <div class="timeline-item">
+            <h4>🔵 صلب الحصة (الوقت الأساسي)</h4>
+            <ul>
+                <li><strong>اشرح بوضوح</strong> - جملة واحدة في كل مرة</li>
+                <li><strong>اعرض على الشاشة</strong> - استخدم مشاركة الشاشة لعرض الحروف/الكلمات</li>
+                <li><strong>اطلب من الطالب القراءة</strong> - لا تقرأ أنت أكثر من اللازم</li>
+                <li><strong>صحّح فوراً</strong> - لا تترك الخطأ يمر</li>
+                <li><strong>امدح التقدم</strong> - "أحسنت"، "ممتاز"، "تحسنت كثيراً"</li>
+                <li><strong>كرّر ما يصعب</strong> - إذا أخطأ الطالب، أعد المحاولة 2-3 مرات</li>
+            </ul>
+        </div>
+        
+        <div class="timeline-item">
+            <h4>🟠 النهاية (آخر 3 دقائق)</h4>
+            <ul>
+                <li>لخّص ما تعلمناه اليوم</li>
+                <li>أخبر الطالب بما سنفعله في الحصة القادمة</li>
+                <li>أعطِ واجباً واضحاً ومحدداً إن كان مطلوباً</li>
+                <li>ودّع الطالب بشكل لطيف</li>
+            </ul>
+        </div>
+    </div>
+
+    <h3>💻 قواعد Zoom الاحترافية</h3>
+    <table class="do-dont-table">
+        <tr>
+            <th>✅ افعل</th>
+            <th>❌ لا تفعل</th>
+        </tr>
+        <tr>
+            <td>انظر للكاميرا عند الحديث</td>
+            <td>لا تأكل أو تشرب أثناء الحصة</td>
+        </tr>
+        <tr>
+            <td>تحدث بوضوح وبطء مناسب</td>
+            <td>لا تترك الميكروفون مفتوحاً عند عدم الحاجة</td>
+        </tr>
+        <tr>
+            <td>استخدم مشاركة الشاشة للشرح</td>
+            <td>لا تفتح برامج أخرى أثناء الحصة</td>
+        </tr>
+        <tr>
+            <td>أبقِ الكاميرا مفتوحة دائماً</td>
+            <td>لا تجلس في مكان مظلم أو فوضوي</td>
+        </tr>
+        <tr>
+            <td>تأكد أن وجهك واضح ومضاء</td>
+            <td>لا تتحرك كثيراً أو تنظر بعيداً</td>
+        </tr>
+    </table>
+
+    <!-- Section 4 -->
+    <h2><span class="section-number">4</span> بعد الحصة</h2>
+
+    <h3>📝 فوراً بعد انتهاء الحصة (5 دقائق):</h3>
+    <ul class="checklist">
+        <li>سجّل ملاحظات موجزة عن الطالب</li>
+        <li>حدّث سجل الطالب في النظام إن وُجد</li>
+        <li>أبلغ الإدارة فوراً عند أي مشكلة</li>
+    </ul>
+
+    <table>
+        <tr>
+            <th>السؤال</th>
+            <th>سجّل الإجابة</th>
+        </tr>
+        <tr>
+            <td>ماذا درسنا اليوم؟</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>أين توقفنا؟</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>ما الذي أتقنه الطالب؟</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>ما الذي يحتاج مراجعة؟</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>ملاحظات سلوكية</td>
+            <td></td>
+        </tr>
+    </table>
+
+    <div class="warning-box">
+        <strong>⚠️ أبلغ الإدارة فوراً إذا:</strong> الطالب لم يحضر • مشكلة تقنية منعت الحصة • الطالب يحتاج تغيير مستوى • أي شكوى من ولي الأمر
+    </div>
+
+    <!-- Section 5 -->
+    <div class="page-break"></div>
+    <h2><span class="section-number">5</span> المسؤوليات الأسبوعية</h2>
+
+    <div class="responsible-list">
+        <div class="responsible-box responsible-yes">
+            <h4>✅ أنت مسؤول عن:</h4>
+            <ul>
+                <li>الحضور في الموعد المحدد</li>
+                <li>تحضير الحصة مسبقاً</li>
+                <li>تدريس المنهج المحدد</li>
+                <li>تسجيل تقدم الطالب</li>
+                <li>التواصل المهني مع الإدارة</li>
+                <li>الإبلاغ عن أي مشكلات</li>
+                <li>تطوير مهاراتك التدريسية</li>
+                <li>الالتزام بسياسات الأكاديمية</li>
+            </ul>
+        </div>
+        <div class="responsible-box responsible-no">
+            <h4>❌ أنت غير مسؤول عن:</h4>
+            <ul>
+                <li>التواصل المباشر مع أولياء الأمور (إلا إذا طُلب)</li>
+                <li>تحصيل الرسوم أو مناقشة الأمور المالية</li>
+                <li>تغيير المنهج من تلقاء نفسك</li>
+                <li>إلغاء أو تغيير المواعيد بدون تنسيق</li>
+                <li>حل المشكلات التقنية للطالب</li>
+                <li>إعطاء رقم هاتفك الشخصي</li>
+            </ul>
+        </div>
+    </div>
+
+    <h3>📅 مهام نهاية الأسبوع:</h3>
+    <ul class="checklist">
+        <li>راجع جدول الأسبوع القادم</li>
+        <li>أكمل أي تقارير مطلوبة</li>
+        <li>تأكد من تحديث سجلات جميع طلابك</li>
+        <li>أبلغ الإدارة بأي إجازات قادمة (قبلها بأسبوع على الأقل)</li>
+    </ul>
+
+    <!-- Section 6 -->
+    <h2><span class="section-number">6</span> ما الذي يجعل المعلم ناجحاً</h2>
+
+    <div class="qualities-grid">
+        <div class="quality-card">
+            <h4>⏰ الالتزام بالمواعيد</h4>
+            <p>تحضر قبل الموعد، لا تنهي الحصة مبكراً، لا تُلغي إلا للضرورة القصوى</p>
+        </div>
+        <div class="quality-card">
+            <h4>🤲 الصبر مع المبتدئين</h4>
+            <p>الطالب المبتدئ سيُخطئ كثيراً - هذا طبيعي. كرّر بدون ضجر</p>
+        </div>
+        <div class="quality-card">
+            <h4>💡 الوضوح في الشرح</h4>
+            <p>جملة واحدة في كل مرة، لا مصطلحات صعبة، تأكد من الفهم</p>
+        </div>
+        <div class="quality-card">
+            <h4>👏 التشجيع المستمر</h4>
+            <p>امدح كل تقدم، لا تقارن بغيره، ركّز على ما أتقنه</p>
+        </div>
+        <div class="quality-card">
+            <h4>📞 التواصل المهني</h4>
+            <p>أبلغ بسرعة عن المشكلات، لا تتجاهل الرسائل، كن صادقاً</p>
+        </div>
+        <div class="quality-card">
+            <h4>📚 التحضير الجيد</h4>
+            <p>لا تدخل بدون معرفة ما ستفعله، اعرف أين توقفت مع كل طالب</p>
+        </div>
+    </div>
+
+    <!-- Section 7 -->
+    <h2><span class="section-number">7</span> الأخطاء الشائعة التي يجب تجنبها</h2>
+
+    <h3>🚨 أخطاء قاتلة:</h3>
+    <table>
+        <tr>
+            <th>الخطأ</th>
+            <th>لماذا هو مشكلة</th>
+        </tr>
+        <tr>
+            <td>التأخر عن الحصة</td>
+            <td>يفقد الطالب الثقة، تضيع دقائق ثمينة</td>
+        </tr>
+        <tr>
+            <td>إلغاء الحصة في آخر لحظة</td>
+            <td>يُغضب ولي الأمر، يضر بسمعة الأكاديمية</td>
+        </tr>
+        <tr>
+            <td>عدم تسجيل الملاحظات</td>
+            <td>تنسى أين توقفت، يتكرر الدرس</td>
+        </tr>
+        <tr>
+            <td>الشرح السريع جداً</td>
+            <td>الطالب لا يستوعب، يشعر بالإحباط</td>
+        </tr>
+        <tr>
+            <td>الحديث أكثر من الطالب</td>
+            <td>الطالب لا يمارس، لا يتعلم</td>
+        </tr>
+        <tr>
+            <td>إظهار الملل أو الإحباط</td>
+            <td>الطالب يشعر أنه عبء</td>
+        </tr>
+    </table>
+
+    <h3>⚠️ أخطاء يجب تجنبها:</h3>
+    <table>
+        <tr>
+            <th>تقنية</th>
+            <th>إدارية</th>
+            <th>تعليمية</th>
+        </tr>
+        <tr>
+            <td>عدم اختبار الصوت والكاميرا</td>
+            <td>عدم الرد على رسائل الإدارة</td>
+            <td>القفز في المنهج بدون تأسيس</td>
+        </tr>
+        <tr>
+            <td>إنترنت ضعيف بدون خطة بديلة</td>
+            <td>تغيير المواعيد بدون تنسيق</td>
+            <td>تجاهل أخطاء النطق</td>
+        </tr>
+        <tr>
+            <td>عدم معرفة مشاركة الشاشة</td>
+            <td>إعطاء معلومات تواصل شخصية</td>
+            <td>عدم المراجعة الدورية</td>
+        </tr>
+        <tr>
+            <td>ترك إشعارات البرامج مفتوحة</td>
+            <td>مناقشة أمور مالية مع الأهل</td>
+            <td>إعطاء واجبات غير واضحة</td>
+        </tr>
+    </table>
+
+    <!-- Summary -->
+    <div class="page-break"></div>
+    <div class="summary-box">
+        <h3>📋 ملخص سريع للمعلم الجديد</h3>
+        <table>
+            <tr>
+                <th>المرحلة</th>
+                <th>المهام</th>
+            </tr>
+            <tr>
+                <td><strong>قبل الحصة</strong></td>
+                <td>حضّر، راجع ملف الطالب، ادخل Zoom قبل 5 دقائق</td>
+            </tr>
+            <tr>
+                <td><strong>أثناء الحصة</strong></td>
+                <td>علّم بوضوح، دع الطالب يقرأ، صحّح، شجّع</td>
+            </tr>
+            <tr>
+                <td><strong>بعد الحصة</strong></td>
+                <td>سجّل الملاحظات فوراً، أبلغ عن أي مشكلة</td>
+            </tr>
+            <tr>
+                <td><strong>أسبوعياً</strong></td>
+                <td>راجع جدولك، حدّث السجلات، تواصل مع الإدارة</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="golden-rule">
+        <p><strong>🌟 القاعدة الذهبية:</strong></p>
+        <p>الطالب يجب أن يغادر كل حصة وهو يشعر أنه تعلم شيئاً جديداً وأنه قادر على التقدم.</p>
+    </div>
+
+    <div class="footer">
+        <p>📄 دليل المعلم العملي - أكاديمية تبيان للتعليم العربي</p>
+        <p>يمكن تحديث هذا الدليل بناءً على ملاحظات المعلمين وتطور سياسات الأكاديمية</p>
+    </div>
+
+</body>
+</html>

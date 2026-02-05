@@ -99,7 +99,7 @@ export default function Logo({ size = 392, showText = true }: LogoProps) {
           css={{ animation: "borderFlash 3s ease-in-out infinite" }}
         />
         <Image
-          src="/logo.jpeg"
+          src="/logo.png"
           alt="تبيان - Tibyan Academy"
           width={size}
           height={size}
