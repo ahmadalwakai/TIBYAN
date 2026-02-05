@@ -25,6 +25,7 @@ import {
 } from "@chakra-ui/react";
 import { toaster } from "@/components/ui/toaster";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 
 // Pulsing animation for streaming avatar
 const pulseAnimation = `
@@ -133,6 +134,7 @@ export default function AIChat({
   onClose,
   isFloating = false,
 }: AIChatProps) {
+  const t = useTranslations("ai");
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -190,13 +192,11 @@ export default function AIChat({
     const welcomeMessage: Message = {
       id: "welcome",
       role: "assistant",
-      content: isRTL
-        ? "مرحباً! أنا مساعدك الذكي في تبيان. يمكنني مساعدتك في:\n\n• تلخيص الدروس\n• إنشاء اختبارات\n• إعداد خطط دراسية\n• الإجابة على أسئلتك\n• تحليل الصور والمستندات\n\nكيف يمكنني مساعدتك اليوم؟"
-        : "Hello! I'm your AI assistant at Tibyan. I can help you with:\n\n• Summarizing lessons\n• Creating quizzes\n• Preparing study plans\n• Answering your questions\n• Analyzing images and documents\n\nHow can I help you today?",
+      content: t("welcomeMessage"),
       timestamp: new Date(),
     };
     setMessages([welcomeMessage]);
-  }, [isRTL]);
+  }, [t]);
 
   // Handle file selection
   const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -211,7 +211,7 @@ export default function AIChat({
 
       if (!isImage && !isPDF && !isDocument) {
         toaster.create({
-          title: isRTL ? "نوع الملف غير مدعوم" : "File type not supported",
+          title: t("fileTypeNotSupported"),
           type: "error",
         });
         return;
@@ -220,7 +220,7 @@ export default function AIChat({
       // Validate file size (max 10MB)
       if (file.size > 10 * 1024 * 1024) {
         toaster.create({
-          title: isRTL ? "الملف كبير جداً (الحد الأقصى 10 ميجابايت)" : "File too large (max 10MB)",
+          title: t("fileTooLarge"),
           type: "error",
         });
         return;
@@ -289,10 +289,10 @@ export default function AIChat({
     setIsLoading(false);
     
     toaster.create({
-      title: isRTL ? "تم إيقاف التوليد" : "Generation stopped",
+      title: t("generationStopped"),
       type: "info",
     });
-  }, [isRTL]);
+  }, [t]);
 
   // Regenerate last response
   const regenerateLastResponse = useCallback(() => {
@@ -495,9 +495,9 @@ export default function AIChat({
         let responseContent = "";
         if (data.ok && data.data) {
           if (action === "summarize_lesson" && data.data.summary) {
-            responseContent = `📝 **${isRTL ? "ملخص الدرس" : "Lesson Summary"}**\n\n${data.data.summary}`;
+            responseContent = `📝 **${t("lessonSummary")}**\n\n${data.data.summary}`;
           } else if (action === "generate_quiz" && data.data.quiz) {
-            responseContent = `📋 **${isRTL ? "اختبار" : "Quiz"}**\n\n`;
+            responseContent = `📋 **${t("quiz")}**\n\n`;
             data.data.quiz.questions.forEach((q, i) => {
               responseContent += `**${i + 1}.** ${q.question}\n`;
               if (q.options) {
@@ -516,7 +516,7 @@ export default function AIChat({
             responseContent = data.data.response || JSON.stringify(data.data, null, 2);
           }
         } else {
-          responseContent = data.error || (isRTL ? "عذراً، حدث خطأ." : "Sorry, an error occurred.");
+          responseContent = data.error || t("genericError");
         }
 
         setMessages((prev) =>
@@ -532,9 +532,7 @@ export default function AIChat({
         console.error("[AIChat] Error:", error);
       }
       
-      let errorMessage = isRTL
-        ? "عذراً، لا يمكن الاتصال بالخادم."
-        : "Sorry, cannot connect to the server.";
+      let errorMessage = t("connectionError");
 
       if (error instanceof Error) {
         if (error.name === "AbortError") {
@@ -571,7 +569,7 @@ export default function AIChat({
         batchTimerRef.current = null;
       }
     }
-  }, [attachments, messages, sessionId, lessonId, courseId, language, isRTL, scrollToBottom, flushBatch]);
+  }, [attachments, messages, sessionId, lessonId, courseId, language, scrollToBottom, flushBatch, t]);
 
   // Handle quick action
   const handleQuickAction = useCallback((action: QuickAction) => {
@@ -635,7 +633,7 @@ export default function AIChat({
             </Icon>
           </Box>
           <Box>
-            <Heading size="sm">{isRTL ? "مساعد تبيان الذكي" : "Tibyan AI Assistant"}</Heading>
+            <Heading size="sm">{t("title")}</Heading>
             <HStack gap={2}>
               <Box
                 w={2}
@@ -644,20 +642,14 @@ export default function AIChat({
                 bg={isStreaming ? "yellow.400" : "green.400"}
               />
               <Text fontSize="xs" color="gray.400">
-                {isStreaming
-                  ? isRTL
-                    ? "جاري الكتابة..."
-                    : "Typing..."
-                  : isRTL
-                  ? "متصل"
-                  : "Online"}
+                {isStreaming ? t("typing") : t("online")}
               </Text>
             </HStack>
           </Box>
         </HStack>
         {isFloating && onClose && (
           <IconButton
-            aria-label="Close"
+            aria-label={t("close")}
             variant="ghost"
             size="sm"
             onClick={onClose}
@@ -757,7 +749,7 @@ export default function AIChat({
                     <HStack gap={2}>
                       <Spinner size="sm" />
                       <Text fontSize="sm" color="gray.400">
-                        {isRTL ? "جاري التفكير..." : "Thinking..."}
+                        {t("thinking")}
                       </Text>
                     </HStack>
                   ) : (
@@ -845,7 +837,7 @@ export default function AIChat({
               </Icon>
               <Text truncate maxW="100px">{att.name}</Text>
               <IconButton
-                aria-label="Remove"
+                aria-label={t("remove")}
                 size="xs"
                 variant="ghost"
                 _hover={{ bg: "whiteAlpha.100" }}
@@ -881,7 +873,7 @@ export default function AIChat({
           onChange={handleFileSelect}
         />
         <IconButton
-          aria-label="Attach file"
+          aria-label={t("attachFile")}
           variant="ghost"
           size="sm"
           onClick={() => fileInputRef.current?.click()}
@@ -900,7 +892,7 @@ export default function AIChat({
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyPress}
-          placeholder={isRTL ? "اكتب رسالتك..." : "Type your message..."}
+          placeholder={t("placeholder")}
           bg="gray.700"
           border="none"
           resize="none"
@@ -915,7 +907,7 @@ export default function AIChat({
         {/* Stop or Send button */}
         {isStreaming ? (
           <IconButton
-            aria-label={isRTL ? "إيقاف التوليد" : "Stop generation"}
+            aria-label={t("stopGeneration")}
             variant="ghost"
             size="sm"
             _hover={{ bg: "red.900/20" }}
@@ -928,7 +920,7 @@ export default function AIChat({
           </IconButton>
         ) : (
           <IconButton
-            aria-label="Send"
+            aria-label={t("send")}
             variant="ghost"
             size="sm"
             _hover={{ bg: "accent/20" }}

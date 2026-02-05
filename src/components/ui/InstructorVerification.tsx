@@ -2,42 +2,62 @@
 
 import { Box, Heading, SimpleGrid, Stack, Text, Badge, Flex } from "@chakra-ui/react";
 import Link from "next/link";
+import { useTranslations, useLocale } from "next-intl";
 
 interface InstructorProfile {
-  name: string;
-  specialization: string;
-  credentials: string;
+  nameAr: string;
+  nameEn: string;
+  specializationAr: string;
+  specializationEn: string;
+  credentialsAr: string;
+  credentialsEn: string;
   icon: string;
 }
 
 const instructors: InstructorProfile[] = [
   {
-    name: "د. محمد أيوب يحيى العلي",
-    specialization: "التفسير وعلوم القرآن",
-    credentials: "دكتوراه في التفسير - جامعة الأزهر",
+    nameAr: "د. محمد أيوب يحيى العلي",
+    nameEn: "Dr. Mohammed Ayoub Yahya Al-Ali",
+    specializationAr: "التفسير وعلوم القرآن",
+    specializationEn: "Tafsir and Quranic Sciences",
+    credentialsAr: "دكتوراه في التفسير - جامعة الأزهر",
+    credentialsEn: "PhD in Tafsir - Al-Azhar University",
     icon: "🎓",
   },
   {
-    name: "أ. نسرين صالح الموسى",
-    specialization: "اللغة العربية والنحو",
-    credentials: "ماجستير في اللغة العربية - جامعة دمشق",
+    nameAr: "أ. نسرين صالح الموسى",
+    nameEn: "Prof. Nesreen Saleh Al-Mousa",
+    specializationAr: "اللغة العربية والنحو",
+    specializationEn: "Arabic Language and Grammar",
+    credentialsAr: "ماجستير في اللغة العربية - جامعة دمشق",
+    credentialsEn: "Master's in Arabic Language - Damascus University",
     icon: "📚",
   },
   {
-    name: "د. جهادية الخليف",
-    specialization: "الفقه وأصوله",
-    credentials: "دكتوراه في الفقه - جامعة الإمام محمد بن سعود",
+    nameAr: "د. جهادية الخليف",
+    nameEn: "Dr. Jihadiya Al-Khalif",
+    specializationAr: "الفقه وأصوله",
+    specializationEn: "Fiqh and Usul",
+    credentialsAr: "دكتوراه في الفقه - جامعة الإمام محمد بن سعود",
+    credentialsEn: "PhD in Fiqh - Imam Muhammad ibn Saud University",
     icon: "⚖️",
   },
   {
-    name: "أ. هناء فوزي النوري",
-    specialization: "العقيدة والسيرة النبوية",
-    credentials: "ماجستير في العقيدة - جامعة الشام",
+    nameAr: "أ. هناء فوزي النوري",
+    nameEn: "Prof. Hanaa Fawzi Al-Nouri",
+    specializationAr: "العقيدة والسيرة النبوية",
+    specializationEn: "Aqidah and Prophetic Biography",
+    credentialsAr: "ماجستير في العقيدة - جامعة الشام",
+    credentialsEn: "Master's in Aqidah - Damascus University",
     icon: "🕌",
   },
 ];
 
 export default function InstructorVerification() {
+  const t = useTranslations("ui.instructorVerification");
+  const locale = useLocale();
+  const isArabic = locale === "ar";
+
   return (
     <Box
       borderRadius="2xl"
@@ -72,10 +92,10 @@ export default function InstructorVerification() {
           </Box>
           <Box>
             <Heading size="lg" color="white">
-              هيئة تدريس مؤهلة ومعتمدة
+              {t("title")}
             </Heading>
             <Text fontSize="sm" color="gray.400" mt={1}>
-              جميع مدرسينا حاصلون على شهادات علمية متخصصة وخبرة تدريسية مثبتة
+              {t("subtitle")}
             </Text>
           </Box>
         </Flex>
@@ -116,7 +136,7 @@ export default function InstructorVerification() {
                   </Box>
                   <Box>
                     <Text fontSize="md" fontWeight="700" color="white">
-                      {instructor.name}
+                      {isArabic ? instructor.nameAr : instructor.nameEn}
                     </Text>
                     <Badge
                       bg="#0A0A0A"
@@ -128,12 +148,12 @@ export default function InstructorVerification() {
                       border="1px solid"
                       borderColor="rgba(0, 255, 42, 0.3)"
                     >
-                      {instructor.specialization}
+                      {isArabic ? instructor.specializationAr : instructor.specializationEn}
                     </Badge>
                   </Box>
                 </Flex>
                 <Text fontSize="sm" color="gray.400">
-                  {instructor.credentials}
+                  {isArabic ? instructor.credentialsAr : instructor.credentialsEn}
                 </Text>
               </Stack>
             </Box>
@@ -144,7 +164,7 @@ export default function InstructorVerification() {
         <Box pt={2}>
           <Text fontSize="sm" color="gray.400" textAlign="center">
             <Link href="/instructors" style={{ color: "#00FF2A", fontWeight: 600 }}>
-              عرض جميع أعضاء هيئة التدريس ←
+              {t("viewAll")}
             </Link>
           </Text>
         </Box>

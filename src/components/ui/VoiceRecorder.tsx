@@ -2,6 +2,7 @@
 
 import { Box, Button, Flex, IconButton, Text } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 
 interface VoiceRecorderProps {
   onRecordingComplete: (blob: Blob, duration: number) => void;
@@ -14,6 +15,7 @@ export default function VoiceRecorder({
   maxDuration = 120,
   disabled = false,
 }: VoiceRecorderProps) {
+  const t = useTranslations("ui.voiceRecorder");
   const [isRecording, setIsRecording] = useState(false);
   const [duration, setDuration] = useState(0);
   const [audioLevel, setAudioLevel] = useState(0);
@@ -112,7 +114,7 @@ export default function VoiceRecorder({
       // Audio level monitoring starts automatically via useEffect when isRecording becomes true
     } catch (error) {
       console.error("Error starting recording:", error);
-      alert("لا يمكن الوصول للميكروفون. يرجى السماح بالوصول.");
+      alert(t("microphoneError"));
     }
   };
 
@@ -218,7 +220,7 @@ export default function VoiceRecorder({
 
         {/* Cancel button */}
         <IconButton
-          aria-label="إلغاء التسجيل"
+          aria-label={t("cancelRecording")}
           size="sm"
           variant="ghost"
           colorPalette="red"
@@ -234,7 +236,7 @@ export default function VoiceRecorder({
           onClick={stopRecording}
           borderRadius="full"
         >
-          إرسال 🎤
+          {t("send")}
         </Button>
       </Flex>
     );
@@ -242,7 +244,7 @@ export default function VoiceRecorder({
 
   return (
     <IconButton
-      aria-label="تسجيل صوتي"
+      aria-label={t("recordVoice")}
       variant="ghost"
       colorPalette="brand"
       onClick={startRecording}

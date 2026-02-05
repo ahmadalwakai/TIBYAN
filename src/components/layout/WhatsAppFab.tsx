@@ -1,8 +1,11 @@
 import { Box, Button } from "@chakra-ui/react";
 import { FaWhatsapp } from "react-icons/fa";
 import { WHATSAPP_URL } from "@/config/contact";
+import { useTranslations } from "next-intl";
 
 export default function WhatsAppFab() {
+  const t = useTranslations("fab");
+  
   return (
     <Box position="fixed" bottom="24px" right="24px" zIndex={1400}>
       <a
@@ -12,7 +15,7 @@ export default function WhatsAppFab() {
         style={{ textDecoration: "none" }}
       >
         <Button
-          aria-label="التواصل عبر واتساب"
+          aria-label={t("whatsapp")}
           w={{ base: "56px", md: "52px" }}
           h={{ base: "56px", md: "52px" }}
           p={0}

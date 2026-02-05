@@ -5,16 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLogout } from "@/lib/auth-client";
 import PremiumCard from "@/components/ui/PremiumCard";
-
-const memberLinks = [
-  { label: "نظرة عامة", href: "/member", icon: "📊" },
-  { label: "الإعلانات", href: "/member/announcements", icon: "📣" },
-  { label: "الموارد الحصرية", href: "/member/resources", icon: "📚" },
-  { label: "الدعم والمساعدة", href: "/member/support", icon: "🛟" },
-  { label: "سجل الدعم", href: "/member/support/tickets", icon: "🧾" },
-  { label: "الملف الشخصي", href: "/member/profile", icon: "👤" },
-  { label: "الإعدادات", href: "/member/settings", icon: "⚙️" },
-];
+import { useTranslations } from "next-intl";
 
 interface MemberSidebarProps {
   userName: string;
@@ -24,6 +15,17 @@ interface MemberSidebarProps {
 export default function MemberSidebar({ userName, onNavigate }: MemberSidebarProps) {
   const handleLogout = useLogout();
   const pathname = usePathname();
+  const t = useTranslations("sidebar");
+
+  const memberLinks = [
+    { label: t("member.overview"), href: "/member", icon: "📊" },
+    { label: t("member.announcements"), href: "/member/announcements", icon: "📣" },
+    { label: t("member.exclusiveResources"), href: "/member/resources", icon: "📚" },
+    { label: t("member.support"), href: "/member/support", icon: "🛟" },
+    { label: t("member.supportTickets"), href: "/member/support/tickets", icon: "🧾" },
+    { label: t("member.profile"), href: "/member/profile", icon: "👤" },
+    { label: t("member.settings"), href: "/member/settings", icon: "⚙️" },
+  ];
 
   return (
     <PremiumCard
@@ -56,7 +58,7 @@ export default function MemberSidebar({ userName, onNavigate }: MemberSidebarPro
               borderRadius="full"
               fontSize="xs"
             >
-              عضو
+              {t("member.badge")}
             </Badge>
           </Box>
         </VStack>
@@ -114,7 +116,7 @@ export default function MemberSidebar({ userName, onNavigate }: MemberSidebarPro
             }}
             size="sm"
           >
-            🚪 تسجيل الخروج
+            🚪 {t("logout")}
           </Button>
         </Box>
       </Stack>

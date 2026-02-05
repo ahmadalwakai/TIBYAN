@@ -1,0 +1,1043 @@
+﻿
+> tibyan@0.1.0 lint:i18n
+> tsx scripts/lint-i18n.ts
+
+
+­ƒîÉ Tibyan i18n Lint
+
+============================================================
+
+­ƒôü Checking locale files...
+
+   Found 7 locale(s): ar, de, en, es, fr, sv, tr
+   Ô£à All locales have identical key sets
+
+­ƒöì Scanning source files for hardcoded strings...
+
+ÔØî Found issues:
+
+   Hardcoded strings: 949
+   Ternary patterns:  83
+   Untranslated props: 302
+   Total: 1334
+
+------------------------------------------------------------
+
+Top 200 issues:
+
+  src\app\about\page.tsx:147
+    Type: hardcoded
+    Found: >Ï▒Ï│Ïº┘äÏ¬┘åÏº<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\activity\page.tsx:127
+    Type: hardcoded
+    Found: >­ƒæÑ Ïº┘ä┘àÏ│Ï¬Ï«Ï»┘à┘è┘å<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\activity\page.tsx:131
+    Type: hardcoded
+    Found: >­ƒôÜ Ïº┘äÏ¬Ï│Ï¼┘è┘äÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\activity\page.tsx:135
+    Type: hardcoded
+    Found: >­ƒÆ░ Ïº┘ä┘àÏ»┘ü┘êÏ╣ÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\activity\page.tsx:139
+    Type: hardcoded
+    Found: >­ƒÄô Ïº┘äÏ»┘êÏ▒ÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\activity\page.tsx:169
+    Type: hardcoded
+    Found: >Ï¼ÏºÏ▒┘è Ïº┘äÏ¬Ï¡┘à┘è┘ä...<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\activity\page.tsx:174
+    Type: hardcoded
+    Found: >┘äÏº Ï¬┘êÏ¼Ï» Ïú┘åÏ┤ÏÀÏ® Ï¡Ï¬┘ë Ïº┘äÏó┘å<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\applications\page.tsx:120
+    Type: hardcoded
+    Found: >ÏÀ┘äÏ¿ÏºÏ¬ Ïº┘äÏº┘åÏÂ┘àÏº┘à ┘â┘àÏ»Ï▒┘æÏ│ ­ƒôØ<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\applications\page.tsx:121
+    Type: hardcoded
+    Found: >ÏÑÏ»ÏºÏ▒Ï® ÏÀ┘äÏ¿ÏºÏ¬ Ïº┘ä┘àÏ»Ï▒Ï│┘è┘å Ïº┘äÏ¼Ï»Ï»<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\applications\page.tsx:132
+    Type: prop
+    Found: placeholder="­ƒöì Ïº┘äÏ¿Ï¡Ï½ Ï¿Ïº┘äÏºÏ│┘à Ïú┘ê Ïº┘äÏ¿Ï▒┘èÏ»..."
+    Fix: Use placeholder={t("key")} with translation
+
+  src\app\admin\applications\page.tsx:202
+    Type: hardcoded
+    Found: >Ïº┘ä┘à┘êÏºÏ»:<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\applications\page.tsx:207
+    Type: hardcoded
+    Found: >Ïº┘äÏ«Ï¿Ï▒Ï®:<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\applications\page.tsx:213
+    Type: hardcoded
+    Found: >Ï¡┘üÏ© Ïº┘ä┘éÏ▒Ïó┘å:<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\applications\page.tsx:219
+    Type: hardcoded
+    Found: >┘àÏ│Ï¬┘ê┘ë Ïº┘äÏ¬Ï¼┘ê┘èÏ»:<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\applications\page.tsx:224
+    Type: hardcoded
+    Found: >Ï¬ÏºÏ▒┘èÏ« Ïº┘äÏ¬┘éÏ»┘è┘à:<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\audit-logs\page.tsx:156
+    Type: hardcoded
+    Found: >ÏÑÏ¼┘àÏº┘ä┘è Ïº┘äÏ│Ï¼┘äÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\audit-logs\page.tsx:170
+    Type: prop
+    Found: placeholder="Ï¿Ï¡Ï½ ┘ü┘è Ïº┘äÏ│Ï¼┘äÏºÏ¬..."
+    Fix: Use placeholder={t("key")} with translation
+
+  src\app\admin\audit-logs\page.tsx:187
+    Type: hardcoded
+    Found: >Ï¼┘à┘èÏ╣ Ïº┘äÏÑÏ¼Ï▒ÏºÏíÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\audit-logs\page.tsx:188
+    Type: hardcoded
+    Found: >ÏÑ┘åÏ┤ÏºÏí ┘àÏ│Ï¬Ï«Ï»┘à<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\audit-logs\page.tsx:189
+    Type: hardcoded
+    Found: >Ï¬Ï¡Ï»┘èÏ½ ┘àÏ│Ï¬Ï«Ï»┘à<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\audit-logs\page.tsx:190
+    Type: hardcoded
+    Found: >Ï¡Ï░┘ü ┘àÏ│Ï¬Ï«Ï»┘à<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\audit-logs\page.tsx:191
+    Type: hardcoded
+    Found: >ÏÑ┘åÏ┤ÏºÏí Ï»┘êÏ▒Ï®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\audit-logs\page.tsx:192
+    Type: hardcoded
+    Found: >Ï¬Ï¡Ï»┘èÏ½ Ï»┘êÏ▒Ï®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\audit-logs\page.tsx:193
+    Type: hardcoded
+    Found: >Ï¡Ï░┘ü Ï»┘êÏ▒Ï®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\audit-logs\page.tsx:194
+    Type: hardcoded
+    Found: >Ï¬Ï¡Ï»┘èÏ½ Ï»┘üÏ╣Ï®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\audit-logs\page.tsx:195
+    Type: hardcoded
+    Found: >┘éÏ¿┘ê┘ä ÏÀ┘äÏ¿<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\audit-logs\page.tsx:196
+    Type: hardcoded
+    Found: >Ï▒┘üÏÂ ÏÀ┘äÏ¿<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\audit-logs\page.tsx:197
+    Type: hardcoded
+    Found: >Ï¬Ï│Ï¼┘è┘ä Ï»Ï«┘ê┘ä<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\audit-logs\page.tsx:214
+    Type: hardcoded
+    Found: >Ï¼ÏºÏ▒┘è Ïº┘äÏ¬Ï¡┘à┘è┘ä...<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\audit-logs\page.tsx:219
+    Type: hardcoded
+    Found: >┘äÏº Ï¬┘êÏ¼Ï» Ï│Ï¼┘äÏºÏ¬ Ï¬Ï»┘é┘è┘é Ï¿Ï╣Ï»<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\audit-logs\page.tsx:225
+    Type: hardcoded
+    Found: >Ïº┘äÏÑÏ¼Ï▒ÏºÏí<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\audit-logs\page.tsx:226
+    Type: hardcoded
+    Found: >Ïº┘ä┘à┘å┘ü┘æÏ░<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\audit-logs\page.tsx:227
+    Type: hardcoded
+    Found: >Ïº┘ä┘å┘êÏ╣<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\audit-logs\page.tsx:228
+    Type: hardcoded
+    Found: >Ïº┘äÏ¬┘üÏºÏÁ┘è┘ä<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\audit-logs\page.tsx:229
+    Type: hardcoded
+    Found: >Ïº┘ä┘ê┘éÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:418
+    Type: hardcoded
+    Found: >┘à┘åÏ┤┘êÏ▒<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:420
+    Type: hardcoded
+    Found: >┘àÏ│┘êÏ»Ï®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:422
+    Type: hardcoded
+    Found: >┘àÏñÏ▒Ï┤┘ü<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:431
+    Type: hardcoded
+    Found: >Ï╣Ïº┘à<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:433
+    Type: hardcoded
+    Found: >┘ä┘äÏúÏ╣ÏÂÏºÏí<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:435
+    Type: hardcoded
+    Found: >Ï«ÏºÏÁ<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:452
+    Type: hardcoded
+    Found: >Ï║┘èÏ▒ ┘àÏÁÏ▒Ï¡<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:478
+    Type: prop
+    Found: placeholder="Ï¿Ï¡Ï½..."
+    Fix: Use placeholder={t("key")} with translation
+
+  src\app\admin\blog-posts\page.tsx:490
+    Type: hardcoded
+    Found: >┘â┘ä Ïº┘äÏ¡Ïº┘äÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:491
+    Type: hardcoded
+    Found: >┘à┘åÏ┤┘êÏ▒<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:492
+    Type: hardcoded
+    Found: >┘àÏ│┘êÏ»Ï®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:493
+    Type: hardcoded
+    Found: >┘àÏñÏ▒Ï┤┘ü<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:504
+    Type: hardcoded
+    Found: >┘â┘ä Ïº┘äÏ©┘ç┘êÏ▒<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:505
+    Type: hardcoded
+    Found: >Ï╣Ïº┘à<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:506
+    Type: hardcoded
+    Found: >┘ä┘äÏúÏ╣ÏÂÏºÏí<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:507
+    Type: hardcoded
+    Found: >Ï«ÏºÏÁ<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:522
+    Type: hardcoded
+    Found: >┘äÏº Ï¬┘êÏ¼Ï» ┘à┘éÏº┘äÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:534
+    Type: hardcoded
+    Found: >Ô¡É ┘à┘à┘èÏ▓<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:602
+    Type: hardcoded
+    Found: >Ï¬Ïú┘â┘èÏ» Ïº┘äÏ¡Ï░┘ü<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:607
+    Type: hardcoded
+    Found: >ÏÑ┘äÏ║ÏºÏí<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:646
+    Type: hardcoded
+    Found: >┘àÏ¡Ï▒Ï▒ Ïº┘ä┘åÏÁ┘êÏÁ<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:647
+    Type: hardcoded
+    Found: >┘àÏ¡Ï▒Ï▒ Ïº┘ä┘êÏ│ÏºÏªÏÀ Ïº┘ä┘àÏ¬┘éÏ»┘à<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:654
+    Type: hardcoded
+    Found: >Ïº┘äÏ╣┘å┘êÏº┘å *<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:663
+    Type: prop
+    Found: placeholder="Ï╣┘å┘êÏº┘å Ïº┘ä┘à┘éÏº┘äÏ®..."
+    Fix: Use placeholder={t("key")} with translation
+
+  src\app\admin\blog-posts\page.tsx:669
+    Type: hardcoded
+    Found: >Ïº┘äÏ▒ÏºÏ¿ÏÀ (Slug)<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:673
+    Type: prop
+    Found: placeholder="Ï▒ÏºÏ¿ÏÀ-Ïº┘ä┘à┘éÏº┘äÏ®-Ïº┘ä┘üÏ▒┘èÏ»"
+    Fix: Use placeholder={t("key")} with translation
+
+  src\app\admin\blog-posts\page.tsx:679
+    Type: hardcoded
+    Found: >Ïº┘ä┘àÏ¡Ï¬┘ê┘ë *<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:690
+    Type: hardcoded
+    Found: >Ïº┘ä┘à┘éÏ¬ÏÀ┘ü (ÏºÏ«Ï¬┘èÏºÏ▒┘è)<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:694
+    Type: prop
+    Found: placeholder="┘à┘äÏ«ÏÁ ┘éÏÁ┘èÏ▒ ┘ä┘ä┘à┘éÏº┘äÏ®..."
+    Fix: Use placeholder={t("key")} with translation
+
+  src\app\admin\blog-posts\page.tsx:701
+    Type: hardcoded
+    Found: >Ïº┘ä┘êÏ│┘ê┘à (ÏºÏ«Ï¬┘èÏºÏ▒┘è)<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:705
+    Type: prop
+    Found: placeholder="┘êÏ│┘à1, ┘êÏ│┘à2, ┘êÏ│┘à3..."
+    Fix: Use placeholder={t("key")} with translation
+
+  src\app\admin\blog-posts\page.tsx:714
+    Type: hardcoded
+    Found: >Ïº┘ä┘êÏ│ÏºÏªÏÀ<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:724
+    Type: hardcoded
+    Found: >ÏÑÏ╣Ï»ÏºÏ»ÏºÏ¬ Ïº┘ä┘êÏ│ÏºÏªÏÀ<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:738
+    Type: hardcoded
+    Found: >Ïº┘ä┘åÏÁ Ïº┘äÏ¿Ï»┘è┘ä (┘ä┘ä┘êÏÁ┘ê┘ä┘èÏ®)<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:740
+    Type: prop
+    Found: placeholder="┘êÏÁ┘ü ┘éÏÁ┘èÏ▒ ┘ä┘äÏÁ┘êÏ▒Ï®..."
+    Fix: Use placeholder={t("key")} with translation
+
+  src\app\admin\blog-posts\page.tsx:753
+    Type: hardcoded
+    Found: >Ïº┘äÏ¬Ï╣┘ä┘è┘é<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:755
+    Type: prop
+    Found: placeholder="Ï¬Ï╣┘ä┘è┘é Ï¬┘êÏÂ┘èÏ¡┘è..."
+    Fix: Use placeholder={t("key")} with translation
+
+  src\app\admin\blog-posts\page.tsx:768
+    Type: hardcoded
+    Found: >Ïº┘äÏ¬┘åÏ│┘è┘é<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:772
+    Type: hardcoded
+    Found: >┘åÏÁ┘ü ┘éÏÀÏ▒ Ïº┘äÏ▓Ïº┘ê┘èÏ®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:788
+    Type: hardcoded
+    Found: >Ï¡ÏºÏ»<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:789
+    Type: hardcoded
+    Found: >┘é┘ä┘è┘äÏº┘ï<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:790
+    Type: hardcoded
+    Found: >┘àÏ¬┘êÏ│ÏÀ<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:791
+    Type: hardcoded
+    Found: >┘àÏ»┘êÏ▒<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:792
+    Type: hardcoded
+    Found: >Ï»ÏºÏªÏ▒┘è<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:799
+    Type: hardcoded
+    Found: >┘à┘äÏºÏí┘àÏ® Ïº┘äÏÁ┘êÏ▒Ï®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:815
+    Type: hardcoded
+    Found: >Ï║ÏÀÏºÏí<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:816
+    Type: hardcoded
+    Found: >ÏºÏ¡Ï¬┘êÏºÏí<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:817
+    Type: hardcoded
+    Found: >┘à┘äÏí<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:818
+    Type: hardcoded
+    Found: >┘àÏ»<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:860
+    Type: hardcoded
+    Found: >Ïº┘äÏ¡Ïº┘äÏ®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:866
+    Type: hardcoded
+    Found: >┘àÏ│┘êÏ»Ï®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:867
+    Type: hardcoded
+    Found: >┘à┘åÏ┤┘êÏ▒<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:868
+    Type: hardcoded
+    Found: >┘àÏñÏ▒Ï┤┘ü<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:874
+    Type: hardcoded
+    Found: >Ïº┘äÏ©┘ç┘êÏ▒<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:880
+    Type: hardcoded
+    Found: >Ï╣Ïº┘à ┘ä┘äÏ¼┘à┘èÏ╣<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:881
+    Type: hardcoded
+    Found: >┘ä┘äÏúÏ╣ÏÂÏºÏí ┘ü┘éÏÀ<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:882
+    Type: hardcoded
+    Found: >Ï«ÏºÏÁ<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:896
+    Type: hardcoded
+    Found: >Ô¡É ┘à┘éÏº┘äÏ® ┘à┘à┘èÏ▓Ï®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\blog-posts\page.tsx:911
+    Type: hardcoded
+    Found: >­ƒÆ¼ Ïº┘äÏ│┘àÏºÏ¡ Ï¿Ïº┘äÏ¬Ï╣┘ä┘è┘éÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\certificates\page.tsx:374
+    Type: hardcoded
+    Found: >ÏÑÏ»ÏºÏ▒Ï® Ïº┘äÏ┤┘çÏºÏ»ÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\certificates\page.tsx:405
+    Type: hardcoded
+    Found: >Ïº┘äÏ┤┘çÏºÏ»ÏºÏ¬ Ïº┘ä┘à┘ÅÏÁÏ»Ï▒Ï®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\certificates\page.tsx:407
+    Type: prop
+    Found: placeholder="Ï¿Ï¡Ï½..."
+    Fix: Use placeholder={t("key")} with translation
+
+  src\app\admin\certificates\page.tsx:436
+    Type: hardcoded
+    Found: >Ï▒┘é┘à Ïº┘äÏ┤┘çÏºÏ»Ï®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\certificates\page.tsx:437
+    Type: hardcoded
+    Found: >ÏºÏ│┘à Ïº┘äÏÀÏº┘äÏ¿<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\certificates\page.tsx:438
+    Type: hardcoded
+    Found: >Ïº┘äÏ»┘êÏ▒Ï®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\certificates\page.tsx:439
+    Type: hardcoded
+    Found: >Ïº┘äÏ¬┘éÏ»┘èÏ▒<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\certificates\page.tsx:440
+    Type: hardcoded
+    Found: >Ïº┘äÏ¬ÏºÏ▒┘èÏ«<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\certificates\page.tsx:441
+    Type: hardcoded
+    Found: >Ïº┘äÏÑÏ¼Ï▒ÏºÏíÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\certificates\page.tsx:539
+    Type: hardcoded
+    Found: >Ï¿┘èÏº┘åÏºÏ¬ Ïº┘äÏ┤┘çÏºÏ»Ï®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\certificates\page.tsx:551
+    Type: prop
+    Found: placeholder="ÏúÏ»Ï«┘ä ÏºÏ│┘à Ïº┘äÏÀÏº┘äÏ¿ Ï¿Ïº┘äÏ╣Ï▒Ï¿┘èÏ®"
+    Fix: Use placeholder={t("key")} with translation
+
+  src\app\admin\certificates\page.tsx:563
+    Type: prop
+    Found: placeholder="Enter student name in English"
+    Fix: Use placeholder={t("key")} with translation
+
+  src\app\admin\certificates\page.tsx:576
+    Type: prop
+    Found: placeholder="ÏúÏ»Ï«┘ä ÏºÏ│┘à Ïº┘äÏ»┘êÏ▒Ï® Ï¿Ïº┘äÏ╣Ï▒Ï¿┘èÏ®"
+    Fix: Use placeholder={t("key")} with translation
+
+  src\app\admin\certificates\page.tsx:588
+    Type: prop
+    Found: placeholder="Enter course name in English"
+    Fix: Use placeholder={t("key")} with translation
+
+  src\app\admin\certificates\page.tsx:649
+    Type: prop
+    Found: placeholder="ÏºÏ│┘à Ïº┘ä┘àÏ»Ï▒Ï¿"
+    Fix: Use placeholder={t("key")} with translation
+
+  src\app\admin\certificates\page.tsx:660
+    Type: prop
+    Found: placeholder="┘àÏ½Ïº┘ä: 40 Ï│ÏºÏ╣Ï®"
+    Fix: Use placeholder={t("key")} with translation
+
+  src\app\admin\certificates\page.tsx:692
+    Type: prop
+    Found: placeholder="Ï│┘èÏ¬┘à ÏÑ┘åÏ┤ÏºÏñ┘ç Ï¬┘ä┘éÏºÏª┘èÏº┘ï"
+    Fix: Use placeholder={t("key")} with translation
+
+  src\app\admin\certificates\page.tsx:716
+    Type: hardcoded
+    Found: >┘àÏ╣Ïº┘è┘åÏ® Ïº┘äÏ┤┘çÏºÏ»Ï®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\certificates\page.tsx:753
+    Type: hardcoded
+    Found: >Ïº┘äÏ┤┘çÏºÏ»Ï® Ï¼Ïº┘çÏ▓Ï® ┘ä┘äÏ¬ÏÁÏ»┘èÏ▒<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\certificates\page.tsx:800
+    Type: hardcoded
+    Found: >Ï¬Ï║┘è┘èÏ▒ Ïº┘ä┘éÏº┘äÏ¿<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\certificates\page.tsx:835
+    Type: hardcoded
+    Found: >Ï¬Ï╣Ï»┘è┘ä Ïº┘äÏ┤┘çÏºÏ»Ï®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\certificates\page.tsx:1001
+    Type: hardcoded
+    Found: >┘àÏ╣Ïº┘è┘åÏ® Ïº┘äÏ┤┘çÏºÏ»Ï®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\certificates\page.tsx:1042
+    Type: hardcoded
+    Found: >Ï¬Ïú┘â┘èÏ» Ïº┘äÏ¡Ï░┘ü<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\certificates\page.tsx:1044
+    Type: hardcoded
+    Found: >┘ç┘ä Ïú┘åÏ¬ ┘àÏ¬Ïú┘âÏ» ┘à┘å Ï▒Ï║Ï¿Ï¬┘â ┘ü┘è Ï¡Ï░┘ü ┘çÏ░┘ç Ïº┘äÏ┤┘çÏºÏ»Ï®...<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\courses\page.tsx:141
+    Type: hardcoded
+    Found: >┘àÏ▒ÏºÏ¼Ï╣Ï® Ïº┘äÏ»┘êÏ▒ÏºÏ¬Ïî ÏºÏ╣Ï¬┘àÏºÏ» Ïº┘ä┘àÏ¡Ï¬┘ê┘ëÏî ┘ê┘àÏ▒Ïº┘éÏ¿Ï® ...<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\courses\page.tsx:148
+    Type: prop
+    Found: placeholder="­ƒöì Ïº┘äÏ¿Ï¡Ï½ Ï╣┘å Ï»┘êÏ▒Ï®..."
+    Fix: Use placeholder={t("key")} with translation
+
+  src\app\admin\courses\page.tsx:200
+    Type: hardcoded
+    Found: >┘äÏº Ï¬┘êÏ¼Ï» Ï»┘êÏ▒ÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\integrations\page.tsx:99
+    Type: hardcoded
+    Found: >Ï¼ÏºÏ▒┘è Ïº┘äÏ¬Ï¡┘à┘è┘ä...<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\integrations\page.tsx:133
+    Type: hardcoded
+    Found: >ÏÑÏ¼┘àÏº┘ä┘è Ïº┘äÏ¬┘âÏº┘à┘äÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\integrations\page.tsx:137
+    Type: hardcoded
+    Found: >┘àÏ¬ÏÁ┘ä<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\integrations\page.tsx:141
+    Type: hardcoded
+    Found: >Ï║┘èÏ▒ ┘àÏ¬ÏÁ┘ä<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\integrations\page.tsx:145
+    Type: hardcoded
+    Found: >Ï«ÏÀÏú<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\integrations\page.tsx:236
+    Type: hardcoded
+    Found: >ÔÜÖ´©Å Ï»┘ä┘è┘ä Ïº┘äÏÑÏ╣Ï»ÏºÏ»<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\integrations\page.tsx:241
+    Type: hardcoded
+    Found: ># Ïº┘äÏ¿Ï▒┘èÏ» Ïº┘äÏÑ┘ä┘âÏ¬Ï▒┘ê┘å┘è<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\integrations\page.tsx:243
+    Type: hardcoded
+    Found: ># Ïº┘ä┘àÏ»┘ü┘êÏ╣ÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\integrations\page.tsx:246
+    Type: hardcoded
+    Found: ># Ïº┘äÏ¬Ï«Ï▓┘è┘å<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\live-chat\page.tsx:179
+    Type: prop
+    Found: aria-label="Chat session with ${session.us..."
+    Fix: Use aria-label={t("key")} with translation
+
+  src\app\admin\live-chat\page.tsx:179
+    Type: prop
+    Found: label="Chat session with ${session.us..."
+    Fix: Use label={t("key")} with translation
+
+  src\app\admin\live-chat\page.tsx:287
+    Type: prop
+    Found: placeholder="Ïº┘âÏ¬Ï¿ Ï▒Ï»┘ïÏº Ï│Ï▒┘èÏ╣┘ïÏº... Ô£ì´©Å"
+    Fix: Use placeholder={t("key")} with translation
+
+  src\app\admin\notifications\page.tsx:208
+    Type: hardcoded
+    Found: >┘àÏ│┘êÏ»Ï®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\notifications\page.tsx:212
+    Type: hardcoded
+    Found: >┘àÏ¼Ï»┘ê┘ä<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\notifications\page.tsx:216
+    Type: hardcoded
+    Found: >┘à┘ÅÏ▒Ï│┘ä<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\notifications\page.tsx:220
+    Type: hardcoded
+    Found: >┘üÏ┤┘ä<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\notifications\page.tsx:231
+    Type: hardcoded
+    Found: >Ïº┘äÏ╣┘å┘êÏº┘å<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\notifications\page.tsx:235
+    Type: prop
+    Found: placeholder="Ï╣┘å┘êÏº┘å Ïº┘äÏÑÏ┤Ï╣ÏºÏ▒"
+    Fix: Use placeholder={t("key")} with translation
+
+  src\app\admin\notifications\page.tsx:240
+    Type: hardcoded
+    Found: >Ïº┘ä┘àÏ¡Ï¬┘ê┘ë<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\notifications\page.tsx:244
+    Type: prop
+    Found: placeholder="┘àÏ¡Ï¬┘ê┘ë Ïº┘äÏÑÏ┤Ï╣ÏºÏ▒"
+    Fix: Use placeholder={t("key")} with translation
+
+  src\app\admin\notifications\page.tsx:250
+    Type: hardcoded
+    Found: >Ïº┘ä┘é┘åÏºÏ®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\notifications\page.tsx:256
+    Type: hardcoded
+    Found: >Ïº┘äÏ¿Ï▒┘èÏ» Ïº┘äÏÑ┘ä┘âÏ¬Ï▒┘ê┘å┘è<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\notifications\page.tsx:257
+    Type: hardcoded
+    Found: >Ï»ÏºÏ«┘ä Ïº┘ä┘à┘åÏÁÏ®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\notifications\page.tsx:258
+    Type: hardcoded
+    Found: >Ï▒Ï│Ïº┘äÏ® ┘åÏÁ┘èÏ®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\notifications\page.tsx:259
+    Type: hardcoded
+    Found: >ÏÑÏ┤Ï╣ÏºÏ▒ ┘ü┘êÏ▒┘è<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\notifications\page.tsx:264
+    Type: hardcoded
+    Found: >Ïº┘ä┘àÏ│Ï¬┘çÏ»┘ü┘ê┘å<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\notifications\page.tsx:270
+    Type: hardcoded
+    Found: >Ï¼┘à┘èÏ╣ Ïº┘ä┘àÏ│Ï¬Ï«Ï»┘à┘è┘å<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\notifications\page.tsx:271
+    Type: hardcoded
+    Found: >Ïº┘äÏÀ┘äÏºÏ¿<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\notifications\page.tsx:272
+    Type: hardcoded
+    Found: >Ïº┘ä┘àÏ╣┘ä┘à┘è┘å<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\notifications\page.tsx:277
+    Type: hardcoded
+    Found: >Ï¼Ï»┘ê┘äÏ® Ïº┘äÏÑÏ▒Ï│Ïº┘ä (ÏºÏ«Ï¬┘èÏºÏ▒┘è)<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\notifications\page.tsx:287
+    Type: hardcoded
+    Found: >ÏÑ┘äÏ║ÏºÏí<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\notifications\page.tsx:337
+    Type: hardcoded
+    Found: >Ï¼ÏºÏ▒┘è Ïº┘äÏ¬Ï¡┘à┘è┘ä...<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\notifications\page.tsx:341
+    Type: hardcoded
+    Found: >┘äÏº Ï¬┘êÏ¼Ï» ÏÑÏ┤Ï╣ÏºÏ▒ÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\notifications\page.tsx:347
+    Type: hardcoded
+    Found: >Ïº┘äÏ╣┘å┘êÏº┘å<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\notifications\page.tsx:348
+    Type: hardcoded
+    Found: >Ïº┘ä┘é┘åÏºÏ®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\notifications\page.tsx:349
+    Type: hardcoded
+    Found: >Ïº┘ä┘àÏ│Ï¬┘çÏ»┘ü┘ê┘å<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\notifications\page.tsx:350
+    Type: hardcoded
+    Found: >Ïº┘äÏ¡Ïº┘äÏ®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\notifications\page.tsx:351
+    Type: hardcoded
+    Found: >Ïº┘äÏ¬ÏºÏ▒┘èÏ«<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\notifications\page.tsx:352
+    Type: hardcoded
+    Found: >Ïº┘äÏÑÏ¼Ï▒ÏºÏíÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\page.tsx:111
+    Type: hardcoded
+    Found: >┘éÏºÏª┘àÏ® Ïº┘ä┘à┘çÏº┘à Ïº┘äÏÑÏ»ÏºÏ▒┘èÏ®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\page.tsx:150
+    Type: hardcoded
+    Found: >Ï¬┘åÏ¿┘è┘çÏºÏ¬ Ï¡Ï▒Ï¼Ï®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\page.tsx:202
+    Type: hardcoded
+    Found: >┘àÏ▒ÏºÏ¼Ï╣ÏºÏ¬ Ïº┘äÏ»┘êÏ▒ÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\page.tsx:257
+    Type: hardcoded
+    Found: >┘à┘äÏ«ÏÁ Ïº┘ä┘àÏ»┘ü┘êÏ╣ÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\page.tsx:312
+    Type: hardcoded
+    Found: >Ïº┘äÏ¬Ï¡┘â┘à Ïº┘äÏ│Ï▒┘èÏ╣<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\payments\page.tsx:154
+    Type: hardcoded
+    Found: >Ïº┘ä┘àÏ»┘ü┘êÏ╣ÏºÏ¬ ┘êÏº┘ä┘ü┘êÏºÏ¬┘èÏ▒ ­ƒÆ│<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\payments\page.tsx:155
+    Type: hardcoded
+    Found: >┘àÏ¬ÏºÏ¿Ï╣Ï® Ï¼┘à┘èÏ╣ Ï╣┘à┘ä┘èÏºÏ¬ Ïº┘äÏ»┘üÏ╣ ┘êÏº┘äÏ¬Ï│Ï¼┘è┘äÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\payments\page.tsx:163
+    Type: hardcoded
+    Found: >ÏÑÏ¼┘àÏº┘ä┘è Ïº┘ä┘àÏ╣Ïº┘à┘äÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\payments\page.tsx:169
+    Type: hardcoded
+    Found: >┘àÏ╣┘ä┘æ┘éÏ®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\payments\page.tsx:175
+    Type: hardcoded
+    Found: >┘à┘âÏ¬┘à┘äÏ®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\payments\page.tsx:181
+    Type: hardcoded
+    Found: >ÏÑÏ¼┘àÏº┘ä┘è Ïº┘äÏÑ┘èÏ▒ÏºÏ»ÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\payments\page.tsx:193
+    Type: prop
+    Found: placeholder="­ƒöì Ïº┘äÏ¿Ï¡Ï½ Ï¿Ïº┘äÏºÏ│┘àÏî Ïº┘äÏ¿Ï▒┘èÏ»Ïî Ïú┘ê Ïº┘ä..."
+    Fix: Use placeholder={t("key")} with translation
+
+  src\app\admin\permissions\page.tsx:160
+    Type: hardcoded
+    Found: >Ï¼ÏºÏ▒┘è Ïº┘äÏ¬Ï¡┘à┘è┘ä...<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\permissions\page.tsx:209
+    Type: hardcoded
+    Found: >ÏºÏ│┘à Ïº┘äÏ»┘êÏ▒ (┘äÏºÏ¬┘è┘å┘è)<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\permissions\page.tsx:219
+    Type: hardcoded
+    Found: >Ïº┘äÏºÏ│┘à Ïº┘äÏ╣Ï▒Ï¿┘è<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\permissions\page.tsx:223
+    Type: prop
+    Found: placeholder="┘àÏ»┘èÏ▒ Ïº┘ä┘àÏ¡Ï¬┘ê┘ë"
+    Fix: Use placeholder={t("key")} with translation
+
+  src\app\admin\permissions\page.tsx:227
+    Type: hardcoded
+    Found: >Ïº┘ä┘êÏÁ┘ü<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\permissions\page.tsx:231
+    Type: prop
+    Found: placeholder="┘êÏÁ┘ü Ïº┘äÏ»┘êÏ▒..."
+    Fix: Use placeholder={t("key")} with translation
+
+  src\app\admin\reports\page.tsx:108
+    Type: hardcoded
+    Found: >ÏÑÏ¼┘àÏº┘ä┘è Ïº┘ä┘àÏ│Ï¬Ï«Ï»┘à┘è┘å<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\reports\page.tsx:115
+    Type: hardcoded
+    Found: >ÏÑÏ¼┘àÏº┘ä┘è Ïº┘äÏ»┘êÏ▒ÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\reports\page.tsx:122
+    Type: hardcoded
+    Found: >ÏÑÏ¼┘àÏº┘ä┘è Ïº┘äÏ¬Ï│Ï¼┘è┘äÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\reports\page.tsx:131
+    Type: hardcoded
+    Found: >ÏÑÏ¼┘àÏº┘ä┘è Ïº┘äÏÑ┘èÏ▒ÏºÏ»ÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\reports\page.tsx:138
+    Type: hardcoded
+    Found: >­ƒôê ┘àÏ╣Ï»┘äÏºÏ¬ Ïº┘ä┘å┘à┘ê<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\reports\page.tsx:141
+    Type: hardcoded
+    Found: >┘àÏ╣Ï»┘ä ┘å┘à┘ê Ïº┘ä┘àÏ│Ï¬Ï«Ï»┘à┘è┘å<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\reports\page.tsx:145
+    Type: hardcoded
+    Found: >┘àÏ╣Ï»┘ä ┘åÏ┤Ï▒ Ïº┘äÏ»┘êÏ▒ÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\reports\page.tsx:149
+    Type: hardcoded
+    Found: >┘àÏ¬┘êÏ│ÏÀ ÏÑ┘â┘àÏº┘ä Ïº┘äÏ»┘êÏ▒ÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\reports\page.tsx:161
+    Type: hardcoded
+    Found: >­ƒÆÁ ┘à┘äÏ«ÏÁ Ïº┘äÏÑ┘èÏ▒ÏºÏ»ÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\reports\page.tsx:164
+    Type: hardcoded
+    Found: >ÏÑÏ¼┘àÏº┘ä┘è Ïº┘äÏÑ┘èÏ▒ÏºÏ»ÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\reports\page.tsx:168
+    Type: hardcoded
+    Found: >Ï╣Ï»Ï» Ïº┘ä┘àÏ╣Ïº┘à┘äÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\reports\page.tsx:172
+    Type: hardcoded
+    Found: >ÏÑ┘èÏ▒ÏºÏ»ÏºÏ¬ Ïº┘ä┘üÏ¬Ï▒Ï®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\reports\page.tsx:179
+    Type: hardcoded
+    Found: >­ƒôè Ï¡Ï│Ï¿ Ïº┘äÏ¡Ïº┘äÏ®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\reports\page.tsx:192
+    Type: hardcoded
+    Found: >­ƒº¥ ÏóÏ«Ï▒ Ïº┘ä┘àÏ»┘ü┘êÏ╣ÏºÏ¬<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\reports\page.tsx:196
+    Type: hardcoded
+    Found: >Ïº┘äÏ╣┘à┘è┘ä<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\reports\page.tsx:197
+    Type: hardcoded
+    Found: >Ïº┘äÏ»┘êÏ▒Ï®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\reports\page.tsx:198
+    Type: hardcoded
+    Found: >Ïº┘ä┘àÏ¿┘äÏ║<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\reports\page.tsx:199
+    Type: hardcoded
+    Found: >Ïº┘äÏ¡Ïº┘äÏ®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\reports\page.tsx:200
+    Type: hardcoded
+    Found: >Ïº┘äÏ¬ÏºÏ▒┘èÏ«<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\reports\page.tsx:227
+    Type: hardcoded
+    Found: >­ƒôï Ï¡Ï│Ï¿ Ïº┘äÏ¡Ïº┘äÏ®<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\reports\page.tsx:239
+    Type: hardcoded
+    Found: >­ƒôè Ï¡Ï│Ï¿ Ïº┘ä┘àÏ│Ï¬┘ê┘ë<
+    Fix: Replace with {t("key")}
+
+  src\app\admin\reports\page.tsx:251
+    Type: hardcoded
+    Found: >Ô¡É Ïº┘äÏ¬┘é┘è┘è┘à Ïº┘äÏ╣Ïº┘à<
+    Fix: Replace with {t("key")}
+
+... and 1134 more issues
+
+------------------------------------------------------------
+
+­ƒÆí Suggestions:
+
+   1. Add missing keys to messages/{locale}.json files
+   2. Replace hardcoded text with t("namespace.key")
+   3. Replace isRTL ternaries with useTranslations() hook
+   4. Use aria-label={t("key")} for accessibility props
+   5. Replace alert() with toaster.create({ title: t("key") })
+
+============================================================
+
+ÔØî i18n lint failed. Fix issues above.
+

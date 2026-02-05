@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Heading, Stack, Text, Flex, Badge } from "@chakra-ui/react";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { lessonBreakdown } from "@/config/academyActivity";
 
 /**
@@ -13,6 +13,7 @@ import { lessonBreakdown } from "@/config/academyActivity";
 export default function RealLessonSection() {
   const locale = useLocale();
   const isArabic = locale === "ar";
+  const t = useTranslations("home.realLesson");
 
   const totalMinutes = lessonBreakdown.durationMinutes;
 
@@ -34,13 +35,11 @@ export default function RealLessonSection() {
             color="white"
             fontFamily="var(--font-ibm-plex)"
           >
-            {isArabic ? "كيف تبدو الحصة الحقيقية؟" : "How a Real Lesson Works"}
+            {t("title")}
           </Heading>
           
           <Text color="gray.400" fontSize="md">
-            {isArabic 
-              ? `حصة واحدة = ${totalMinutes} دقيقة، مقسمة كالتالي:` 
-              : `One session = ${totalMinutes} minutes, broken down like this:`}
+            {t("subtitle", { minutes: totalMinutes })}
           </Text>
         </Stack>
 
@@ -73,7 +72,7 @@ export default function RealLessonSection() {
                       fontSize={{ base: "xs", md: "sm" }}
                       fontWeight="700"
                     >
-                      {step.minutes} {isArabic ? "د" : "min"}
+                      {t("minutes", { count: step.minutes })}
                     </Badge>
                   </Box>
 
@@ -122,9 +121,7 @@ export default function RealLessonSection() {
           borderColor="whiteAlpha.100"
         >
           <Text color="gray.300" fontSize="sm" textAlign="center">
-            {isArabic 
-              ? "كل حصة لها هدف واضح. لا وقت ضائع." 
-              : "Every session has a clear goal. No wasted time."}
+            {t("summary")}
           </Text>
         </Box>
       </Stack>

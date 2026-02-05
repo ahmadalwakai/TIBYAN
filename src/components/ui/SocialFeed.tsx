@@ -18,6 +18,7 @@ import {
 import { toaster } from "@/components/ui/toaster";
 import { useCallback, useEffect, useState } from "react";
 import PremiumCard from "@/components/ui/PremiumCard";
+import { useTranslations, useLocale } from "next-intl";
 
 // Helper to check if URL is valid (not a blob URL from another origin)
 function isValidMediaUrl(url: string): boolean {
@@ -95,6 +96,8 @@ export default function SocialFeed({
   maxPosts = 10,
   className,
 }: SocialFeedProps) {
+  const t = useTranslations("ui.socialFeed");
+  const locale = useLocale();
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [expandedPost, setExpandedPost] = useState<string | null>(null);
@@ -163,10 +166,10 @@ export default function SocialFeed({
           )
         );
       } else if (res.status === 401) {
-        toaster.error({ title: "يجب تسجيل الدخول للإعجاب" });
+        toaster.error({ title: t("loginToLike") });
       }
     } catch {
-      toaster.error({ title: "خطأ في الاتصال" });
+      toaster.error({ title: t("connectionError") });
     }
   };
 
@@ -193,14 +196,14 @@ export default function SocialFeed({
             p.id === postId ? { ...p, commentsCount: p.commentsCount + 1 } : p
           )
         );
-        toaster.success({ title: json.data.message || "تم إضافة التعليق" });
+        toaster.success({ title: json.data.message || t("commentAdded") });
       } else if (res.status === 401) {
-        toaster.error({ title: "يجب تسجيل الدخول للتعليق" });
+        toaster.error({ title: t("loginToComment") });
       } else {
-        toaster.error({ title: json.error || "فشل في إضافة التعليق" });
+        toaster.error({ title: json.error || t("commentFailed") });
       }
     } catch {
-      toaster.error({ title: "خطأ في الاتصال" });
+      toaster.error({ title: t("connectionError") });
     } finally {
       setSubmittingComment(false);
     }
@@ -268,7 +271,7 @@ export default function SocialFeed({
     <Box className={className}>
       {showTitle && (
         <Text as="h2" fontSize="2xl" fontWeight="700" mb={6} textAlign="center">
-          آخر المنشورات
+          {t("latestPosts")}
         </Text>
       )}
 
@@ -285,14 +288,14 @@ export default function SocialFeed({
               <Box flex={1}>
                 <HStack gap={2}>
                   <Text fontWeight="600">
-                    {post.authorType === "ADMIN" ? "إدارة تبيان" : "معلم"}
+                    {post.authorType === "ADMIN" ? t("admin") : t("teacher")}
                   </Text>
                   {post.isPinned && (
-                    <Badge colorPalette="orange" size="sm">📌 مثبت</Badge>
+                    <Badge colorPalette="orange" size="sm">{t("pinned")}</Badge>
                   )}
                 </HStack>
                 <Text fontSize="xs" color="muted">
-                  {new Date(post.publishedAt || post.createdAt).toLocaleDateString("ar", {
+                  {new Date(post.publishedAt || post.createdAt).toLocaleDateString(locale, {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
@@ -469,7 +472,7 @@ export default function SocialFeed({
                       onChange={(e) =>
                         setNewComment((prev) => ({ ...prev, [post.id]: e.target.value }))
                       }
-                      placeholder="أضف تعليقاً..."
+                      placeholder={t("writeComment")}
                       rows={2}
                       resize="none"
                     />
@@ -480,7 +483,7 @@ export default function SocialFeed({
                         onClick={() => handleSubmitComment(post.id)}
                         disabled={!newComment[post.id]?.trim() || submittingComment}
                       >
-                        {submittingComment ? <Spinner size="sm" /> : "تعليق"}
+                        {submittingComment ? <Spinner size="sm" /> : t("comment")}
                       </Button>
                     </Flex>
                   </Box>

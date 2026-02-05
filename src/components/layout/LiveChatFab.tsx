@@ -3,10 +3,12 @@
 import { Box, Button } from "@chakra-ui/react";
 import { useRouter, usePathname } from "next/navigation";
 import { LuMessageCircle } from "react-icons/lu";
+import { useTranslations } from "next-intl";
 
 export default function LiveChatFab() {
   const router = useRouter();
   const pathname = usePathname();
+  const t = useTranslations("fab");
 
   // Extract locale from pathname (e.g., /ar or /en or root /)
   const locale = pathname.split("/")[1] || "ar";
@@ -22,7 +24,7 @@ export default function LiveChatFab() {
   return (
     <Box position="fixed" bottom="92px" right="24px" zIndex={1400}>
       <Button
-        aria-label={locale === "ar" ? "فتح مساعد تبيان" : "Open Tibyan AI"}
+        aria-label={t("liveChat")}
         onClick={handleOpenAI}
         w={{ base: "56px", md: "52px" }}
         h={{ base: "56px", md: "52px" }}

@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Heading, Stack, Text, Flex } from "@chakra-ui/react";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { teacherDayTimeline } from "@/config/academyActivity";
 
 /**
@@ -13,6 +13,7 @@ import { teacherDayTimeline } from "@/config/academyActivity";
 export default function TeacherDaySection() {
   const locale = useLocale();
   const isArabic = locale === "ar";
+  const t = useTranslations("home.teacherDay");
 
   return (
     <Box
@@ -32,13 +33,11 @@ export default function TeacherDaySection() {
             color="white"
             fontFamily="var(--font-ibm-plex)"
           >
-            {isArabic ? "يوم المعلم الحقيقي" : "A Real Teacher's Day"}
+            {t("title")}
           </Heading>
           
           <Text color="gray.400" fontSize="md">
-            {isArabic 
-              ? "ماذا يفعل معلمونا فعلياً خلال يوم العمل" 
-              : "What our teachers actually do during a work day"}
+            {t("subtitle")}
           </Text>
         </Stack>
 
@@ -117,9 +116,7 @@ export default function TeacherDaySection() {
 
         {/* Human note */}
         <Text color="gray.500" fontSize="sm" fontStyle="italic" textAlign="center">
-          {isArabic 
-            ? "التدريس ليس مجرد إلقاء محاضرات — إنه متابعة وتحضير وتواصل" 
-            : "Teaching isn't just delivering lectures — it's follow-up, preparation, and communication"}
+          {t("note")}
         </Text>
       </Stack>
     </Box>

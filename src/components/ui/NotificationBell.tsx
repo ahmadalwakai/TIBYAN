@@ -3,6 +3,7 @@
 import { Box, Flex, IconButton, Stack, Text, Badge, Spinner } from "@chakra-ui/react";
 import { useEffect, useState, useRef, useCallback } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 interface Notification {
   id: string;
@@ -16,6 +17,7 @@ interface Notification {
 }
 
 export default function NotificationBell() {
+  const t = useTranslations("ui.notifications");
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
@@ -98,10 +100,10 @@ export default function NotificationBell() {
     const hours = Math.floor(diff / 3600000);
     const days = Math.floor(diff / 86400000);
 
-    if (minutes < 1) return "الآن";
-    if (minutes < 60) return `منذ ${minutes} دقيقة`;
-    if (hours < 24) return `منذ ${hours} ساعة`;
-    return `منذ ${days} يوم`;
+    if (minutes < 1) return t("now");
+    if (minutes < 60) return t("minutesAgo", { count: minutes });
+    if (hours < 24) return t("hoursAgo", { count: hours });
+    return t("daysAgo", { count: days });
   };
 
   const getNotificationIcon = (type: string) => {
@@ -122,7 +124,7 @@ export default function NotificationBell() {
     <Box position="relative" ref={menuRef}>
       {/* Bell Button */}
       <IconButton
-        aria-label="الإشعارات"
+        aria-label={t("title")}
         variant="ghost"
         size="sm"
         borderRadius="full"
@@ -205,11 +207,11 @@ export default function NotificationBell() {
           >
             <Flex align="center" gap={2}>
               <Text fontWeight="700" color="white">
-                🔔 الإشعارات
+                🔔 {t("title")}
               </Text>
               {unreadCount > 0 && (
                 <Badge colorPalette="red" size="sm">
-                  {unreadCount} جديد
+                  {unreadCount} {t("new")}
                 </Badge>
               )}
             </Flex>
@@ -222,7 +224,7 @@ export default function NotificationBell() {
                 onClick={markAllAsRead}
                 _hover={{ textDecoration: "underline" }}
               >
-                {loading ? <Spinner size="xs" /> : "تحديد الكل كمقروء"}
+                {loading ? <Spinner size="xs" /> : t("markAllRead")}
               </Box>
             )}
           </Flex>
@@ -232,7 +234,7 @@ export default function NotificationBell() {
             {notifications.length === 0 ? (
               <Flex direction="column" align="center" justify="center" py={10} color="whiteAlpha.600">
                 <Text fontSize="3xl" mb={2}>📭</Text>
-                <Text>لا توجد إشعارات</Text>
+                <Text>{t("noNotifications")}</Text>
               </Flex>
             ) : (
               <Stack gap={0}>
@@ -309,7 +311,7 @@ export default function NotificationBell() {
                 _hover={{ textDecoration: "underline" }}
                 onClick={() => setIsOpen(false)}
               >
-                عرض جميع الإشعارات
+                {t("viewAll")}
               </Text>
             </Box>
           )}

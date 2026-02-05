@@ -3,10 +3,12 @@
 import { Box, IconButton, Icon } from "@chakra-ui/react";
 import { useRouter, usePathname } from "next/navigation";
 import { LuSparkles } from "react-icons/lu";
+import { useTranslations } from "next-intl";
 
 export default function AiAgentFab() {
   const router = useRouter();
   const pathname = usePathname();
+  const t = useTranslations("fab");
   
   // Extract locale from pathname (e.g., /ar or /en or root /)
   const locale = pathname.split("/")[1] || "ar";
@@ -35,7 +37,7 @@ export default function AiAgentFab() {
       }}
     >
       <IconButton
-        aria-label="فتح مساعد تبيان الذكي"
+        aria-label={t("aiAssistant")}
         onClick={() => router.push(`/${locale}/ai`)}
         size="lg"
         w={{ base: "56px", md: "64px" }}

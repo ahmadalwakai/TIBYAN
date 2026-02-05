@@ -41,6 +41,8 @@
     "instructors": "Dozenten",
     "community": "Gemeinschaft",
     "teacherRoom": "Lehrerzimmer",
+    "teachingLessons": "Meine Unterrichtssitzungen",
+    "myLessons": "Meine Live-Lektionen",
     "pricing": "Preise",
     "help": "Hilfe",
     "login": "Anmelden",
@@ -48,6 +50,9 @@
     "logout": "Abmelden",
     "admin": "Admin",
     "user": "Benutzer",
+    "member": "Mitglied",
+    "createPost": "Beitrag erstellen",
+    "memberPortal": "Mitgliederportal",
     "search": "Suchen",
     "loading": "Laden...",
     "error": "Ein Fehler ist aufgetreten",
@@ -66,7 +71,57 @@
   "header": {
     "facultyBadge": "Lehrpersonal",
     "darkMode": "Zum Dunkelmodus wechseln",
-    "lightMode": "Zum Hellmodus wechseln"
+    "lightMode": "Zum Hellmodus wechseln",
+    "toggleTheme": "Design umschalten",
+    "openMenu": "Menü öffnen",
+    "closeMenu": "Menü schließen"
+  },
+  "ai": {
+    "title": "Tibyan KI-Assistent",
+    "online": "Online",
+    "typing": "Schreibt...",
+    "thinking": "Denkt nach...",
+    "close": "Schließen",
+    "welcomeMessage": "Hallo! Ich bin Ihr KI-Assistent bei Tibyan. Ich kann Ihnen helfen bei:\n\n• Zusammenfassung von Lektionen\n• Erstellung von Quiz\n• Vorbereitung von Studienplänen\n• Beantwortung Ihrer Fragen\n• Analyse von Bildern und Dokumenten\n\nWie kann ich Ihnen heute helfen?",
+    "fileTypeNotSupported": "Dateityp nicht unterstützt",
+    "fileTooLarge": "Datei zu groß (max 10MB)",
+    "generationStopped": "Generierung gestoppt",
+    "lessonSummary": "Lektionszusammenfassung",
+    "quiz": "Quiz",
+    "connectionError": "Entschuldigung, keine Verbindung zum Server möglich.",
+    "genericError": "Entschuldigung, ein Fehler ist aufgetreten.",
+    "attachFile": "Datei anhängen",
+    "stopGeneration": "Generierung stoppen",
+    "send": "Senden",
+    "placeholder": "Nachricht eingeben...",
+    "remove": "Entfernen"
+  },
+  "certificate": {
+    "basmala": "Im Namen Allahs, des Allerbarmers, des Barmherzigen",
+    "academyName": "Tibyan Akademie für Islamische Bildung",
+    "certificateOfCompletion": "Abschlusszertifikat",
+    "certificateOfAppreciation": "Anerkennungszertifikat",
+    "certificateOfAchievement": "Leistungszertifikat",
+    "academicCertificate": "Akademisches Abschlusszertifikat",
+    "certifiedCertificate": "Zertifiziertes Zertifikat",
+    "certifies": "Tibyan Akademie bescheinigt, dass",
+    "certifiesAlt": "Hiermit wird bescheinigt, dass",
+    "awardedTo": "Dieses Zertifikat wird verliehen an",
+    "hasCompleted": "die Anforderungen erfolgreich abgeschlossen hat von",
+    "hasCompletedAlt": "für den erfolgreichen Abschluss von",
+    "forCompletion": "für den Abschluss",
+    "forExcellence": "in Anerkennung des erfolgreichen Abschlusses von",
+    "grade": "Note",
+    "score": "Punktzahl",
+    "issueDate": "Ausstellungsdatum",
+    "courseDuration": "Kursdauer",
+    "duration": "Dauer",
+    "instructor": "Dozent",
+    "signature": "Unterschrift",
+    "administration": "Verwaltung",
+    "academyAdmin": "Akademieverwaltung",
+    "departmentHead": "Abteilungsleiter",
+    "date": "Datum"
   },
   "home": {
     "heroBadge": "✨ Die neue Generation arabischer Bildungsplattformen",
@@ -79,7 +134,12 @@
     "stats": {
       "programs": "Programme",
       "activeStudents": "Aktive Studenten",
-      "rating": "Bewertung"
+      "rating": "Bewertung",
+      "students": "Studenten",
+      "courses": "Kurse",
+      "instructors": "Dozenten",
+      "certified": "Zertifizierte Programme",
+      "expertInstructors": "Fachdozenten"
     },
     "whyTibyan": "✨ Warum Tibyan?",
     "featuresTitle": "Funktionen, die uns zur ersten Wahl machen",
@@ -93,6 +153,18 @@
         "description": "Mehrere Fragetypen, wiederholte Versuche und sofortige automatisierte Bewertungen mit detailliertem Feedback."
       },
       "interactiveCommunity": {
+        "title": "Interaktive Gemeinschaft",
+        "description": "Live-Diskussionen innerhalb der Lektionen mit sofortiger Unterstützung von Dozenten und genehmigten Antworten."
+      },
+      "academic": {
+        "title": "Akademisches Engagement",
+        "description": "Lektionsabschlussregeln verhindern oberflächliches Lernen und gewährleisten echtes, tiefes Verständnis des Inhalts."
+      },
+      "questions": {
+        "title": "Fortgeschrittene Fragenbank",
+        "description": "Mehrere Fragetypen, wiederholte Versuche und sofortige automatisierte Bewertungen mit detailliertem Feedback."
+      },
+      "community": {
         "title": "Interaktive Gemeinschaft",
         "description": "Live-Diskussionen innerhalb der Lektionen mit sofortiger Unterstützung von Dozenten und genehmigten Antworten."
       }
@@ -115,6 +187,10 @@
         "title": "Arabisch-Leseprogramm",
         "description": "Von Buchstaben zur Sprachgewandtheit",
         "sessions": "112 Sitzungen"
+      },
+      "arabic": {
+        "title": "Arabisch-Leseprogramm",
+        "description": "Von Buchstaben zur Sprachgewandtheit"
       }
     },
     "learnMore": "Mehr erfahren",
@@ -127,7 +203,11 @@
       "dragDrop": "Lehrplan per Drag & Drop erstellen",
       "qualityReview": "Qualitätsprüfung vor Veröffentlichung",
       "analytics": "Fortgeschrittene Engagement-Analysen",
-      "smartAssessment": "Intelligentes automatisiertes Bewertungssystem"
+      "smartAssessment": "Intelligentes automatisiertes Bewertungssystem",
+      "qualified": "Zertifizierte Lehrer",
+      "experience": "Jahre Erfahrung",
+      "support": "Kontinuierliche Unterstützung",
+      "followUp": "Individuelle Nachverfolgung"
     },
     "ctaTitle": "Starten Sie heute Ihre Bildungsreise mit Tibyan",
     "ctaDescription": "Treten Sie Tausenden von Studenten und Lehrern in der Wissensgemeinschaft bei und beginnen Sie, Ihren Bildungsweg mit Vertrauen und Klarheit aufzubauen.",
@@ -141,7 +221,10 @@
     "trustIndicators": {
       "trustedContent": "Vertrauenswürdige Inhalte",
       "certifiedCertificates": "Zertifizierte Zertifikate",
-      "continuousSupport": "Kontinuierliche Unterstützung"
+      "continuousSupport": "Kontinuierliche Unterstützung",
+      "students": "Über 10.000 Studenten",
+      "rating": "4.9/5 Bewertung",
+      "certificate": "Akkreditierte Zertifikate"
     },
     "advisoryBadge": "🏛️ Beirat",
     "advisoryTitle": "Lernen von renommierten Gelehrten",
@@ -150,17 +233,20 @@
       "scholar1": {
         "name": "Dr. Ahmad Al-Khalidi",
         "title": "Professor für Islamische Studien",
-        "bio": "30+ Jahre in islamischer Bildung, ehemaliger Dekan der Scharia-Fakultät"
+        "bio": "30+ Jahre in islamischer Bildung, ehemaliger Dekan der Scharia-Fakultät",
+        "institution": "Umm Al-Qura Universität"
       },
       "scholar2": {
         "name": "Sheikh Mohammed Al-Rashid",
         "title": "Experte für Koranwissenschaften",
-        "bio": "Autor von 15 Büchern, hat über 10.000 Studenten weltweit unterrichtet"
+        "bio": "Autor von 15 Büchern, hat über 10.000 Studenten weltweit unterrichtet",
+        "institution": "Al-Azhar Universität"
       },
       "scholar3": {
         "name": "Dr. Fatima Al-Zahra",
         "title": "Spezialistin für Arabische Sprache",
-        "bio": "PhD von Al-Azhar, Pionierin moderner Arabisch-Lehrmethoden"
+        "bio": "PhD von Al-Azhar, Pionierin moderner Arabisch-Lehrmethoden",
+        "institution": "Justizrat"
       }
     },
     "methodologyBadge": "⭐ Die Tibyan-Methode",
@@ -220,7 +306,47 @@
     "assessmentFeatures": {
       "personalized": "Personalisierte Empfehlungen",
       "freeMinutes": "5 Minuten kostenlos",
-      "noCommitment": "Keine Verpflichtung erforderlich"
+      "noCommitment": "Keine Verpflichtung erforderlich",
+      "time": "5 Minuten",
+      "questions": "10 Fragen",
+      "result": "Sofortiges Ergebnis"
+    },
+    "startAssessment": "🎯 Kostenlose Bewertung starten",
+    "quranicVerse": {
+      "translation": "Und Wir haben den Quran gewiss leicht zum Gedenken gemacht. Gibt es also jemanden, der gedenkt?",
+      "reference": "Sure Al-Qamar 54:17"
+    },
+    "newsletter": {
+      "title": "Treten Sie unserer Lerngemeinschaft bei",
+      "description": "Erhalten Sie wöchentliche Bildungstipps, exklusive Inhalte und Updates zu neuen Programmen direkt in Ihr Postfach.",
+      "placeholder": "Geben Sie Ihre E-Mail-Adresse ein",
+      "button": "Jetzt abonnieren",
+      "privacy": "Wir respektieren Ihre Privatsphäre. Sie können sich jederzeit abmelden."
+    },
+    "schedule": {
+      "title": "Aktueller Stundenplan",
+      "subtitle": "Wöchentliche Unterrichtszeiten derzeit verfügbar",
+      "full": "Voll",
+      "spotsLeft": "{count} Plätze übrig",
+      "spotsAvailable": "{count} Plätze verfügbar",
+      "note": "Zeiten in deutscher Zeitzone (CET). Kontaktieren Sie uns, um einen Platz zu reservieren."
+    },
+    "realLesson": {
+      "title": "Wie eine echte Unterrichtsstunde abläuft",
+      "subtitle": "Eine Sitzung = {minutes} Minuten, aufgeteilt wie folgt:",
+      "minutes": "{count} Min",
+      "summary": "Jede Sitzung hat ein klares Ziel. Keine Zeitverschwendung."
+    },
+    "teacherDay": {
+      "title": "Ein echter Lehrertag",
+      "subtitle": "Was unsere Lehrer tatsächlich während eines Arbeitstages tun",
+      "note": "Unterrichten ist nicht nur Vorlesungen halten — es ist Nachverfolgung, Vorbereitung und Kommunikation"
+    },
+    "thisWeek": {
+      "badge": "🟢 Live-Update",
+      "title": "Diese Woche in der Tibyan-Akademie",
+      "lastUpdated": "Zuletzt aktualisiert: {date}",
+      "footer": "Dieser Abschnitt wird wöchentlich aktualisiert, um die tatsächliche Akademieaktivität widerzuspiegeln"
     }
   },
   "hero": {
@@ -322,7 +448,79 @@
       "description": "Einführungsinhalte zum Erkunden der Plattform und Starten Ihrer Lernreise"
     }
   },
+  "assessment": {
+    "badge": "📋 Kostenlose Bewertung",
+    "title": "Entdecken Sie Ihren idealen Lernpfad",
+    "subtitle": "Beantworten Sie 5 kurze Fragen, um personalisierte Programmempfehlungen zu erhalten",
+    "question": "Frage",
+    "previous": "Zurück",
+    "next": "Weiter",
+    "seeResults": "Ergebnisse anzeigen",
+    "questions": {
+      "q1": {
+        "text": "Was ist Ihr aktuelles Niveau an islamischem Wissen?",
+        "q1_a": "Kompletter Anfänger - Ich beginne gerade meine Reise",
+        "q1_b": "Grundkenntnisse - Ich kenne die Grundlagen",
+        "q1_c": "Mittelstufe - Ich habe einige Themen vertieft studiert",
+        "q1_d": "Fortgeschritten - Ich habe eine formale islamische Ausbildung"
+      },
+      "q2": {
+        "text": "Können Sie Arabisch fließend lesen?",
+        "q2_a": "Nein, ich kann kein Arabisch lesen",
+        "q2_b": "Ich kann langsam mit einigen Schwierigkeiten lesen",
+        "q2_c": "Ja, ich kann Arabisch fließend lesen"
+      },
+      "q3": {
+        "text": "Was ist Ihr primäres Lernziel?",
+        "q3_a": "Eine solide Grundlage in islamischen Grundlagen aufbauen",
+        "q3_b": "Arabische Texte lesen und verstehen lernen",
+        "q3_c": "Mein Wissen in bestimmten Bereichen vertiefen",
+        "q3_d": "Fortgeschrittene wissenschaftliche Studien verfolgen"
+      },
+      "q4": {
+        "text": "Wie viel Zeit können Sie wöchentlich zum Studieren aufwenden?",
+        "q4_a": "1-3 Stunden pro Woche",
+        "q4_b": "4-7 Stunden pro Woche",
+        "q4_c": "8+ Stunden pro Woche"
+      },
+      "q5": {
+        "text": "Haben Sie bereits formale islamische Kurse abgeschlossen?",
+        "q5_a": "Keine formalen Kurse",
+        "q5_b": "Einige Kurzkurse oder Workshops",
+        "q5_c": "Mehrere Kurse oder ein strukturiertes Programm"
+      }
+    },
+    "programs": {
+      "preparatory": {
+        "title": "Vorbereitungsjahr"
+      },
+      "shariah": {
+        "title": "Scharia-Studiengang"
+      },
+      "arabicReading": {
+        "title": "Arabisch-Leseprogramm"
+      }
+    },
+    "results": {
+      "badge": "🎯 Ihre personalisierten Ergebnisse",
+      "title": "Hier sind Ihre empfohlenen Programme",
+      "subtitle": "Basierend auf Ihren Antworten haben wir die besten Lernpfade für Ihre Reise identifiziert",
+      "bestMatch": "Beste Übereinstimmung",
+      "matchScore": "Übereinstimmung",
+      "learnMore": "Mehr erfahren",
+      "retake": "Bewertung wiederholen",
+      "createAccount": "Kostenloses Konto erstellen",
+      "reasons": {
+        "preparatory": "Perfekt für den Aufbau einer soliden Grundlage in islamischen Wissenschaften mit einem strukturierten, umfassenden Ansatz.",
+        "shariah": "Ideal zur Vertiefung Ihres Wissens mit fortgeschrittenen Studien in Rechtswissenschaft und islamischen Prinzipien.",
+        "arabicReading": "Großartig für die Entwicklung Ihrer Arabisch-Lesefähigkeiten von den Grundlagen bis zur Sprachgewandtheit."
+      }
+    }
+  },
   "auth": {
+    "login": "Anmelden",
+    "register": "Registrieren",
+    "logout": "Abmelden",
     "loginTitle": "Anmelden",
     "registerTitle": "Neues Konto erstellen",
     "email": "E-Mail",
@@ -334,5 +532,187 @@
     "hasAccount": "Bereits ein Konto?",
     "loginButton": "Anmelden",
     "registerButton": "Konto erstellen"
+  },
+  "sidebar": {
+    "admin": {
+      "title": "Tibyan-Verwaltung",
+      "controlPanel": "Steuerungspanel",
+      "overview": "Übersicht",
+      "users": "Benutzer",
+      "teacherApplications": "Lehreranträge",
+      "courses": "Kurse",
+      "payments": "Zahlungen",
+      "certificates": "Zertifikate",
+      "socialPosts": "Soziale Beiträge",
+      "reviews": "Bewertungen",
+      "reports": "Berichte",
+      "auditLogs": "Audit-Protokolle",
+      "permissions": "Berechtigungen & Rollen",
+      "storage": "Speicher & Streaming",
+      "notifications": "Benachrichtigungen",
+      "liveChat": "Live-Chat",
+      "activityLog": "Aktivitätsprotokoll",
+      "integrations": "Externe Integrationen",
+      "settings": "Einstellungen",
+      "blogPosts": "Blog-Beiträge"
+    },
+    "member": {
+      "badge": "Mitglied",
+      "overview": "Übersicht",
+      "announcements": "Ankündigungen",
+      "exclusiveResources": "Exklusive Ressourcen",
+      "support": "Unterstützung",
+      "supportTickets": "Support-Tickets",
+      "profile": "Profil",
+      "settings": "Einstellungen"
+    },
+    "student": {
+      "badge": "Student",
+      "overview": "Übersicht",
+      "myCourses": "Meine Kurse",
+      "liveLessons": "Live-Unterricht",
+      "schedule": "Stundenplan",
+      "certificates": "Zertifikate",
+      "payments": "Zahlungen",
+      "notifications": "Benachrichtigungen",
+      "profile": "Profil"
+    },
+    "teacher": {
+      "badge": "Lehrer",
+      "overview": "Übersicht",
+      "myCourses": "Meine Kurse",
+      "createCourse": "Kurs erstellen",
+      "myLessons": "Mein Unterricht",
+      "myPosts": "Meine Beiträge",
+      "myStudents": "Meine Studenten",
+      "earnings": "Einnahmen",
+      "reviews": "Bewertungen",
+      "analytics": "Analytik",
+      "notifications": "Benachrichtigungen",
+      "profile": "Profil",
+      "syrianCurriculum": "Syrischer Lehrplan 2026"
+    },
+    "logout": "Abmelden",
+    "closeMenu": "Menü schließen"
+  },
+  "fab": {
+    "whatsapp": "Kontakt über WhatsApp",
+    "aiAssistant": "Tibyan KI-Assistent öffnen",
+    "liveChat": "Tibyan KI öffnen"
+  },
+  "ui": {
+    "notifications": {
+      "title": "Benachrichtigungen",
+      "noNotifications": "Keine Benachrichtigungen",
+      "new": "neu",
+      "markAllRead": "Alle als gelesen markieren",
+      "now": "Jetzt",
+      "minutesAgo": "vor {count} Minuten",
+      "hoursAgo": "vor {count} Stunden",
+      "daysAgo": "vor {count} Tagen",
+      "viewAll": "Alle Benachrichtigungen anzeigen"
+    },
+    "mediaUploader": {
+      "sharpEdges": "Scharfe Kanten",
+      "slightlyRounded": "Leicht gerundet",
+      "rounded": "Gerundet",
+      "veryRounded": "Sehr gerundet",
+      "circular": "Kreisförmig",
+      "cover": "Abdecken",
+      "contain": "Einpassen",
+      "fill": "Füllen",
+      "none": "Keine",
+      "auto": "Automatisch",
+      "square": "Quadrat 1:1",
+      "traditional": "Traditionell 4:3",
+      "wide": "Breit 16:9",
+      "cinematic": "Kinematisch 21:9",
+      "unsupportedType": "Nicht unterstützter Typ",
+      "supportedTypes": "Unterstützte Typen: Bilder (JPEG, PNG, GIF, WebP), Videos (MP4, WebM), Audio (MP3, WAV)",
+      "fileTooLarge": "Datei zu groß",
+      "maxSize": "Maximum 50MB"
+    },
+    "richTextEditor": {
+      "default": "Standard",
+      "kufiFont": "Kufi-Schrift",
+      "naskhFont": "Naskh-Schrift",
+      "amiriFont": "Amiri-Schrift",
+      "cairoFont": "Cairo-Schrift",
+      "tajawalFont": "Tajawal-Schrift",
+      "small": "Klein",
+      "medium": "Mittel",
+      "large": "Groß",
+      "veryLarge": "Sehr groß",
+      "huge": "Riesig",
+      "right": "Rechts",
+      "center": "Mitte",
+      "left": "Links",
+      "justify": "Blocksatz",
+      "placeholder": "Schreiben Sie Ihren Inhalt..."
+    },
+    "voiceRecorder": {
+      "startRecording": "Aufnahme starten",
+      "stopRecording": "Aufnahme stoppen",
+      "recording": "Aufnahme läuft...",
+      "maxDuration": "Maximale Dauer: {seconds}s",
+      "cancelRecording": "Aufnahme abbrechen",
+      "send": "Senden 🎙",
+      "recordVoice": "Sprachaufnahme",
+      "microphoneError": "Kein Zugriff auf das Mikrofon. Bitte erlauben Sie den Zugriff."
+    },
+    "socialFeed": {
+      "title": "Social Feed",
+      "latestPosts": "Neueste Beiträge",
+      "like": "Gefällt mir",
+      "comment": "Kommentar",
+      "share": "Teilen",
+      "writeComment": "Kommentar schreiben...",
+      "postComment": "Posten",
+      "noComments": "Noch keine Kommentare",
+      "loadMore": "Mehr laden",
+      "admin": "Tibyan Admin",
+      "teacher": "Lehrer",
+      "pinned": "📌 Angepinnt",
+      "commentAdded": "Kommentar hinzugefügt",
+      "loginToLike": "Anmelden um zu liken",
+      "loginToComment": "Anmelden um zu kommentieren",
+      "commentFailed": "Kommentar konnte nicht hinzugefügt werden",
+      "connectionError": "Verbindungsfehler",
+      "showComments": "{count} Kommentare anzeigen",
+      "hideComments": "Kommentare ausblenden"
+    },
+    "curriculum": {
+      "title": "Lehrplan",
+      "expectedOutcomes": "Erwartete Lernergebnisse",
+      "subjects": "Fächer",
+      "weeks": "Wochen",
+      "outcome1": "Beherrschung der Koranrezitation mit korrekten Tajweed-Regeln",
+      "outcome2": "Verständnis der Grundlagen des islamischen Glaubens und der praktischen Rechtswissenschaft",
+      "outcome3": "Fähigkeit zur genauen Analyse religiöser Texte",
+      "outcome4": "Entwicklung sprachlicher Fähigkeiten in Grammatik, Morphologie und Rhetorik"
+    },
+    "instructorVerification": {
+      "title": "Qualifizierte & zertifizierte Fakultät",
+      "subtitle": "Alle unsere Dozenten verfügen über spezialisierte akademische Abschlüsse und nachgewiesene Lehrerfahrung"
+    },
+    "pricing": {
+      "bestValue": "Bester Wert",
+      "academicTrack": "Akademischer Pfad",
+      "professionalTrack": "Professionelle Diplome"
+    },
+    "refund": {
+      "title": "Geld-zurück-Garantie",
+      "description": "Wir bieten eine vollständige Rückerstattung innerhalb der ersten zwei Wochen (14 Tage) ab dem Anmeldedatum, wenn Sie mit der Inhaltsqualität oder Lehrmethode nicht zufrieden sind.",
+      "conditions": "Rückerstattungsbedingungen",
+      "condition1": "Rückerstattungsantrag innerhalb von 14 Tagen nach der Anmeldung",
+      "condition2": "Student hat nicht mehr als 25% des Kursinhalts absolviert",
+      "condition3": "Rückerstattung innerhalb von 5-7 Werktagen",
+      "fullPolicy": "vollständige Rückerstattungsrichtlinie",
+      "seeMore": "Weitere Details finden Sie in unserer"
+    },
+    "security": {
+      "title": "Sicherheit & Zahlungsmethoden",
+      "description": "Wir verwenden eine sichere verschlüsselte Verbindung (HTTPS), um Ihre persönlichen Daten beim Surfen und bei der Registrierung zu schützen."
+    }
   }
 }

@@ -41,6 +41,8 @@
     "instructors": "Eğitmenler",
     "community": "Topluluk",
     "teacherRoom": "Öğretmenler odası",
+    "teachingLessons": "Öğretim oturumlarım",
+    "myLessons": "Canlı derslerim",
     "pricing": "Fiyatlandırma",
     "help": "Yardım",
     "login": "Giriş Yap",
@@ -48,6 +50,9 @@
     "logout": "Çıkış",
     "admin": "Yönetici",
     "user": "Kullanıcı",
+    "member": "Üye",
+    "createPost": "Gönderi oluştur",
+    "memberPortal": "Üye portalı",
     "search": "Ara",
     "loading": "Yükleniyor...",
     "error": "Bir hata oluştu",
@@ -66,7 +71,57 @@
   "header": {
     "facultyBadge": "Öğretim Kadrosu",
     "darkMode": "Karanlık Moda Geç",
-    "lightMode": "Aydınlık Moda Geç"
+    "lightMode": "Aydınlık Moda Geç",
+    "toggleTheme": "Temayı değiştir",
+    "openMenu": "Menüyü aç",
+    "closeMenu": "Menüyü kapat"
+  },
+  "ai": {
+    "title": "Tibyan Yapay Zeka Asistanı",
+    "online": "Çevrimiçi",
+    "typing": "Yazıyor...",
+    "thinking": "Düşünüyor...",
+    "close": "Kapat",
+    "welcomeMessage": "Merhaba! Ben Tibyan'daki yapay zeka asistanınızım. Size yardımcı olabilirim:\n\n• Dersleri özetleme\n• Quiz oluşturma\n• Çalışma planları hazırlama\n• Sorularınızı yanıtlama\n• Görsel ve belge analizi\n\nBugün size nasıl yardımcı olabilirim?",
+    "fileTypeNotSupported": "Dosya türü desteklenmiyor",
+    "fileTooLarge": "Dosya çok büyük (maks 10MB)",
+    "generationStopped": "Üretim durduruldu",
+    "lessonSummary": "Ders Özeti",
+    "quiz": "Quiz",
+    "connectionError": "Üzgünüm, sunucuya bağlanılamıyor.",
+    "genericError": "Üzgünüm, bir hata oluştu.",
+    "attachFile": "Dosya ekle",
+    "stopGeneration": "Üretimi durdur",
+    "send": "Gönder",
+    "placeholder": "Mesajınızı yazın...",
+    "remove": "Kaldır"
+  },
+  "certificate": {
+    "basmala": "Rahman ve Rahim olan Allah'ın adıyla",
+    "academyName": "Tibyan İslami Eğitim Akademisi",
+    "certificateOfCompletion": "Tamamlama Sertifikası",
+    "certificateOfAppreciation": "Takdir Sertifikası",
+    "certificateOfAchievement": "Başarı Sertifikası",
+    "academicCertificate": "Akademik Tamamlama Sertifikası",
+    "certifiedCertificate": "Onaylı Sertifika",
+    "certifies": "Tibyan Akademisi onaylar ki",
+    "certifiesAlt": "Bu belge ile onaylanır ki",
+    "awardedTo": "Bu sertifika verilmiştir",
+    "hasCompleted": "gerekliliklerini başarıyla tamamlamıştır",
+    "hasCompletedAlt": "başarıyla tamamladığı için",
+    "forCompletion": "tamamlama için",
+    "forExcellence": "başarılı tamamlama takdirinde",
+    "grade": "Not",
+    "score": "Puan",
+    "issueDate": "Düzenleme Tarihi",
+    "courseDuration": "Kurs Süresi",
+    "duration": "Süre",
+    "instructor": "Eğitmen",
+    "signature": "İmza",
+    "administration": "Yönetim",
+    "academyAdmin": "Akademi Yönetimi",
+    "departmentHead": "Bölüm Başkanı",
+    "date": "Tarih"
   },
   "home": {
     "heroBadge": "Kapsamlı İslami Öğrenme Platformu",
@@ -79,7 +134,12 @@
     "stats": {
       "courses": "Kurslar",
       "students": "Öğrenciler",
-      "rating": "Değerlendirme"
+      "rating": "Değerlendirme",
+      "programs": "Programlar",
+      "activeStudents": "Aktif Öğrenciler",
+      "instructors": "Eğitmenler",
+      "certified": "Sertifikalı Programlar",
+      "expertInstructors": "Uzman Eğitmenler"
     },
     "whyTibyan": "Neden Tibyan?",
     "featuresTitle": "Özgünlük ve modernliği birleştiren benzersiz eğitim deneyimi",
@@ -95,6 +155,18 @@
       "community": {
         "title": "Etkileşimli Topluluk",
         "description": "Öğretmenler ve öğrencilerle doğrudan iletişim"
+      },
+      "academicCommitment": {
+        "title": "Akademik Bağlılık",
+        "description": "Akademik performansın sürekli takibi ile sağlam bilimsel metodoloji"
+      },
+      "questionBank": {
+        "title": "Gelişmiş Soru Bankası",
+        "description": "Anında düzeltme ve analiz ile binlerce soru"
+      },
+      "interactiveCommunity": {
+        "title": "Etkileşimli Topluluk",
+        "description": "Öğretmenler ve öğrencilerle doğrudan iletişim"
       }
     },
     "programsBadge": "Eğitim Programları",
@@ -103,15 +175,22 @@
     "programsList": {
       "preparatory": {
         "title": "Hazırlık Yılı",
-        "description": "Psikolojik, bilişsel ve beceri hazırlığı"
+        "description": "Psikolojik, bilişsel ve beceri hazırlığı",
+        "sessions": "160 oturum"
       },
       "shariah": {
         "title": "Şeriat Yolu",
-        "description": "İslami bilimlerde üç yıllık uzmanlık"
+        "description": "İslami bilimlerde üç yıllık uzmanlık",
+        "sessions": "96-112 oturum"
       },
       "arabic": {
         "title": "Arapça Okuma",
         "description": "Sıfırdan ustalığa"
+      },
+      "arabicReading": {
+        "title": "Arapça Okuma Programı",
+        "description": "Sıfırdan ustalığa",
+        "sessions": "112 oturum"
       }
     },
     "learnMore": "Daha Fazla Bilgi",
@@ -124,7 +203,11 @@
       "qualified": "Sertifikalı öğretmenler",
       "experience": "Yıllarca deneyim",
       "support": "Sürekli destek",
-      "followUp": "Bireysel takip"
+      "followUp": "Bireysel takip",
+      "dragDrop": "Sürükle bırak ile müfredat oluştur",
+      "qualityReview": "Yayından önce kalite kontrolü",
+      "analytics": "Gelişmiş etkileşim analitiği",
+      "smartAssessment": "Akıllı otomatik değerlendirme sistemi"
     },
     "ctaTitle": "Bugün öğrenme yolculuğunuza başlayın",
     "ctaDescription": "Tibyan ile öğrenen binlerce öğrenciye katılın",
@@ -138,7 +221,10 @@
     "trustIndicators": {
       "students": "10.000'den fazla öğrenci",
       "rating": "4.9/5 değerlendirme",
-      "certificate": "Akredite sertifikalar"
+      "certificate": "Akredite sertifikalar",
+      "trustedContent": "Güvenilir içerik",
+      "certifiedCertificates": "Sertifikalı sertifikalar",
+      "continuousSupport": "Sürekli destek"
     },
     "advisoryBadge": "Danışma Kurulu",
     "advisoryTitle": "Seçkin alimlerden oluşan bir komite",
@@ -147,17 +233,20 @@
       "scholar1": {
         "name": "Dr. Ahmad Al-Qari",
         "title": "İslami Fıkıh Profesörü",
-        "institution": "Umm Al-Qura Üniversitesi"
+        "institution": "Umm Al-Qura Üniversitesi",
+        "bio": "30+ yıl İslami eğitimde, Şeriat Fakültesi eski dekanı"
       },
       "scholar2": {
         "name": "Dr. Fatima Al-Zahra",
         "title": "Kur'an çalışmaları uzmanı",
-        "institution": "Al-Azhar Üniversitesi"
+        "institution": "Al-Azhar Üniversitesi",
+        "bio": "15 kitabın yazarı, dünya çapında 10.000'den fazla öğrenciye ders verdi"
       },
       "scholar3": {
         "name": "Şeyh Abdullah Hassan",
         "title": "Şeriat mahkemesi hakimi",
-        "institution": "Yargı Konseyi"
+        "institution": "Yargı Konseyi",
+        "bio": "Al-Azhar'dan PhD, modern Arapça öğretim yöntemlerinde öncü"
       }
     },
     "methodologyBadge": "Metodolojimiz",
@@ -217,7 +306,47 @@
     "assessmentFeatures": {
       "time": "5 dakika",
       "questions": "10 soru",
-      "result": "Anında sonuç"
+      "result": "Anlık sonuç",
+      "personalized": "Kişisel öneriler",
+      "freeMinutes": "5 dakika ücretsiz",
+      "noCommitment": "Taahhüt yok"
+    },
+    "startAssessment": "🎯 Ücretsiz değerlendirmeye başla",
+    "quranicVerse": {
+      "translation": "And olsun ki Kur'an'ı hatırlamak için kolay kıldık. Hatırlayan var mı?",
+      "reference": "Kamer Suresi 54:17"
+    },
+    "newsletter": {
+      "title": "Öğrenme topluluğumuza katılın",
+      "description": "Haftalık eğitim ipuçları, özel içerik ve yeni programlar hakkında güncellemeleri doğrudan gelen kutunuza alın.",
+      "placeholder": "E-posta adresinizi girin",
+      "button": "Şimdi abone ol",
+      "privacy": "Gizliliğinize saygı duyarız. İstediğiniz zaman aboneliği iptal edebilirsiniz."
+    },
+    "schedule": {
+      "title": "Mevcut Ders Programı",
+      "subtitle": "Şu anda mevcut haftalık ders saatleri",
+      "full": "Dolu",
+      "spotsLeft": "{count} yer kaldı",
+      "spotsAvailable": "{count} yer mevcut",
+      "note": "Saatler Almanya saat diliminde (CET) gösterilmektedir. Bir yer ayırtmak için bizimle iletişime geçin."
+    },
+    "realLesson": {
+      "title": "Gerçek Bir Ders Nasıl İşliyor",
+      "subtitle": "Bir seans = {minutes} dakika, şu şekilde dağıtılır:",
+      "minutes": "{count} dk",
+      "summary": "Her seansın net bir hedefi var. Boşa zaman yok."
+    },
+    "teacherDay": {
+      "title": "Gerçek Bir Öğretmen Günü",
+      "subtitle": "Öğretmenlerimizin bir iş günü boyunca gerçekte ne yaptıkları",
+      "note": "Öğretmenlik sadece ders vermek değildir — takip, hazırlık ve iletişimdir"
+    },
+    "thisWeek": {
+      "badge": "🟢 Canlı Güncelleme",
+      "title": "Bu Hafta Tibyan Akademi'de",
+      "lastUpdated": "Son güncelleme: {date}",
+      "footer": "Bu bölüm, gerçek akademi faaliyetini yansıtmak için haftalık olarak güncellenmektedir"
     }
   },
   "hero": {
@@ -319,7 +448,79 @@
       "description": "Platformu keşfetmek ve öğrenme yolculuğunuza başlamak için tanıtım içeriği"
     }
   },
+  "assessment": {
+    "badge": "📋 Ücretsiz Değerlendirme",
+    "title": "İdeal öğrenme yolunuzu keşfedin",
+    "subtitle": "Kişiselleştirilmiş program önerileri almak için 5 hızlı soruyu yanıtlayın",
+    "question": "Soru",
+    "previous": "Önceki",
+    "next": "İleri",
+    "seeResults": "Sonuçları gör",
+    "questions": {
+      "q1": {
+        "text": "İslami bilgi düzeyiniz nedir?",
+        "q1_a": "Tam başlangıç - Yolculuğuma yeni başlıyorum",
+        "q1_b": "Temel - Temelleri biliyorum",
+        "q1_c": "Orta - Bazı konuları derinlemesine çalıştım",
+        "q1_d": "İleri - Resmi İslami eğitimim var"
+      },
+      "q2": {
+        "text": "Arapça'yı akıcı okuyabiliyor musunuz?",
+        "q2_a": "Hayır, Arapça okuyamıyorum",
+        "q2_b": "Biraz zorlukla yavaş okuyabiliyorum",
+        "q2_c": "Evet, Arapça'yı akıcı okuyabiliyorum"
+      },
+      "q3": {
+        "text": "Birincil öğrenme hedefiniz nedir?",
+        "q3_a": "İslami temellerde sağlam bir temel oluşturmak",
+        "q3_b": "Arapça metinleri okumayı ve anlamayı öğrenmek",
+        "q3_c": "Belirli alanlarda bilgimi derinleştirmek",
+        "q3_d": "İleri akademik çalışmalara devam etmek"
+      },
+      "q4": {
+        "text": "Haftalık çalışmaya ne kadar zaman ayırabilirsiniz?",
+        "q4_a": "Haftada 1-3 saat",
+        "q4_b": "Haftada 4-7 saat",
+        "q4_c": "Haftada 8+ saat"
+      },
+      "q5": {
+        "text": "Daha önce resmi İslami kurs tamamladınız mı?",
+        "q5_a": "Resmi kurs yok",
+        "q5_b": "Birkaç kısa kurs veya atölye",
+        "q5_c": "Birden fazla kurs veya yapılandırılmış program"
+      }
+    },
+    "programs": {
+      "preparatory": {
+        "title": "Hazırlık Yılı"
+      },
+      "shariah": {
+        "title": "Şeriat Programı"
+      },
+      "arabicReading": {
+        "title": "Arapça Okuma Programı"
+      }
+    },
+    "results": {
+      "badge": "🎯 Kişiselleştirilmiş sonuçlarınız",
+      "title": "Önerilen programlarınız",
+      "subtitle": "Yanıtlarınıza göre, yolculuğunuz için en iyi öğrenme yollarını belirledik",
+      "bestMatch": "En iyi eşleşme",
+      "matchScore": "Eşleşme",
+      "learnMore": "Daha fazla bilgi",
+      "retake": "Değerlendirmeyi tekrarla",
+      "createAccount": "Ücretsiz hesap oluştur",
+      "reasons": {
+        "preparatory": "Yapılandırılmış, kapsamlı bir yaklaşımla İslami bilimlerde sağlam bir temel oluşturmak için mükemmel.",
+        "shariah": "Fıkıh ve İslami ilkelerde ileri düzey çalışmalarla bilginizi derinleştirmek için ideal.",
+        "arabicReading": "Arapça okuma becerilerinizi temellerden akıcılığa geliştirmek için harika."
+      }
+    }
+  },
   "auth": {
+    "login": "Giriş Yap",
+    "register": "Kayıt Ol",
+    "logout": "Çıkış Yap",
     "loginTitle": "Giriş Yap",
     "registerTitle": "Yeni Hesap Oluştur",
     "email": "E-posta",
@@ -331,5 +532,187 @@
     "hasAccount": "Zaten hesabınız var mı?",
     "loginButton": "Giriş Yap",
     "registerButton": "Hesap Oluştur"
+  },
+  "sidebar": {
+    "admin": {
+      "title": "Tibyan Yönetimi",
+      "controlPanel": "Kontrol Paneli",
+      "overview": "Genel Bakış",
+      "users": "Kullanıcılar",
+      "teacherApplications": "Öğretmen Başvuruları",
+      "courses": "Kurslar",
+      "payments": "Ödemeler",
+      "certificates": "Sertifikalar",
+      "socialPosts": "Sosyal Paylaşımlar",
+      "reviews": "Yorumlar",
+      "reports": "Raporlar",
+      "auditLogs": "Denetim Kayıtları",
+      "permissions": "İzinler ve Roller",
+      "storage": "Depolama ve Yayın",
+      "notifications": "Bildirimler",
+      "liveChat": "Canlı Sohbet",
+      "activityLog": "Etkinlik Kaydı",
+      "integrations": "Harici Entegrasyonlar",
+      "settings": "Ayarlar",
+      "blogPosts": "Blog Yazıları"
+    },
+    "member": {
+      "badge": "Üye",
+      "overview": "Genel Bakış",
+      "announcements": "Duyurular",
+      "exclusiveResources": "Özel Kaynaklar",
+      "support": "Destek",
+      "supportTickets": "Destek Talepleri",
+      "profile": "Profil",
+      "settings": "Ayarlar"
+    },
+    "student": {
+      "badge": "Öğrenci",
+      "overview": "Genel Bakış",
+      "myCourses": "Kurslarım",
+      "liveLessons": "Canlı Dersler",
+      "schedule": "Program",
+      "certificates": "Sertifikalar",
+      "payments": "Ödemeler",
+      "notifications": "Bildirimler",
+      "profile": "Profil"
+    },
+    "teacher": {
+      "badge": "Öğretmen",
+      "overview": "Genel Bakış",
+      "myCourses": "Kurslarım",
+      "createCourse": "Kurs Oluştur",
+      "myLessons": "Derslerim",
+      "myPosts": "Paylaşımlarım",
+      "myStudents": "Öğrencilerim",
+      "earnings": "Kazançlar",
+      "reviews": "Yorumlar",
+      "analytics": "Analitik",
+      "notifications": "Bildirimler",
+      "profile": "Profil",
+      "syrianCurriculum": "Suriye Müfredatı 2026"
+    },
+    "logout": "Çıkış Yap",
+    "closeMenu": "Menüyü Kapat"
+  },
+  "fab": {
+    "whatsapp": "WhatsApp ile İletişim",
+    "aiAssistant": "Tibyan AI Asistanı Aç",
+    "liveChat": "Tibyan AI'ı Aç"
+  },
+  "ui": {
+    "notifications": {
+      "title": "Bildirimler",
+      "noNotifications": "Bildirim yok",
+      "new": "yeni",
+      "markAllRead": "Tümünü okundu işaretle",
+      "now": "Şimdi",
+      "minutesAgo": "{count} dakika önce",
+      "hoursAgo": "{count} saat önce",
+      "daysAgo": "{count} gün önce",
+      "viewAll": "Tüm bildirimleri gör"
+    },
+    "mediaUploader": {
+      "sharpEdges": "Keskin kenarlar",
+      "slightlyRounded": "Hafif yuvarlatılmış",
+      "rounded": "Yuvarlatılmış",
+      "veryRounded": "Çok yuvarlatılmış",
+      "circular": "Dairesel",
+      "cover": "Kapla",
+      "contain": "Sığdır",
+      "fill": "Doldur",
+      "none": "Yok",
+      "auto": "Otomatik",
+      "square": "Kare 1:1",
+      "traditional": "Geleneksel 4:3",
+      "wide": "Geniş 16:9",
+      "cinematic": "Sinematik 21:9",
+      "unsupportedType": "Desteklenmeyen tür",
+      "supportedTypes": "Desteklenen türler: resimler (JPEG, PNG, GIF, WebP), videolar (MP4, WebM), ses (MP3, WAV)",
+      "fileTooLarge": "Dosya çok büyük",
+      "maxSize": "Maksimum 50MB"
+    },
+    "richTextEditor": {
+      "default": "Varsayılan",
+      "kufiFont": "Kufi Yazı Tipi",
+      "naskhFont": "Naskh Yazı Tipi",
+      "amiriFont": "Amiri Yazı Tipi",
+      "cairoFont": "Cairo Yazı Tipi",
+      "tajawalFont": "Tajawal Yazı Tipi",
+      "small": "Küçük",
+      "medium": "Orta",
+      "large": "Büyük",
+      "veryLarge": "Çok büyük",
+      "huge": "Devasa",
+      "right": "Sağ",
+      "center": "Orta",
+      "left": "Sol",
+      "justify": "Yasla",
+      "placeholder": "İçeriğinizi yazın..."
+    },
+    "voiceRecorder": {
+      "startRecording": "Kayda başla",
+      "stopRecording": "Kaydı durdur",
+      "recording": "Kaydediyor...",
+      "maxDuration": "Maksimum süre: {seconds}s",
+      "cancelRecording": "Kaydı iptal et",
+      "send": "Gönder 🎙",
+      "recordVoice": "Ses kaydet",
+      "microphoneError": "Mikrofona erişilemiyor. Lütfen erişime izin verin."
+    },
+    "socialFeed": {
+      "title": "Sosyal Akış",
+      "latestPosts": "Son Gönderiler",
+      "like": "Beğen",
+      "comment": "Yorum",
+      "share": "Paylaş",
+      "writeComment": "Bir yorum yazın...",
+      "postComment": "Gönder",
+      "noComments": "Henüz yorum yok",
+      "loadMore": "Daha fazla yükle",
+      "admin": "Tibyan Yönetici",
+      "teacher": "Öğretmen",
+      "pinned": "📌 Sabitlendi",
+      "commentAdded": "Yorum eklendi",
+      "loginToLike": "Beğenmek için giriş yapın",
+      "loginToComment": "Yorum yapmak için giriş yapın",
+      "commentFailed": "Yorum eklenemedi",
+      "connectionError": "Bağlantı hatası",
+      "showComments": "{count} yorumu göster",
+      "hideComments": "Yorumları gizle"
+    },
+    "curriculum": {
+      "title": "Müfredat",
+      "expectedOutcomes": "Beklenen öğrenme çıktıları",
+      "subjects": "Dersler",
+      "weeks": "hafta",
+      "outcome1": "Doğru Tecvid kurallarıyla Kur'an tilavetinde ustalaşma",
+      "outcome2": "İslami inanç ve pratik fıkıh temellerini anlama",
+      "outcome3": "Dini metinleri doğru şekilde analiz etme yeteneği",
+      "outcome4": "Dilbilgisi, morfoloji ve retorik konularında dil becerilerini geliştirme"
+    },
+    "instructorVerification": {
+      "title": "Nitelikli ve Sertifikalı Öğretim Kadrosu",
+      "subtitle": "Tüm eğitmenlerimiz uzman akademik derecelere ve kanıtlanmış öğretim deneyimine sahiptir"
+    },
+    "pricing": {
+      "bestValue": "En iyi değer",
+      "academicTrack": "Akademik Yol",
+      "professionalTrack": "Profesyonel Diplomalar"
+    },
+    "refund": {
+      "title": "Para iade garantisi",
+      "description": "İçerik kalitesi veya öğretim yöntemi konusunda memnun kalmazsanız, kayıt tarihinden itibaren ilk iki hafta (14 gün) içinde tam geri ödeme sunuyoruz.",
+      "conditions": "İade koşulları",
+      "condition1": "Kayıttan sonraki 14 gün içinde iade talebi",
+      "condition2": "Öğrenci kurs içeriğinin %25'ini aşmamış olmalı",
+      "condition3": "İade 5-7 iş günü içinde işlenir",
+      "fullPolicy": "tam iade politikası",
+      "seeMore": "Daha fazla bilgi için bakınız"
+    },
+    "security": {
+      "title": "Güvenlik ve Ödeme Yöntemleri",
+      "description": "Gezinme ve kayıt sırasında kişisel verilerinizi korumak için güvenli şifreli bağlantı (HTTPS) kullanıyoruz."
+    }
   }
 }

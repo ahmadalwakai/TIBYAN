@@ -6,6 +6,7 @@ import {
   Flex,
   Text,
 } from "@chakra-ui/react";
+import { useTranslations } from "next-intl";
 
 interface PortalDrawerProps {
   isOpen: boolean;
@@ -22,6 +23,7 @@ export default function PortalDrawer({
   children,
   placement = "right",
 }: PortalDrawerProps) {
+  const t = useTranslations("sidebar");
   const drawerPlacement = placement === "right" ? "end" : "start";
   const safeAreaLeft = placement === "right" ? "0px" : "env(safe-area-inset-left)";
   const safeAreaRight = placement === "right" ? "env(safe-area-inset-right)" : "0px";
@@ -53,7 +55,7 @@ export default function PortalDrawer({
                 <Text fontWeight="700">{title}</Text>
               </Drawer.Title>
               <Drawer.CloseTrigger
-                aria-label="إغلاق القائمة"
+                aria-label={t("closeMenu")}
                 fontSize="lg"
                 bg="transparent"
                 _hover={{ bg: "surfaceHover" }}

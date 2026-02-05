@@ -71,7 +71,57 @@
   "header": {
     "facultyBadge": "Faculty",
     "darkMode": "Switch to Dark Mode",
-    "lightMode": "Switch to Light Mode"
+    "lightMode": "Switch to Light Mode",
+    "toggleTheme": "Toggle theme",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "ai": {
+    "title": "Tibyan AI Assistant",
+    "online": "Online",
+    "typing": "Typing...",
+    "thinking": "Thinking...",
+    "close": "Close",
+    "welcomeMessage": "Hello! I'm your AI assistant at Tibyan. I can help you with:\n\n• Summarizing lessons\n• Creating quizzes\n• Preparing study plans\n• Answering your questions\n• Analyzing images and documents\n\nHow can I help you today?",
+    "fileTypeNotSupported": "File type not supported",
+    "fileTooLarge": "File too large (max 10MB)",
+    "generationStopped": "Generation stopped",
+    "lessonSummary": "Lesson Summary",
+    "quiz": "Quiz",
+    "connectionError": "Sorry, cannot connect to the server.",
+    "genericError": "Sorry, an error occurred.",
+    "attachFile": "Attach file",
+    "stopGeneration": "Stop generation",
+    "send": "Send",
+    "placeholder": "Type your message...",
+    "remove": "Remove"
+  },
+  "certificate": {
+    "basmala": "In the Name of Allah, the Most Gracious, the Most Merciful",
+    "academyName": "Tibyan Academy for Islamic Education",
+    "certificateOfCompletion": "Certificate of Completion",
+    "certificateOfAppreciation": "Certificate of Appreciation",
+    "certificateOfAchievement": "Certificate of Achievement",
+    "academicCertificate": "Academic Certificate of Completion",
+    "certifiedCertificate": "Certified Certificate",
+    "certifies": "Tibyan Academy certifies that",
+    "certifiesAlt": "This is to certify that",
+    "awardedTo": "This certificate is awarded to",
+    "hasCompleted": "has successfully completed the requirements of",
+    "hasCompletedAlt": "for successfully completing",
+    "forCompletion": "for completing",
+    "forExcellence": "in recognition of successful completion of",
+    "grade": "Grade",
+    "score": "Score",
+    "issueDate": "Issue Date",
+    "courseDuration": "Course Duration",
+    "duration": "Duration",
+    "instructor": "Instructor",
+    "signature": "Signature",
+    "administration": "Administration",
+    "academyAdmin": "Academy Administration",
+    "departmentHead": "Department Head",
+    "date": "Date"
   },
   "home": {
     "heroBadge": "🎓 The Premier Arabic Platform for Advanced Islamic Education",
@@ -79,6 +129,7 @@
     "heroTitle": "Master Islamic Sciences",
     "heroSubtitle": "With Academic Methodology & Expert Guidance",
     "heroDescription": "A leading educational platform offering <strong>Quranic Sciences & Tajweed</strong>, <strong>Arabic Language</strong>, and <strong>Islamic Studies</strong> through structured curricula, interactive assessments, and an active scholarly community — supervised by elite specialists.",
+    "startAssessment": "🎯 Start Free Assessment",
     "explorePrograms": "🚀 Explore Programs",
     "becomeInstructor": "👨‍🏫 Join as Instructor",
     "stats": {
@@ -87,7 +138,9 @@
       "rating": "Rating",
       "students": "Students",
       "courses": "Courses",
-      "instructors": "Instructors"
+      "instructors": "Instructors",
+      "certified": "Certified Programs",
+      "expertInstructors": "Expert Instructors"
     },
     "quranicVerse": {
       "translation": "And We have certainly made the Quran easy for remembrance, so is there any who will remember?",
@@ -114,6 +167,18 @@
       "interactiveCommunity": {
         "title": "Interactive Community",
         "description": "Live discussions within lessons with instant support from instructors and approved answers."
+      },
+      "academic": {
+        "title": "Academic Commitment",
+        "description": "Lesson completion rules prevent superficial learning and ensure genuine, deep understanding of the content."
+      },
+      "questions": {
+        "title": "Advanced Question Bank",
+        "description": "Multiple question types, repeated attempts, and instant automated assessments with detailed feedback."
+      },
+      "community": {
+        "title": "Interactive Community",
+        "description": "Live discussions within lessons with instant support from instructors and approved answers."
       }
     },
     "programsBadge": "🎓 Comprehensive Educational Paths",
@@ -134,6 +199,10 @@
         "title": "Arabic Reading Program",
         "description": "From letters to fluency",
         "sessions": "112 sessions"
+      },
+      "arabic": {
+        "title": "Arabic Reading Program",
+        "description": "From letters to fluency"
       }
     },
     "learnMore": "Learn More",
@@ -146,7 +215,11 @@
       "dragDrop": "Build curriculum with drag & drop",
       "qualityReview": "Quality review before publishing",
       "analytics": "Advanced engagement analytics",
-      "smartAssessment": "Smart automated assessment system"
+      "smartAssessment": "Smart automated assessment system",
+      "qualified": "Qualified Teachers",
+      "experience": "Years of Experience",
+      "support": "Continuous Support",
+      "followUp": "Individual Follow-up"
     },
     "ctaTitle": "Start Your Educational Journey with Tibyan Today",
     "ctaDescription": "Join thousands of students and teachers in the knowledge community and start building your educational path with confidence and clarity.",
@@ -160,7 +233,10 @@
     "trustIndicators": {
       "trustedContent": "Trusted Content",
       "certifiedCertificates": "Certified Certificates",
-      "continuousSupport": "Continuous Support"
+      "continuousSupport": "Continuous Support",
+      "students": "Over 10,000 Students",
+      "rating": "4.9/5 Rating",
+      "certificate": "Accredited Certificates"
     },
     "advisoryBadge": "🏛️ Advisory Board",
     "advisoryTitle": "Learn from Renowned Scholars",
@@ -169,17 +245,20 @@
       "scholar1": {
         "name": "Dr. Ahmad Al-Khalidi",
         "title": "Professor of Islamic Studies",
-        "bio": "30+ years in Islamic education, former Dean of Shariah Faculty"
+        "bio": "30+ years in Islamic education, former Dean of Shariah Faculty",
+        "institution": "Umm Al-Qura University"
       },
       "scholar2": {
         "name": "Sheikh Mohammed Al-Rashid",
         "title": "Expert in Quranic Sciences",
-        "bio": "Author of 15 books, taught over 10,000 students globally"
+        "bio": "Author of 15 books, taught over 10,000 students globally",
+        "institution": "Al-Azhar University"
       },
       "scholar3": {
         "name": "Dr. Fatima Al-Zahra",
         "title": "Specialist in Arabic Language",
-        "bio": "PhD from Al-Azhar, pioneer in modern Arabic teaching methods"
+        "bio": "PhD from Al-Azhar, pioneer in modern Arabic teaching methods",
+        "institution": "Judiciary Council"
       }
     },
     "methodologyBadge": "⭐ The Tibyan Method",
@@ -239,7 +318,35 @@
     "assessmentFeatures": {
       "personalized": "Personalized Recommendations",
       "freeMinutes": "5 Minutes Free",
-      "noCommitment": "No Commitment Required"
+      "noCommitment": "No Commitment Required",
+      "time": "5 minutes",
+      "questions": "10 questions",
+      "result": "Instant result"
+    },
+    "schedule": {
+      "title": "Current Class Schedule",
+      "subtitle": "Weekly class times currently available",
+      "full": "Full",
+      "spotsLeft": "{count} spots left",
+      "spotsAvailable": "{count} spots available",
+      "note": "Times shown in Germany timezone (CET). Contact us to reserve a spot."
+    },
+    "realLesson": {
+      "title": "How a Real Lesson Works",
+      "subtitle": "One session = {minutes} minutes, broken down like this:",
+      "minutes": "{count} min",
+      "summary": "Every session has a clear goal. No wasted time."
+    },
+    "teacherDay": {
+      "title": "A Real Teacher's Day",
+      "subtitle": "What our teachers actually do during a work day",
+      "note": "Teaching isn't just delivering lectures — it's follow-up, preparation, and communication"
+    },
+    "thisWeek": {
+      "badge": "🟢 Live Update",
+      "title": "This Week at Tibyan Academy",
+      "lastUpdated": "Last updated: {date}",
+      "footer": "This section is updated weekly to reflect actual academy activity"
     }
   },
   "hero": {
@@ -408,6 +515,197 @@
         "shariah": "Ideal for deepening your knowledge with advanced studies in jurisprudence and Islamic principles.",
         "arabicReading": "Great for developing your Arabic reading skills from basics to fluency."
       }
+    }
+  },
+  "sidebar": {
+    "admin": {
+      "title": "Tibyan Admin",
+      "controlPanel": "Control Panel",
+      "overview": "Overview",
+      "users": "Users",
+      "teacherApplications": "Teacher Applications",
+      "courses": "Courses",
+      "payments": "Payments",
+      "certificates": "Certificates",
+      "socialPosts": "Social Posts",
+      "reviews": "Reviews",
+      "reports": "Reports",
+      "auditLogs": "Audit Logs",
+      "permissions": "Permissions & Roles",
+      "storage": "Storage & Streaming",
+      "notifications": "Notifications",
+      "liveChat": "Live Chat",
+      "activityLog": "Activity Log",
+      "integrations": "External Integrations",
+      "settings": "Settings",
+      "blogPosts": "Blog Posts"
+    },
+    "member": {
+      "badge": "Member",
+      "overview": "Overview",
+      "announcements": "Announcements",
+      "exclusiveResources": "Exclusive Resources",
+      "support": "Support",
+      "supportTickets": "Support Tickets",
+      "profile": "Profile",
+      "settings": "Settings"
+    },
+    "student": {
+      "badge": "Student",
+      "overview": "Overview",
+      "myCourses": "My Courses",
+      "liveLessons": "Live Lessons",
+      "schedule": "Schedule",
+      "certificates": "Certificates",
+      "payments": "Payments",
+      "notifications": "Notifications",
+      "profile": "Profile"
+    },
+    "teacher": {
+      "badge": "Instructor",
+      "overview": "Overview",
+      "myCourses": "My Courses",
+      "createCourse": "Create Course",
+      "myLessons": "My Lessons",
+      "myPosts": "My Posts",
+      "myStudents": "My Students",
+      "earnings": "Earnings",
+      "reviews": "Reviews",
+      "analytics": "Analytics",
+      "notifications": "Notifications",
+      "profile": "Profile",
+      "syrianCurriculum": "Syrian Curriculum 2026"
+    },
+    "logout": "Logout",
+    "closeMenu": "Close Menu"
+  },
+  "fab": {
+    "whatsapp": "Contact via WhatsApp",
+    "aiAssistant": "Open Tibyan AI Assistant",
+    "liveChat": "Open Tibyan AI"
+  },
+  "ui": {
+    "notifications": {
+      "title": "Notifications",
+      "noNotifications": "No notifications",
+      "new": "new",
+      "markAllRead": "Mark all as read",
+      "now": "Now",
+      "minutesAgo": "{count} minutes ago",
+      "hoursAgo": "{count} hours ago",
+      "daysAgo": "{count} days ago",
+      "viewAll": "View all notifications"
+    },
+    "mediaUploader": {
+      "sharpEdges": "Sharp edges",
+      "slightlyRounded": "Slightly rounded",
+      "rounded": "Rounded",
+      "veryRounded": "Very rounded",
+      "circular": "Circular",
+      "cover": "Cover",
+      "contain": "Contain",
+      "fill": "Fill",
+      "none": "None",
+      "auto": "Auto",
+      "square": "Square 1:1",
+      "traditional": "Traditional 4:3",
+      "wide": "Wide 16:9",
+      "cinematic": "Cinematic 21:9",
+      "unsupportedType": "Unsupported type",
+      "supportedTypes": "Supported types: images (JPEG, PNG, GIF, WebP), videos (MP4, WebM), audio (MP3, WAV)",
+      "fileTooLarge": "File too large",
+      "maxSize": "Maximum 50MB"
+    },
+    "richTextEditor": {
+      "default": "Default",
+      "kufiFont": "Kufi Font",
+      "naskhFont": "Naskh Font",
+      "amiriFont": "Amiri Font",
+      "cairoFont": "Cairo Font",
+      "tajawalFont": "Tajawal Font",
+      "small": "Small",
+      "medium": "Medium",
+      "large": "Large",
+      "veryLarge": "Very Large",
+      "huge": "Huge",
+      "right": "Right",
+      "center": "Center",
+      "left": "Left",
+      "justify": "Justify",
+      "placeholder": "Write your content..."
+    },
+    "voiceRecorder": {
+      "startRecording": "Start Recording",
+      "stopRecording": "Stop Recording",
+      "recording": "Recording...",
+      "maxDuration": "Max duration: {seconds}s",
+      "cancelRecording": "Cancel recording",
+      "send": "Send 🎙",
+      "recordVoice": "Record voice",
+      "microphoneError": "Cannot access microphone. Please allow access."
+    },
+    "socialFeed": {
+      "title": "Social Feed",
+      "latestPosts": "Latest Posts",
+      "like": "Like",
+      "comment": "Comment",
+      "share": "Share",
+      "writeComment": "Write a comment...",
+      "postComment": "Post",
+      "noComments": "No comments yet",
+      "loadMore": "Load more",
+      "admin": "Tibyan Admin",
+      "teacher": "Teacher",
+      "pinned": "📌 Pinned",
+      "commentAdded": "Comment added",
+      "loginToLike": "Login to like",
+      "loginToComment": "Login to comment",
+      "commentFailed": "Failed to add comment",
+      "connectionError": "Connection error",
+      "showComments": "Show {count} comments",
+      "hideComments": "Hide comments"
+    },
+    "curriculum": {
+      "title": "Academic Curriculum",
+      "expectedOutcomes": "Expected Learning Outcomes",
+      "subjects": "Subjects",
+      "weeks": "weeks",
+      "outcome1": "Mastering Quran recitation with proper Tajweed rules",
+      "outcome2": "Understanding the basics of Islamic creed and practical jurisprudence",
+      "outcome3": "Ability to analyze religious texts accurately",
+      "outcome4": "Developing linguistic skills in grammar, morphology, and rhetoric",
+      "subtitle": "A comprehensive curriculum designed to achieve clear and measurable educational outcomes",
+      "downloadSyllabus": "📥 Download Full Syllabus (PDF)"
+    },
+    "instructorVerification": {
+      "title": "Qualified & Certified Faculty",
+      "subtitle": "All our instructors hold specialized academic degrees and proven teaching experience",
+      "viewAll": "View all faculty members →"
+    },
+    "pricing": {
+      "bestValue": "Best Value",
+      "academicTrack": "Academic Track",
+      "professionalTrack": "Professional Diplomas"
+    },
+    "refund": {
+      "title": "Money Back Guarantee",
+      "description": "We offer a full refund within the first two weeks (14 days) from the registration date, if you are not satisfied with the content quality or teaching method.",
+      "conditions": "Refund Conditions",
+      "condition1": "Request refund within 14 days of registration",
+      "condition2": "Student has not exceeded 25% of the course content",
+      "condition3": "Refund processed within 5-7 business days",
+      "fullPolicy": "full refund policy",
+      "seeMore": "For more details, see our"
+    },
+    "security": {
+      "title": "Security & Payment Methods",
+      "description": "We use secure encrypted connection (HTTPS) to protect your personal data during browsing and registration.",
+      "paymentMethods": "Available Payment Methods",
+      "method1": "Bank transfer (SEPA) within Europe",
+      "method2": "Credit cards (Visa/Mastercard) via secure payment processor",
+      "method3": "Monthly or annual prepayment",
+      "inquiries": "For inquiries:",
+      "disclaimer": "* All financial transactions are processed through encrypted channels. We do not store credit card data on our servers."
     }
   }
 }

@@ -1,37 +1,53 @@
 "use client";
 
 import { Box, Heading, Stack, Text } from "@chakra-ui/react";
+import { useTranslations, useLocale } from "next-intl";
 
 interface CurriculumModule {
-  title: string;
-  description: string;
-  duration: string;
+  titleAr: string;
+  titleEn: string;
+  descriptionAr: string;
+  descriptionEn: string;
+  durationAr: string;
+  durationEn: string;
   icon: string;
 }
 
 const curriculumModules: CurriculumModule[] = [
   {
-    title: "التفسير الموضوعي",
-    description: "دراسة أشهر سور القرآن الكريم بمنهجية مبتكرة لتبيان أحكام وعلوم القرآن مع إبراز أساليب المعاني والبلاغة.",
-    duration: "٨ أسابيع",
+    titleAr: "التفسير الموضوعي",
+    titleEn: "Thematic Tafsir",
+    descriptionAr: "دراسة أشهر سور القرآن الكريم بمنهجية مبتكرة لتبيان أحكام وعلوم القرآن مع إبراز أساليب المعاني والبلاغة.",
+    descriptionEn: "Study of famous Quranic chapters with an innovative methodology to explain rulings and sciences of the Quran while highlighting meaning and rhetoric.",
+    durationAr: "٨ أسابيع",
+    durationEn: "8 weeks",
     icon: "📖",
   },
   {
-    title: "علم التجويد",
-    description: "أحكام علم التجويد من الأحكام الأساسية في القرآن الكريم، يُدرس بشكل تطبيقي وعملي.",
-    duration: "٦ أسابيع",
+    titleAr: "علم التجويد",
+    titleEn: "Tajweed Science",
+    descriptionAr: "أحكام علم التجويد من الأحكام الأساسية في القرآن الكريم، يُدرس بشكل تطبيقي وعملي.",
+    descriptionEn: "Tajweed rules are fundamental in Quran recitation, taught in a practical and applied manner.",
+    durationAr: "٦ أسابيع",
+    durationEn: "6 weeks",
     icon: "🎵",
   },
   {
-    title: "العقيدة والفقه",
-    description: "أصول العلم والمعرفة، أحكام وأدلة التوحيد، ودراسة فقه العبادات بشكل نظري تطبيقي.",
-    duration: "١٠ أسابيع",
+    titleAr: "العقيدة والفقه",
+    titleEn: "Creed and Jurisprudence",
+    descriptionAr: "أصول العلم والمعرفة، أحكام وأدلة التوحيد، ودراسة فقه العبادات بشكل نظري تطبيقي.",
+    descriptionEn: "Foundations of knowledge, principles and evidences of monotheism, and practical study of worship jurisprudence.",
+    durationAr: "١٠ أسابيع",
+    durationEn: "10 weeks",
     icon: "⚖️",
   },
   {
-    title: "النحو والصرف",
-    description: "علامات الإعراب، مباحث المرفوعات والمنصوبات والمجرورات، مع مباحث مختارة في علم الصرف.",
-    duration: "٨ أسابيع",
+    titleAr: "النحو والصرف",
+    titleEn: "Grammar and Morphology",
+    descriptionAr: "علامات الإعراب، مباحث المرفوعات والمنصوبات والمجرورات، مع مباحث مختارة في علم الصرف.",
+    descriptionEn: "Grammatical signs, studies of nominative, accusative and genitive cases, with selected morphology topics.",
+    durationAr: "٨ أسابيع",
+    durationEn: "8 weeks",
     icon: "✍️",
   },
 ];
@@ -40,7 +56,12 @@ interface CurriculumOutcomesProps {
   programName?: string;
 }
 
-export default function CurriculumOutcomes({ programName = "السنة التمهيدية" }: CurriculumOutcomesProps) {
+export default function CurriculumOutcomes({ programName }: CurriculumOutcomesProps) {
+  const t = useTranslations("ui.curriculum");
+  const locale = useLocale();
+  const isArabic = locale === "ar";
+  const defaultProgramName = isArabic ? "السنة التمهيدية" : "Preparatory Year";
+  
   return (
     <Box
       borderRadius="2xl"
@@ -54,25 +75,20 @@ export default function CurriculumOutcomes({ programName = "السنة التم�
         {/* Header */}
         <Box>
           <Heading size="lg" color="text">
-            📚 المنهج الدراسي - {programName}
+            📚 {t("title")} - {programName || defaultProgramName}
           </Heading>
           <Text fontSize="sm" color="muted" mt={2}>
-            منهج متكامل مصمم لتحقيق نتائج تعليمية واضحة وقابلة للقياس
+            {t("subtitle")}
           </Text>
         </Box>
 
         {/* Learning Outcomes */}
         <Box borderRadius="xl" bg="backgroundAlt" p={5} border="1px solid" borderColor="border">
           <Heading size="md" color="text" mb={3}>
-            🎯 النتائج التعليمية المتوقعة
+            🎯 {t("expectedOutcomes")}
           </Heading>
           <Stack gap={2}>
-            {[
-              "إتقان قراءة القرآن الكريم بأحكام التجويد الصحيحة",
-              "فهم أساسيات العقيدة الإسلامية والفقه العملي",
-              "القدرة على تحليل النصوص الشرعية بشكل دقيق",
-              "تطوير المهارات اللغوية في النحو والصرف والبلاغة",
-            ].map((outcome, idx) => (
+            {[t("outcome1"), t("outcome2"), t("outcome3"), t("outcome4")].map((outcome, idx) => (
               <Box key={idx} display="flex" alignItems="start" gap={2}>
                 <Text color="success" fontSize="lg">✓</Text>
                 <Text fontSize="sm" color="textBody" flex={1}>
@@ -86,7 +102,7 @@ export default function CurriculumOutcomes({ programName = "السنة التم�
         {/* Curriculum Modules */}
         <Stack gap={3}>
           <Heading size="md" color="text">
-            📋 المواد الدراسية
+            📋 {t("subjects")}
           </Heading>
           {curriculumModules.map((module, idx) => (
             <Box
@@ -106,14 +122,14 @@ export default function CurriculumOutcomes({ programName = "السنة التم�
                 <Box display="flex" alignItems="center" gap={2}>
                   <Text fontSize="xl">{module.icon}</Text>
                   <Text fontSize="md" fontWeight="700" color="text">
-                    {module.title}
+                    {isArabic ? module.titleAr : module.titleEn}
                   </Text>
                   <Text fontSize="xs" color="muted" mr="auto">
-                    {module.duration}
+                    {isArabic ? module.durationAr : module.durationEn}
                   </Text>
                 </Box>
                 <Text fontSize="sm" color="textBody" lineHeight="1.7">
-                  {module.description}
+                  {isArabic ? module.descriptionAr : module.descriptionEn}
                 </Text>
               </Stack>
             </Box>
@@ -124,7 +140,7 @@ export default function CurriculumOutcomes({ programName = "السنة التم�
         <Box textAlign="center" pt={2}>
           <Text fontSize="sm" color="muted">
             <a href="/syllabus.pdf" style={{ color: "var(--chakra-colors-link)", fontWeight: 600 }} download>
-              📥 تحميل المنهج الكامل (PDF)
+              {t("downloadSyllabus")}
             </a>
           </Text>
         </Box>

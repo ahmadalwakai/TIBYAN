@@ -41,6 +41,8 @@
     "instructors": "Lärare",
     "community": "Gemenskap",
     "teacherRoom": "Lärarrummet",
+    "teachingLessons": "Mina undervisningssessioner",
+    "myLessons": "Mina livesessioner",
     "pricing": "Priser",
     "help": "Hjälp",
     "login": "Logga in",
@@ -48,6 +50,9 @@
     "logout": "Logga ut",
     "admin": "Admin",
     "user": "Användare",
+    "member": "Medlem",
+    "createPost": "Skapa inlägg",
+    "memberPortal": "Medlemsportal",
     "search": "Sök",
     "loading": "Laddar...",
     "error": "Ett fel uppstod",
@@ -66,7 +71,57 @@
   "header": {
     "facultyBadge": "Lärarkår",
     "darkMode": "Växla till mörkt läge",
-    "lightMode": "Växla till ljust läge"
+    "lightMode": "Växla till ljust läge",
+    "toggleTheme": "Växla tema",
+    "openMenu": "Öppna meny",
+    "closeMenu": "Stäng meny"
+  },
+  "ai": {
+    "title": "Tibyan AI-assistent",
+    "online": "Online",
+    "typing": "Skriver...",
+    "thinking": "Tänker...",
+    "close": "Stäng",
+    "welcomeMessage": "Hej! Jag är din AI-assistent på Tibyan. Jag kan hjälpa dig med:\n\n• Sammanfatta lektioner\n• Skapa quiz\n• Förbereda studieplaner\n• Svara på dina frågor\n• Analysera bilder och dokument\n\nHur kan jag hjälpa dig idag?",
+    "fileTypeNotSupported": "Filtyp stöds inte",
+    "fileTooLarge": "Filen är för stor (max 10MB)",
+    "generationStopped": "Generering stoppad",
+    "lessonSummary": "Lektionssammanfattning",
+    "quiz": "Quiz",
+    "connectionError": "Tyvärr, kan inte ansluta till servern.",
+    "genericError": "Tyvärr, ett fel uppstod.",
+    "attachFile": "Bifoga fil",
+    "stopGeneration": "Stoppa generering",
+    "send": "Skicka",
+    "placeholder": "Skriv ditt meddelande...",
+    "remove": "Ta bort"
+  },
+  "certificate": {
+    "basmala": "I Allahs, den Nåderikes, den Barmhärtiges namn",
+    "academyName": "Tibyan Akademi för Islamisk Utbildning",
+    "certificateOfCompletion": "Slutförandecertifikat",
+    "certificateOfAppreciation": "Uppskattningscertifikat",
+    "certificateOfAchievement": "Prestationscertifikat",
+    "academicCertificate": "Akademiskt Slutförandecertifikat",
+    "certifiedCertificate": "Certifierat Certifikat",
+    "certifies": "Tibyan Akademi intygar att",
+    "certifiesAlt": "Härmed intygas att",
+    "awardedTo": "Detta certifikat tilldelas",
+    "hasCompleted": "framgångsrikt har slutfört kraven för",
+    "hasCompletedAlt": "för framgångsrikt slutförande av",
+    "forCompletion": "för slutförande av",
+    "forExcellence": "som erkännande av framgångsrikt slutförande av",
+    "grade": "Betyg",
+    "score": "Poäng",
+    "issueDate": "Utfärdandedatum",
+    "courseDuration": "Kurslängd",
+    "duration": "Längd",
+    "instructor": "Instruktör",
+    "signature": "Underskrift",
+    "administration": "Administration",
+    "academyAdmin": "Akademiadministration",
+    "departmentHead": "Avdelningschef",
+    "date": "Datum"
   },
   "home": {
     "heroBadge": "Komplett islamisk läroplattform",
@@ -79,7 +134,12 @@
     "stats": {
       "courses": "Kurser",
       "students": "Studenter",
-      "rating": "Betyg"
+      "rating": "Betyg",
+      "programs": "Program",
+      "activeStudents": "Aktiva Studenter",
+      "instructors": "Lärare",
+      "certified": "Certifierade Program",
+      "expertInstructors": "Expertlärare"
     },
     "whyTibyan": "Varför Tibyan?",
     "featuresTitle": "Unik utbildningsupplevelse som kombinerar autenticitet och modernitet",
@@ -95,6 +155,18 @@
       "community": {
         "title": "Interaktiv gemenskap",
         "description": "Direkt kommunikation med lärare och studenter"
+      },
+      "academicCommitment": {
+        "title": "Akademiskt åtagande",
+        "description": "Solid vetenskaplig metodik med kontinuerlig uppföljning av akademiska resultat"
+      },
+      "questionBank": {
+        "title": "Avancerad frågebank",
+        "description": "Tusentals frågor med omedelbar korrigering och analys"
+      },
+      "interactiveCommunity": {
+        "title": "Interaktiv gemenskap",
+        "description": "Direkt kommunikation med lärare och studenter"
       }
     },
     "programsBadge": "Utbildningsprogram",
@@ -103,15 +175,22 @@
     "programsList": {
       "preparatory": {
         "title": "Förberedande år",
-        "description": "Psykologisk, kognitiv och färdighetsmässig förberedelse"
+        "description": "Psykologisk, kognitiv och färdighetsmässig förberedelse",
+        "sessions": "160 sessioner"
       },
       "shariah": {
         "title": "Sharia-spåret",
-        "description": "Tre års specialisering inom islamiska vetenskaper"
+        "description": "Tre års specialisering inom islamiska vetenskaper",
+        "sessions": "96-112 sessioner"
       },
       "arabic": {
         "title": "Arabisk läsning",
         "description": "Från noll till behärskning"
+      },
+      "arabicReading": {
+        "title": "Arabiskt läsprogram",
+        "description": "Från noll till behärskning",
+        "sessions": "112 sessioner"
       }
     },
     "learnMore": "Läs mer",
@@ -124,7 +203,11 @@
       "qualified": "Certifierade lärare",
       "experience": "Års erfarenhet",
       "support": "Kontinuerlig support",
-      "followUp": "Individuell uppföljning"
+      "followUp": "Individuell uppföljning",
+      "dragDrop": "Bygg kursplan med dra och släpp",
+      "qualityReview": "Kvalitetsgranskning före publicering",
+      "analytics": "Avancerad engagemangsanalys",
+      "smartAssessment": "Smart automatiserat bedömningssystem"
     },
     "ctaTitle": "Börja din läranderesa idag",
     "ctaDescription": "Gå med tusentals studenter som lär sig med Tibyan",
@@ -138,7 +221,10 @@
     "trustIndicators": {
       "students": "Över 10 000 studenter",
       "rating": "Betyg 4.9/5",
-      "certificate": "Ackrediterade certifikat"
+      "certificate": "Ackrediterade certifikat",
+      "trustedContent": "Pålitligt innehåll",
+      "certifiedCertificates": "Certifierade certifikat",
+      "continuousSupport": "Kontinuerlig support"
     },
     "advisoryBadge": "Rådgivande styrelse",
     "advisoryTitle": "En kommitté av framstående lärda",
@@ -147,17 +233,20 @@
       "scholar1": {
         "name": "Dr. Ahmad Al-Qari",
         "title": "Professor i islamisk fiqh",
-        "institution": "Umm Al-Qura-universitetet"
+        "institution": "Umm Al-Qura-universitetet",
+        "bio": "30+ år inom islamisk utbildning, tidigare dekan vid Sharia-fakulteten"
       },
       "scholar2": {
         "name": "Dr. Fatima Al-Zahra",
         "title": "Specialist på koranstudier",
-        "institution": "Al-Azhar-universitetet"
+        "institution": "Al-Azhar-universitetet",
+        "bio": "Författare till 15 böcker, har undervisat över 10 000 studenter globalt"
       },
       "scholar3": {
         "name": "Sheikh Abdullah Hassan",
         "title": "Domare vid shariadomstolen",
-        "institution": "Domstolsrådet"
+        "institution": "Domstolsrådet",
+        "bio": "PhD från Al-Azhar, pionjär inom moderna arabiska undervisningsmetoder"
       }
     },
     "methodologyBadge": "Vår metodik",
@@ -217,7 +306,47 @@
     "assessmentFeatures": {
       "time": "5 minuter",
       "questions": "10 frågor",
-      "result": "Omedelbart resultat"
+      "result": "Omedelbart resultat",
+      "personalized": "Personliga rekommendationer",
+      "freeMinutes": "5 minuter gratis",
+      "noCommitment": "Ingen förpliktelse"
+    },
+    "startAssessment": "🎯 Starta gratis bedömning",
+    "quranicVerse": {
+      "translation": "Och Vi har sannerligen gjort Koranen lätt att minnas. Finns det någon som tar det till sig?",
+      "reference": "Sura Al-Qamar 54:17"
+    },
+    "newsletter": {
+      "title": "Gå med i vår lärandegemenskap",
+      "description": "Få veckovisa utbildningstips, exklusivt innehåll och uppdateringar om nya program direkt till din inkorg.",
+      "placeholder": "Ange din e-postadress",
+      "button": "Prenumerera nu",
+      "privacy": "Vi respekterar din integritet. Du kan avsluta prenumerationen när som helst."
+    },
+    "schedule": {
+      "title": "Aktuellt lektionsschema",
+      "subtitle": "Veckotider för lektioner som för närvarande är tillgängliga",
+      "full": "Fullt",
+      "spotsLeft": "{count} platser kvar",
+      "spotsAvailable": "{count} platser tillgängliga",
+      "note": "Tider visas i tysk tidszon (CET). Kontakta oss för att reservera en plats."
+    },
+    "realLesson": {
+      "title": "Hur en riktig lektion fungerar",
+      "subtitle": "En session = {minutes} minuter, uppdelat så här:",
+      "minutes": "{count} min",
+      "summary": "Varje session har ett tydligt mål. Ingen bortkastad tid."
+    },
+    "teacherDay": {
+      "title": "En riktig lärardag",
+      "subtitle": "Vad våra lärare faktiskt gör under en arbetsdag",
+      "note": "Att undervisa handlar inte bara om att hålla föreläsningar — det är uppföljning, förberedelser och kommunikation"
+    },
+    "thisWeek": {
+      "badge": "🟢 Liveuppdatering",
+      "title": "Denna vecka på Tibyan Academy",
+      "lastUpdated": "Senast uppdaterad: {date}",
+      "footer": "Denna sektion uppdateras veckovis för att återspegla den verkliga akademiaktiviteten"
     }
   },
   "hero": {
@@ -319,7 +448,79 @@
       "description": "Introduktionsinnehåll för att utforska plattformen och börja din läranderesa"
     }
   },
+  "assessment": {
+    "badge": "📋 Gratis bedömning",
+    "title": "Upptäck din ideala lärandeväg",
+    "subtitle": "Svara på 5 snabba frågor för att få personliga programrekommendationer",
+    "question": "Fråga",
+    "previous": "Föregående",
+    "next": "Nästa",
+    "seeResults": "Se resultat",
+    "questions": {
+      "q1": {
+        "text": "Vad är din nuvarande nivå av islamisk kunskap?",
+        "q1_a": "Komplett nybörjare - Jag börjar precis min resa",
+        "q1_b": "Grundläggande - Jag känner till grunderna",
+        "q1_c": "Mellanliggande - Jag har studerat vissa ämnen på djupet",
+        "q1_d": "Avancerad - Jag har formell islamisk utbildning"
+      },
+      "q2": {
+        "text": "Kan du läsa arabiska flytande?",
+        "q2_a": "Nej, jag kan inte läsa arabiska",
+        "q2_b": "Jag kan läsa långsamt med viss svårighet",
+        "q2_c": "Ja, jag kan läsa arabiska flytande"
+      },
+      "q3": {
+        "text": "Vad är ditt primära lärandemål?",
+        "q3_a": "Bygga en stark grund i islamiska grunder",
+        "q3_b": "Lära mig läsa och förstå arabiska texter",
+        "q3_c": "Fördjupa mina kunskaper i specifika områden",
+        "q3_d": "Fortsätta med avancerade akademiska studier"
+      },
+      "q4": {
+        "text": "Hur mycket tid kan du ägna åt studier varje vecka?",
+        "q4_a": "1-3 timmar per vecka",
+        "q4_b": "4-7 timmar per vecka",
+        "q4_c": "8+ timmar per vecka"
+      },
+      "q5": {
+        "text": "Har du slutfört några formella islamiska kurser tidigare?",
+        "q5_a": "Inga formella kurser",
+        "q5_b": "Några korta kurser eller workshops",
+        "q5_c": "Flera kurser eller ett strukturerat program"
+      }
+    },
+    "programs": {
+      "preparatory": {
+        "title": "Förberedande år"
+      },
+      "shariah": {
+        "title": "Shariaprogram"
+      },
+      "arabicReading": {
+        "title": "Arabiskt läsprogram"
+      }
+    },
+    "results": {
+      "badge": "🎯 Dina personliga resultat",
+      "title": "Här är dina rekommenderade program",
+      "subtitle": "Baserat på dina svar har vi identifierat de bästa lärandevägarna för din resa",
+      "bestMatch": "Bästa matchning",
+      "matchScore": "Matchning",
+      "learnMore": "Läs mer",
+      "retake": "Gör om bedömningen",
+      "createAccount": "Skapa gratis konto",
+      "reasons": {
+        "preparatory": "Perfekt för att bygga en solid grund i islamiska vetenskaper med ett strukturerat, hältäckande tillvägagångssätt.",
+        "shariah": "Idealisk för att fördjupa dina kunskaper med avancerade studier i juridik och islamiska principer.",
+        "arabicReading": "Utmärkt för att utveckla dina arabiska läsfärdigheter från grunden till flyt."
+      }
+    }
+  },
   "auth": {
+    "login": "Logga in",
+    "register": "Registrera",
+    "logout": "Logga ut",
     "loginTitle": "Logga in",
     "registerTitle": "Skapa nytt konto",
     "email": "E-post",
@@ -331,5 +532,187 @@
     "hasAccount": "Har du redan ett konto?",
     "loginButton": "Logga in",
     "registerButton": "Skapa konto"
+  },
+  "sidebar": {
+    "admin": {
+      "title": "Tibyan Administration",
+      "controlPanel": "Kontrollpanel",
+      "overview": "Översikt",
+      "users": "Användare",
+      "teacherApplications": "Läraransökningar",
+      "courses": "Kurser",
+      "payments": "Betalningar",
+      "certificates": "Certifikat",
+      "socialPosts": "Sociala Inlägg",
+      "reviews": "Recensioner",
+      "reports": "Rapporter",
+      "auditLogs": "Granskningsloggar",
+      "permissions": "Behörigheter & Roller",
+      "storage": "Lagring & Streaming",
+      "notifications": "Notifikationer",
+      "liveChat": "Live-chatt",
+      "activityLog": "Aktivitetslogg",
+      "integrations": "Externa Integrationer",
+      "settings": "Inställningar",
+      "blogPosts": "Blogginlägg"
+    },
+    "member": {
+      "badge": "Medlem",
+      "overview": "Översikt",
+      "announcements": "Meddelanden",
+      "exclusiveResources": "Exklusiva Resurser",
+      "support": "Support",
+      "supportTickets": "Supportärenden",
+      "profile": "Profil",
+      "settings": "Inställningar"
+    },
+    "student": {
+      "badge": "Student",
+      "overview": "Översikt",
+      "myCourses": "Mina Kurser",
+      "liveLessons": "Live-lektioner",
+      "schedule": "Schema",
+      "certificates": "Certifikat",
+      "payments": "Betalningar",
+      "notifications": "Notifikationer",
+      "profile": "Profil"
+    },
+    "teacher": {
+      "badge": "Lärare",
+      "overview": "Översikt",
+      "myCourses": "Mina Kurser",
+      "createCourse": "Skapa Kurs",
+      "myLessons": "Mina Lektioner",
+      "myPosts": "Mina Inlägg",
+      "myStudents": "Mina Studenter",
+      "earnings": "Intäkter",
+      "reviews": "Recensioner",
+      "analytics": "Analys",
+      "notifications": "Notifikationer",
+      "profile": "Profil",
+      "syrianCurriculum": "Syrisk Läroplan 2026"
+    },
+    "logout": "Logga ut",
+    "closeMenu": "Stäng Meny"
+  },
+  "fab": {
+    "whatsapp": "Kontakta via WhatsApp",
+    "aiAssistant": "Öppna Tibyan AI-assistent",
+    "liveChat": "Öppna Tibyan AI"
+  },
+  "ui": {
+    "notifications": {
+      "title": "Notifikationer",
+      "noNotifications": "Inga notifikationer",
+      "new": "ny",
+      "markAllRead": "Markera alla som lästa",
+      "now": "Nu",
+      "minutesAgo": "för {count} minuter sedan",
+      "hoursAgo": "för {count} timmar sedan",
+      "daysAgo": "för {count} dagar sedan",
+      "viewAll": "Visa alla notifikationer"
+    },
+    "mediaUploader": {
+      "sharpEdges": "Skarpa kanter",
+      "slightlyRounded": "Lätt rundade",
+      "rounded": "Rundade",
+      "veryRounded": "Mycket rundade",
+      "circular": "Cirkulär",
+      "cover": "Täck",
+      "contain": "Innehåll",
+      "fill": "Fyll",
+      "none": "Ingen",
+      "auto": "Automatisk",
+      "square": "Kvadrat 1:1",
+      "traditional": "Traditionell 4:3",
+      "wide": "Bred 16:9",
+      "cinematic": "Biografisk 21:9",
+      "unsupportedType": "Typ stöds ej",
+      "supportedTypes": "Stödda typer: bilder (JPEG, PNG, GIF, WebP), videor (MP4, WebM), ljud (MP3, WAV)",
+      "fileTooLarge": "Filen är för stor",
+      "maxSize": "Maximum 50MB"
+    },
+    "richTextEditor": {
+      "default": "Standard",
+      "kufiFont": "Kufi-typsnitt",
+      "naskhFont": "Naskh-typsnitt",
+      "amiriFont": "Amiri-typsnitt",
+      "cairoFont": "Cairo-typsnitt",
+      "tajawalFont": "Tajawal-typsnitt",
+      "small": "Liten",
+      "medium": "Medium",
+      "large": "Stor",
+      "veryLarge": "Mycket stor",
+      "huge": "Enorm",
+      "right": "Höger",
+      "center": "Mitten",
+      "left": "Vänster",
+      "justify": "Marginaljustera",
+      "placeholder": "Skriv ditt innehåll..."
+    },
+    "voiceRecorder": {
+      "startRecording": "Starta inspelning",
+      "stopRecording": "Stoppa inspelning",
+      "recording": "Spelar in...",
+      "maxDuration": "Maximal längd: {seconds}s",
+      "cancelRecording": "Avbryt inspelning",
+      "send": "Skicka 🎙",
+      "recordVoice": "Spela in röst",
+      "microphoneError": "Kan inte komma åt mikrofonen. Vänligen tillåt åtkomst."
+    },
+    "socialFeed": {
+      "title": "Socialt flöde",
+      "latestPosts": "Senaste inläggen",
+      "like": "Gilla",
+      "comment": "Kommentar",
+      "share": "Dela",
+      "writeComment": "Skriv en kommentar...",
+      "postComment": "Publicera",
+      "noComments": "Inga kommentarer än",
+      "loadMore": "Ladda mer",
+      "admin": "Tibyan Admin",
+      "teacher": "Lärare",
+      "pinned": "📌 Fäst",
+      "commentAdded": "Kommentar tillagd",
+      "loginToLike": "Logga in för att gilla",
+      "loginToComment": "Logga in för att kommentera",
+      "commentFailed": "Kunde inte lägga till kommentar",
+      "connectionError": "Anslutningsfel",
+      "showComments": "Visa {count} kommentarer",
+      "hideComments": "Dölj kommentarer"
+    },
+    "curriculum": {
+      "title": "Läroplan",
+      "expectedOutcomes": "Förväntade lärandemål",
+      "subjects": "Ämnen",
+      "weeks": "veckor",
+      "outcome1": "Behärska Koranrecitation med korrekta Tajweed-regler",
+      "outcome2": "Förståelse för grunderna i islamisk tro och praktisk juridik",
+      "outcome3": "Förmåga att analysera religiösa texter noggrant",
+      "outcome4": "Utveckling av språkliga färdigheter i grammatik, morfologi och retorik"
+    },
+    "instructorVerification": {
+      "title": "Kvalificerad & certifierad fakultet",
+      "subtitle": "Alla våra instruktörer har specialiserade akademiska examina och bevisad undervisningserfarenhet"
+    },
+    "pricing": {
+      "bestValue": "Bästa värde",
+      "academicTrack": "Akademisk väg",
+      "professionalTrack": "Professionella diplom"
+    },
+    "refund": {
+      "title": "Pengarna tillbaka-garanti",
+      "description": "Vi erbjuder full återbetalning inom de första två veckorna (14 dagar) från registreringsdatumet, om du inte är nöjd med innehållets kvalitet eller undervisningsmetoden.",
+      "conditions": "Återbetalningsvillkor",
+      "condition1": "Begär återbetalning inom 14 dagar efter registrering",
+      "condition2": "Studenten har inte överstiga 25% av kursinnehållet",
+      "condition3": "Återbetalning behandlas inom 5-7 arbetsdagar",
+      "fullPolicy": "fullständig återbetalningspolicy",
+      "seeMore": "För mer information, se vår"
+    },
+    "security": {
+      "title": "Säkerhet & betalningsmetoder",
+      "description": "Vi använder en säker krypterad anslutning (HTTPS) för att skydda dina personuppgifter under surfning och registrering."
+    }
   }
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Heading, Stack, Text, Badge } from "@chakra-ui/react";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { thisWeekUpdates, lastUpdated } from "@/config/academyActivity";
 
 /**
@@ -16,6 +16,7 @@ import { thisWeekUpdates, lastUpdated } from "@/config/academyActivity";
 export default function ThisWeekSection() {
   const locale = useLocale();
   const isArabic = locale === "ar";
+  const t = useTranslations("home.thisWeek");
 
   // Format the last updated date
   const formattedDate = new Date(lastUpdated).toLocaleDateString(
@@ -45,7 +46,7 @@ export default function ThisWeekSection() {
             fontWeight="700"
             w="fit-content"
           >
-            {isArabic ? "🟢 تحديث مباشر" : "🟢 Live Update"}
+            {t("badge")}
           </Badge>
           
           <Heading
@@ -54,13 +55,11 @@ export default function ThisWeekSection() {
             color="white"
             fontFamily="var(--font-ibm-plex)"
           >
-            {isArabic 
-              ? "هذا الأسبوع في أكاديمية تِبيان" 
-              : "This Week at Tibyan Academy"}
+            {t("title")}
           </Heading>
           
           <Text color="gray.500" fontSize="sm">
-            {isArabic ? `آخر تحديث: ${formattedDate}` : `Last updated: ${formattedDate}`}
+            {t("lastUpdated", { date: formattedDate })}
           </Text>
         </Stack>
 
@@ -101,9 +100,7 @@ export default function ThisWeekSection() {
 
         {/* Subtle footer */}
         <Text color="gray.600" fontSize="xs" textAlign="center">
-          {isArabic 
-            ? "يُحدَّث هذا القسم أسبوعياً ليعكس نشاط الأكاديمية الفعلي" 
-            : "This section is updated weekly to reflect actual academy activity"}
+          {t("footer")}
         </Text>
       </Stack>
     </Box>

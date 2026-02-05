@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Heading, Stack, Text, Badge, SimpleGrid, Flex } from "@chakra-ui/react";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { currentSchedule } from "@/config/academyActivity";
 
 /**
@@ -13,6 +13,7 @@ import { currentSchedule } from "@/config/academyActivity";
 export default function CurrentScheduleSection() {
   const locale = useLocale();
   const isArabic = locale === "ar";
+  const t = useTranslations("home.schedule");
 
   return (
     <Box
@@ -32,13 +33,11 @@ export default function CurrentScheduleSection() {
             color="white"
             fontFamily="var(--font-ibm-plex)"
           >
-            {isArabic ? "جدول الحصص الحالي" : "Current Class Schedule"}
+            {t("title")}
           </Heading>
           
           <Text color="gray.400" fontSize="md">
-            {isArabic 
-              ? "مواعيد الحصص الأسبوعية المتاحة حالياً" 
-              : "Weekly class times currently available"}
+            {t("subtitle")}
           </Text>
         </Stack>
 
@@ -96,7 +95,7 @@ export default function CurrentScheduleSection() {
                         fontSize="xs"
                         fontWeight="700"
                       >
-                        {isArabic ? "مكتمل" : "Full"}
+                        {t("full")}
                       </Badge>
                     ) : isLowSpots ? (
                       <Badge
@@ -108,9 +107,7 @@ export default function CurrentScheduleSection() {
                         fontSize="xs"
                         fontWeight="700"
                       >
-                        {isArabic 
-                          ? `${slot.spotsLeft} مقاعد متبقية` 
-                          : `${slot.spotsLeft} spots left`}
+                        {t("spotsLeft", { count: slot.spotsLeft ?? 0 })}
                       </Badge>
                     ) : (
                       <Badge
@@ -122,9 +119,7 @@ export default function CurrentScheduleSection() {
                         fontSize="xs"
                         fontWeight="700"
                       >
-                        {isArabic 
-                          ? `${slot.spotsLeft} مقاعد متاحة` 
-                          : `${slot.spotsLeft} spots available`}
+                        {t("spotsAvailable", { count: slot.spotsLeft ?? 0 })}
                       </Badge>
                     )}
                   </Flex>
@@ -143,9 +138,7 @@ export default function CurrentScheduleSection() {
           borderColor="whiteAlpha.100"
         >
           <Text color="gray.400" fontSize="sm" textAlign="center">
-            {isArabic 
-              ? "التوقيتات بتوقيت ألمانيا (CET). تواصل معنا لحجز مقعد." 
-              : "Times shown in Germany timezone (CET). Contact us to reserve a spot."}
+            {t("note")}
           </Text>
         </Box>
       </Stack>

@@ -5,21 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLogout } from "@/lib/auth-client";
 import PremiumCard from "@/components/ui/PremiumCard";
-
-const teacherLinks = [
-  { label: "نظرة عامة", href: "/teacher", icon: "📊" },
-  { label: "دوراتي", href: "/teacher/courses", icon: "📚" },
-  { label: "إنشاء دورة", href: "/teacher/courses/new", icon: "➕" },
-  { label: "حصصي التعليمية", href: "/teacher/lessons", icon: "🎥" },
-  { label: "منشوراتي", href: "/teacher/posts", icon: "✍️" },
-  { label: "طلابي", href: "/teacher/students", icon: "👥" },
-  { label: "الأرباح", href: "/teacher/earnings", icon: "💰" },
-  { label: "المراجعات", href: "/teacher/reviews", icon: "⭐" },
-  { label: "الإحصائيات", href: "/teacher/analytics", icon: "📈" },
-  { label: "الإشعارات", href: "/teacher/notifications", icon: "🔔" },
-  { label: "الملف الشخصي", href: "/teacher/profile", icon: "👤" },
-  { label: "المناهج السورية 2026", href: "/teachers/resources/syrian-curriculum-2026", icon: "📚" },
-];
+import { useTranslations } from "next-intl";
 
 interface TeacherSidebarProps {
   userName: string;
@@ -28,6 +14,22 @@ interface TeacherSidebarProps {
 export default function TeacherSidebar({ userName }: TeacherSidebarProps) {
   const handleLogout = useLogout();
   const pathname = usePathname();
+  const t = useTranslations("sidebar");
+
+  const teacherLinks = [
+    { label: t("teacher.overview"), href: "/teacher", icon: "📊" },
+    { label: t("teacher.myCourses"), href: "/teacher/courses", icon: "📚" },
+    { label: t("teacher.createCourse"), href: "/teacher/courses/new", icon: "➕" },
+    { label: t("teacher.myLessons"), href: "/teacher/lessons", icon: "🎥" },
+    { label: t("teacher.myPosts"), href: "/teacher/posts", icon: "✍️" },
+    { label: t("teacher.myStudents"), href: "/teacher/students", icon: "👥" },
+    { label: t("teacher.earnings"), href: "/teacher/earnings", icon: "💰" },
+    { label: t("teacher.reviews"), href: "/teacher/reviews", icon: "⭐" },
+    { label: t("teacher.analytics"), href: "/teacher/analytics", icon: "📈" },
+    { label: t("teacher.notifications"), href: "/teacher/notifications", icon: "🔔" },
+    { label: t("teacher.profile"), href: "/teacher/profile", icon: "👤" },
+    { label: t("teacher.syrianCurriculum"), href: "/teachers/resources/syrian-curriculum-2026", icon: "📚" },
+  ];
 
   return (
     <PremiumCard
@@ -60,7 +62,7 @@ export default function TeacherSidebar({ userName }: TeacherSidebarProps) {
               borderRadius="full"
               fontSize="xs"
             >
-              مدرس
+              {t("teacher.badge")}
             </Badge>
           </Box>
         </VStack>
@@ -111,7 +113,7 @@ export default function TeacherSidebar({ userName }: TeacherSidebarProps) {
             }}
             size="sm"
           >
-            🚪 تسجيل الخروج
+            🚪 {t("logout")}
           </Button>
         </Box>
       </Stack>

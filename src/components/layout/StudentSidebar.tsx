@@ -5,17 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLogout } from "@/lib/auth-client";
 import PremiumCard from "@/components/ui/PremiumCard";
-
-const studentLinks = [
-  { label: "نظرة عامة", href: "/student", icon: "📊" },
-  { label: "دوراتي", href: "/student/courses", icon: "📚" },
-  { label: "حصصي المباشرة", href: "/student/lessons", icon: "🎥" },
-  { label: "جدول الدراسة", href: "/student/schedule", icon: "📅" },
-  { label: "الشهادات", href: "/student/certificates", icon: "🏆" },
-  { label: "المدفوعات", href: "/student/payments", icon: "💳" },
-  { label: "الإشعارات", href: "/student/notifications", icon: "🔔" },
-  { label: "الملف الشخصي", href: "/student/profile", icon: "👤" },
-];
+import { useTranslations } from "next-intl";
 
 interface StudentSidebarProps {
   userName: string;
@@ -25,6 +15,18 @@ interface StudentSidebarProps {
 export default function StudentSidebar({ userName, onNavigate }: StudentSidebarProps) {
   const handleLogout = useLogout();
   const pathname = usePathname();
+  const t = useTranslations("sidebar");
+
+  const studentLinks = [
+    { label: t("student.overview"), href: "/student", icon: "📊" },
+    { label: t("student.myCourses"), href: "/student/courses", icon: "📚" },
+    { label: t("student.liveLessons"), href: "/student/lessons", icon: "🎥" },
+    { label: t("student.schedule"), href: "/student/schedule", icon: "📅" },
+    { label: t("student.certificates"), href: "/student/certificates", icon: "🏆" },
+    { label: t("student.payments"), href: "/student/payments", icon: "💳" },
+    { label: t("student.notifications"), href: "/student/notifications", icon: "🔔" },
+    { label: t("student.profile"), href: "/student/profile", icon: "👤" },
+  ];
 
   return (
     <PremiumCard
@@ -57,7 +59,7 @@ export default function StudentSidebar({ userName, onNavigate }: StudentSidebarP
               borderRadius="full"
               fontSize="xs"
             >
-              طالب
+              {t("student.badge")}
             </Badge>
           </Box>
         </VStack>
@@ -115,7 +117,7 @@ export default function StudentSidebar({ userName, onNavigate }: StudentSidebarP
             }}
             size="sm"
           >
-            🚪 تسجيل الخروج
+            🚪 {t("logout")}
           </Button>
         </Box>
       </Stack>

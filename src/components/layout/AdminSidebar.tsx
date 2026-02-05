@@ -3,30 +3,32 @@
 import { Badge, Box, Button, Stack, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import { useLogout } from "@/lib/auth-client";
-
-const adminLinks = [
-  { label: "نظرة عامة", href: "/admin" },
-  { label: "المستخدمون", href: "/admin/users" },
-  { label: "طلبات المدرسين", href: "/admin/applications" },
-  { label: "الدورات", href: "/admin/courses" },
-  { label: "المدفوعات", href: "/admin/payments" },
-  { label: "الشهادات", href: "/admin/certificates" },
-  { label: "المنشورات الاجتماعية", href: "/admin/social" },
-  { label: "المراجعات", href: "/admin/reviews" },
-  { label: "التقارير", href: "/admin/reports" },
-  { label: "سجلات التدقيق", href: "/admin/audit-logs" },
-  { label: "الصلاحيات والأدوار", href: "/admin/permissions" },
-  { label: "التخزين والبث", href: "/admin/storage" },
-  { label: "الإشعارات", href: "/admin/notifications" },
-  { label: "الدردشة المباشرة", href: "/admin/live-chat" },
-  { label: "سجل الأنشطة التعليمية", href: "/admin/activity" },
-  { label: "التكاملات الخارجية", href: "/admin/integrations" },
-  { label: "Zyphon AI", href: "/admin/zyphon-ai" },
-  { label: "الإعدادات", href: "/admin/settings" },
-];
+import { useTranslations } from "next-intl";
 
 export default function AdminSidebar() {
   const handleLogout = useLogout();
+  const t = useTranslations("sidebar");
+
+  const adminLinks = [
+    { label: t("admin.overview"), href: "/admin" },
+    { label: t("admin.users"), href: "/admin/users" },
+    { label: t("admin.teacherApplications"), href: "/admin/applications" },
+    { label: t("admin.courses"), href: "/admin/courses" },
+    { label: t("admin.payments"), href: "/admin/payments" },
+    { label: t("admin.certificates"), href: "/admin/certificates" },
+    { label: t("admin.socialPosts"), href: "/admin/social" },
+    { label: t("admin.reviews"), href: "/admin/reviews" },
+    { label: t("admin.reports"), href: "/admin/reports" },
+    { label: t("admin.auditLogs"), href: "/admin/audit-logs" },
+    { label: t("admin.permissions"), href: "/admin/permissions" },
+    { label: t("admin.storage"), href: "/admin/storage" },
+    { label: t("admin.notifications"), href: "/admin/notifications" },
+    { label: t("admin.liveChat"), href: "/admin/live-chat" },
+    { label: t("admin.activityLog"), href: "/admin/activity" },
+    { label: t("admin.integrations"), href: "/admin/integrations" },
+    { label: "Zyphon AI", href: "/admin/zyphon-ai" },
+    { label: t("admin.settings"), href: "/admin/settings" },
+  ];
 
   return (
     <Box
@@ -44,7 +46,7 @@ export default function AdminSidebar() {
       <Stack gap={4}>
         <Box>
           <Text fontWeight="700" mb={2} color="white">
-            إدارة تبيان
+            {t("admin.title")}
           </Text>
           <Badge
             bg="rgba(0, 255, 42, 0.1)"
@@ -56,7 +58,7 @@ export default function AdminSidebar() {
             borderRadius="full"
             fontSize="xs"
           >
-            لوحة التحكم
+            {t("admin.controlPanel")}
           </Badge>
         </Box>
         <Stack gap={1}>
@@ -108,7 +110,7 @@ export default function AdminSidebar() {
             }}
             size="sm"
           >
-            🚪 تسجيل الخروج
+            🚪 {t("logout")}
           </Button>
         </Box>
       </Stack>

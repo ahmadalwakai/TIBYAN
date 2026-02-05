@@ -2,8 +2,12 @@
 
 import { Box, Heading, Stack, Text, Flex } from "@chakra-ui/react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export default function RefundSecurityBlock() {
+  const tRefund = useTranslations("ui.refund");
+  const tSecurity = useTranslations("ui.security");
+
   return (
     <Box
       borderRadius="2xl"
@@ -31,12 +35,12 @@ export default function RefundSecurityBlock() {
               <Text fontSize="2xl">💰</Text>
             </Box>
             <Heading size="lg" color="white">
-              ضمان استرداد الأموال
+              {tRefund("title")}
             </Heading>
           </Flex>
           <Stack gap={3}>
             <Text fontSize="md" color="gray.300" lineHeight="1.8">
-              نوفر <Text as="strong" color="#00FF2A">ضمان استرداد كامل للمبلغ المدفوع</Text> خلال أول أسبوعين (14 يوماً) من تاريخ التسجيل في البرنامج، في حال عدم رضاك عن جودة المحتوى أو طريقة التدريس.
+              {tRefund("description")}
             </Text>
             <Box
               borderRadius="lg"
@@ -47,19 +51,19 @@ export default function RefundSecurityBlock() {
             >
               <Stack gap={2}>
                 <Text fontSize="sm" fontWeight="700" color="#00FF2A">
-                  ✓ شروط الاسترداد
+                  ✓ {tRefund("conditions")}
                 </Text>
                 <Text fontSize="sm" color="gray.300">
-                  • طلب الاسترداد خلال 14 يوم من التسجيل<br />
-                  • لم يتجاوز المتعلم 25% من المحتوى الدراسي<br />
-                  • الاسترداد خلال 5-7 أيام عمل
+                  • {tRefund("condition1")}<br />
+                  • {tRefund("condition2")}<br />
+                  • {tRefund("condition3")}
                 </Text>
               </Stack>
             </Box>
             <Text fontSize="sm" color="gray.400">
-              للمزيد من التفاصيل، راجع{" "}
+              {tRefund("seeMore")}{" "}
               <Link href="/refund-policy" style={{ color: "#00FF2A", fontWeight: 600 }}>
-                سياسة الاسترداد الكاملة
+                {tRefund("fullPolicy")}
               </Link>
             </Text>
           </Stack>
@@ -82,12 +86,12 @@ export default function RefundSecurityBlock() {
               <Text fontSize="2xl">🔒</Text>
             </Box>
             <Heading size="lg" color="white">
-              الأمان وطرق الدفع
+              {tSecurity("title")}
             </Heading>
           </Flex>
           <Stack gap={3}>
             <Text fontSize="md" color="gray.300" lineHeight="1.8">
-              نستخدم <Text as="strong" color="#00FF2A">اتصال آمن مشفر (HTTPS)</Text> لحماية بياناتك الشخصية أثناء التصفح والتسجيل.
+              {tSecurity("description")}
             </Text>
             <Box
               borderRadius="lg"
@@ -98,13 +102,13 @@ export default function RefundSecurityBlock() {
             >
               <Stack gap={2}>
                 <Text fontSize="sm" fontWeight="700" color="#00FF2A">
-                  🔐 طرق الدفع المتاحة
+                  🔐 {tSecurity("paymentMethods")}
                 </Text>
                 <Text fontSize="sm" color="gray.300">
-                  • التحويل البنكي (SEPA) داخل أوروبا<br />
-                  • بطاقات الائتمان (Visa/Mastercard) عبر معالج دفع آمن<br />
-                  • الدفع الشهري أو السنوي المقدم<br />
-                  • للاستفسارات: {" "}
+                  • {tSecurity("method1")}<br />
+                  • {tSecurity("method2")}<br />
+                  • {tSecurity("method3")}<br />
+                  • {tSecurity("inquiries")}{" "}
                   <Link href="mailto:support@ti-by-an.com" style={{ color: "#00FF2A", fontWeight: 600 }}>
                     support@ti-by-an.com
                   </Link>
@@ -112,7 +116,7 @@ export default function RefundSecurityBlock() {
               </Stack>
             </Box>
             <Text fontSize="xs" color="gray.500" mt={2}>
-              * جميع المعاملات المالية تتم عبر قنوات مشفرة. لا نقوم بتخزين بيانات البطاقات الائتمانية على خوادمنا.
+              {tSecurity("disclaimer")}
             </Text>
           </Stack>
         </Box>

@@ -189,12 +189,13 @@ function LanguageSelector({ currentLocale, isRtl, onLocaleChange }: LanguageSele
 interface ThemeToggleProps {
   isDark: boolean;
   onToggle: () => void;
+  ariaLabel: string;
 }
 
-function ThemeToggle({ isDark, onToggle }: ThemeToggleProps) {
+function ThemeToggle({ isDark, onToggle, ariaLabel }: ThemeToggleProps) {
   return (
     <IconButton
-      aria-label="تبديل المظهر"
+      aria-label={ariaLabel}
       onClick={onToggle}
       variant="ghost"
       width={`${ICON_BUTTON_SIZE}px`}
@@ -556,7 +557,7 @@ function MobileMenu({
             <Logo size={40} showText={false} />
           </Link>
           <IconButton
-            aria-label="إغلاق القائمة"
+            aria-label={t("header.closeMenu")}
             onClick={onClose}
             variant="ghost"
             color="white"
@@ -841,7 +842,7 @@ export default function Header() {
             <Flex align="center" gap={3} flexShrink={0}>
               {/* Mobile Menu Button */}
               <IconButton
-                aria-label="القائمة"
+                aria-label={t("header.openMenu")}
                 display={{ base: "flex", lg: "none" }}
                 onClick={() => setMobileMenuOpen(true)}
                 variant="ghost"
@@ -917,7 +918,7 @@ export default function Header() {
               </Box>
 
               {/* Theme Toggle */}
-              <ThemeToggle isDark={isDark} onToggle={toggleColorMode} />
+              <ThemeToggle isDark={isDark} onToggle={toggleColorMode} ariaLabel={t("header.toggleTheme")} />
 
               {/* Notification Bell (logged in only) */}
               {user && <NotificationBell />}
